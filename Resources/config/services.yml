@@ -1,0 +1,7 @@
+parameters:
+#    cl_chill_main.example.class: CL\Chill\MainBundle\Example
+
+services:
+#    cl_chill_main.example:
+#        class: %cl_chill_main.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

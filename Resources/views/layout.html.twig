@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    {% stylesheets  output="css/all.css"
-          "@CLChillMainBundle/Resources/assets/gumpy/css/gumby.css" %}
+    {% stylesheets  output="css/all.css" filter="cssrewrite"
+          "bundles/clchillmain/css/gumby.css"
+          "bundles/clchillmain/css/chillmain.css" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     
@@ -10,10 +11,53 @@
 </head>
 
 <body>
+    {# class for multicolumn in gumpy #}
+    <div class="row">
+        <div class="twelve columns" >
+            
+            <div id="header">
+                <div id="header_nav_box" class="push_seven seven columns">
+                    <nav class="inline-nav">
+                    <ul>
+                        <li><i class="icon-users"></i></li>
+                        <li><i class="icon-export"></i></li>
+                        <li><i class="icon-gauge"></i></li>
+                    </ul>
+                    </nav> 
+
+                    Bonjour {julien} - <a href="#">Se déconnecter <i class="icon-logout"></i></a>
+
+                </div>
+            </div>
+            
+            
+            <div id="useful_bar">
+                
+                <div class="six columns">
+                    <i class="user-add"></i>
+                    
+                </div>
+                
+                <div id="search">
+                    
+                    <input type="search" name="person-search" 
+                           class="xwide search input">
+                    <span class="adjoined ">s</span>
+                    
+                </div>
+                
+            </div>
+            
+            <p> Hello  ! </p>
+            
+        </div>
+        
+        
+        
+    </div>
 
 
 
-<p> Hello  ! </p>
 
 <div class="medium primary btn">
   <a href="#">Primary</a>

@@ -1,1 +1,6 @@
-nav.inline-nav ul, nav.inline-nav ol { display: inline-block; list-style-type: none; }
+div#connect_module_menu { text-align: right; }
+div#connect_module_menu nav.inline-nav { display: inline; }
+div#connect_module_menu nav.inline-nav ul, div#connect_module_menu nav.inline-nav ol { list-style-type: none; display: inline; }
+div#connect_module_menu nav.inline-nav ul li, div#connect_module_menu nav.inline-nav ol li { display: inline; }
+
+div#searchbox { text-align: right; }

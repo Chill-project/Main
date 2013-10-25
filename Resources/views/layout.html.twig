@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     
+    {% javascripts output="js/modernizer.js"  
+          "bundles/clchillmain/js/modernizr-2.6.2.min.js" %}
+    <script src="{{ asset_url }}" type="text/javascript" ></script>
+    {% endjavascripts %}
+    
     
 </head>
 
@@ -15,41 +20,54 @@
     <div class="row">
         <div class="twelve columns" >
             
-            <div id="header">
-                <div id="header_nav_box" class="push_seven seven columns">
+            <div id="logo" class="four columns">
+                
+            </div>
+            
+            <div id="connect_module_menu">
+                <div id="header_nav_box" class="push_two six columns">
+                    
+                    Bonjour <a href="#">{julien}</a>
+                    
                     <nav class="inline-nav">
                     <ul>
-                        <li><i class="icon-users"></i></li>
-                        <li><i class="icon-export"></i></li>
-                        <li><i class="icon-gauge"></i></li>
+                        <li><a href="#"><i class="icon-users"></i></a></li>
+                        <li><a href="#"><i class="icon-export"></i></a></li>
+                        <li><a href="#"><i class="icon-gauge"></i></a></li>
                     </ul>
                     </nav> 
 
-                    Bonjour {julien} - <a href="#">Se déconnecter <i class="icon-logout"></i></a>
+                    <a href="#">Se déconnecter <i class="icon-logout"></i></a>
 
                 </div>
             </div>
             
             
-            <div id="useful_bar">
+            <div id="useful_bar" class="" >
                 
                 <div class="six columns">
-                    <i class="user-add"></i>
+                    <a href="#"><i class="icon-user-add"></i></a>
                     
                 </div>
                 
-                <div id="search">
+                <div id="searchbox" class="field append six columns"> 
                     
                     <input type="search" name="person-search" 
-                           class="xwide search input">
-                    <span class="adjoined ">s</span>
+                           class="normal search input" placeholder="Rechercher des personnes">
+                    <button type="submit" class="adjoined "><i class="icon-search"></i></button>
                     
                 </div>
                 
             </div>
             
-            <p> Hello  ! </p>
             
+            <div id="wrapper" style="min-height: 1500px;">
+            <p gumby-fixed="top"> Hello  ! </p>
+            
+            <div class="medium primary btn">
+  <a href="#">Primary</a>
+</div>
+            </div>
         </div>
         
         
@@ -59,9 +77,15 @@
 
 
 
-<div class="medium primary btn">
-  <a href="#">Primary</a>
-</div>
+{% javascripts output="js/all.js"
+     "bundles/clchillmain/js/jquery-2.0.2.min.js"
+     "bundles/clchillmain/js/gumby.js"
+
+     "bundles/clchillmain/js/gumby.init.js" 
+     "bundles/clchillmain/js/ui/*.js" %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+
+{% endjavascripts %}
 
 </body>
 

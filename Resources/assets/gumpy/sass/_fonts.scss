@@ -15,6 +15,101 @@
        url('../fonts/icons/#{$icons}.ttf')  format('truetype');
 }
 
+$path_to_fonts: "./../../fonts/";
+
+//correct entypo
+@font-face { 
+    font-family: "entypo"; font-style: normal; font-weight: 400; 
+    src: url('#{$path_to_fonts}icons/entypo.eot'); 
+    src: url("#{$path_to_fonts}icons/entypo.eot?#iefix") format("ie9-skip-eot"), 
+        url("#{$path_to_fonts}icons/entypo.woff") format("woff"), 
+        url("#{$path_to_fonts}icons/entypo.ttf") format("truetype"); 
+}
+
+
+$font_1: "Merriweather Sans";
+$font_1_path: "Merriweather_Sans/MerriweatherSans-";
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: normal;
+  font-weight: 400;
+  src: url('#{$path_to_fonts}#{font_1_path}Regular.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: italic;
+  font-weight: 400;
+  src: url('#{$path_to_fonts}#{$font_1_path}Italic.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: normal;
+  font-weight: 300;
+  src: url('#{$path_to_fonts}#{$font_1_path}Light.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: italic;
+  font-weight: 300;
+  src: url('#{$path_to_fonts}#{$font_1_path}LigthItalic.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: normal;
+  font-weight: 700;
+  src: url('#{$path_to_fonts}#{$font_1_path}Bold.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: italic;
+  font-weight: 700;
+  src: url('#{$path_to_fonts}#{$font_1_path}BoldItalic.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: normal;
+  font-weight: 800;
+  src: url('#{$path_to_fonts}#{$font_1_path}ExtraBold.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_1}';
+  font-style: italic;
+  font-weight: 800;
+  src: url('#{$path_to_fonts}#{$font_1_path}ExtraBoldItalic.ttf')  format('truetype');
+}
+
+$font_2: "Oxygen";
+$font_2_path: "Oxygen/Oxygen-";
+
+@font-face {
+  font-family: '#{$font_2}';
+  font-style: normal;
+  font-weight: 300;
+  src: url('#{$path_to_fonts}#{$font_2_path}Light.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_2}';
+  font-style: normal;
+  font-weight: 400;
+  src: url('#{$path_to_fonts}#{$font_2_path}Regular.ttf')  format('truetype');
+}
+
+@font-face {
+  font-family: '#{$font_2}';
+  font-style: normal;
+  font-weight: 700;
+  src: url('#{$path_to_fonts}#{$font_2_path}Bold.ttf')  format('truetype');
+}
+
 // To include your own, local copies of fonts, use the following template
 //
 //@font-face {

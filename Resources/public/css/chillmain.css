@@ -1,6 +1,14 @@
-div#connect_module_menu { text-align: right; }
-div#connect_module_menu nav.inline-nav { display: inline; }
-div#connect_module_menu nav.inline-nav ul, div#connect_module_menu nav.inline-nav ol { list-style-type: none; display: inline; }
-div#connect_module_menu nav.inline-nav ul li, div#connect_module_menu nav.inline-nav ol li { display: inline; }
+div#usefulbar { background-color: #fbba3a; z-index: 1000; padding-right: 15px; }
+div#usefulbar i.menu { font-size: 2em; }
+div#usefulbar ul { display: flex; justify-content: flex-end; margin: 0; padding-top: 5px; padding-right: 10px; }
+div#usefulbar li { color: white; margin-left: 10px; }
+div#usefulbar li a { color: white; text-shadow: 0px 0px 1px #555; }
+div#usefulbar li i.icon-user-add:before { vertical-align: -5px; }
+div#usefulbar li#search_element { text-align: right; }
+div#usefulbar li#search_element div#search_form { margin: 0; padding: 0; }
+div#usefulbar li#search_element div#search_form div { margin: 0; }
+div#usefulbar li#search_element div#search_form .field { margin: 0; }
+div#usefulbar li#search_element div#search_form button { color: white; border: none; bottom: -2px; height: 35px; }
 
-div#searchbox { text-align: right; }
+div#flashMessages { margin-top: 20px; }
+div#flashMessages .flash-notice { margin-top: 10px; margin-bottom: 10px; }

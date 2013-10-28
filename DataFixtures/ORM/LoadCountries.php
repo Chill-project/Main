@@ -19,6 +19,9 @@ class LoadCountries extends AbstractFixture {
     }
     
     public function load(ObjectManager $manager) {
+        
+        echo "loading countries... \n";
+        
         foreach ($this->countries as $code => $name) {
             $country = new \CL\Chill\MainBundle\Entity\Country();
             $country->setLabel(ucwords($name));

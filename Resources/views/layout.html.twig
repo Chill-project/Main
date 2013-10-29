@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    
+    <title>{{ installation.name }}{% block title %}{% endblock %}</title>
+    
     {% stylesheets  output="css/all.css" filter="cssrewrite"
           "bundles/clchillmain/css/gumby.css"
           "bundles/clchillmain/css/chillmain.css" %}
@@ -32,7 +35,7 @@
 
    
                 <ul id="nav_list" class="push_five six columns">
-                    <li><a href="#">Bonjour {julien}</a></li>
+                    <li><a href="#">Bonjour {utilisateur}</a></li>
                     <li><a href="#"><i class="icon-users"></i></a></li>
                     <li><a href="#"><i class="icon-export"></i></a></li>
                     <li><a href="#"><i class="icon-gauge"></i></a></li>
@@ -122,14 +125,17 @@
     <div class="row">
             <div id="wrapper" style="min-height: 1500px;">
                 
-                
+                {% block content %}
                 
                 
                 <h1>Title</h1>
-            <p> Hello  ! </p>
-            
-            <div class="medium primary btn">
-  <a href="#">Primary</a>
+                    <p> Hello  ! </p>
+
+                    <div class="medium primary btn">
+                    <a href="#">Primary</a>
+  
+  
+                {% endblock %}
 </div>
             </div>
     </div> 

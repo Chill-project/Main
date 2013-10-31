@@ -12,3 +12,7 @@ div#usefulbar li#search_element div#search_form button { color: white; border: n
 
 div#flashMessages { margin-top: 20px; }
 div#flashMessages .flash-notice { margin-top: 10px; margin-bottom: 10px; }
+
+.personName { font-variant: small-caps; text-transform: capitalize; }
+
+.personName { text-transform: capitalize; }

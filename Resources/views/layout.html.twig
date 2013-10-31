@@ -63,11 +63,11 @@
                <li id="search_element" class="">
                    <div id="search_form"  class="">
                         <div class="field append">
-                                 
+                                 <form method="GET" action="{{ path('chill_person_search') }}">
                                  <input type="search" name="q" 
                                         class="wide search input" placeholder="Rechercher">
                                  <button type="submit" class="medium primary btn">Go</button>
-
+                                 </form>
                         </div>
                     </div>
                    
@@ -100,19 +100,19 @@
         <div id="flashMessages" class="push_three six columns">
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="flash-notice success alert">
-                    {{ flashMessage }}
+                    {{ flashMessage|raw }}
                 </div>
             {% endfor %}
             
             {% for flashMessage in app.session.flashbag.get('danger') %}
                 <div class="flash-notice danger alert">
-                    {{ flashMessage }}
+                    {{ flashMessage|raw }}
                 </div>
             {% endfor %}
             
             {% for flashMessage in app.session.flashbag.get('info') %}
                 <div class="flash-notice info alert">
-                    {{ flashMessage }}
+                    {{ flashMessage|raw }}
                 </div>
             {% endfor %}
       
@@ -124,7 +124,7 @@
     
     <div class="row">
             <div id="wrapper" style="min-height: 1500px;">
-                
+
                 {% block content %}
                 
                 

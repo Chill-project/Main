@@ -29,10 +29,14 @@ class MenuComposer {
         $routes = array();
         
         foreach ($this->routeCollection->all() as $key => $route) {
-            if ($route['options']['menu'] === $menuId) {
-                $routes[$route['options']['order']] = $route;
+            if ($route->getOption('menu') === $menuId) {
+                $a['route'] = $key;
+                $a['label'] = $route->getOption('label');
+                $routes[$route->getOption('order')] = $a;
             }
         }
+        
+        ksort($routes);
         
         return $routes;
         

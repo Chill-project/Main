@@ -5,7 +5,7 @@ services:
     menu_composer:
         class: CL\Chill\MainBundle\DependencyInjection\Services\MenuComposer
         arguments:
-            -  "@routing.loader"
+            -  "@router"
 #    cl_chill_main.example:
 #        class: %cl_chill_main.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

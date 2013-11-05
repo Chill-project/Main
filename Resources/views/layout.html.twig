@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     
+    {% block css%}<!-- nothing added to css -->{% endblock %}
+    
     {% javascripts output="js/modernizer.js"  
           "bundles/clchillmain/js/modernizr-2.6.2.min.js" %}
     <script src="{{ asset_url }}" type="text/javascript" ></script>
@@ -24,17 +26,17 @@
         <nav id="header" class="navbar pretty" >
             
           
-            
-                <div id="logo" class="five columns logo">
+            <!--
+                <div id="logo" class="six columns logo">
 
                 </div>
-
+   -->
                 
 
                         
 
    
-                <ul id="nav_list" class="push_five six columns">
+                <ul id="nav_list" class="six columns">
                     <li><a href="#">Bonjour {utilisateur}</a></li>
                     <li><a href="#"><i class="icon-users"></i></a></li>
                     <li><a href="#"><i class="icon-export"></i></a></li>

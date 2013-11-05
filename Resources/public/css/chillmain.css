@@ -1,4 +1,5 @@
 div#usefulbar { background-color: #fbba3a; z-index: 1000; padding-right: 15px; }
+div#usefulbar form { margin: 0; }
 div#usefulbar i.menu { font-size: 2em; }
 div#usefulbar ul { display: flex; justify-content: flex-end; margin: 0; padding-top: 5px; padding-right: 10px; }
 div#usefulbar li { color: white; margin-left: 10px; }

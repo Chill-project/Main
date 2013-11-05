@@ -1,7 +1,3 @@
 cl_chill_main_homepage:
     pattern:  /hello
     defaults: { _controller: CLChillMainBundle:Default:index }
-    options:
-        menu: person
-        order: 0
-        label: HomePage

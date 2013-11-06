@@ -1,0 +1,72 @@
+
+
+{% block form_row %}
+{% spaceless %}
+    <div class="field inline">
+        {{ form_errors(form) }}
+        {{ form_label(form) }}
+        {{ form_widget(form,  {'attr' : {'class': 'input wide'} })  }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+
+{% block date_widget %}
+{% spaceless %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ date_pattern|replace({
+                '{{ year }}': form_widget(form.year, {'attr': {'class': 'input'} } ),
+                '{{ month }}': form_widget(form.month, {'attr': {'class': 'input'} } ),
+                '{{ day }}': form_widget(form.day, {'attr': {'class': 'input'} } ),
+            })|raw }}
+        </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock date_widget %}
+
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('inline ') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+
+ 
+{#    
+{% block widget_attributes %}
+{% spaceless %}
+{% set class_added = false %}
+
+{% if gumby_class_wide is not defined %}
+{% set gumby_class_wide = 'normal' %}
+{% endif %}
+
+{% set gumby_class_input = 'input' %}
+
+    id="{{ id }}" name="{{ full_name }}"{% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %}
+    {% for attrname, attrvalue in attr %}
+        {% if attrname in ['placeholder', 'title'] %}{{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}" 
+             class="{{ gumby_class_input }} {{gumby_class_wide}} {{attrvalue}}" {% set class_added = true %}
+        {% else %}{{ attrname }}="{{ attrvalue }}" 
+        {% endif %}
+    {% endfor %}
+    
+    {% if class_added == false %}
+        class="{{ gumby_class_input }} {{gumby_class_wide}}"
+    {% endif %}
+{% endspaceless %}
+{% endblock widget_attributes %}    
+#}

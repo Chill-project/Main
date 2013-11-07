@@ -5,10 +5,65 @@
     <div class="field inline">
         {{ form_errors(form) }}
         {{ form_label(form) }}
-        {{ form_widget(form,  {'attr' : {'class': 'input wide'} })  }}
+        {{ form_widget(form)  }}
     </div>
 {% endspaceless %}
 {% endblock form_row %}
+
+
+{% block form_widget_simple %}
+{% spaceless %}
+{% if attr.class is not defined %}
+    {% set attr = {'class' : 'input wide'} %}
+{% endif %}
+    {% set type = type|default('text') %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+    
+{% block textarea_widget %}
+{% spaceless %}
+{% if attr.class is not defined %}
+    {% set attr = {'class' : 'input textarea'} %}
+{% endif %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+    
+{% block choice_widget_collapsed %}
+    <div class="picker">
+{% spaceless %}
+    {% if required and empty_value is none and not empty_value_in_choices %}
+        {% set required = false %}
+    {% endif %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if empty_value is not none %}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('choice_widget_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('choice_widget_options') }}
+    </select>
+{% endspaceless %}
+    </div>
+{% endblock choice_widget_collapsed %}    
+    
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        {{ form_widget(child) }}
+        {{ form_label(child, '', {'label_attr': { 'class' : 'inline radio'} }) }}
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
 
 
 {% block date_widget %}
@@ -18,9 +73,9 @@
     {% else %}
         <div {{ block('widget_container_attributes') }}>
             {{ date_pattern|replace({
-                '{{ year }}': form_widget(form.year, {'attr': {'class': 'input'} } ),
-                '{{ month }}': form_widget(form.month, {'attr': {'class': 'input'} } ),
-                '{{ day }}': form_widget(form.day, {'attr': {'class': 'input'} } ),
+                '{{ year }}': form_widget(form.year ),
+                '{{ month }}': form_widget(form.month ),
+                '{{ day }}': form_widget(form.day ),
             })|raw }}
         </div>
     {% endif %}

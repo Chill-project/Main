@@ -98,6 +98,15 @@
     {% endif %}
 {% endspaceless %}
 {% endblock form_label %}
+        
+        
+{% block belgian_national_number_widget %}
+    {% spaceless %}
+        {{ form_widget(form.inversed_date, { 'attr': { 'class': 'input belgian_national_number_inversed_date'  } } ) }}
+        {{ form_widget(form.daily_counter, { 'attr': { 'class': 'input belgian_national_number_daily_counter' } } ) }}
+        {{ form_widget(form.control_digit, { 'attr': { 'class': 'input belgian_national_number_control_digit' } } ) }}
+    {% endspaceless %}
+{% endblock %}        
 
  
 {#    

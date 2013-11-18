@@ -9,11 +9,11 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $a = array(
-            array('success', "Message de succès ! "),
+            array('success', "Message de succès (success)! "),
             array('success',"Un autre message de succès ! "),
-            array('danger' , "Avert lorem ipsum dolor sit amet spiritur"),
+            array('danger' , "(danger)Avert lorem ipsum dolor sit amet spiritur"),
             array('danger' ,"Avertum ipsut est amet amergitur tatouari"),
-            array('info' , "Un message d'information s'affiche."),
+            array('info' , "(info) Un message d'information s'affiche."),
             array('info' , "Info informitur escept asolitur amet. Sit Roberetur astot.")
         );
         

@@ -6,17 +6,34 @@
     
     {% stylesheets  output="css/all.css" filter="cssrewrite"
           "bundles/clchillmain/css/gumby.css"
-          "bundles/clchillmain/css/chillmain.css" %}
+          "bundles/clchillmain/css/chillmain.css"
+          "bundles/clchillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.css" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     
     {% block css%}<!-- nothing added to css -->{% endblock %}
-    
-    {% javascripts output="js/modernizer.js"  
-          "bundles/clchillmain/js/modernizr-2.6.2.min.js" %}
-    <script src="{{ asset_url }}" type="text/javascript" ></script>
-    {% endjavascripts %}
-    
+
+    {% javascripts output="js/libs.js"
+        "bundles/clchillmain/js/modernizr-2.6.2.min.js"
+        "bundles/clchillmain/js/jquery-2.0.2.min.js"
+        "bundles/clchillmain/js/gumby.js"
+        "bundles/clchillmain/js/gumby.init.js" 
+        "bundles/clchillmain/js/ui/*.js"
+        "bundles/clchillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.js" %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}    
+
+    <script type="text/javascript">
+      $.datepicker.regional[ "fr" ]
+      $(document).ready(function() {
+          $('.datepicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd'
+          }, $.datepicker.regional["fr"]);
+      });
+    {% block js%}<!-- nothing added to js -->{% endblock %}
+    </script>
     
 </head>
 
@@ -141,23 +158,6 @@
 </div>
             </div>
     </div> 
-        
-        
-        
-    
-
-
-
-
-{% javascripts output="js/all.js"
-     "bundles/clchillmain/js/jquery-2.0.2.min.js"
-     "bundles/clchillmain/js/gumby.js"
-
-     "bundles/clchillmain/js/gumby.init.js" 
-     "bundles/clchillmain/js/ui/*.js" %}
-    <script gumby-debug src="{{ asset_url }}" type="text/javascript"></script>
-
-{% endjavascripts %}
 
 </body>
 

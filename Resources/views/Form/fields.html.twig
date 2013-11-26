@@ -73,6 +73,7 @@ has_error danger
 {% block date_widget %}
 {% spaceless %}
     {% if widget == 'single_text' %}
+        {% set attr = {'class' : 'input wide datepicker'} %}
         {{ block('form_widget_simple') }}
     {% else %}
         <div {{ block('widget_container_attributes') }}>

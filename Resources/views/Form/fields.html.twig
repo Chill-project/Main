@@ -2,10 +2,14 @@
 
 {% block form_row %}
 {% spaceless %}
-    <div class="field inline">
-        {{ form_errors(form) }}
+    <div class="field inline {% spaceless %} 
+{% if errors|length > 0 %}
+has_error danger
+{% endif %}
+ {% endspaceless %}">
         {{ form_label(form) }}
         {{ form_widget(form)  }}
+        {{ form_errors(form) }}
     </div>
 {% endspaceless %}
 {% endblock form_row %}
@@ -89,7 +93,7 @@
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
         {% if required %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('inline ') ~ ' required')|trim}) %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
         {% endif %}
         {% if label is empty %}
             {% set label = name|humanize %}
@@ -106,7 +110,20 @@
         {{ form_widget(form.daily_counter, { 'attr': { 'class': 'input belgian_national_number_daily_counter' } } ) }}
         {{ form_widget(form.control_digit, { 'attr': { 'class': 'input belgian_national_number_control_digit' } } ) }}
     {% endspaceless %}
-{% endblock %}        
+{% endblock %}  
+        
+        
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <ul class="errors">
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}      
 
  
 {#    

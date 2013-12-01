@@ -2609,3 +2609,9 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
 .ie9 .radio.checked i, .ie9 .checkbox.checked i { top: 0; }
 
 h1, h2, h3, h4, h5, h6 { font-family: "Merriweather Sans"; font-weight: 600; }
+
+table .striped, table.stripe { background-color: #e5e5e5; }
+
+pre { font-family: monospace; font-weight: normal; }
+
+table tr td:first-child { font-weight: normal; }

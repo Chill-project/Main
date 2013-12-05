@@ -7,3 +7,18 @@ h1,h2,h3,h4,h5,h6 {
     font-weight: $font-weight-title;
 }
 
+table .striped, table.stripe {
+    background-color: $table-stripe-bgcolor;
+}
+
+pre {
+    font-family: monospace;
+    font-weight: normal;
+}
+
+table tr td:first-child {
+    
+    font-weight: normal;
+    
+}
+

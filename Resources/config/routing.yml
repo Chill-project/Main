@@ -1,3 +1,7 @@
 cl_chill_main_homepage:
     pattern:  /hello
     defaults: { _controller: CLChillMainBundle:Default:index }
+    
+chill_main_admin_central:
+    pattern: /admin
+    defaults: { _controller: CLChillMainBundle:Admin:index }

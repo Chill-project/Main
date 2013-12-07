@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class MenuController extends Controller
 {
-    public function writeMenuAction($menu, $layout, $activeRouteKey, array $args = array() )
+    public function writeMenuAction($menu, $layout, $activeRouteKey = null, array $args = array() )
     {
         
         

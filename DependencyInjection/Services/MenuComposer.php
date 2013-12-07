@@ -32,6 +32,13 @@ class MenuComposer {
             if ($route->getOption('menu') === $menuId) {
                 $a['route'] = $key;
                 $a['label'] = $route->getOption('label');
+                
+                if ($route->hasOption('helper')) {
+                    $a['helper'] = $route->getOption('helper');
+                } else {
+                    $a['helper'] = '';
+                }
+                
                 $routes[$route->getOption('order')] = $a;
             }
         }

@@ -2,11 +2,20 @@
 
 {% block title%}{{ header_title|trans }}{% endblock %}
 
+
+{% block css %}
+    {% stylesheets  output="css/all.css" filter="cssrewrite"
+          "bundles/clchillmain/css/admin.css"
+    %} 
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+ {% endblock css %}
+
 {% block content %}
 
 <h1>{{ page_title|trans }}</h1>
 
-<ul class="two tiles">
+<ul class="two tiles admin_tiles">
     {% for menu in menu_composer.getRoutesFor(menu) %}
         <li class="">
             <h3><a href="{{ path(menu.route, args) }}" >{{ menu.label|trans }}</a></h3>

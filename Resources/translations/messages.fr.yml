@@ -1,0 +1,6 @@
+views:
+    Main:
+        admin:
+            index:
+                header_title: Administration de Chill
+                page_title: Administration

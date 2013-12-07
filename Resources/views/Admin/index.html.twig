@@ -1,0 +1,23 @@
+{% extends "CLChillMainBundle::layout.html.twig" %}
+
+{% block title%}{{ header_title|trans }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ page_title|trans }}</h1>
+
+<ul class="two tiles">
+    {% for menu in menu_composer.getRoutesFor(menu) %}
+        <li class="">
+            <h3><a href="{{ path(menu.route, args) }}" >{{ menu.label|trans }}</a></h3>
+            
+            <p>{{ menu.helper|trans|default('') }}</p>
+            
+            <p><a href="{{ path(menu.route, args) }}" >{{ menu.label|trans }}</a></p>
+        </li>
+
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

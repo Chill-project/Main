@@ -4,3 +4,9 @@ views:
             index:
                 header_title: Administration de Chill
                 page_title: Administration
+
+views:
+    Common:
+        edit: Modifier
+        show: Voir
+        actions: Actions

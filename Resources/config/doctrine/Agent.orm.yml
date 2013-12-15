@@ -1,0 +1,14 @@
+CL\Chill\MainBundle\Entity\Agent:
+    type: entity
+    table: agents
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 80
+                    

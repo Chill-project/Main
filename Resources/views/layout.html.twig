@@ -54,11 +54,11 @@
 
    
                 <ul id="nav_list" class="six columns">
-                    <li><a href="#">Bonjour {utilisateur}</a></li>
+                    <li><a href="#">Bonjour {{ app.user.username }}</a></li>
                     <li><a href="#"><i class="icon-users"></i></a></li>
                     <li><a href="#"><i class="icon-export"></i></a></li>
                     <li><a href="{{ path('chill_main_admin_central') }}"><i class="icon-gauge"></i></a></li>
-                    <li><a href="#">Se déconnecter <i class="icon-logout"></i></a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter <i class="icon-logout"></i></a></li>
                 </ul>
                          
 

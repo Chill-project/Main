@@ -59,6 +59,6 @@ class Agent extends BaseUser {
     }
     
     public function __toString() {
-        parent::__toString();
+        return parent::__toString();
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "cl/chill-main",
+    "name": "champs-libres/chill-main",
     "license": "GPL-3.0",
     "type": "symfony-bundle",
     "description": "The main bundle for the Chill App",

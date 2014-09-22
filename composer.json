@@ -6,7 +6,7 @@
     "keywords" : ["chill", "social work"],
     "homepage" : "https://github.com/Champs-Libres/ChillMain",
     "autoload": {
-        "psr-4": { "CL\\Chill\\MainBundle\\": "src/" }
+        "psr-4": { "CL\\Chill\\MainBundle\\": "" }
     },
     "authors" : [
         {
@@ -16,15 +16,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.5",
-        "doctrine/orm": "dev-master@dev",
-        "doctrine/dbal": "~2.5@dev",
-        "doctrine/common": "~2.4@dev",
-        "doctrine/doctrine-bundle": "~1.2@dev",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
-        "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4"
     }
 }

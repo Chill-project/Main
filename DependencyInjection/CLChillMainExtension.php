@@ -22,30 +22,39 @@ class CLChillMainExtension extends Extension implements PrependExtensionInterfac
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        
+        $container->setParameter('cl_chill_main.installation_name', 
+                $config['installation_name']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
 
-    public function prepend(ContainerBuilder $container) {
+    public function prepend(ContainerBuilder $container) 
+    {
         $bundles = $container->getParameter('kernel.bundles');
-        
-        //Configure FOSUSerBundle
-        if (!isset($bundles['FOSUserBundle'])) {
-            throw new MissingBundleException('FOSUserBundle');
+        //add CLChillMain to assetic-enabled bundles
+        if (!isset($bundles['AsseticBundle'])) {
+            throw new MissingBundleException('AsseticBundle');
         }
+
+        $asseticConfig = $container->getExtensionConfig('assetic');
+        $asseticConfig['bundles'][] = 'CLChillMainBundle';
+        $container->prependExtensionConfig('assetic', 
+                array('bundles' => array('CLChillMainBundle')));
+        
+        //add installation_name to globals
+        $chillMainConfig = $container->getExtensionConfig($this->getAlias());
+        $config = $this->processConfiguration(new Configuration(), $chillMainConfig);
+        $twigConfig = array(
+            'globals' => array(
+                'installation' => array(
+                    'name' => $config['installation_name']
+                )
+            )
+        );
+        $container->prependExtensionConfig('twig', $twigConfig);
                 
-        $db_driver = array('db_driver' => 'orm'); 
-        $container->prependExtensionConfig('fos_user', $db_driver);
-        
-        $user_class = array('user_class' => 'CL\Chill\MainBundle\Entity\Agent');
-        $container->prependExtensionConfig('fos_user', $user_class);
-        
-        $registration_form = array('registration' => array( 
-            'form' => array('type' => 'chill_user_registration')));
-        $container->prependExtensionConfig('fos_user', $registration_form);
-        
-        
     }
 
 }

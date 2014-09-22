@@ -54,11 +54,11 @@
 
    
                 <ul id="nav_list" class="six columns">
-                    <li><a href="#">Bonjour {{ app.user.username }}</a></li>
+                    <li><a href="#">Bonjour  app.user.username </a></li>
                     <li><a href="#"><i class="icon-users"></i></a></li>
                     <li><a href="#"><i class="icon-export"></i></a></li>
                     <li><a href="{{ path('chill_main_admin_central') }}"><i class="icon-gauge"></i></a></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter <i class="icon-logout"></i></a></li>
+                    <li><a href="#">Se déconnecter <i class="icon-logout"></i></a></li>
                 </ul>
                          
 
@@ -82,7 +82,7 @@
                <li id="search_element" class="">
                    <div id="search_form"  class="">
                         <div class="field append">
-                                 <form method="GET" action="{{ path('chill_person_search') }}">
+                                 <form method="GET" action="#">
                                  <input type="search" name="q" 
                                         class="wide search input" placeholder="Rechercher">
                                  <button type="submit" class="medium primary btn">Go</button>
@@ -93,7 +93,7 @@
                </li>
                
                <li class="" >
-                   <a href="{{ path('chill_person_new') }}"><i class="icon-user-add menu"></i></a>
+                   <a href="#"><i class="icon-user-add menu"></i></a>
                </li>
 
                

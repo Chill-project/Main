@@ -26,6 +26,9 @@
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4"
+    },
+    "extra": {
+      "branch-alias": "1.0-dev"
     }
 }
 

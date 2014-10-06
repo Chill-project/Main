@@ -4,6 +4,11 @@ root:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /hello
         permanent: true
+    options:
+        menus:
+            main:
+                order: 10
+                label: homepage
 
 cl_chill_main_homepage:
     pattern:  /hello
@@ -12,3 +17,30 @@ cl_chill_main_homepage:
 chill_main_admin_central:
     pattern: /admin
     defaults: { _controller: CLChillMainBundle:Admin:index }
+    options:
+        menus:
+            main:
+                order: 20
+                label: homepage
+    
+    
+chill_main_dummy_0:
+    pattern: /dummy
+    defaults: { _controller: CLChillMainBundle:Default:index }
+    options:
+        menus:
+            dummy0:
+                order: 50
+                label: 'test dummy 0'
+            dummy1:
+                order: 50
+                label: test dummy 1
+
+chill_main_dummy_1:
+    pattern: /dummy1
+    defaults: { _controller: CLChillMainBundle:Default:index }
+    options:
+        menus:
+            dummy0:
+                order: 51
+                label: 'test dummy 1'

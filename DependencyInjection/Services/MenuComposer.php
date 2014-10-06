@@ -3,6 +3,7 @@
 namespace CL\Chill\MainBundle\DependencyInjection\Services;
 
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * This class permit to build menu from the routing information
@@ -12,41 +13,64 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @author julien
  */
-class MenuComposer {
-    
+class MenuComposer
+{
+
     /**
      *
      * @var \Symfony\Component\Routing\RouteCollection; 
      */
     private $routeCollection;
-    
-    
-    public function __construct(RouterInterface $router) {
-        $this->routeCollection = $router->getRouteCollection();
+
+    public function __construct(RouterInterface $router)
+    {
+        //see remark in MenuComposer::setRouteCollection
+        $this->setRouteCollection($router->getRouteCollection());
     }
-    
-    public function getRoutesFor($menuId, array $parameters = array()) {
+
+    /**
+     * Set the route Collection
+     * This function is needed for testing purpose: routeCollection is not
+     * available as a service (RouterInterface is provided as a service and
+     * added to this class as paramater in __construct)
+     * 
+     * @param RouteCollection $routeCollection
+     */
+    public function setRouteCollection(RouteCollection $routeCollection)
+    {
+        $this->routeCollection = $routeCollection;
+    }
+
+    public function getRoutesFor($menuId, array $parameters = array())
+    {
         $routes = array();
-        
+
         foreach ($this->routeCollection->all() as $key => $route) {
-            if ($route->getOption('menu') === $menuId) {
-                $a['route'] = $key;
-                $a['label'] = $route->getOption('label');
-                
-                if ($route->hasOption('helper')) {
-                    $a['helper'] = $route->getOption('helper');
-                } else {
-                    $a['helper'] = '';
+            if ($route->hasOption('menus')) {
+                foreach ($route->getOption('menus') as $key => $params) {
+                    if ($menuId === $key) {
+                        $route = array();
+                        $route['route'] = $key;
+                        $route['label'] = $params['label']; 
+                        $route['helper'] = 
+                                (isset($params['helper'])) ? $params['helper'] : '';
+                        
+                        //add route to the routes array, avoiding duplicate 'order'
+                        // to erase previously added
+                        if (!isset($routes[$params['order']])) {
+                            $routes[$params['order']] = $route;
+                        } else {
+                            $routes[$params['order'] + 1 ] = $route;
+                        }
+                        
+                    }
                 }
-                
-                $routes[$route->getOption('order')] = $a;
             }
         }
-        
+
         ksort($routes);
-        
+
         return $routes;
-        
     }
-    
+
 }

@@ -45,15 +45,15 @@ class MenuComposer
     {
         $routes = array();
 
-        foreach ($this->routeCollection->all() as $key => $route) {
+        foreach ($this->routeCollection->all() as $routeKey => $route) {
             if ($route->hasOption('menus')) {
-                foreach ($route->getOption('menus') as $key => $params) {
-                    if ($menuId === $key) {
+                foreach ($route->getOption('menus') as $menuKey => $params) {
+                    if ($menuId === $menuKey) {
                         $route = array();
-                        $route['route'] = $key;
+                        $route['route'] = $routeKey;
                         $route['label'] = $params['label']; 
                         $route['helper'] = 
-                                (isset($params['helper'])) ? $params['helper'] : '';
+                                (isset($params['helper'])) ? $params['helper'] : null;
                         
                         //add route to the routes array, avoiding duplicate 'order'
                         // to erase previously added

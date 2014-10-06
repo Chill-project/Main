@@ -15,5 +15,7 @@ web/bundles/*
 app/config/parameters.ini
 app/config/parameters.yml
 
+#composer
+composer.lock
 #sass-cache
 Resources/assets/gumpy/.sass-cache

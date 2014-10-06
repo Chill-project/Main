@@ -11,7 +11,7 @@ use Symfony\Component\Routing\RouteCollection;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class MenuComposer extends KernelTestCase
+class MenuComposerTest extends KernelTestCase
 {
     
     /**
@@ -28,17 +28,17 @@ class MenuComposer extends KernelTestCase
     
     public function setUp()
     {
-        self::bootKernel();
+        self::bootKernel(array('environment' => 'test'));
         $this->loader = static::$kernel->getContainer()
                 ->get('routing.loader');
         $this->menuComposer = static::$kernel->getContainer()
-                ->get('chill_main.menu_composer');
+                ->get('chill.main.menu_composer');
     }
     
     public function testMenuComposer()
     {
         $collection = new RouteCollection();
-        $collection->add($this->loader->load(__DIR__.'dummy_menu_composer.yml', 'yaml'));
+        //$collection->add($this->loader->load(__DIR__.'dummy_menu_composer.yml', 'yaml'));
         
         $routes = $this->menuComposer->getRoutesFor('dummy0');
         
@@ -54,11 +54,12 @@ class MenuComposer extends KernelTestCase
         }
         $this->assertSame(array(
             50 => array(
-                'key'   => 'chill_main_dummy_0',
+                'route'   => 'chill_main_dummy_0',
                 'label' => 'test0',
+                'helper'=> null
                 ),
             51 => array(
-                'key'   => 'chill_main_dummy_1',
+                'route'   => 'chill_main_dummy_1',
                 'label' => 'test1',
                 'helper'=> 'great helper'
             )

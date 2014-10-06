@@ -29,8 +29,6 @@ class MenuComposerTest extends KernelTestCase
     public function setUp()
     {
         self::bootKernel(array('environment' => 'test'));
-        $this->loader = static::$kernel->getContainer()
-                ->get('routing.loader');
         $this->menuComposer = static::$kernel->getContainer()
                 ->get('chill.main.menu_composer');
     }
@@ -38,7 +36,6 @@ class MenuComposerTest extends KernelTestCase
     public function testMenuComposer()
     {
         $collection = new RouteCollection();
-        //$collection->add($this->loader->load(__DIR__.'dummy_menu_composer.yml', 'yaml'));
         
         $routes = $this->menuComposer->getRoutesFor('dummy0');
         

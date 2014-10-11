@@ -8,7 +8,8 @@ chill_main_dummy_0:
         menus:
             dummy0:
                 order: 50
-                label: 'test0'
+                label: test0
+                otherkey: othervalue
             dummy1:
                 order: 50
                 label: test dummy 1

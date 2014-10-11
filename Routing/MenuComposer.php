@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\DependencyInjection\Services;
+namespace CL\Chill\MainBundle\Routing;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -47,23 +47,15 @@ class MenuComposer
 
         foreach ($this->routeCollection->all() as $routeKey => $route) {
             if ($route->hasOption('menus')) {
-                foreach ($route->getOption('menus') as $menuKey => $params) {
-                    if ($menuId === $menuKey) {
-                        $route = array();
-                        $route['route'] = $routeKey;
-                        $route['label'] = $params['label']; 
-                        $route['helper'] = 
-                                (isset($params['helper'])) ? $params['helper'] : null;
-                        
-                        //add route to the routes array, avoiding duplicate 'order'
-                        // to erase previously added
-                        if (!isset($routes[$params['order']])) {
-                            $routes[$params['order']] = $route;
-                        } else {
-                            $routes[$params['order'] + 1 ] = $route;
-                        }
-                        
-                    }
+                if (array_key_exists($menuId, $route->getOption('menus'))) {
+                    $route = $route->getOption('menus')[$menuId];
+
+                    $route['key'] = $routeKey;
+
+                    $order = $this->resolveOrder($routes, $route['order']);
+                    //we do not want to duplicate order information
+                    unset($route['order']);
+                    $routes[$order] = $route;
                 }
             }
         }
@@ -71,6 +63,23 @@ class MenuComposer
         ksort($routes);
 
         return $routes;
+    }
+    
+    /**
+     * recursive function to resolve the order of a array of routes.
+     * If the order chosen in routing.yml is already in used, find the 
+     * first next order available.
+     * 
+     * @param array $routes the routes previously added
+     * @param int $order
+     * @return int
+     */
+    private function resolveOrder($routes, $order){
+        if (isset($routes[$order])) {
+            return $this->resolveOrder($routes, $order + 1);
+        } else {
+            return $order;
+        }
     }
 
 }

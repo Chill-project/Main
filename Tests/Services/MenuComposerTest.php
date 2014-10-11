@@ -49,18 +49,37 @@ class MenuComposerTest extends KernelTestCase
                         'Failing to assert that routes are ordered');
             }
         }
-        $this->assertSame(array(
+        
+        //check that the array are identical, order is not important :
+        
+        $expected = array(
             50 => array(
-                'route'   => 'chill_main_dummy_0',
+                'key'   => 'chill_main_dummy_0',
                 'label' => 'test0',
-                'helper'=> null
+                'otherkey' => 'othervalue'
                 ),
             51 => array(
-                'route'   => 'chill_main_dummy_1',
+                'key'   => 'chill_main_dummy_1',
                 'label' => 'test1',
                 'helper'=> 'great helper'
-            )
+            ));
+        
+        
+        foreach ($expected as $order => $route ){
             
-        ), $routes);
+        }
+        
+        //compare arrays
+        foreach($expected as $order => $route) {
+            //check the key are the one expected
+            $this->assertTrue(isset($routes[$order]));
+            
+            if (isset($routes[$order])){ #avoid an exception if routes with order does not exists
+                //sort arrays. Order matters for phpunit::assertSame
+                ksort($route);
+                ksort($routes[$order]);
+                $this->assertSame($route, $routes[$order]);
+            }
+        }
     }
 }

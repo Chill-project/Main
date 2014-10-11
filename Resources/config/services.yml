@@ -3,7 +3,7 @@ parameters:
 
 services:
     chill.main.menu_composer:
-        class: CL\Chill\MainBundle\DependencyInjection\Services\MenuComposer
+        class: CL\Chill\MainBundle\Routing\MenuComposer
         arguments:
             -  "@router"
 #    cl_chill_main.example:

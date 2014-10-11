@@ -33,6 +33,9 @@ class MenuComposerTest extends KernelTestCase
                 ->get('chill.main.menu_composer');
     }
     
+    /**
+     * @covers \CL\Chill\MainBundle\Routing\MenuComposer
+     */
     public function testMenuComposer()
     {
         $collection = new RouteCollection();

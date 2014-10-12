@@ -6,7 +6,7 @@ services:
         class: CL\Chill\MainBundle\Routing\MenuComposer
         #must be set in function to avoid circular reference with chill.main.twig.chill_menu
         calls:
-            -  [setRoute, ["@router"]]
+            -  [setContainer, ["@service_container"]]
             
     chill.main.twig.chill_menu:
         class: CL\Chill\MainBundle\Routing\MenuTwig

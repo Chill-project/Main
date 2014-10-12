@@ -4,6 +4,8 @@ namespace CL\Chill\MainBundle\Routing;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * This class permit to build menu from the routing information
@@ -13,25 +15,27 @@ use Symfony\Component\Routing\RouteCollection;
  *
  * @author julien
  */
-class MenuComposer
+class MenuComposer implements ContainerAwareInterface
 {
-
+    
     /**
      *
-     * @var \Symfony\Component\Routing\RouteCollection; 
+     * @var ContainerInterface
      */
-    private $routeCollection;
+    private $container;
 
     /**
      * 
-     * @internal must be set in function instead of controller to avoid circular reference 
-     * with MenuTwig
-     * @param RouterInterface $router
+     * @internal using the service router in container cause circular references
+     * @param ContainerInterface $container
      */
-    public function setRoute(RouterInterface $router)
+    public function setContainer(ContainerInterface $container = null)
     {
+        if (NULL === $container) {
+            throw new LogicException('container should not be null');
+        }
         //see remark in MenuComposer::setRouteCollection
-        $this->routeCollection = $router->getRouteCollection();
+        $this->container = $container;
     }
 
     /**
@@ -58,8 +62,9 @@ class MenuComposer
     public function getRoutesFor($menuId, array $parameters = array())
     {
         $routes = array();
+        $routeCollection = $this->container->get('router')->getRouteCollection();
 
-        foreach ($this->routeCollection->all() as $routeKey => $route) {
+        foreach ($routeCollection->all() as $routeKey => $route) {
             if ($route->hasOption('menus')) {
                 if (array_key_exists($menuId, $route->getOption('menus'))) {
                     $route = $route->getOption('menus')[$menuId];

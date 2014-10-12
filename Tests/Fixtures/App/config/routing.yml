@@ -23,3 +23,12 @@ chill_main_dummy_1:
                 order: 50
                 label: 'test1'
                 helper: 'great helper'
+                
+chill_main_dummy_2:
+    pattern: /dummy2/{param}
+    defaults: {_controller: CLChillMainBundle:Default:index }
+    options:
+        menus:
+            dummy0:
+                order: 50
+                label: test2

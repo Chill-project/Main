@@ -1,0 +1,5 @@
+<ul>
+{% for route in routes %}
+    <li><a href="{{ path(route.key, args ) }}" class="{%- if activeRouteKey == route.key -%}active{%- endif -%}">{{ route.label }}</a></li>
+{% endfor %}
+</ul>

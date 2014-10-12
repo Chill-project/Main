@@ -5,7 +5,9 @@ php:
   - 5.6
   - hhvm
 
-install: composer install --dev
+install: 
+   - composer install --dev
+   - php Tests/Fixtures/App/console --env=test cache:warmup
 
 script: phpunit --coverage-text
 

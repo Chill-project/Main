@@ -3,7 +3,6 @@
 namespace CL\Chill\MainBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
@@ -43,7 +42,7 @@ class MenuComposerTest extends KernelTestCase
         $routes = $this->menuComposer->getRoutesFor('dummy0');
         
         $this->assertInternalType('array', $routes);
-        $this->assertCount(2, $routes);
+        $this->assertCount(3, $routes);
         //check that the keys are sorted
         $orders = array_keys($routes);
         foreach ($orders as $key => $order){
@@ -65,6 +64,10 @@ class MenuComposerTest extends KernelTestCase
                 'key'   => 'chill_main_dummy_1',
                 'label' => 'test1',
                 'helper'=> 'great helper'
+            ),
+            52 => array(
+                'key'   => 'chill_main_dummy_2',
+                'label' => 'test2'
             ));
         
         

@@ -22,10 +22,16 @@ class MenuComposer
      */
     private $routeCollection;
 
-    public function __construct(RouterInterface $router)
+    /**
+     * 
+     * @internal must be set in function instead of controller to avoid circular reference 
+     * with MenuTwig
+     * @param RouterInterface $router
+     */
+    public function setRoute(RouterInterface $router)
     {
         //see remark in MenuComposer::setRouteCollection
-        $this->setRouteCollection($router->getRouteCollection());
+        $this->routeCollection = $router->getRouteCollection();
     }
 
     /**
@@ -41,6 +47,14 @@ class MenuComposer
         $this->routeCollection = $routeCollection;
     }
 
+    /**
+     * Return an array of routes added to $menuId,
+     * The array is aimed to build route with MenuTwig
+     * 
+     * @param string $menuId
+     * @param array $parameters see https://redmine.champs-libres.coop/issues/179
+     * @return array
+     */
     public function getRoutesFor($menuId, array $parameters = array())
     {
         $routes = array();

@@ -4,7 +4,7 @@
     "type": "symfony-bundle",
     "description": "The main bundle for the Chill App",
     "keywords" : ["chill", "social work"],
-    "homepage" : "https://github.com/Chill-project/main",
+    "homepage" : "https://github.com/Chill-project/Main",
     "autoload": {
         "psr-4": { "CL\\Chill\\MainBundle\\": "" }
     },

@@ -1,11 +1,11 @@
-{% extends "CLChillMainBundle::layout.html.twig" %}
+{% extends "ChillMainBundle::layout.html.twig" %}
 
 {% block title%}{{ header_title|trans }}{% endblock %}
 
 
 {% block css %}
     {% stylesheets  output="css/all.css" filter="cssrewrite"
-          "bundles/clchillmain/css/admin.css"
+          "bundles/Chillmain/css/admin.css"
     %} 
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}

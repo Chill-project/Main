@@ -6,7 +6,7 @@
     "keywords" : ["chill", "social work"],
     "homepage" : "https://github.com/Chill-project/Main",
     "autoload": {
-        "psr-4": { "CL\\Chill\\MainBundle\\": "" }
+        "psr-4": { "Chill\\MainBundle\\": "" }
     },
     "authors" : [
         {

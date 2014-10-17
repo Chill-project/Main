@@ -1,9 +1,9 @@
 hello_bundle:                                                                                                                                                                                                    
-    resource: "@CLChillMainBundle/Resources/config/routing.yml"
+    resource: "@ChillMainBundle/Resources/config/routing.yml"
     
 chill_main_dummy_0:
     pattern: /dummy
-    defaults: { _controller: CLChillMainBundle:Default:index }
+    defaults: { _controller: ChillMainBundle:Default:index }
     options:
         menus:
             dummy0:
@@ -16,7 +16,7 @@ chill_main_dummy_0:
 
 chill_main_dummy_1:
     pattern: /dummy1
-    defaults: { _controller: CLChillMainBundle:Default:index }
+    defaults: { _controller: ChillMainBundle:Default:index }
     options:
         menus:
             dummy0:
@@ -26,7 +26,7 @@ chill_main_dummy_1:
                 
 chill_main_dummy_2:
     pattern: /dummy2/{param}
-    defaults: {_controller: CLChillMainBundle:Default:index }
+    defaults: {_controller: ChillMainBundle:Default:index }
     options:
         menus:
             dummy0:

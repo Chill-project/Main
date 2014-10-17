@@ -9,7 +9,7 @@ class AppKernel extends Kernel
     {   
         return array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \CL\Chill\MainBundle\CLChillMainBundle(),
+            new Chill\MainBundle\ChillMainBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),

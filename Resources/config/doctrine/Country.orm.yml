@@ -1,4 +1,4 @@
-CL\Chill\MainBundle\Entity\Country:
+Chill\MainBundle\Entity\Country:
     type: entity
     table: null
     fields:

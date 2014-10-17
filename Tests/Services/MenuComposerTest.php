@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\Tests\Services;
+namespace Chill\MainBundle\Tests\Services;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Routing\RouteCollection;
@@ -21,7 +21,7 @@ class MenuComposerTest extends KernelTestCase
     
     /**
      *
-     * @var \CL\Chill\MainBundle\DependencyInjection\Services\MenuComposer;
+     * @var \Chill\MainBundle\DependencyInjection\Services\MenuComposer;
      */
     private $menuComposer;
     
@@ -33,7 +33,7 @@ class MenuComposerTest extends KernelTestCase
     }
     
     /**
-     * @covers \CL\Chill\MainBundle\Routing\MenuComposer
+     * @covers \Chill\MainBundle\Routing\MenuComposer
      */
     public function testMenuComposer()
     {

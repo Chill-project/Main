@@ -1,15 +1,15 @@
 parameters:
-#    cl_chill_main.example.class: CL\Chill\MainBundle\Example
+#    cl_chill_main.example.class: Chill\MainBundle\Example
 
 services:
     chill.main.menu_composer:
-        class: CL\Chill\MainBundle\Routing\MenuComposer
+        class: Chill\MainBundle\Routing\MenuComposer
         #must be set in function to avoid circular reference with chill.main.twig.chill_menu
         calls:
             -  [setContainer, ["@service_container"]]
             
     chill.main.twig.chill_menu:
-        class: CL\Chill\MainBundle\Routing\MenuTwig
+        class: Chill\MainBundle\Routing\MenuTwig
         arguments:
             - "@chill.main.menu_composer"
         calls:

@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\Controller;
+namespace Chill\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -16,7 +16,7 @@ class AdminController extends Controller {
             $page_title = 'views.Main.admin.index.page_title') {
         
         
-        return $this->render('CLChillMainBundle:Admin:index.html.twig', array(
+        return $this->render('ChillMainBundle:Admin:index.html.twig', array(
             'menu_composer' => $this->get('cl_chill_main_menu_composer'),
             'menu' => $menu,
             'header_title' => $header_title,

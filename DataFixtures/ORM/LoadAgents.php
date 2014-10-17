@@ -1,11 +1,11 @@
 <?php
 
-namespace CL\Chill\MainBundle\DataFixtures\ORM;
+namespace Chill\MainBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use CL\Chill\MainBundle\Entity\Agent;
+use Chill\MainBundle\Entity\Agent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 

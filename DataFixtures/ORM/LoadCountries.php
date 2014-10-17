@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\DataFixtures\ORM;
+namespace Chill\MainBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -23,7 +23,7 @@ class LoadCountries extends AbstractFixture {
         echo "loading countries... \n";
         
         foreach ($this->countries as $code => $name) {
-            $country = new \CL\Chill\MainBundle\Entity\Country();
+            $country = new \Chill\MainBundle\Entity\Country();
             $country->setLabel(ucwords($name));
             $manager->persist($country);
         }

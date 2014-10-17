@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\Routing;
+namespace Chill\MainBundle\Routing;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\RouteCollection;

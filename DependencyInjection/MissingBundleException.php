@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\DependencyInjection;
+namespace Chill\MainBundle\DependencyInjection;
 
 use Exception;
 

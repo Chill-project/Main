@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\Entity;
+namespace Chill\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

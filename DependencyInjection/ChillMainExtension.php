@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\DependencyInjection;
+namespace Chill\MainBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class CLChillMainExtension extends Extension implements PrependExtensionInterface
+class ChillMainExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritDoc}
@@ -33,15 +33,15 @@ class CLChillMainExtension extends Extension implements PrependExtensionInterfac
     public function prepend(ContainerBuilder $container) 
     {
         $bundles = $container->getParameter('kernel.bundles');
-        //add CLChillMain to assetic-enabled bundles
+        //add ChillMain to assetic-enabled bundles
         if (!isset($bundles['AsseticBundle'])) {
             throw new MissingBundleException('AsseticBundle');
         }
 
         $asseticConfig = $container->getExtensionConfig('assetic');
-        $asseticConfig['bundles'][] = 'CLChillMainBundle';
+        $asseticConfig['bundles'][] = 'ChillMainBundle';
         $container->prependExtensionConfig('assetic', 
-                array('bundles' => array('CLChillMainBundle')));
+                array('bundles' => array('ChillMainBundle')));
         
         //add installation_name to globals
         $chillMainConfig = $container->getExtensionConfig($this->getAlias());

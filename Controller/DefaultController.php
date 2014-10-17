@@ -1,6 +1,6 @@
 <?php
 
-namespace CL\Chill\MainBundle\Controller;
+namespace Chill\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -24,6 +24,6 @@ class DefaultController extends Controller
         }
         
         
-        return $this->render('CLChillMainBundle::layout.html.twig');
+        return $this->render('ChillMainBundle::layout.html.twig');
     }
 }

@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace CL\Chill\MainBundle\Routing;
+namespace Chill\MainBundle\Routing;
 
-use CL\Chill\MainBundle\Routing\MenuComposer;
+use Chill\MainBundle\Routing\MenuComposer;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -51,7 +51,7 @@ class MenuTwig extends \Twig_Extension implements ContainerAwareInterface
      * @var mixed[] 
      */
     private $defaultParams = array(
-        'layout' => 'CLChillMainBundle:Menu:defaultMenu.html.twig',
+        'layout' => 'ChillMainBundle:Menu:defaultMenu.html.twig',
         'args' => array(),
         'activeRouteKey' => null
     );
@@ -73,7 +73,7 @@ class MenuTwig extends \Twig_Extension implements ContainerAwareInterface
      * 
      * Expected params : 
      * - args: the arguments to build the path (i.e: if pattern is /something/{bar}, args must contain {'bar': 'foo'}
-     * - layout: the layout. Absolute path needed (i.e.: CLChillXyzBundle:section:foo.html.twig)
+     * - layout: the layout. Absolute path needed (i.e.: ChillXyzBundle:section:foo.html.twig)
      * - activeRouteKey : the key active, will render the menu differently.
      * 
      * see https://redmine.champs-libres.coop/issues/179 for more informations

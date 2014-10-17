@@ -1,4 +1,4 @@
-CL\Chill\MainBundle\Entity\Agent:
+Chill\MainBundle\Entity\Agent:
     type: entity
     table: agents
     id:

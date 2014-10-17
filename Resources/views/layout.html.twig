@@ -5,21 +5,21 @@
     <title>{{ installation.name }}{% block title %}{% endblock %}</title>
     
     {% stylesheets  output="css/all.css" filter="cssrewrite"
-          "bundles/clchillmain/css/gumby.css"
-          "bundles/clchillmain/css/chillmain.css"
-          "bundles/clchillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.css" %}
+          "bundles/Chillmain/css/gumby.css"
+          "bundles/Chillmain/css/chillmain.css"
+          "bundles/Chillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.css" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
     
     {% block css%}<!-- nothing added to css -->{% endblock %}
 
     {% javascripts output="js/libs.js"
-        "bundles/clchillmain/js/modernizr-2.6.2.min.js"
-        "bundles/clchillmain/js/jquery-2.0.2.min.js"
-        "bundles/clchillmain/js/gumby.js"
-        "bundles/clchillmain/js/gumby.init.js" 
-        "bundles/clchillmain/js/ui/*.js"
-        "bundles/clchillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.js" %}
+        "bundles/Chillmain/js/modernizr-2.6.2.min.js"
+        "bundles/Chillmain/js/jquery-2.0.2.min.js"
+        "bundles/Chillmain/js/gumby.js"
+        "bundles/Chillmain/js/gumby.init.js" 
+        "bundles/Chillmain/js/ui/*.js"
+        "bundles/Chillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.js" %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}    
 

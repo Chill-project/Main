@@ -1,6 +1,6 @@
-Chill\MainBundle\Entity\Agent:
+Chill\MainBundle\Entity\Center:
     type: entity
-    table: agents
+    table: centers
     id:
         id:
             type: integer
@@ -9,6 +9,4 @@ Chill\MainBundle\Entity\Agent:
                 strategy: AUTO
     fields:
         name:
-            type: string
-            length: 80
-                    
+            type: json_array

@@ -1,0 +1,21 @@
+Chill\MainBundle\Entity\User:
+    type: entity
+    table: users
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 80
+        password:
+            type: string
+            length: 255
+        salt:
+            type: string
+            length: 255
+        
+                    

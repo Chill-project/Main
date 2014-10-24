@@ -1,3 +1,6 @@
+imports:
+    - { resource: parameters.yml }
+
 framework:                                                                                                                                                                                                         
     secret:          Not very secret
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -9,3 +12,14 @@ framework:
     profiler:        { only_exceptions: false }
     templating:
         engines: ['twig']
+        
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8

@@ -28,6 +28,7 @@
         "doctrine/doctrine-bundle": "~1.2@dev"
     },
     "require-dev": {
-        "symfony/dom-crawler": "2.5"
+        "symfony/dom-crawler": "2.5",
+        "doctrine/doctrine-fixtures-bundle": "~2.2"
     }
 }

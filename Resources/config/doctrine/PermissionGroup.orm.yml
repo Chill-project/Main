@@ -1,6 +1,6 @@
-Chill\MainBundle\Entity\Scope:
+Chill\MainBundle\Entity\PermissionGroup:
     type: entity
-    table: scopes
+    table: permission_groups
     id:
         id:
             type: integer
@@ -10,7 +10,7 @@ Chill\MainBundle\Entity\Scope:
     fields:
         name:
             type: json_array
-    oneToMany:
+    manyToMany:
         roleScopes:
             targetEntity: Chill\MainBundle\Entity\RoleScope
-            mappedBy: scope
+            

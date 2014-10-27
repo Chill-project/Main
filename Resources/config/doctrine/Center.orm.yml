@@ -9,4 +9,5 @@ Chill\MainBundle\Entity\Center:
                 strategy: AUTO
     fields:
         name:
-            type: json_array
+            type: string
+            length: 255

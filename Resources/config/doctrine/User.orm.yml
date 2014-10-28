@@ -17,5 +17,15 @@ Chill\MainBundle\Entity\User:
         salt:
             type: string
             length: 255
+            nullable: true
+        enabled:
+            type: boolean
+            default: true
+        locked:
+            type: boolean
+            default: false
+    manyToMany:
+        groupCenters:
+            targetEntity: Chill\MainBundle\Entity\GroupCenter
         
                     

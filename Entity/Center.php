@@ -39,6 +39,17 @@ class Center
      */
     private $id;
     
+    /**
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $groupCenters;
+    
+    public function __construct()
+    {
+        $this->groupCenters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     public function getName()
     {
         return $this->name;
@@ -53,6 +64,17 @@ class Center
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function getGroupCenters()
+    {
+        return $this->groupCenters;
+    }
+
+    public function addGroupCenter(GroupCenter $groupCenter)
+    {
+        $this->groupCenters->add($groupCenter);
+        return $this;
     }
 
 

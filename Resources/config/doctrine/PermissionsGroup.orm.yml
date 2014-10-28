@@ -1,4 +1,4 @@
-Chill\MainBundle\Entity\PermissionGroup:
+Chill\MainBundle\Entity\PermissionsGroup:
     type: entity
     table: permission_groups
     id:
@@ -9,7 +9,8 @@ Chill\MainBundle\Entity\PermissionGroup:
                 strategy: AUTO
     fields:
         name:
-            type: json_array
+            type: string
+            length: 255
     manyToMany:
         roleScopes:
             targetEntity: Chill\MainBundle\Entity\RoleScope

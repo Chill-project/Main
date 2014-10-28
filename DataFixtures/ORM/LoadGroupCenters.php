@@ -23,44 +23,39 @@ namespace Chill\MainBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Chill\MainBundle\Entity\Center;
+use Chill\MainBundle\Entity\GroupCenter;
+use Chill\MainBundle\DataFixtures\ORM\LoadCenters;
+use Chill\MainBundle\DataFixtures\ORM\LoadPermissionsGroup;
 
 /**
  * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class LoadCenters extends AbstractFixture implements OrderedFixtureInterface
+class LoadGroupCenters extends AbstractFixture implements OrderedFixtureInterface
 {
     public function getOrder()
     {
-        return 100;
+        return 500;
     }
     
-    public static $centers = array(
-        array(
-            'name' => 'Center A',
-            'ref' => 'centerA'
-        ),
-        array(
-            'name' => 'Center B',
-            'ref'  => 'centerB'
-        )
-    );
-    
     public static $refs = array();
-    
+
     public function load(ObjectManager $manager)
     {
-        foreach (static::$centers as $new) {
-            $centerA = new Center();
-            $centerA->setName($new['name']);
-
-            $manager->persist($centerA);
-            $this->addReference($new['ref'], $centerA);
-            static::$refs[] = $new['ref'];
+        foreach (LoadCenters::$refs as $centerRef) {
+            foreach (LoadPermissionsGroup::$refs as $permissionGroupRef) {
+                $GroupCenter = new GroupCenter();
+                $GroupCenter->setCenter($this->getReference($centerRef));
+                $GroupCenter->addPermissionGroup($this->getReference($permissionGroupRef));
+                
+                $manager->persist($GroupCenter);
+                
+                $reference = $centerRef.'_'.$permissionGroupRef;
+                $this->addReference($reference, $GroupCenter);
+                static::$refs[] = $reference;
+                echo "Creating $reference...  \n";
+            }
         }
         
         $manager->flush();

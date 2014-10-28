@@ -29,7 +29,7 @@ use Chill\MainBundle\Entity\RoleScope;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class PermissionGroup
+class PermissionsGroup
 {
     /**
      *
@@ -39,7 +39,7 @@ class PermissionGroup
     
     /**
      *
-     * @var array
+     * @var string
      */
     private $name;
     
@@ -59,6 +59,10 @@ class PermissionGroup
         return $this->id;
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
@@ -69,7 +73,7 @@ class PermissionGroup
         return $this->roleScopes;
     }
 
-    public function setName(array $name)
+    public function setName($name)
     {
         $this->name = $name;
         return $this;

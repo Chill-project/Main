@@ -1,0 +1,16 @@
+Chill\MainBundle\Entity\GroupCenter:
+    type: entity
+    table: group_centers
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+    manyToOne:
+        center:
+            targetEntity: Chill\MainBundle\Entity\Center
+            inversedBy: groupCenters
+    manyToMany:
+        permissionGroups:
+            targetEntity: Chill\MainBundle\Entity\PermissionsGroup

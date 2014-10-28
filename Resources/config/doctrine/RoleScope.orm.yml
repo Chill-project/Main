@@ -11,7 +11,7 @@ Chill\MainBundle\Entity\RoleScope:
         role:
             type: string
             length: 255
-    oneToMany:
+    manyToOne:
         scope:
             targetEntity: Chill\MainBundle\Entity\Scope
-            mappedBy: roleScopes
+            inversedBy: roleScopes

@@ -2,14 +2,14 @@
 
 namespace Chill\MainBundle\Entity;
 
-
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
  */
-class User implements UserInterface {
+class User implements AdvancedUserInterface {
     
     /**
      * @var integer
@@ -21,14 +21,43 @@ class User implements UserInterface {
      */
     private $username;
     
+    /**
+     *
+     * @var string 
+     */
     private $password;
     
-    private $salt;
+    /**
+     *
+     * @var string
+     * @internal must be set to null if we use bcrypt 
+     */
+    private $salt = null;
+    
+    /**
+     *
+     * @var boolean
+     */
+    private $locked = false;
+    
+    /**
+     *
+     * @var boolean
+     */
+    private $enabled = true;
+    
+    /**
+     *
+     * @var Collection 
+     */
+    private $groupCenters;
+    
+    public function __construct()
+    {
+        $this->groupCenters = new ArrayCollection();
+    }
     
     
-
-
-
     /**
      * Get id
      *
@@ -51,16 +80,6 @@ class User implements UserInterface {
     
         return $this;
     }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->username;
-    }
     
     public function __toString() {
         return $this->getUsername();
@@ -71,6 +90,10 @@ class User implements UserInterface {
         
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getPassword()
     {
         return $this->password;
@@ -93,7 +116,7 @@ class User implements UserInterface {
     
     function setPassword($password)
     {
-        $this->password = $password;
+        $this->password =  $password;
         return $this;
     }
 
@@ -103,6 +126,63 @@ class User implements UserInterface {
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     * 
+     * @return boolean
+     */
+    public function isAccountNonExpired()
+    {
+        return false;
+    }
 
+    /**
+     * {@inheritdoc}
+     * 
+     */
+    public function isAccountNonLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * {@inheritdoc}
+     * 
+     * @return boolean
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     * 
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+    
+    /**
+     * 
+     * @return GroupCenter[]
+     */
+    public function getGroupCenters()
+    {
+        return $this->groupCenters;
+    }
+    
+    /**
+     * 
+     * @param \Chill\MainBundle\Entity\GroupCenter $groupCenter
+     * @return \Chill\MainBundle\Entity\User
+     */
+    public function addGroupCenter(GroupCenter $groupCenter)
+    {
+        $this->groupCenters->add($groupCenter);
+        return $this;
+    }
 
 }

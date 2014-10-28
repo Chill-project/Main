@@ -46,6 +46,13 @@ class LoadRoleScopes extends AbstractFixture implements OrderedFixtureInterface
                 'nl' => 'zie foo'
             )
         ),
+        'CHILL_FOO_SEE_DETAILS' => array(
+            'names' => array(
+                'fr' => 'voir foo avec détails',
+                'en' => 'see foo with details',
+                'nl' => 'zie foo in details'
+            )
+        ),
         'CHILL_FOO_EDIT' => array(
             'names' => array(
                 'fr' => 'modifier foo',
@@ -66,7 +73,7 @@ class LoadRoleScopes extends AbstractFixture implements OrderedFixtureInterface
                         ->setScope($this->getReference($scopeReference))
                         ;
                 $reference = 'role_scope_'.$key.'_'.$this->getReference($scopeReference)->getName()['en'];
-                var_dump($reference);
+                echo "Creating $reference \n";
                 $this->addReference($reference, $roleScope);
                 $manager->persist($roleScope);
                 static::$references[] = $reference;

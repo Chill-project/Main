@@ -11,3 +11,7 @@ Chill\MainBundle\Entity\Center:
         name:
             type: string
             length: 255
+    oneToMany:
+        groupCenters:
+            targetEntity: Chill\MainBundle\Entity\GroupCenter
+            mappedBy: groupCenters

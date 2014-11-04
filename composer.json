@@ -1,6 +1,6 @@
 {
     "name": "chill-project/main",
-    "license": "GPL-3.0",
+    "license": "AGPL-3.0",
     "type": "symfony-bundle",
     "description": "The main bundle for the Chill App",
     "keywords" : ["chill", "social work"],

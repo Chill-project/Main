@@ -1,0 +1,21 @@
+{
+  "name": "scratch-css-design",
+  "version": "0.0.0",
+  "description": "Scratch CSS Design",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Champs-Libres.coop",
+  "license": "GNU AGPL",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bower-task": "^0.4.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-sass": "^0.8.1",
+    "jit-grunt": "^0.9.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-clean": "^0.6.0"
+  },
+  "dependencies": {}
+}

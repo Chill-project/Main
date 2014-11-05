@@ -1,6 +1,6 @@
 {
     "name": "chill-project/main",
-    "license": "GPL-3.0",
+    "license": "AGPL-3.0",
     "type": "symfony-bundle",
     "description": "The main bundle for the Chill App",
     "keywords" : ["chill", "social work"],
@@ -21,9 +21,14 @@
         "symfony/monolog-bundle": "~2.4",
         "symfony/framework-bundle": "2.5.*",
         "symfony/yaml": "2.5.*",
-        "symfony/symfony": "2.5.*"
+        "symfony/symfony": "2.5.*",
+        "doctrine/dbal": "2.5.*@dev",
+        "doctrine/orm": "2.5.*@dev",
+        "doctrine/common": "2.4.*@dev",
+        "doctrine/doctrine-bundle": "~1.2@dev"
     },
     "require-dev": {
-        "symfony/dom-crawler": "2.5"
+        "symfony/dom-crawler": "2.5",
+        "doctrine/doctrine-fixtures-bundle": "~2.2"
     }
 }

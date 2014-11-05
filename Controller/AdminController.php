@@ -17,7 +17,7 @@ class AdminController extends Controller {
         
         
         return $this->render('ChillMainBundle:Admin:index.html.twig', array(
-            'menu_composer' => $this->get('cl_chill_main_menu_composer'),
+            'menu_composer' => $this->get('chill.main.menu_composer'),
             'menu' => $menu,
             'header_title' => $header_title,
             'page_title' => $page_title,

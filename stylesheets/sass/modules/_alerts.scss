@@ -1,0 +1,15 @@
+.success {
+   @include alert($green);
+}
+
+.error {
+   @include alert($red);
+}
+
+.alert {
+   @include alert($orange);
+}
+
+.notice {
+   @include alert($blue);
+}

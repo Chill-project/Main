@@ -1,0 +1,33 @@
+@mixin button($button-background-color, $button-text-color) {
+   color: $button-text-color; 
+   background: $button-background-color;
+   border: medium none;
+   box-shadow: none;
+   padding: $button-padding;
+   text-decoration: none;
+   text-align: center;
+   display: inline-block;
+   vertical-align: middle;
+   white-space: nowrap;
+   line-height: normal;
+   border-radius: 2px;
+
+   &:hover,
+   &:active {
+      background: darken($button-background-color, 5%);
+      color: $button-text-color;  // force text color for anchor tags
+      text-decoration: none;      // remove underline on anchor tags
+   }
+
+   &:focus {
+      background: darken($button-background-color, 5%);
+   }
+
+   &[disabled] {
+      background: transparentize($button-background-color,0.4);
+      color: darken($button-background-color, 10%);
+      &:hover {
+         box-shadow: none;
+      }
+   }
+}

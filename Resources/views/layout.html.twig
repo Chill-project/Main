@@ -38,128 +38,102 @@
 </head>
 
 <body>
-    {# class for multicolumn in gumpy #}
-    <div class="row">
-        <nav id="header" class="navbar pretty" >
-            
-          
-            <!--
-                <div id="logo" class="six columns logo">
+    <header class="navigation container">
+        <div class="nav grid-2">
+            <ul id="navigation-menu">
+                <li class="nav-link title"><a href="javascript:void(0)">Chill</a>
+            </ul>
+        </div>
 
-                </div>
-   -->
-                
+        <div class="grid-4 navigation-search">
+            <input type="search" placeholder="Enter Search" />
+            <button class="button white border"><i class="fa fa-search"></i></button>
+        </div>
 
-                        
+        <div class="nav grid-6 text-right">
+            <ul id="navigation-menu">
+                <li class="nav-link more"><a href="javascript:void(0)">Sections</a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0)"><i class="fa fa-user"></i> Person</a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-calendar-o"></i>Report</a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-gears"></i> Admin</a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-upload"></i> Export</a></li>
+                    </ul>
+                </li>
+                <li class="nav-link more"><a href="javascript:void(0)">app.user.username</a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0)"><i class="fa fa-gear"></i> Mon profil</a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-power-off"></i> Se déconnecter</a></li>
+                        <li><a href="javascript:void(0)"><i class="fa fa-question"></i> Aide</a></li>
+                    </ul>
+                </li>
+                <li class="nav-link more"><a href="javascript:void(0)">FR</a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0)">FR</a></li>
+                        <li><a href="javascript:void(0)">NL</a></li>
+                        <li><a href="javascript:void(0)">EN</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
 
-   
-                <ul id="nav_list" class="six columns">
-                    <li><a href="#">Bonjour  app.user.username </a></li>
-                    <li><a href="#"><i class="icon-users"></i></a></li>
-                    <li><a href="#"><i class="icon-export"></i></a></li>
-                    <li><a href="{{ path('chill_main_admin_central') }}"><i class="icon-gauge"></i></a></li>
-                    <li><a href="#">Se déconnecter <i class="icon-logout"></i></a></li>
-                </ul>
-                         
-
-                        
-
-                    
-                
-                
-          
-            
-      </nav>
+    <div class="container">
+        <div class="grid-8 centered">
+            <input name="person" type="text" placeholder="Rechercher une personne">
+        </div>
     </div>
-    
-    
-    
-    <div  class="row">
-       <div id="usefulbar" gumby-fixed="top" class="">
 
-           <ul class="">
-               
-               <li id="search_element" class="">
-                   <div id="search_form"  class="">
-                        <div class="field append">
-                                 <form method="GET" action="#">
-                                 <input type="search" name="q" 
-                                        class="wide search input" placeholder="Rechercher">
-                                 <button type="submit" class="medium primary btn">Go</button>
-                                 </form>
-                        </div>
-                    </div>
-                   
-               </li>
-               
-               <li class="" >
-                   <a href="#"><i class="icon-user-add menu"></i></a>
-               </li>
-
-               
-           </ul>
-           
-           
-             
-
-            
-
- 
-       </div>
-   
-    </div>
     
     {# Flash messages ! 
     
     {% if (app.session.flashbag.get('success').length > 0 
          OR app.session.flashbag.get('danger').length > 0 
          OR app.session.flashbag.get('info').length > 0 ) %}#}
-    <div class="row">
-        
-        <div id="flashMessages" class="push_three six columns">
-            {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="flash-notice success alert">
+    <div class="container">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="grid-8 centered success">
+                <span>
                     {{ flashMessage|raw }}
-                </div>
-            {% endfor %}
+                </span>
+            </div>
+        {% endfor %}
             
-            {% for flashMessage in app.session.flashbag.get('danger') %}
-                <div class="flash-notice danger alert">
+        {% for flashMessage in app.session.flashbag.get('danger') %}
+            <div class="grid-8 centered error">
+                <span>
                     {{ flashMessage|raw }}
-                </div>
-            {% endfor %}
+                </span>
+            </div>
+        {% endfor %}
             
-            {% for flashMessage in app.session.flashbag.get('info') %}
-                <div class="flash-notice info alert">
+        {% for flashMessage in app.session.flashbag.get('info') %}
+            <div class="grid-8 centered notice">
+                <span>
                     {{ flashMessage|raw }}
-                </div>
-            {% endfor %}
-      
-            
-        </div>
-        
+                </span>
+            </div>
+        {% endfor %}    
     </div>
    {# {% endif %} #}
     
-    <div class="row">
-            <div id="wrapper" style="min-height: 1500px;">
+    <div class="container">
+        <div id="wrapper" style="min-height: 1500px;">
 
-                {% block content %}
-                
-                
+            {% block content %}
                 <h1>Title</h1>
-                    <p> Hello  ! </p>
+                <p> Hello  ! </p>
 
-                    <div class="medium primary btn">
+                <div class="medium primary btn">
                     <a href="#">Primary</a>
-  
-  
-                {% endblock %}
-</div>
-            </div>
+                </div>
+            {% endblock %}
+        </div>
     </div> 
 
+    <footer class="footer">
+        <p>License AGPL</p>
+    </footer>
 </body>
-
-
 </html>

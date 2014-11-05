@@ -1,0 +1,17 @@
+Chill\MainBundle\Entity\Center:
+    type: entity
+    table: centers
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    oneToMany:
+        groupCenters:
+            targetEntity: Chill\MainBundle\Entity\GroupCenter
+            mappedBy: groupCenters

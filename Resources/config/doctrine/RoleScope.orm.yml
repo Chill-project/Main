@@ -1,0 +1,17 @@
+Chill\MainBundle\Entity\RoleScope:
+    type: entity
+    table: role_scopes
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+    fields:
+        role:
+            type: string
+            length: 255
+    manyToOne:
+        scope:
+            targetEntity: Chill\MainBundle\Entity\Scope
+            inversedBy: roleScopes

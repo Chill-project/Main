@@ -1,0 +1,17 @@
+Chill\MainBundle\Entity\PermissionsGroup:
+    type: entity
+    table: permission_groups
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+    manyToMany:
+        roleScopes:
+            targetEntity: Chill\MainBundle\Entity\RoleScope
+            

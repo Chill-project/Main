@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+   <!-- <link rel="stylesheet" type="text/css" href="bower_components/Ink/dist/css/ink.css">
+   <link rel="stylesheet" type="text/css" href="bower_components/Ink/dist/css/ink-flex.css">
+   <script type="text/javascript" src="bower_components/Ink/dist/js/ink-all.js"></script> -->
+   <link rel="stylesheet" type="text/css" href="stylesheets/scratch.css">
+   <title>Scratch</title>
+   <meta charset="utf-8" />  
+</head>
+
+<body>
+   <header class="navigation container">
+      <div class="nav grid-2">
+         <ul id="navigation-menu">
+            <li class="nav-link title"><a href="javascript:void(0)">Scratch</a>
+         </ul>
+      </div>
+
+      <div class="grid-4 navigation-search">
+      <!-- <div class="navigation-tools">
+         <div class="search-bar">
+            <div class="search-and-submit"> -->
+               <input type="search" placeholder="Enter Search" />
+               <button class="button white border"><i class="fa fa-search"></i></button>
+            <!-- </div>
+         </div>
+      </div> -->
+      </div>
+
+      <div class="nav grid-6 text-right">
+         <ul id="navigation-menu">
+            <li class="nav-link more"><a href="javascript:void(0)">Sections</a>
+               <ul class="submenu">
+                  <li><a href="javascript:void(0)">Person</a></li>
+                  <li><a href="javascript:void(0)">Report</a></li>
+                  <li><a href="javascript:void(0)">Admin</a></li>
+                  <li><a href="javascript:void(0)">Export</a></li>
+               </ul>
+            </li>
+            <li class="nav-link more"><a href="javascript:void(0)">Marc Ducobu</a>
+               <ul class="submenu">
+                  <li><a href="javascript:void(0)">Mon profil</a></li>
+                  <li><a href="javascript:void(0)">Se déconnecter Blop blop</a></li>
+                  <li><a href="javascript:void(0)">Aide</a></li>
+               </ul>
+            </li>
+            <li class="nav-link more"><a href="javascript:void(0)">FR</a>
+               <ul class="submenu">
+                  <li><a href="javascript:void(0)">FR</a></li>
+                  <li><a href="javascript:void(0)">NL</a></li>
+                  <li><a href="javascript:void(0)">EN</a></li>
+               </ul>
+            </li>
+         </ul>
+      </div>
+   </header>
+
+   <div class="container">
+      <form action="" class="grid-6 centered">
+         <fieldset>
+            <div class="required">
+               <label for="first-name" class="grid-4">Name</label>
+               <div class="grid-4">
+                  <input type="text" id="first-name">
+                  <p class="tip">First Name</p>
+               </div>
+               <div class="grid-4">
+                  <input type="text" id="last-name">
+                  <p class="tip">Last Name</p>
+               </div>
+            </div>
+
+            <label for="email" class="grid-4">Email</label>
+            <div class="grid-8">
+               <input type="text" id="email">
+            </div>
+
+
+            <label for="area" class="grid-4">Description</label>
+            <div class="grid-8">
+               <textarea id="area"></textarea>
+            </div>
+
+            <label for="file-input" class="grid-4">File input</label>
+            <div class="grid-8">
+               <input type="file" name="" id="file-input">
+            </div>
+        </fieldset>
+      </form>
+   </div>
+
+   <div class="container" >
+      <form action="#">
+         <fieldset class="grid-4">
+           <legend>Fieldset title</legend>
+            
+            <label for="name2">Name</label>
+            <input type="text" id="name2">
+
+            <label for="phone2">Phone</label>
+            <input type="text" id="phone2">
+            
+            <label for="email2">Email</label>
+            <input type="text" id="email2">
+         </fieldset>
+
+         <fieldset class="grid-4">
+            <legend>Rock Bands</legend>
+            
+            <p class="label">Please select one or more options</p>
+            
+            <ul class="control unstyled">
+               <li><input type="checkbox" id="cb1" name="cb1" value=""><label for="cb1">Chimaira</label></li>
+               <li><input type="checkbox" id="cb2" name="cb2" value=""><label for="cb2">Metallica</label></li>
+               <li><input type="checkbox" id="cb3" name="cb3" value=""><label for="cb3">Motörhead</label></li>
+               <li><input type="checkbox" id="cb4" name="cb4" value=""><label for="cb4">Pantera</label></li>
+               <li><input type="checkbox" id="cb5" name="cb5" value=""><label for="cb5">Slayer</label></li>
+               <li><input type="checkbox" id="cb6" name="cb6" value=""><label for="cb6">Switchtense</label></li>
+            </ul>
+         </fieldset>
+
+         <fieldset class="grid-4">
+            <legend>Pick a card</legend>
+            <p class="label">Please select one of these options</p>
+            <ul class="control unstyled">
+               <li><input type="radio" id="rb1" name="rb" value=""><label for="rb1">Ace of Spades</label></li>
+               <li><input type="radio" id="rb2" name="rb" value=""><label for="rb2">Queen of Diamonds</label></li>
+               <li><input type="radio" id="rb3" name="rb" value=""><label for="rb3">Queen of Spades</label></li>
+               <li><input type="radio" id="rb4" name="rb" value=""><label for="rb4">Jack of Hearts</label></li>
+               <li><input type="radio" id="rb5" name="rb" value=""><label for="rb5">King of Clubs</label></li>
+               <li><input type="radio" id="rb6" name="rb" value=""><label for="rb6">King of Diamonds</label></li>
+            </ul>
+         </fieldset>
+      </form>
+   </div>
+
+   <div class="container">
+      <div class="grid-8 centered">
+         <input name="person" type="text" placeholder="Rechercher une personne">
+      </div>
+
+      <div class="grid-8 centered success">
+         <span>
+            This is a success message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="grid-8 centered error">
+         <span>
+            This is a error message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="grid-8 centered notice">
+         <span>
+            This is a notice message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="grid-8 centered alert">
+         <span>
+            This is a alert message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="prefix-2 grid-1">
+         <a class="button" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button blue" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button green" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button orange" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button red" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button black" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button white" href="#">Button</a>
+      </div>
+      <div class="grid-1 suffix-2">
+         <a class="button white" href="#"><i class="fa fa-futbol-o"></i> Button</a>
+      </div>
+
+      <div class="prefix-2 grid-1">
+         <button class="button" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button blue" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button green" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button orange" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button red" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button black" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button white" disabled="">Button</button>
+      </div>
+      <div class="grid-1 suffix-2">
+         <button class="button white" disabled=""><i class="fa fa-camera-retro"></i> Button</button>
+      </div>
+   </div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <ul>
+      <li><h3>Content</h3></li>
+      <li><a href="javascript:void(0)">About</a></li>
+      <li><a href="javascript:void(0)">Contact</a></li>
+      <li><a href="javascript:void(0)">Products</a></li>
+    </ul>
+    <ul>
+      <li><h3>Follow Us</h3></li>
+      <li><a href="javascript:void(0)">Facebook</a></li>
+      <li><a href="javascript:void(0)">Twitter</a></li>
+      <li><a href="javascript:void(0)">YouTube</a></li>
+    </ul>
+    <ul>
+      <li><h3>Legal</h3></li>
+      <li><a href="javascript:void(0)">Terms and Conditions</a></li>
+      <li><a href="javascript:void(0)">Privacy Policy</a></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <p>License XXX</p>
+</footer>
+
+
+</body>
+
+
+</html>

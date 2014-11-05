@@ -1,0 +1,24 @@
+{
+  "name": "Scratch CSS Design",
+  "version": "0.0.0",
+  "authors": [
+    "Marc Ducobu <marc@champs-libres.coop>",
+    "Julien Fastré <julien@champs-libres.coop>"
+  ],
+  "description": "Scratch CSS Design",
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "normalize.css": "~3.0.2",
+    "gridle": "~1.3.33",
+    "fontawesome": "~4.2.0",
+    "bourbon": "~4.0.2"
+  }
+}

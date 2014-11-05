@@ -1,0 +1,46 @@
+@import "contrib/normalize/normalize";
+@import "contrib/fontawesome/font-awesome";
+@import "contrib/bourbon/bourbon";
+
+@import "config/variables";
+@import "config/colors";
+@import "config/buttons";
+
+/* etrange pour les forms */
+
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+
+@import "mixins/buttons";
+@import "mixins/alerts";
+
+@import "contrib/gridle/gridle/gridle";
+
+@include gridle_setup( (
+    context : 12,
+    gutter-width : 20px,
+    //direction: ltr,
+    /*
+    direction : rtl,
+    // etc...
+    */
+) );
+
+@include gridle_generate_classes();
+
+@import "modules/typography";
+@import "modules/navigation";
+
+a {
+   text-decoration: none;
+}
+
+.text-right {
+   text-align: right;
+}
+
+@import "modules/footer";
+@import "modules/alerts";
+@import "modules/forms";
+@import "modules/buttons";

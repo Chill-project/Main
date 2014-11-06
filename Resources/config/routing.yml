@@ -22,3 +22,7 @@ chill_main_admin_central:
             main:
                 order: 20
                 label: homepage
+
+login:
+    path:     /login
+    defaults: { _controller: ChillMainBundle:Login:login }

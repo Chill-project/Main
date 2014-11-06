@@ -60,10 +60,10 @@
                         <li><a href="javascript:void(0)"><i class="fa fa-upload"></i> Export</a></li>
                     </ul>
                 </li>
-                <li class="nav-link more"><a href="javascript:void(0)">app.user.username</a>
+                <li class="nav-link more"><a href="javascript:void(0)">{{ app.user.username }}</a>
                     <ul class="submenu">
                         <li><a href="javascript:void(0)"><i class="fa fa-gear"></i> Mon profil</a></li>
-                        <li><a href="javascript:void(0)"><i class="fa fa-power-off"></i> Se déconnecter</a></li>
+                        <li><a href="{{ path('logout') }}" alt="logout"><i class="fa fa-power-off"></i>{{ 'Logout'|trans }}</a></li>
                         <li><a href="javascript:void(0)"><i class="fa fa-question"></i> Aide</a></li>
                     </ul>
                 </li>

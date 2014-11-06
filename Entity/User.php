@@ -38,7 +38,7 @@ class User implements AdvancedUserInterface {
      *
      * @var boolean
      */
-    private $locked = false;
+    private $locked = true;
     
     /**
      *
@@ -101,7 +101,7 @@ class User implements AdvancedUserInterface {
 
     public function getRoles()
     {
-        return 'ROLE_USER';
+        return array('ROLE_USER');
     }
 
     public function getSalt()
@@ -133,7 +133,7 @@ class User implements AdvancedUserInterface {
      */
     public function isAccountNonExpired()
     {
-        return false;
+        return true;
     }
 
     /**

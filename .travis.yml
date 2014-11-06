@@ -17,8 +17,8 @@ install:
    - cp Tests/Fixtures/App/config/parameters.travis.yml Tests/Fixtures/App/config/parameters.yml
   
 before_script:
-  - php Tests/Fixtures/App/console --env=test cache:warmup
   - psql -c 'create database test0;' -U postgres
+  - php Tests/Fixtures/App/console --env=test cache:warmup
   - php Tests/Fixtures/App/console doctrine:schema:create --env=test --no-interaction
   - php Tests/Fixtures/App/console doctrine:fixtures:load --env=test --no-interaction
 

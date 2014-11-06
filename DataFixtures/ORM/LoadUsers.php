@@ -42,18 +42,18 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
                 
                 $permissionGroup = $this->getReference($permissionGroupRef);
                 $center = $this->getReference($centerRef);
-                $username = $center->getName().'_'.$permissionGroup->getName();
+                $username = strtolower($center->getName().'_'.$permissionGroup->getName());
                 
                 $user->setUsername($username)
                         ->setPassword($this->container->get('security.encoder_factory')
                                 ->getEncoder($user)
-                                ->encodePassword($username, $user->getSalt()));
+                                ->encodePassword('password', $user->getSalt()));
                 $user->addGroupCenter($this->getReference($centerRef.'_'.$permissionGroupRef));
                 
                 $manager->persist($user);
                 $this->addReference($username, $user);
                 static::$refs[] = $user->getUsername();
-                echo "Creating user with username ".$user->getUsername()."... \n";
+                echo "Creating user with username '".$user->getUsername()."' and password 'password'.. \n";
             }
         }
         

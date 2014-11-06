@@ -15,6 +15,7 @@ web/bundles/*
 app/config/parameters.ini
 app/config/parameters.yml
 Tests/Fixtures/App/config/parameters.yml
+parameters.yml
 
 #composer
 composer.lock

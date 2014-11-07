@@ -43,14 +43,15 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
         $container->prependExtensionConfig('assetic', 
                 array('bundles' => array('ChillMainBundle')));
         
-        //add installation_name to globals
+        //add installation_name and date_format to globals
         $chillMainConfig = $container->getExtensionConfig($this->getAlias());
         $config = $this->processConfiguration(new Configuration(), $chillMainConfig);
         $twigConfig = array(
             'globals' => array(
                 'installation' => array(
                     'name' => $config['installation_name']
-                )
+                ),
+               'date_format' => 'd-M-Y'
             )
         );
         $container->prependExtensionConfig('twig', $twigConfig);

@@ -28,7 +28,7 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {   
-        return sys_get_temp_dir().'/AcmeHelloBundle/cache';
+        return sys_get_temp_dir().'/ChillMainBundle/cache';
     }   
 
     /** 
@@ -36,6 +36,6 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {   
-        return sys_get_temp_dir().'/AcmeHelloBundle/logs';
+        return sys_get_temp_dir().'/ChillMainBundle/logs';
     }   
 }

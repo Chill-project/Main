@@ -23,8 +23,11 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         
-        $container->setParameter('cl_chill_main.installation_name', 
-                $config['installation_name']);
+        $container->setParameter('chill_main.installation_name',
+            $config['installation_name']);
+
+        $container->setParameter('chill_main.available_languages',
+            $config['available_languages']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

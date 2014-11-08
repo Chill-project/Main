@@ -21,12 +21,15 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('cl_chill_main');
 
         $rootNode
-                ->children()
-                  ->scalarNode('installation_name')
-                     ->cannotBeEmpty()
-                     ->defaultValue('Chill')
-                  ->end()
-                ->end();
+            ->children()
+                ->scalarNode('installation_name')
+                    ->cannotBeEmpty()
+                    ->defaultValue('Chill')
+                ->end()
+                ->arrayNode('available_languages')
+                    ->prototype('scalar')->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

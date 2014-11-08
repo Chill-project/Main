@@ -7,7 +7,7 @@ services:
         #must be set in function to avoid circular reference with chill.main.twig.chill_menu
         calls:
             -  [setContainer, ["@service_container"]]
-            
+
     chill.main.twig.chill_menu:
         class: Chill\MainBundle\Routing\MenuTwig
         arguments:
@@ -16,3 +16,12 @@ services:
             - [setContainer, ["@service_container"]]
         tags:
             - { name: twig.extension }
+
+    chill.main.form.type.translatable.string:
+        class: Chill\MainBundle\Form\Type\TranslatableStringFormType
+        arguments:
+            - "%chill_main.available_languages%"
+            #- "%framework.translator.fallback%"
+            - "%locale%"
+        tags:
+            - { name: form.type, alias: translatable_string }

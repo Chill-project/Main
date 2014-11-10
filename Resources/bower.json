@@ -1,0 +1,15 @@
+{
+  "name": "Chill-JS-CSS",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Chill-project/Main",
+  "authors": [
+    "Champs-Libres <info@champs-libres.coop>"
+  ],
+  "description": "JS-CSS files for Chill, a software for social workers",
+  "private": true,
+  "devDependencies": {
+    "Scratch-CSS-Design": "git@github.com:Champs-Libres/ScratchCSS.git#master",
+    "pikaday": "https://github.com/dbushell/Pikaday.git#~1.2.0"
+  },
+  "license": "MIT"
+}

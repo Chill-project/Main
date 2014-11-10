@@ -41,9 +41,8 @@
                 <li class="nav-link title"><a href="javascript:void(0)">Chill</a>
             </ul>
         </div>
-
         <div class="grid-4 navigation-search">
-            <form action"" method="get">
+            <form action="{{ path('chill_person_search') }}" method="get">
                 <input name="q" type="search" placeholder="{{ 'Chercher une personne'|trans }}" />
                 <button type="submit" class="button white border"><i class="fa fa-search"></i></button>
             <form>

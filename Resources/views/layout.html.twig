@@ -16,9 +16,6 @@
     {% javascripts output="js/libs.js"
         "bundles/chillmain/js/modernizr-2.6.2.min.js"
         "bundles/chillmain/js/jquery-2.0.2.min.js"
-        "bundles/chillmain/js/gumby.js"
-        "bundles/chillmain/js/gumby.init.js" 
-        "bundles/chillmain/js/ui/*.js"
         "bundles/chillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.js" %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}    
@@ -78,14 +75,6 @@
         </div>
     </header>
     
-
-    <div class="container">
-        <div class="grid-8 centered">
-            <input name="person" type="text" placeholder="Rechercher une personne">
-        </div>
-    </div>
-
-    
     {# Flash messages ! 
     
     {% if (app.session.flashbag.get('success').length > 0 
@@ -119,17 +108,14 @@
    {# {% endif %} #}
     
     <div class="container">
-        <div id="wrapper" style="min-height: 1500px;">
+        {% block content %}
+            <h1>Title</h1>
+            <p> Hello  ! </p>
 
-            {% block content %}
-                <h1>Title</h1>
-                <p> Hello  ! </p>
-
-                <div class="medium primary btn">
-                    <a href="#">Primary</a>
-                </div>
-            {% endblock %}
-        </div>
+            <div class="medium primary btn">
+                <a href="#">Primary</a>
+            </div>
+        {% endblock %}
     </div> 
 
     <footer class="footer">

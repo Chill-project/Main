@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+   <!-- <link rel="stylesheet" type="text/css" href="bower_components/Ink/dist/css/ink.css">
+   <link rel="stylesheet" type="text/css" href="bower_components/Ink/dist/css/ink-flex.css">
+   <script type="text/javascript" src="bower_components/Ink/dist/js/ink-all.js"></script> -->
+   <link rel="stylesheet" type="text/css" href="stylesheets/scratch.css">
+   <title>Scratch</title>
+   <meta charset="utf-8" />  
+</head>
+
+<body>
+   <header class="navigation container">
+      <div class="nav grid-2">
+         <ul id="navigation-menu">
+            <li class="nav-link title"><a href="javascript:void(0)">Scratch</a>
+         </ul>
+      </div>
+
+      <div class="grid-4 navigation-search">
+            <form action="/search" method="get">
+                <input name="q" type="search" placeholder="Chercher une personne" />
+                <button type="submit" class="button white border"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+      <div class="nav grid-6 text-right">
+         <ul id="navigation-menu">
+            <li class="nav-link more"><a href="javascript:void(0)">Sections</a>
+               <ul class="submenu">
+                  <li><a href="javascript:void(0)">Person</a></li>
+                  <li><a href="javascript:void(0)">Report</a></li>
+                  <li><a href="javascript:void(0)">Admin</a></li>
+                  <li><a href="javascript:void(0)">Export</a></li>
+               </ul>
+            </li>
+            <li class="nav-link more"><a href="javascript:void(0)">Marc Ducobu</a>
+               <ul class="submenu">
+                  <li><a href="javascript:void(0)">Mon profil</a></li>
+                  <li><a href="javascript:void(0)">Se déconnecter Blop blop</a></li>
+                  <li><a href="javascript:void(0)">Aide</a></li>
+               </ul>
+            </li>
+            <li class="nav-link more"><a href="javascript:void(0)">FR</a>
+               <ul class="submenu">
+                  <li><a href="javascript:void(0)">FR</a></li>
+                  <li><a href="javascript:void(0)">NL</a></li>
+                  <li><a href="javascript:void(0)">EN</a></li>
+               </ul>
+            </li>
+         </ul>
+      </div>
+   </header>
+
+
+   <div class="container">
+      <div id="person_wrapper">
+         <div id="general">
+            <h1>
+               <span class="surname">Caroline</span> 
+               <span class="personName">Bah</span>
+            </h1>
+
+            <p class="date detail">Née le 12-10-1960</p>
+            <p class="nationality detail without_nationality">Nationalité inconnue</p>
+         </div>
+
+         <div id="person_details">
+            <section class="container"> 
+                   
+               <div class="grid-4">
+                  <ul class="tab-nav follow-href-path">
+                     <li class="title">
+                        Lol
+                     </li>
+                     <li class=" ">
+                        <a href="/person/1269/general" >Person View</a>
+                     </li>
+                     <li class=" ">
+                        <a href="/person/1269/history" >Historique</a>
+                     </li>
+                     <li class="active ">
+                        <a href="/person/1269/report/select/type/for/creation" >Add a report</a>
+                     </li>
+                  </ul>
+               </div>
+                          
+               <div class="grid-8">
+                  <form name="chill_reportbundle_report" method="post" action="/person/1269/report/cfgroup/41/create"><div id="chill_reportbundle_report"><div>                <label class="required">Date</label>        <div id="chill_reportbundle_report_date"><div id="chill_reportbundle_report_date_date"><select id="chill_reportbundle_report_date_date_day" name="chill_reportbundle_report[date][date][day]">
+        <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select><select id="chill_reportbundle_report_date_date_month" name="chill_reportbundle_report[date][date][month]">
+        <option value="1">janv.</option><option value="2">févr.</option><option value="3">mars</option><option value="4">avr.</option><option value="5">mai</option><option value="6">juin</option><option value="7">juil.</option><option value="8">août</option><option value="9">sept.</option><option value="10">oct.</option><option value="11">nov.</option><option value="12">déc.</option></select><select id="chill_reportbundle_report_date_date_year" name="chill_reportbundle_report[date][date][year]">
+        <option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option></select></div>        <div id="chill_reportbundle_report_date_time">
+            <select id="chill_reportbundle_report_date_time_hour" name="chill_reportbundle_report[date][time][hour]">
+        <option value="0">00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option></select>:<select id="chill_reportbundle_report_date_time_minute" name="chill_reportbundle_report[date][time][minute]">
+        <option value="0">00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option></select>        </div></div>
+    </div><div>                <label for="chill_reportbundle_report_scope" class="required">Scope</label><input type="text" id="chill_reportbundle_report_scope" name="chill_reportbundle_report[scope]" required="required" maxlength="255" /></div><div>                <label class="required">C f data</label><div id="chill_reportbundle_report_cFData"><div>                <label for="chill_reportbundle_report_cFData_cf_report_7" class="required">CustomField 7</label><input type="text" id="chill_reportbundle_report_cFData_cf_report_7" name="chill_reportbundle_report[cFData][cf_report_7]" required="required" /></div><div>                <label for="chill_reportbundle_report_cFData_cf_report_17" class="required">CustomField 17</label><textarea id="chill_reportbundle_report_cFData_cf_report_17" name="chill_reportbundle_report[cFData][cf_report_17]" required="required"></textarea></div><div>                <label for="chill_reportbundle_report_cFData_cf_report_18" class="required">CustomField 18</label><textarea id="chill_reportbundle_report_cFData_cf_report_18" name="chill_reportbundle_report[cFData][cf_report_18]" required="required"></textarea></div><div>    <span class="title">
+        Blop
+    </span>
+</div></div></div><div><button type="submit" id="chill_reportbundle_report_submit" name="chill_reportbundle_report[submit]">Create</button></div><input type="hidden" id="chill_reportbundle_report__token" name="chill_reportbundle_report[_token]" value="1xVMSj0qVavvJFG4ll0y_NzrWHEBXOTSYs40vO8L6eE" /></div>
+                  </form>
+               </div>
+            </section>
+         </div>
+      </div>
+   </div> 
+
+
+   <div class="container">
+      <form action="" class="grid-6 centered">
+         <fieldset>
+            <div class="required">
+               <label for="first-name" class="grid-4">Name</label>
+               <div class="grid-4">
+                  <input type="text" id="first-name">
+                  <p class="tip">First Name</p>
+               </div>
+               <div class="grid-4">
+                  <input type="text" id="last-name">
+                  <p class="tip">Last Name</p>
+               </div>
+            </div>
+
+            <label for="email" class="grid-4">Email</label>
+            <div class="grid-8">
+               <input type="text" id="email">
+            </div>
+
+
+            <label for="area" class="grid-4">Description</label>
+            <div class="grid-8">
+               <textarea id="area"></textarea>
+            </div>
+
+            <label for="file-input" class="grid-4">File input</label>
+            <div class="grid-8">
+               <input type="file" name="" id="file-input">
+            </div>
+        </fieldset>
+      </form>
+   </div>
+
+   <div class="container" >
+      <form action="#">
+         <fieldset class="grid-4">
+           <legend>Fieldset title</legend>
+            
+            <label for="name2">Name</label>
+            <input type="text" id="name2">
+
+            <label for="phone2">Phone</label>
+            <input type="text" id="phone2">
+            
+            <label for="email2">Email</label>
+            <input type="text" id="email2">
+         </fieldset>
+
+         <fieldset class="grid-4">
+            <legend>Rock Bands</legend>
+            
+            <p class="label">Please select one or more options</p>
+            
+            <ul class="control unstyled">
+               <li><input type="checkbox" id="cb1" name="cb1" value=""><label for="cb1">Chimaira</label></li>
+               <li><input type="checkbox" id="cb2" name="cb2" value=""><label for="cb2">Metallica</label></li>
+               <li><input type="checkbox" id="cb3" name="cb3" value=""><label for="cb3">Motörhead</label></li>
+               <li><input type="checkbox" id="cb4" name="cb4" value=""><label for="cb4">Pantera</label></li>
+               <li><input type="checkbox" id="cb5" name="cb5" value=""><label for="cb5">Slayer</label></li>
+               <li><input type="checkbox" id="cb6" name="cb6" value=""><label for="cb6">Switchtense</label></li>
+            </ul>
+         </fieldset>
+
+         <fieldset class="grid-4">
+            <legend>Pick a card</legend>
+            <p class="label">Please select one of these options</p>
+            <ul class="control unstyled">
+               <li><input type="radio" id="rb1" name="rb" value=""><label for="rb1">Ace of Spades</label></li>
+               <li><input type="radio" id="rb2" name="rb" value=""><label for="rb2">Queen of Diamonds</label></li>
+               <li><input type="radio" id="rb3" name="rb" value=""><label for="rb3">Queen of Spades</label></li>
+               <li><input type="radio" id="rb4" name="rb" value=""><label for="rb4">Jack of Hearts</label></li>
+               <li><input type="radio" id="rb5" name="rb" value=""><label for="rb5">King of Clubs</label></li>
+               <li><input type="radio" id="rb6" name="rb" value=""><label for="rb6">King of Diamonds</label></li>
+            </ul>
+         </fieldset>
+      </form>
+   </div>
+
+   <div class="container">
+      <div class="grid-8 centered">
+         <input name="person" type="text" placeholder="Rechercher une personne">
+      </div>
+
+      <div class="grid-8 centered success">
+         <span>
+            This is a success message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="grid-8 centered error">
+         <span>
+            This is a error message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="grid-8 centered notice">
+         <span>
+            This is a notice message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="grid-8 centered alert">
+         <span>
+            This is a alert message <a href="#">with a link</a>
+         </span>
+      </div>
+
+      <div class="prefix-2 grid-1">
+         <a class="button" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button blue" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button green" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button orange" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button red" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button black" href="#">Button</a>
+      </div>
+      <div class="grid-1">
+         <a class="button white" href="#">Button</a>
+      </div>
+      <div class="grid-1 suffix-2">
+         <a class="button white" href="#"><i class="fa fa-futbol-o"></i> Button</a>
+      </div>
+
+      <div class="prefix-2 grid-1">
+         <button class="button" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button blue" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button green" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button orange" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button red" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button black" disabled="">Button</button>
+      </div>
+      <div class="grid-1">
+         <button class="button white" disabled="">Button</button>
+      </div>
+      <div class="grid-1 suffix-2">
+         <button class="button white" disabled=""><i class="fa fa-camera-retro"></i> Button</button>
+      </div>
+   </div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <ul>
+      <li><h3>Content</h3></li>
+      <li><a href="javascript:void(0)">About</a></li>
+      <li><a href="javascript:void(0)">Contact</a></li>
+      <li><a href="javascript:void(0)">Products</a></li>
+    </ul>
+    <ul>
+      <li><h3>Follow Us</h3></li>
+      <li><a href="javascript:void(0)">Facebook</a></li>
+      <li><a href="javascript:void(0)">Twitter</a></li>
+      <li><a href="javascript:void(0)">YouTube</a></li>
+    </ul>
+    <ul>
+      <li><h3>Legal</h3></li>
+      <li><a href="javascript:void(0)">Terms and Conditions</a></li>
+      <li><a href="javascript:void(0)">Privacy Policy</a></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <p>License XXX</p>
+</footer>
+
+
+</body>
+
+
+</html>

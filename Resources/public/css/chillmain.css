@@ -23,3 +23,8 @@ input.belgian_national_number_inversed_date { width: 7em; margin-right: 1em; }
 input.belgian_national_number_daily_counter { width: 4em; margin-right: 1em; }
 
 input.belgian_national_number_control_digit { width: 3em; }
+
+div#general {
+    background: none repeat scroll 0 0 #ccc;
+    padding-top: 0.5em;
+}

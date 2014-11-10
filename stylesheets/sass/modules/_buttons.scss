@@ -1,0 +1,10 @@
+.button {
+   @include button($grey-15, $button-text-color); 
+    
+   &.blue      { @include button($blue, $white); }
+   &.green     { @include button($green, $white); }
+   &.orange    { @include button($orange, $white); }
+   &.red       { @include button($red, $white); }
+   &.black     { @include button($grey-90, $white); }
+   &.white     { @include button($white, $text-color); }
+}

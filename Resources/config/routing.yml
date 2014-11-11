@@ -2,18 +2,18 @@ root:
     pattern: /
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /hello
+        path: /welcome
         permanent: true
     options:
         menus:
             main:
                 order: 10
-                label: homepage
+                label: Homepage
 
 cl_chill_main_homepage:
-    pattern:  /hello
+    pattern:  /welcome
     defaults: { _controller: ChillMainBundle:Default:index }
-    
+
 chill_main_admin_central:
     pattern: /admin
     defaults: { _controller: ChillMainBundle:Admin:index }
@@ -21,14 +21,14 @@ chill_main_admin_central:
         menus:
             main:
                 order: 20
-                label: homepage
+                label: Admin Menu
 
 login:
     path:     /login
     defaults: { _controller: ChillMainBundle:Login:login }
-    
+
 login_check:
     path:    /login_check
-    
+
 logout:
     path:    /logout

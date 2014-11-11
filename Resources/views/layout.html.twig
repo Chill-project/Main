@@ -65,41 +65,45 @@
         </div>
     </header>
     
-    {# Flash messages ! #}
     <div class="container">
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="grid-8 centered success">
-                <span>
-                    {{ flashMessage|raw }}
-                </span>
+        {% block layout_content %}
+            {# Flash messages ! #}
+            <div class="container">
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="grid-8 centered success">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}
+                    
+                {% for flashMessage in app.session.flashbag.get('danger') %}
+                    <div class="grid-8 centered error">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}
+                    
+                {% for flashMessage in app.session.flashbag.get('info') %}
+                    <div class="grid-8 centered notice">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}    
             </div>
-        {% endfor %}
-            
-        {% for flashMessage in app.session.flashbag.get('danger') %}
-            <div class="grid-8 centered error">
-                <span>
-                    {{ flashMessage|raw }}
-                </span>
-            </div>
-        {% endfor %}
-            
-        {% for flashMessage in app.session.flashbag.get('info') %}
-            <div class="grid-8 centered notice">
-                <span>
-                    {{ flashMessage|raw }}
-                </span>
-            </div>
-        {% endfor %}    
-    </div>
-    
-    <div class="container">
-        {% block content %}
-            <h1>Title</h1>
-            <p> Hello  ! </p>
 
-            <div class="medium primary btn">
-                <a href="#">Primary</a>
+            {{ chill_menu('main', {
+                 'layout': 'ChillPersonBundle::menu.html.twig',
+            }) }}
+
+            {% block content %}
+            <div class="grid-8">
+                <h1>Welcome to Chill</h1>
             </div>
+            {% endblock %}
+            
         {% endblock %}
     </div> 
 

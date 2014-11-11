@@ -55,10 +55,10 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
                     'name' => $config['installation_name']
                 ),
                'date_format' => 'd-M-Y'
-            )
+            ),
+            'form' => array(
+                'resources' => array('ChillMainBundle:Form:fields.html.twig'))
         );
         $container->prependExtensionConfig('twig', $twigConfig);
-                
     }
-
 }

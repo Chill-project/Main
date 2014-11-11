@@ -1,16 +1,28 @@
 {% block form_row %}
 {% spaceless %}
-<div class="grid-4 {#{% spaceless %} 
-{% if errors|length > 0 %}
-has_error danger
-{% endif %}
- {% endspaceless %}">#}">
-{{ form_label(form) }}
-</div>
-<div class="grid-8">
-    {{ form_widget(form)  }}
-    {{ form_errors(form) }}
-</div>
+    <div class="{% spaceless %}
+        {% if attr.class is defined and 'only-label' in attr.class %} 
+            grid-12
+        {% elseif attr.class is defined and 'no-label' in attr.class %} 
+            grid-0
+        {% else %}
+            grid-4
+        {% endif %}
+    {% endspaceless %}">
+    {{ form_label(form) }}
+    </div>
+    <div class="{% spaceless %}
+        {% if attr.class is defined and 'only-label' in attr.class %} 
+
+        {% elseif attr.class is defined and 'no-label' in attr.class %} 
+            grid-12
+        {% else %}
+            grid-8
+        {% endif %}
+    {% endspaceless %}">
+        {{ form_widget(form)  }}
+        {{ form_errors(form) }}
+    </div>
 {% endspaceless %}
 {% endblock form_row %}
 

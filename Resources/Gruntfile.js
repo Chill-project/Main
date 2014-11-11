@@ -19,7 +19,8 @@ module.exports = function(grunt) {
             options: {
                targetDir: '<%= chill.folders.bower %>',
                install: true,
-               copy: false
+               copy: false,
+               cleanBowerDir: true
             }
          }
       },

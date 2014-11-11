@@ -2726,6 +2726,9 @@ input, label, select {
   /*  font-family: $form-font-family;
   font-size: $form-font-size; */ }
 
+label.inline {
+  display: inline-block; }
+
 label {
   font-weight: bold;
   margin-bottom: 0.375em; }
@@ -3049,5 +3052,11 @@ div#general {
 
 html, body {
   min-height: 100%; }
+
+.title {
+  font-size: 2em; }
+
+.subtitle {
+  font-size: 1.5em; }
 
 /*# sourceMappingURL=scratch.css.map */

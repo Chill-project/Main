@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                targetDir: '<%= chill.folders.bower %>',
                install: true,
                copy: false,
-               //cleanBowerDir: true,
+               cleanBowerDir: true,
                verbose: true
             }
          }
@@ -87,8 +87,8 @@ module.exports = function(grunt) {
       },
       watch: {
          css: {
-            files: [ '<%= chill.folders.sass.src %>/** /*.scss' ],
-            tasks: ['css'],
+            files: [ '<%= chill.folders.sass.src %>/*.scss', '<%= chill.folders.sass.src %>/**/*.scss' ],
+            tasks: ['generatecss'],
             /*
             options: {
                spawn: false,

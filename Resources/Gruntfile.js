@@ -4,13 +4,14 @@ module.exports = function(grunt) {
 
       chill: {
          folders: {
-            fonts: './public/fonts',
+            pub: './public',
+            fonts: '<%= chill.folders.pub %>/fonts',
             bower: './bower_components/',
             css: {
-               dist: './public/stylesheets/',
+               dist: '<%= chill.folders.pub %>/stylesheets/',
             },
             sass: {
-               src: './public/stylesheets/sass/',
+               src: '<%= chill.folders.css.dist %>/sass/',
             }
          }
       },
@@ -20,7 +21,8 @@ module.exports = function(grunt) {
                targetDir: '<%= chill.folders.bower %>',
                install: true,
                copy: false,
-               cleanBowerDir: true
+               //cleanBowerDir: true,
+               verbose: true
             }
          }
       },
@@ -39,6 +41,26 @@ module.exports = function(grunt) {
                   dest: '<%= chill.folders.fonts %>',
                   expand: true,
                }
+            ]
+         },
+         pikaday: {
+            files: [
+                {
+                    cwd: '<%= chill.folders.bower %>pikaday',
+                    src: ['css/pikaday.css', 'pikaday.js',  'plugins/pikaday.jquery.js'],
+                    dest: '<%= chill.folders.pub %>',
+                    expand: true,
+                }
+            ]
+         },
+         moment: {
+            files: [
+                {
+                    cwd: '<%= chill.folders.bower %>moment',
+                    src: ['moment.js'],
+                    dest: '<%= chill.folders.pub %>',
+                    expand: true,
+                }
             ]
          },
          chill_standard: {

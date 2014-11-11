@@ -8,8 +8,9 @@
   "description": "JS-CSS files for Chill, a software for social workers",
   "private": true,
   "devDependencies": {
-    "Scratch-CSS-Design": "git@github.com:Champs-Libres/ScratchCSS.git#master",
-    "pikaday": "https://github.com/dbushell/Pikaday.git#~1.2.0"
+    "Scratch-CSS-Design": "git@github.com:Champs-Libres/ScratchCSS.git",
+    "pikaday": "https://github.com/dbushell/Pikaday.git#~1.2.0",
+    "moment": "~2.8.3"
   },
   "license": "MIT"
 }

@@ -7,6 +7,7 @@
     {% stylesheets  output="css/all.css" filter="cssrewrite"
           "bundles/chillmain/stylesheets/scratch.css"
           "bundles/chillmain/css/chillmain.css"
+          "bundles/chillmain/css/pikaday.css"
           "bundles/chillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.css" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
@@ -16,35 +17,25 @@
     {% javascripts output="js/libs.js"
         "bundles/chillmain/js/modernizr-2.6.2.min.js"
         "bundles/chillmain/js/jquery-2.0.2.min.js"
+        "bundles/chillmain/moment.js"
+        "bundles/chillmain/pikaday.js"
+        "bundles/chillmain/plugins/pikaday.jquery.js"
         "bundles/chillmain/js/lib_jquery_ui_pickadate/jquery-ui-1.10.3.pickadate.js" %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}    
-
-    <script type="text/javascript">
-      $.datepicker.regional[ "fr" ]
-      $(document).ready(function() {
-          $('.datepicker').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dateFormat: 'dd-mm-yy'
-          }, $.datepicker.regional["fr"]);
-      });
-    {% block js%}<!-- nothing added to js -->{% endblock %}
-    </script>
-    
 </head>
 
 <body>
     <header class="navigation container">
         <div class="nav grid-2">
             <ul id="navigation-menu">
-                <li class="nav-link title"><a href="javascript:void(0)">Chill</a>
+                <li class="nav-link nav-title"><a href="javascript:void(0)">Chill</a>
             </ul>
         </div>
         <div class="grid-4 navigation-search">
             <form action="{{ path('chill_person_search') }}" method="get">
                 <input name="q" type="search" placeholder="{{ 'Chercher une personne'|trans }}" />
-                <button type="submit" class="button white border"><i class="fa fa-search"></i></button>
+                <button type="submit" class="sc-button white border"><i class="fa fa-search"></i></button>
             </form>
         </div>
 
@@ -76,11 +67,7 @@
         </div>
     </header>
     
-    {# Flash messages ! 
-    
-    {% if (app.session.flashbag.get('success').length > 0 
-         OR app.session.flashbag.get('danger').length > 0 
-         OR app.session.flashbag.get('info').length > 0 ) %}#}
+    {# Flash messages ! #}
     <div class="container">
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="grid-8 centered success">
@@ -106,7 +93,6 @@
             </div>
         {% endfor %}    
     </div>
-   {# {% endif %} #}
     
     <div class="container">
         {% block content %}
@@ -122,5 +108,20 @@
     <footer class="footer">
         <p>License AGPL</p>
     </footer>
+
+    <script type="text/javascript">
+    $('.datepicker').pikaday({ 
+        format: "D-M-YYYY",
+        i18n: {
+            previousMonth : 'Mois précédent',
+            nextMonth     : 'Mois suivant',
+            months        : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+            weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+        }
+    });
+    {% block js%}<!-- nothing added to js -->{% endblock %}*/
+    </script>
+
 </body>
 </html>

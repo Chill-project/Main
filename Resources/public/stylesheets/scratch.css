@@ -2019,8 +2019,11 @@ th {
   content: ""; }
 
 /* etrange pour les forms */
-*, *:before, *:after {
+* {
   box-sizing: inherit; }
+
+html {
+  box-sizing: border-box; }
 
 .container:after {
   content: "";
@@ -2807,7 +2810,7 @@ form li label {
   display: inline-block;
   font-weight: normal; }
 
-.button {
+.sc-button {
   color: #000;
   background: #d9d9d9;
   border: medium none;
@@ -2823,18 +2826,18 @@ form li label {
   border-top-right-radius: 3px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px; }
-  .button:hover, .button:active {
+  .sc-button:hover, .sc-button:active {
     background: #cccccc;
     color: #000;
     text-decoration: none; }
-  .button:focus {
+  .sc-button:focus {
     background: #cccccc; }
-  .button[disabled] {
+  .sc-button[disabled] {
     background: rgba(217, 217, 217, 0.6);
     color: #bfbfbf; }
-    .button[disabled]:hover {
+    .sc-button[disabled]:hover {
       box-shadow: none; }
-  .button.blue {
+  .sc-button.blue {
     color: #fff;
     background: #2980b9;
     border: medium none;
@@ -2850,18 +2853,18 @@ form li label {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
-    .button.blue:hover, .button.blue:active {
+    .sc-button.blue:hover, .sc-button.blue:active {
       background: #2472a4;
       color: #fff;
       text-decoration: none; }
-    .button.blue:focus {
+    .sc-button.blue:focus {
       background: #2472a4; }
-    .button.blue[disabled] {
+    .sc-button.blue[disabled] {
       background: rgba(41, 128, 185, 0.6);
       color: #20638f; }
-      .button.blue[disabled]:hover {
+      .sc-button.blue[disabled]:hover {
         box-shadow: none; }
-  .button.green {
+  .sc-button.green {
     color: #fff;
     background: #4a9b17;
     border: medium none;
@@ -2877,18 +2880,18 @@ form li label {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
-    .button.green:hover, .button.green:active {
+    .sc-button.green:hover, .sc-button.green:active {
       background: #3f8514;
       color: #fff;
       text-decoration: none; }
-    .button.green:focus {
+    .sc-button.green:focus {
       background: #3f8514; }
-    .button.green[disabled] {
+    .sc-button.green[disabled] {
       background: rgba(74, 155, 23, 0.6);
       color: #356f10; }
-      .button.green[disabled]:hover {
+      .sc-button.green[disabled]:hover {
         box-shadow: none; }
-  .button.orange {
+  .sc-button.orange {
     color: #fff;
     background: #ff9c00;
     border: medium none;
@@ -2904,18 +2907,18 @@ form li label {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
-    .button.orange:hover, .button.orange:active {
+    .sc-button.orange:hover, .sc-button.orange:active {
       background: #e68c00;
       color: #fff;
       text-decoration: none; }
-    .button.orange:focus {
+    .sc-button.orange:focus {
       background: #e68c00; }
-    .button.orange[disabled] {
+    .sc-button.orange[disabled] {
       background: rgba(255, 156, 0, 0.6);
       color: #cc7d00; }
-      .button.orange[disabled]:hover {
+      .sc-button.orange[disabled]:hover {
         box-shadow: none; }
-  .button.red {
+  .sc-button.red {
     color: #fff;
     background: #c91111;
     border: medium none;
@@ -2931,18 +2934,18 @@ form li label {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
-    .button.red:hover, .button.red:active {
+    .sc-button.red:hover, .sc-button.red:active {
       background: #b10f0f;
       color: #fff;
       text-decoration: none; }
-    .button.red:focus {
+    .sc-button.red:focus {
       background: #b10f0f; }
-    .button.red[disabled] {
+    .sc-button.red[disabled] {
       background: rgba(201, 17, 17, 0.6);
       color: #9a0d0d; }
-      .button.red[disabled]:hover {
+      .sc-button.red[disabled]:hover {
         box-shadow: none; }
-  .button.black {
+  .sc-button.black {
     color: #fff;
     background: #1a1a1a;
     border: medium none;
@@ -2958,18 +2961,18 @@ form li label {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
-    .button.black:hover, .button.black:active {
+    .sc-button.black:hover, .sc-button.black:active {
       background: #0d0d0d;
       color: #fff;
       text-decoration: none; }
-    .button.black:focus {
+    .sc-button.black:focus {
       background: #0d0d0d; }
-    .button.black[disabled] {
+    .sc-button.black[disabled] {
       background: rgba(26, 26, 26, 0.6);
       color: black; }
-      .button.black[disabled]:hover {
+      .sc-button.black[disabled]:hover {
         box-shadow: none; }
-  .button.white {
+  .sc-button.white {
     color: #555;
     background: #fff;
     border: medium none;
@@ -2985,16 +2988,16 @@ form li label {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
-    .button.white:hover, .button.white:active {
+    .sc-button.white:hover, .sc-button.white:active {
       background: #f2f2f2;
       color: #555;
       text-decoration: none; }
-    .button.white:focus {
+    .sc-button.white:focus {
       background: #f2f2f2; }
-    .button.white[disabled] {
+    .sc-button.white[disabled] {
       background: rgba(255, 255, 255, 0.6);
       color: #e6e6e6; }
-      .button.white[disabled]:hover {
+      .sc-button.white[disabled]:hover {
         box-shadow: none; }
 
 /* Tabs */

@@ -26,4 +26,5 @@ Resources/assets/gumpy/.sass-cache
 Resources/.sass-cache/
 Resources/bower_components/
 Resources/node_modules/
-Resources/public/stylesheets/sass/
+Resources/public/stylesheets/sass/*
+!Resources/public/stylesheets/sass/_custom.scss

@@ -39,6 +39,16 @@ module.exports = function(grunt) {
                   expand: true,
                }
             ]
+         },
+         chill_standard: {
+            files: [
+               {
+                  cwd: './public',
+                  src: '**',
+                  dest: '../../../../web/bundles/chillmain/',
+                  expand: true,
+               }
+            ]
          }
       },
       sass: {
@@ -75,7 +85,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-contrib-clean');
 
-   grunt.registerTask('generatecss', ['clean:css', 'sass']);
+   grunt.registerTask('generatecss', ['clean:css', 'sass', 'copy:chill_standard']);
    grunt.registerTask('dependencies', ['bower', 'copy']);
    grunt.registerTask('default', ['dependencies', 'generatecss']);
 };

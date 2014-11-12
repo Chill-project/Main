@@ -49,16 +49,21 @@
                     'layout': 'ChillMainBundle::Menu/user.html.twig',
                 }) }}
 
+
                 <li class="nav-link more"><a href="javascript:void(0)">FR</a>
                     <ul class="submenu">
-                        <li><a href="javascript:void(0)">FR</a></li>
-                        <li><a href="javascript:void(0)">NL</a></li>
-                        <li><a href="javascript:void(0)">EN</a></li>
+                        {% for locale in ['fr', 'nl', 'en']  %}
+                            <li {% if locale == app.request.locale %}class="active"{% endif %}>
+                                <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : locale})) }}">{{ locale | upper }}</a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </li>
             </ul>
         </div>
     </header>
+
+    {{ app.request.locale }}
     
         {% block layout_content %}
             <div class="container content">

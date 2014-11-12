@@ -4,6 +4,14 @@ root:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /homepage
         permanent: true
+
+chill_main_homepage_without_locale:
+    pattern:  /homepage
+    defaults: { _controller: ChillMainBundle:Default:indexWithoutLocale }
+
+chill_main_homepage:
+    pattern:  /{_locale}/homepage
+    defaults: { _controller: ChillMainBundle:Default:index }
     options:
         menus:
             section:
@@ -11,12 +19,8 @@ root:
                 label: Homepage
                 icon: home
 
-cl_chill_main_homepage:
-    pattern:  /homepage
-    defaults: { _controller: ChillMainBundle:Default:index }
-
 chill_main_admin_central:
-    pattern: /admin
+    pattern: /{_locale}/admin
     defaults: { _controller: ChillMainBundle:Admin:index }
     options:
         menus:

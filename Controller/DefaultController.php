@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {        
         return $this->render('ChillMainBundle::layout.html.twig');
     }
+
+    public function indexWithoutLocaleAction()
+    {
+        return $this->redirect($this->generateUrl('chill_main_homepage'));
+    }
 }

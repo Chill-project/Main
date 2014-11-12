@@ -3062,4 +3062,7 @@ html, body {
 .cf-subtitle {
   font-size: 1.5em; }
 
+ul.submenu.min-width {
+  min-width: 11em; }
+
 /*# sourceMappingURL=scratch.css.map */

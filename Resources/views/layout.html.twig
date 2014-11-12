@@ -39,21 +39,16 @@
 
         <div class="nav grid-6 text-right">
             <ul id="navigation-menu">
-                <li class="nav-link more"><a href="javascript:void(0)">Sections</a>
-                    <ul class="submenu">
-                        <li><a href="javascript:void(0)"><i class="fa fa-user"></i> Person</a></li>
-                        <li><a href="javascript:void(0)"><i class="fa fa-calendar-o"></i>Report</a></li>
-                        <li><a href="javascript:void(0)"><i class="fa fa-gears"></i> Admin</a></li>
-                        <li><a href="javascript:void(0)"><i class="fa fa-upload"></i> Export</a></li>
-                    </ul>
-                </li>
-                <li class="nav-link more"><a href="javascript:void(0)">{{ app.user.username }}</a>
-                    <ul class="submenu">
-                        <li><a href="javascript:void(0)"><i class="fa fa-gear"></i> Mon profil</a></li>
-                        <li><a href="{{ path('logout') }}" alt="logout"><i class="fa fa-power-off"></i>{{ 'Logout'|trans }}</a></li>
-                        <li><a href="javascript:void(0)"><i class="fa fa-question"></i> Aide</a></li>
-                    </ul>
-                </li>
+
+
+                {{ chill_menu('section', {
+                    'layout': 'ChillMainBundle::Menu/section.html.twig',
+                }) }}
+
+                {{ chill_menu('user', {
+                    'layout': 'ChillMainBundle::Menu/user.html.twig',
+                }) }}
+
                 <li class="nav-link more"><a href="javascript:void(0)">FR</a>
                     <ul class="submenu">
                         <li><a href="javascript:void(0)">FR</a></li>

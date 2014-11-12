@@ -6,9 +6,10 @@ root:
         permanent: true
     options:
         menus:
-            main:
+            section:
                 order: 10
                 label: Homepage
+                icon: home
 
 cl_chill_main_homepage:
     pattern:  /welcome
@@ -19,9 +20,10 @@ chill_main_admin_central:
     defaults: { _controller: ChillMainBundle:Admin:index }
     options:
         menus:
-            main:
+            section:
                 order: 20
                 label: Admin Menu
+                icon: gears
 
 login:
     path:     /login
@@ -32,3 +34,9 @@ login_check:
 
 logout:
     path:    /logout
+    options:
+        menus:
+            user:
+                order: 10
+                label: Logout
+                icon: power-off

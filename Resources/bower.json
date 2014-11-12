@@ -10,7 +10,8 @@
   "devDependencies": {
     "Scratch-CSS-Design": "git@github.com:Champs-Libres/ScratchCSS.git",
     "pikaday": "https://github.com/dbushell/Pikaday.git#~1.2.0",
-    "moment": "~2.8.3"
+    "moment": "~2.8.3",
+    "select2": "~3.5.2"
   },
   "license": "MIT"
 }

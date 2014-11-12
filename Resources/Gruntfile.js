@@ -43,6 +43,16 @@ module.exports = function(grunt) {
                }
             ]
          },
+         select2: {
+            files: [
+                {
+                    cwd: '<%= chill.folders.bower %>select2',
+                    src: ['*'],
+                    dest: '<%= chill.folders.pub %>',
+                    expand: true,
+                }
+            ]
+         },
          pikaday: {
             files: [
                 {

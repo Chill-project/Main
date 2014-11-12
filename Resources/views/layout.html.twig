@@ -7,6 +7,7 @@
     {% stylesheets  output="css/all.css" filter="cssrewrite"
           "bundles/chillmain/stylesheets/scratch.css"
           "bundles/chillmain/css/chillmain.css"
+          "bundles/chillmain/select2.css"
           "bundles/chillmain/css/pikaday.css" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
@@ -18,6 +19,7 @@
         "bundles/chillmain/js/jquery-2.0.2.min.js"
         "bundles/chillmain/moment.js"
         "bundles/chillmain/pikaday.js"
+        "bundles/chillmain/select2.js"
         "bundles/chillmain/plugins/pikaday.jquery.js" %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}    
@@ -127,7 +129,8 @@
             weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
         }
     });
-    {% block js%}<!-- nothing added to js -->{% endblock %}*/
+
+    $('select').select2();
     </script>
 
 </body>

@@ -50,7 +50,7 @@
                 }) }}
 
 
-                <li class="nav-link more"><a href="javascript:void(0)">FR</a>
+                <li class="nav-link more"><a href="">{{ app.request.locale | upper }}</a>
                     <ul class="submenu">
                         {% for locale in ['fr', 'nl', 'en']  %}
                             <li {% if locale == app.request.locale %}class="active"{% endif %}>
@@ -62,9 +62,6 @@
             </ul>
         </div>
     </header>
-
-    {{ app.request.locale }}
-    
         {% block layout_content %}
             <div class="container content">
                 {# Flash messages ! #}

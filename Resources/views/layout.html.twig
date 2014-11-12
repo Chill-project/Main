@@ -60,56 +60,55 @@
         </div>
     </header>
     
-    <div class="container content">
         {% block layout_content %}
-            {# Flash messages ! #}
-            <div class="container">
-                {% for flashMessage in app.session.flashbag.get('success') %}
-                    <div class="grid-8 centered success">
-                        <span>
-                            {{ flashMessage|raw }}
-                        </span>
-                    </div>
-                {% endfor %}
-                    
-                {% for flashMessage in app.session.flashbag.get('danger') %}
-                    <div class="grid-8 centered error">
-                        <span>
-                            {{ flashMessage|raw }}
-                        </span>
-                    </div>
-                {% endfor %}
-                    
-                {% for flashMessage in app.session.flashbag.get('info') %}
-                    <div class="grid-8 centered notice">
-                        <span>
-                            {{ flashMessage|raw }}
-                        </span>
-                    </div>
-                {% endfor %}    
-            </div>
-
-            {% block content %}
-
-            <div class="container">
-                <div class="grid-8 centered">
-                    <form action="{{ path('chill_person_search') }}" method="get">
-                        <input name="q" type="search" placeholder="{{ 'Nom / Prénom de la personne'|trans }}" />
-                        <center>
-                            <button type="submit" class="sc-button orange">{{ 'Chercher une personne'|trans }}</button>
-                        </center>
-                    </form>
+            <div class="container content">
+                {# Flash messages ! #}
+                <div class="container">
+                    {% for flashMessage in app.session.flashbag.get('success') %}
+                        <div class="grid-8 centered success">
+                            <span>
+                                {{ flashMessage|raw }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                        
+                    {% for flashMessage in app.session.flashbag.get('danger') %}
+                        <div class="grid-8 centered error">
+                            <span>
+                                {{ flashMessage|raw }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                        
+                    {% for flashMessage in app.session.flashbag.get('info') %}
+                        <div class="grid-8 centered notice">
+                            <span>
+                                {{ flashMessage|raw }}
+                            </span>
+                        </div>
+                    {% endfor %}    
                 </div>
-            </div>
 
-            {{ chill_menu('homepage', {
-                'layout': 'ChillMainBundle::Menu/homepage.html.twig',
-            }) }}
+                {% block content %}
 
-            {% endblock %}
-            
+                <div class="container">
+                    <div class="grid-8 centered">
+                        <form action="{{ path('chill_person_search') }}" method="get">
+                            <input name="q" type="search" placeholder="{{ 'Nom / Prénom de la personne'|trans }}" />
+                            <center>
+                                <button type="submit" class="sc-button orange">{{ 'Chercher une personne'|trans }}</button>
+                            </center>
+                        </form>
+                    </div>
+                </div>
+
+                {{ chill_menu('homepage', {
+                    'layout': 'ChillMainBundle::Menu/homepage.html.twig',
+                }) }}
+
+                {% endblock %}
+            </div> 
         {% endblock %}
-    </div> 
 
     <footer class="footer">
         <p>License AGPL</p>

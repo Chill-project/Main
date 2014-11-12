@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                targetDir: '<%= chill.folders.bower %>',
                install: true,
                copy: false,
-               cleanBowerDir: true,
+               //cleanBowerDir: true,
                verbose: true
             }
          }
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             files: [
                {
                   cwd: '<%= chill.folders.bower %>Scratch-CSS-Design/stylesheets/sass',
-                  src: ['*', '**',  '!_custom.scss'],
+                  src: ['**', '!_custom.scss'],
                   dest: '<%= chill.folders.sass.src %>',
                   expand: true,
                },

@@ -5,7 +5,10 @@ div#general {
     padding: 0.5em;
 }
 
-html,body { min-height:100%; }
+html,body { 
+   min-height:100%; 
+   background-color: $footer-background;
+}
 
 .cf-title {
    font-size: 2em;
@@ -18,3 +21,11 @@ html,body { min-height:100%; }
 ul.submenu.min-width {
    min-width: 11em;
 }
+
+.content {
+   padding-top: 1em;
+   padding-bottom: 1em;
+   background-color: $white;
+}
+
+

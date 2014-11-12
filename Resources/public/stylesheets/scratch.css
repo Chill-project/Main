@@ -3054,7 +3054,8 @@ div#general {
   padding: 0.5em; }
 
 html, body {
-  min-height: 100%; }
+  min-height: 100%;
+  background-color: #294253; }
 
 .cf-title {
   font-size: 2em; }
@@ -3064,5 +3065,10 @@ html, body {
 
 ul.submenu.min-width {
   min-width: 11em; }
+
+.content {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  background-color: #fff; }
 
 /*# sourceMappingURL=scratch.css.map */

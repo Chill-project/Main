@@ -2,7 +2,7 @@ root:
     pattern: /
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /welcome
+        path: /homepage
         permanent: true
     options:
         menus:
@@ -12,7 +12,7 @@ root:
                 icon: home
 
 cl_chill_main_homepage:
-    pattern:  /welcome
+    pattern:  /homepage
     defaults: { _controller: ChillMainBundle:Default:index }
 
 chill_main_admin_central:

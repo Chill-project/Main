@@ -89,14 +89,23 @@
                 {% endfor %}    
             </div>
 
-            {{ chill_menu('main', {
-                 'layout': 'ChillPersonBundle::menu.html.twig',
+            {% block content %}
+
+            <div class="container">
+                <div class="grid-8 centered">
+                    <form action="{{ path('chill_person_search') }}" method="get">
+                        <input name="q" type="search" placeholder="{{ 'Nom / Prénom de la personne'|trans }}" />
+                        <center>
+                            <button type="submit" class="sc-button orange">{{ 'Chercher une personne'|trans }}</button>
+                        </center>
+                    </form>
+                </div>
+            </div>
+
+            {{ chill_menu('homepage', {
+                'layout': 'ChillMainBundle::Menu/homepage.html.twig',
             }) }}
 
-            {% block content %}
-            <div class="grid-8">
-                <h1>Welcome to Chill</h1>
-            </div>
             {% endblock %}
             
         {% endblock %}

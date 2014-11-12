@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="grid-8 centered" style="text-align:center">
+        {% for route in routes %}
+            <a href="{{ path(route.key, args ) }}">
+                <div class="grid-3 sc-button blue" style="float: inherit;">
+                    {{ route.label|trans }}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>

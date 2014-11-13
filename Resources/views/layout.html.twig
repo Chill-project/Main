@@ -29,12 +29,12 @@
     <header class="navigation container">
         <div class="nav grid-2">
             <ul id="navigation-menu">
-                <li class="nav-link nav-title"><a href="javascript:void(0)">Chill</a>
+                <li class="nav-link nav-title"><a href="{{ path('chill_main_homepage') }}">Chill</a>
             </ul>
         </div>
         <div class="grid-4 navigation-search">
             <form action="{{ path('chill_person_search') }}" method="get">
-                <input name="q" type="search" placeholder="{{ 'Chercher une personne'|trans }}" />
+                <input name="q" type="search" placeholder="{{ 'Search a person'|trans }}" />
                 <button type="submit" class="sc-button white border"><i class="fa fa-search"></i></button>
             </form>
         </div>
@@ -97,20 +97,24 @@
 
                 <div class="container">
                     <div class="grid-8 centered">
+                        <h2>{{ 'Search a person'|trans }}</h2>
+
                         <form action="{{ path('chill_person_search') }}" method="get">
-                            <input name="q" type="search" placeholder="{{ 'Nom / Prénom de la personne'|trans }}" />
+                            <input name="q" type="search" placeholder="{{ 'Person Name'|trans }}" />
                             <center>
-                                <button type="submit" class="sc-button orange">{{ 'Chercher une personne'|trans }}</button>
+                                <button type="submit" class="sc-button orange"><i class="fa fa-search"></i> {{ 'Search a person'|trans }}</button>
                             </center>
                         </form>
                     </div>
                 </div>
 
-                {{ chill_menu('homepage', {
-                    'layout': 'ChillMainBundle::Menu/homepage.html.twig',
-                }) }}
+                <div style="padding-top:2em; padding-bottom:2em;">
+                    {{ chill_menu('homepage', {
+                        'layout': 'ChillMainBundle::Menu/homepage.html.twig',
+                    }) }}
 
-                {% endblock %}
+                    {% endblock %}
+                </div>
             </div> 
         {% endblock %}
 

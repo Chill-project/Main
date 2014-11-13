@@ -3071,4 +3071,10 @@ ul.submenu.min-width {
   padding-bottom: 1em;
   background-color: #fff; }
 
+.select2 {
+  width: 100%; }
+
+ul.custom_fields.choice li {
+  list-style: none; }
+
 /*# sourceMappingURL=scratch.css.map */

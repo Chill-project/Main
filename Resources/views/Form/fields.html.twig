@@ -6,14 +6,14 @@
         {% elseif attr.class is defined and 'no-label' in attr.class %} 
             grid-0
         {% else %}
-            grid-4
+            grid-4 clear
         {% endif %}
     {% endspaceless %}">
     {{ form_label(form) }}
     </div>
     <div class="{% spaceless %}
         {% if attr.class is defined and 'only-label' in attr.class %} 
-
+            grid-12 parent
         {% elseif attr.class is defined and 'no-label' in attr.class %} 
             grid-12
         {% else %}
@@ -26,15 +26,6 @@
 {% endspaceless %}
 {% endblock form_row %}
 
-{% block form_widget_simple %}
-{% spaceless %}
-{% if attr.class is not defined %}
-    {% set attr = {'class' : 'input wide'} %}
-{% endif %}
-    {% set type = type|default('text') %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-{% endspaceless %}
-{% endblock form_widget_simple %}
     
 {% block textarea_widget %}
 {% spaceless %}

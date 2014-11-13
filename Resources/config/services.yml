@@ -25,3 +25,8 @@ services:
             - "%locale%"
         tags:
             - { name: form.type, alias: translatable_string }
+     
+    chill.main.form.type.select2choice:
+        class: Chill\MainBundle\Form\Type\Select2ChoiceType
+        tags:
+            - {name: form.type, alias: select2_choice}

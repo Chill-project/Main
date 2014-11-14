@@ -9,3 +9,8 @@ Issues
 ======
 
 Please refer to https://redmine.champs-libres.coop/projects/chillmain/issues
+
+Documentation
+=============
+
+Read documentation here : http://chill.readthedocs.org

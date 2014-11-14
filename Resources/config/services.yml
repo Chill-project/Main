@@ -30,3 +30,13 @@ services:
         class: Chill\MainBundle\Form\Type\Select2ChoiceType
         tags:
             - {name: form.type, alias: select2_choice}
+            
+    chill.main.form.type.select2entity:
+        class: Chill\MainBundle\Form\Type\Select2EntityType
+        tags:
+            - {name: form.type, alias: select2_entity }
+            
+    chill.main.form.type.select2country:
+        class: Chill\MainBundle\Form\Type\Select2CountryType
+        tags:
+            - { name: form.type, alias: select2_chill_country }

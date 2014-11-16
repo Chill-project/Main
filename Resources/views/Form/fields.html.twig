@@ -25,16 +25,6 @@
     </div>
 {% endspaceless %}
 {% endblock form_row %}
-
-    
-{% block textarea_widget %}
-{% spaceless %}
-{% if attr.class is not defined %}
-    {% set attr = {'class' : 'input textarea'} %}
-{% endif %}
-    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
-{% endspaceless %}
-{% endblock textarea_widget %}
     
 {% block choice_widget_collapsed %}
     <div class="picker">

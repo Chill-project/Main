@@ -25,6 +25,10 @@ services:
             - "%locale%"
         tags:
             - { name: form.type, alias: translatable_string }
+    chill.main.helper.translatable_string:
+        class: Chill\MainBundle\Templating\TranslatableStringHelper
+        arguments:
+            - "@request_stack"
      
     chill.main.form.type.select2choice:
         class: Chill\MainBundle\Form\Type\Select2ChoiceType
@@ -38,5 +42,7 @@ services:
             
     chill.main.form.type.select2country:
         class: Chill\MainBundle\Form\Type\Select2CountryType
+        arguments:
+            - "@request_stack"
         tags:
             - { name: form.type, alias: select2_chill_country }

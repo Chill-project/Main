@@ -25,10 +25,19 @@ services:
             - "%locale%"
         tags:
             - { name: form.type, alias: translatable_string }
+            
+            
     chill.main.helper.translatable_string:
         class: Chill\MainBundle\Templating\TranslatableStringHelper
         arguments:
             - "@request_stack"
+            
+    chill.main.twig.translatable_string:
+        class: Chill\MainBundle\Templating\TranslatableStringTwig
+        calls:
+            - [ setContainer, ["@service_container"]]
+        tags:
+            - { name: twig.extension }
      
     chill.main.form.type.select2choice:
         class: Chill\MainBundle\Form\Type\Select2ChoiceType

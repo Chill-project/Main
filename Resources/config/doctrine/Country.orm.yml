@@ -7,7 +7,9 @@ Chill\MainBundle\Entity\Country:
             id: true
             generator:
                 strategy: AUTO
-        label:
+        name:
+            type: json_array
+        countryCode:
             type: string
-            length: 255
+            length: 3
     lifecycleCallbacks: {  }

@@ -17,7 +17,13 @@ class Country
     /**
      * @var string
      */
-    private $label;
+    private $name;
+    
+    /**
+     * 
+     * @var string
+     */
+    private $countryCode;
 
 
     /**
@@ -31,29 +37,51 @@ class Country
     }
 
     /**
-     * Set label
+     * Set name
      *
-     * @param string $label
+     * @param string $name
      * @return Country
      */
-    public function setLabel($label)
+    public function setName($name)
     {
-        $this->label = $label;
+        $this->name = $name;
     
         return $this;
     }
 
     /**
-     * Get label
+     * Get name
      *
      * @return string 
      */
-    public function getLabel()
+    public function getName()
     {
-        return $this->label;
+        return $this->name;
     }
     
+    
+    
     public function __toString() {
-        return $this->getLabel();
+        return $this->getName();
     }
+
+    /**
+     *
+     * @return the string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     *
+     * @param string $countryCode            
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+        return $this;
+    }
+ 
 }

@@ -3018,7 +3018,7 @@ form li label {
       padding: 0.5em;
       padding-left: 1em;
       font-weight: 900;
-      background-color: #c91111;
+      background-color: #ff9c00;
       color: #fff;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
@@ -3031,22 +3031,36 @@ form li label {
       padding-left: 1.5em;
       margin: 0;
       color: #000;
-      cursor: pointer; }
+      cursor: pointer;
+      border: 2px solid transparent; }
       .tab-nav > li > a:hover {
         text-decoration: none;
-        border: 2px solid #c91111;
-        color: #c91111;
+        border: 2px solid #ff9c00;
+        color: #ff9c00;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         border-bottom-left-radius: 3px;
         border-bottom-right-radius: 3px; }
       .tab-nav > li > a:active {
-        border: 2px solid #c91111;
-        color: #c91111;
+        border: 2px solid #ff9c00;
+        color: #ff9c00;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         border-bottom-left-radius: 3px;
         border-bottom-right-radius: 3px; }
+
+table {
+  width: 100%; }
+  table thead th,
+  table tbody td,
+  table tr td {
+    text-align: left;
+    padding: 0.3em; }
+  table thead {
+    background-color: #ff9c00;
+    color: #fff; }
+  table tr:nth-of-type(even) {
+    background-color: #f2f2f2; }
 
 div#general {
   background: none repeat scroll 0 0 #2980b9;

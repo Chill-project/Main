@@ -109,6 +109,7 @@ module.exports = function(grunt) {
       },
       clean: {
          css: ['<%= chill.folders.css.dist %>/*.css'],
+         bowerDir: ['<%= chill.folders.bower %>'] 
       }
    });
 

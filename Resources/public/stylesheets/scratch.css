@@ -3031,22 +3031,15 @@ form li label {
       margin: 0;
       color: #000;
       cursor: pointer;
-      border: 2px solid transparent; }
+      border: 3px solid transparent; }
+      .tab-nav > li > a:hover, .tab-nav > li > a:active {
+        border: 3px solid #ff9c00;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px; }
       .tab-nav > li > a:hover {
-        text-decoration: none;
-        border: 2px solid #ff9c00;
-        color: #ff9c00;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px; }
-      .tab-nav > li > a:active {
-        border: 2px solid #ff9c00;
-        color: #ff9c00;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px; }
+        text-decoration: none; }
 
 table {
   width: 100%; }

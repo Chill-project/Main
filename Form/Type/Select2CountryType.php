@@ -21,7 +21,10 @@
 namespace Chill\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Chill\MainBundle\Templating\TranslatableStringHelper;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Chill\MainBundle\Entity\Country;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Extends choice to allow adding select2 library on widget
@@ -30,6 +33,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class Select2CountryType extends AbstractType
 {
+    /**
+     * 
+     * @var RequestStack
+     */
+    private $requestStack;
+    
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
+    
     public function getName()
     {
         return 'select2_chill_country';
@@ -42,8 +56,11 @@ class Select2CountryType extends AbstractType
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $locale = $this->requestStack->getCurrentRequest()->getLocale();
+        
         $resolver->setDefaults(array(
-           'class' => 'Chill\MainBundle\Entity\Country'
+           'class' => 'Chill\MainBundle\Entity\Country',
+           'property' => 'name['.$locale.']'
         ));
     }
 }

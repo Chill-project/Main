@@ -36,7 +36,6 @@ ul.custom_fields.choice li {
    list-style:none;
 }
 
-
 .sticky-form-buttons {
    margin-top:1em;
    background-color:$orange;//$grey-5;
@@ -50,4 +49,8 @@ ul.custom_fields.choice li {
 .sticky-form-buttons button,  .sticky-form-buttons a {
    margin-left: 1em;
    margin-right: 1em;
+}
+
+.errors {
+   color: $red;
 }

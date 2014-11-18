@@ -35,3 +35,19 @@ ul.submenu.min-width {
 ul.custom_fields.choice li {
    list-style:none;
 }
+
+
+.sticky-form-buttons {
+   margin-top:1em;
+   background-color:$orange;//$grey-5;
+   position:sticky;
+   bottom:0.5em;
+   text-align:center;
+   padding:0.5em;
+   border-radius: $base-border-radius;
+}
+
+.sticky-form-buttons button {
+   margin-left: 1em;
+   margin-right: 1em;
+}

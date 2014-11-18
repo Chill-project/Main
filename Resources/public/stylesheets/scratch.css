@@ -2801,10 +2801,12 @@ form fieldset {
     font-size: 1.438em;
     font-weight: 700;
     width: 100%;
-    border-bottom: 1px solid #ddd; }
+    border-bottom: 3px solid #ddd;
+    margin-bottom: 1em; }
     form fieldset legend + * {
-      -webkit-margin-top-collapse: separate;
-      margin: 2em 0; }
+      -webkit-margin-top-collapse: separate; }
+    form fieldset legend h2 {
+      margin-bottom: 0; }
 form li label {
   display: inline-block;
   font-weight: normal; }
@@ -3092,7 +3094,7 @@ ul.custom_fields.choice li {
   padding: 0.5em;
   border-radius: 3px; }
 
-.sticky-form-buttons button {
+.sticky-form-buttons button, .sticky-form-buttons a {
   margin-left: 1em;
   margin-right: 1em; }
 

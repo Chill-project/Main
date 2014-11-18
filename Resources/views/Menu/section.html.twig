@@ -1,7 +1,13 @@
 <li class="nav-link more"><a href="javascript:void(0)">Sections</a>
     <ul class="submenu min-width">
         {% for route in routes %}
-            <li><a href="{{ path(route.key, args ) }}"><i class="fa fa-{{ route.icon }}"></i> {{ route.label|trans }}</a></li>
+            <li><a href="{{ path(route.key, args ) }}">
+                {% spaceless %}
+                    {% for icon in route.icons %}
+                        <i class="fa fa-{{ icon }}"></i> 
+                    {% endfor %}
+                {% endspaceless %}
+                {{ route.label|trans }}</a></li>
         {% endfor %}
     </ul>
 </li>

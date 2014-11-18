@@ -17,7 +17,7 @@ chill_main_homepage:
             section:
                 order: 10
                 label: Homepage
-                icon: home
+                icons: [home]
 
 chill_main_admin_central:
     pattern: /{_locale}/admin
@@ -27,7 +27,7 @@ chill_main_admin_central:
             section:
                 order: 20
                 label: Admin Menu
-                icon: gears
+                icons: [gears]
 
 login:
     path:     /login

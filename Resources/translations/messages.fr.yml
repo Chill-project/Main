@@ -2,4 +2,9 @@ Search a person: Rechercher une personne
 Person name: Nom / Prénom de la personne
 Login: Connexion
 Logout: Se déconnecter
-Homepage: "Page d'accueil"
+Bad credentials: Le mot de passe et le nom d'utilisateur ne correspondent pas
+Invalid CSRF token.: Votre session a expirée ou est devenue invalide.
+Username: Nom d'utilisateur
+Password: Mot de passe
+Welcome to %installation_name%: Bienvenue à %installation_name%
+Login to %installation_name%: Connexion à %installation_name%

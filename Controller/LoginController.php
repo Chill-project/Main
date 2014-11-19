@@ -37,7 +37,7 @@ class LoginController extends Controller
 
         return $this->render('ChillMainBundle:Login:login.html.twig', array(
             'last_username' => $lastUsername,
-            'error'         => $error
+            'error'         => (empty($error)) ? $error : $error->getMessage()
         ));  
         
     }

@@ -3395,7 +3395,8 @@ input, label, select {
   font-size: $form-font-size; */ }
 
 label.inline {
-  display: inline; }
+  display: inline;
+  margin-right: 1em; }
 
 label {
   font-weight: bold;

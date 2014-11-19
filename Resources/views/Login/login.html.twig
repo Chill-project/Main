@@ -1,19 +1,44 @@
-{% extends "::base.html.twig" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
 
-{% block title %}ChillMainBundle:Login:login{% endblock %}
+        <title>{{ 'Login to %installation_name%' | trans({ '%installation_name%' : installation.name } ) }}</title>
+        <style>
+            label {
+                width : 15em;
+                text-align: right;
+                display: inline-block;
+            }
+            input {
+                
+            }
+            form {
+                
+            }
+            button {
+                margin-left: 15em;
+                margin-top: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>{{ 'Welcome to %installation_name%' | trans({ '%installation_name%' : installation.name } ) }}</h1>
 
-{% block body %}
-<h1>Welcome to the Login:login page</h1>
+        <p>{{ error|trans }}</p>
 
-<p>{{ error }}</p>
+        <form method="POST" action="{{ path('login_check') }}">
+            <label for="_username">{{ 'Username'|trans }}</label>
+            <input type="text" name="_username" value="{{ last_username }}" />
+            <br/>
+            <label for="_password">{{ 'Password'|trans }}</label>
+            <input type="password" name="_password" />
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+            <br/>
+            <button type="submit">{{ 'Login'|trans }}</button>
 
-<form method="POST" action="{{ path('login_check') }}">
-    <input type="text" name="_username" value="{{ last_username }}" />
-    <input type="password" name="_password" />
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
-    
-    <button type="submit">{{ 'Login'|trans }}</button>
+        </form>
 
-</form>
+    </body>
+</html>
 
-{% endblock %}

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    
+<head>    
     <title>{{ installation.name }} - {% block title %}{% endblock %}</title>
     
     {% stylesheets  output="css/all.css" filter="cssrewrite"
@@ -100,7 +99,7 @@
                         <h2>{{ 'Search a person'|trans }}</h2>
 
                         <form action="{{ path('chill_person_search') }}" method="get">
-                            <input name="q" type="search" placeholder="{{ 'Person Name'|trans }}" />
+                            <input name="q" type="search" placeholder="{{ 'Person name'|trans }}" />
                             <center>
                                 <button type="submit" class="sc-button orange"><i class="fa fa-search"></i> {{ 'Search a person'|trans }}</button>
                             </center>

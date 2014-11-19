@@ -1,14 +1,3 @@
-views:
-    Main:
-        admin:
-            index:
-                header_title: Administration de Chill
-                page_title: Administration
-
-views:
-    Common:
-        edit: Modifier
-        show: Voir
-        actions: Actions
 Search a person: Rechercher une personne
 Person name: Nom / Prénom de la personne
+Login: Connexion

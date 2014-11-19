@@ -3739,8 +3739,11 @@ html, body {
 .cf-subtitle {
   font-size: 1.5em; }
 
-ul.submenu.min-width {
+ul.submenu.width-11-em {
   min-width: 11em; }
+
+ul.submenu.width-15-em {
+  min-width: 15em; }
 
 .content {
   padding-top: 1em;

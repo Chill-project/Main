@@ -1,5 +1,5 @@
 <li class="nav-link more"><a href="javascript:void(0)">{{ app.user.username }}</a>
-    <ul class="submenu min-width">
+    <ul class="submenu width-11-em">
         {% for route in routes %}
             <li><a href="{{ path(route.key, args ) }}"><i class="fa fa-{{ route.icon }}"></i> {{ route.label|trans }}</a></li>
         {% endfor %}

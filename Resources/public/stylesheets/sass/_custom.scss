@@ -18,8 +18,10 @@ html,body {
    font-size: 1.5em;
 }
 
-ul.submenu.min-width {
-   min-width: 11em;
+@each $len in 11, 15 {
+   ul.submenu.width-#{$len}-em {
+      min-width: #{$len}em;
+   }
 }
 
 .content {

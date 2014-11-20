@@ -3396,9 +3396,13 @@ input, label, select {
 
 label.inline {
   display: inline;
-  margin-right: 1em; }
+  line-height: 2em;
+  margin-right: 1em;
+  font-weight: normal; }
 
 label {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   font-weight: bold;
   margin-bottom: 0.375em; }
   label.required:after {
@@ -3420,7 +3424,7 @@ select[multiple=multiple] {
   box-shadow: none;
   /*font-family: $form-font-family;
   font-size: $form-font-size; */
-  margin-bottom: 0.75em;
+  margin-bottom: 0.375em;
   padding: 0.5em 0.5em;
   width: 100%; }
   textarea:hover,
@@ -3447,9 +3451,9 @@ input[type="file"] {
   width: 100%; }
 
 select {
-  margin-bottom: 0.75em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  margin-bottom: 0.375em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
   width: 100%; }
 
 form p.tip {
@@ -3771,5 +3775,8 @@ ul.custom_fields.choice li {
 
 .errors {
   color: #c91111; }
+
+.blop label {
+  line-height: 1.5em; }
 
 /*# sourceMappingURL=scratch.css.map */

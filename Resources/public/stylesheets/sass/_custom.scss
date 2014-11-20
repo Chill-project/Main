@@ -56,3 +56,7 @@ ul.custom_fields.choice li {
 .errors {
    color: $red;
 }
+
+.blop label {
+   line-height: 1 + ($base-spacing / 3);
+}

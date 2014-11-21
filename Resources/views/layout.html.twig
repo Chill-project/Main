@@ -50,16 +50,21 @@
                     'layout': 'ChillMainBundle::Menu/user.html.twig',
                 }) }}
 
-
-                <li class="nav-link more"><a href="">{{ app.request.locale | upper }}</a>
-                    <ul class="submenu">
-                        {% for locale in ['fr', 'nl', 'en']  %}
-                            <li {% if locale == app.request.locale %}class="active"{% endif %}>
-                                <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : locale})) }}">{{ locale | upper }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                {% if  available_languages|length == 1 %}
+                    <li class="nav-link">
+                        <a href="">{{ available_languages[0] | upper }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-link more"><a href="">{{ app.request.locale | upper }}</a>
+                        <ul class="submenu">
+                            {% for lang in available_languages  %}
+                                <li {% if lang == app.request.locale %}class="active"{% endif %}>
+                                    <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : lang})) }}">{{ lang | upper }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </header>

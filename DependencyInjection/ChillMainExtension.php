@@ -52,9 +52,9 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
         $twigConfig = array(
             'globals' => array(
                 'installation' => array(
-                    'name' => $config['installation_name']
-                ),
-               'date_format' => 'd-M-Y'
+                    'name' => $config['installation_name']),
+                'date_format' => 'd-M-Y',
+                'available_languages' => $config['available_languages']
             ),
             'form' => array(
                 'resources' => array('ChillMainBundle:Form:fields.html.twig'))

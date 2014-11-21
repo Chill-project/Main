@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('Chill')
                 ->end()
                 ->arrayNode('available_languages')
+                    ->defaultValue(array('fr'))
                     ->prototype('scalar')->end()
                 ->end()
             ->end();

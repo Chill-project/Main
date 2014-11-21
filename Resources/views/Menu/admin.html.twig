@@ -1,5 +1,14 @@
-<ul>
-    {% for route in routes %}
-        <li><a href="{{ path(route.key, args ) }}">{{ route.label|trans }}</a></li>
-    {% endfor %}
-</ul>
+<div class="grid-4">
+    <ul class="tab-nav follow-href-path">
+        <li class="title">{{ 'Admin Menu'|trans }}</li>
+        {% for route in routes %}
+            <li class="{% spaceless  %}
+                        {% if route.key == activeRouteKey %}
+                            active
+                        {% endif %}
+                   {% endspaceless %} ">
+                <a href="{{ path(route.key, args ) }}" >{{ route.label|trans }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

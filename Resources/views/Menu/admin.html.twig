@@ -1,0 +1,5 @@
+<ul>
+    {% for route in routes %}
+        <li><a href="{{ path(route.key, args ) }}">{{ route.label|trans }}</a></li>
+    {% endfor %}
+</ul>

@@ -6,18 +6,9 @@
 
 <h1>{{ page_title|trans }}</h1>
 
-<ul class="two tiles admin_tiles">
-    {% for menu in menu_composer.getRoutesFor(menu) %}
-        <li class="">
-            <h3><a href="{{ path(menu.route, args) }}" >{{ menu.label|trans }}</a></h3>
-            
-            <p>{{ menu.helper|trans|default('') }}</p>
-            
-            <p><a href="{{ path(menu.route, args) }}" >{{ menu.label|trans }}</a></p>
-        </li>
-
-    {% endfor %}
-</ul>
+{{ chill_menu('admin', {
+    'layout': 'ChillMainBundle::Menu/admin.html.twig',
+}) }}
 
 
 {% endblock %}

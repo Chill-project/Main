@@ -71,54 +71,50 @@
         {% block layout_content %}
             <div class="container content">
                 {# Flash messages ! #}
-                <div class="container">
-                    {% for flashMessage in app.session.flashbag.get('success') %}
-                        <div class="grid-8 centered success">
-                            <span>
-                                {{ flashMessage|raw }}
-                            </span>
-                        </div>
-                    {% endfor %}
-                        
-                    {% for flashMessage in app.session.flashbag.get('danger') %}
-                        <div class="grid-8 centered error">
-                            <span>
-                                {{ flashMessage|raw }}
-                            </span>
-                        </div>
-                    {% endfor %}
-                        
-                    {% for flashMessage in app.session.flashbag.get('info') %}
-                        <div class="grid-8 centered notice">
-                            <span>
-                                {{ flashMessage|raw }}
-                            </span>
-                        </div>
-                    {% endfor %}    
-                </div>
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="grid-8 centered success">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}
+                    
+                {% for flashMessage in app.session.flashbag.get('danger') %}
+                    <div class="grid-8 centered error">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}
+                    
+                {% for flashMessage in app.session.flashbag.get('info') %}
+                    <div class="grid-8 centered notice">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}    
 
                 {% block content %}
+                    <div class="container">
+                        <div class="grid-8 centered">
+                            <h2>{{ 'Search a person'|trans }}</h2>
 
-                <div class="container">
-                    <div class="grid-8 centered">
-                        <h2>{{ 'Search a person'|trans }}</h2>
-
-                        <form action="{{ path('chill_person_search') }}" method="get">
-                            <input name="q" type="search" placeholder="{{ 'Person name'|trans }}" />
-                            <center>
-                                <button type="submit" class="sc-button orange"><i class="fa fa-search"></i> {{ 'Search a person'|trans }}</button>
-                            </center>
-                        </form>
+                            <form action="{{ path('chill_person_search') }}" method="get">
+                                <input name="q" type="search" placeholder="{{ 'Person name'|trans }}" />
+                                <center>
+                                    <button type="submit" class="sc-button orange"><i class="fa fa-search"></i> {{ 'Search a person'|trans }}</button>
+                                </center>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <div style="padding-top:2em; padding-bottom:2em;">
-                    {{ chill_menu('homepage', {
-                        'layout': 'ChillMainBundle::Menu/homepage.html.twig',
-                    }) }}
-
-                    {% endblock %}
-                </div>
+                    <div style="padding-top:2em; padding-bottom:2em;">
+                        {{ chill_menu('homepage', {
+                            'layout': 'ChillMainBundle::Menu/homepage.html.twig',
+                        }) }}
+                    </div>
+                {% endblock %}
             </div> 
         {% endblock %}
 

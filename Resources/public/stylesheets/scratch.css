@@ -3269,7 +3269,7 @@ a:hover {
     .navigation .navigation-search button {
       padding: 7px 12px;
       position: absolute;
-      top: .9em;
+      top: .99em;
       right: 1em; }
 
 a {
@@ -3277,6 +3277,12 @@ a {
 
 .text-right {
   text-align: right; }
+
+html, body {
+  height: 100%; }
+
+.content {
+  min-height: 85%; }
 
 .footer {
   background: #294253;

@@ -28,6 +28,10 @@ chill_main_admin_central:
                 order: 20
                 label: Admin Menu
                 icons: [gears]
+                
+chill_main_search:
+    pattern: /{_locale}/person/search
+    defaults: { _controller: ChillMainBundle:Search:search }
 
 login:
     path:     /login

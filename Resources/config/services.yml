@@ -54,3 +54,7 @@ services:
             - "@request_stack"
         tags:
             - { name: form.type, alias: select2_chill_country }
+            
+    chill.main.search_provider:
+        class: Chill\MainBundle\Search\SearchProvider
+    

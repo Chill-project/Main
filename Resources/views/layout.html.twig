@@ -123,16 +123,39 @@
     </footer>
 
     <script type="text/javascript">
-    $('.datepicker').pikaday({ 
-        format: "D-M-YYYY",
-        i18n: {
-            previousMonth : 'Mois précédent',
-            nextMonth     : 'Mois suivant',
-            months        : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-            weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
-            weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+    function init_pikaday(locale) {
+        var i18n_trad = {
+            fr: {
+                previousMonth : 'Mois précédent',
+                nextMonth     : 'Mois suivant',
+                months        : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                weekdays      : ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+                weekdaysShort : ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam']
+            },
+            nl: {
+                previousMonth : 'Vorig maand',
+                nextMonth     : 'Volgende maand',
+                months        : ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'],
+                weekdays      : ['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'],
+                weekdaysShort : ['Zon','Ma','Di','Wo','Do','Vri','Zat']
+            }
+        };
+
+        var pikaday_options = { 
+            format: "D-M-YYYY",
+            yearRange: [parseInt(moment().format('YYYY')) - 100, parseInt(moment().format('YYYY'))],
+        };
+
+        if(locale in i18n_trad) {
+            pikaday_options.i18n = i18n_trad[locale];
         }
-    });
+
+        $('.datepicker').pikaday(
+            pikaday_options
+        );
+    };
+
+    init_pikaday('{{ app.request.locale }}');
 
     $('.select2').select2();
     </script>

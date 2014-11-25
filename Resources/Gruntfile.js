@@ -82,6 +82,10 @@ module.exports = function(grunt) {
                   expand: true,
                }
             ]
+         },
+         jquery: {
+            src: '<%= chill.folders.bower %>jquery/dist/jquery.js',
+            dest: '<%= chill.folders.pub %>/js/jquery.js'
          }
       },
       sass: {

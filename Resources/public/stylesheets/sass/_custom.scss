@@ -48,9 +48,14 @@ ul.custom_fields.choice li {
    border-radius: $base-border-radius;
 }
 
-.sticky-form-buttons button,  .sticky-form-buttons a {
-   margin-left: 1em;
-   margin-right: 1em;
+.sticky-form-buttons .margin-5 {
+   margin-left: 5%;
+   margin-right: 5%;
+}
+
+.sticky-form-buttons .margin-10 {
+   margin-left: 10%;
+   margin-right: 10%;
 }
 
 .errors {

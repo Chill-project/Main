@@ -3775,9 +3775,13 @@ ul.custom_fields.choice li {
   padding: 0.5em;
   border-radius: 3px; }
 
-.sticky-form-buttons button, .sticky-form-buttons a {
-  margin-left: 1em;
-  margin-right: 1em; }
+.sticky-form-buttons .margin-5 {
+  margin-left: 5%;
+  margin-right: 5%; }
+
+.sticky-form-buttons .margin-10 {
+  margin-left: 10%;
+  margin-right: 10%; }
 
 .errors {
   color: #c91111; }

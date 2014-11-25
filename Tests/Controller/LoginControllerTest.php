@@ -9,13 +9,21 @@ class LoginControllerTest extends WebTestCase
 {
     public function testLogin()
     {
-        $client = static::createClient();
+        $client = static::createClient(array(
+            'framework' => array(
+                'default_locale' => 'en',
+                'translator' => array(
+                    'fallback' => 'en'
+                )
+            ),
+            
+        ));
 
         //load login page and submit form
         $crawler = $client->request('GET', '/login');
         $this->assertTrue($client->getResponse()->isSuccessful());
         
-        $buttonCrawlerNode = $crawler->selectButton('Login');
+        $buttonCrawlerNode = $crawler->selectButton('login');
         $form = $buttonCrawlerNode->form();
         
         $client->submit($form, array(
@@ -40,7 +48,7 @@ class LoginControllerTest extends WebTestCase
         $logoutLinkFilter = $crawler->filter('a:contains("Logout")');
         
         //check there is > 0 logout link
-        $this->assertGreaterThan(0, $logoutLinkFilter->count());
+        $this->assertGreaterThan(0, $logoutLinkFilter->count(), 'check that a logout link is present');
         
         //click on logout link
         $client->followRedirects(false);

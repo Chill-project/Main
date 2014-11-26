@@ -54,7 +54,13 @@ services:
             - "@request_stack"
         tags:
             - { name: form.type, alias: select2_chill_country }
-            
+
+    chill.main.form.type.select2language:
+        class: Chill\MainBundle\Form\Type\Select2LanguageType
+        arguments:
+            - "@request_stack"
+        tags:
+            - { name: form.type, alias: select2_chill_language }
+
     chill.main.search_provider:
         class: Chill\MainBundle\Search\SearchProvider
-    

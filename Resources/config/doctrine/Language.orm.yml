@@ -1,0 +1,10 @@
+Chill\MainBundle\Entity\Language:
+    type: entity
+    table: null
+    id: 
+        id:
+            type: string
+    fields:
+        name:
+            type: json_array
+    lifecycleCallbacks: {  }

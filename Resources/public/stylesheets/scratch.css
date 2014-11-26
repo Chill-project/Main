@@ -2018,6 +2018,13 @@ th {
 .fa-meanpath:before {
   content: ""; }
 
+/*
+// Flash Colors
+$alert-color: $light-yellow;
+$error-color: $light-red;
+$notice-color: lighten($base-accent-color, 40);
+$success-color: $light-green;
+*/
 /* etrange pour les forms */
 * {
   box-sizing: inherit; }
@@ -3152,7 +3159,7 @@ a:hover {
   color: #1b557a; }
 
 .navigation {
-  background-color: #333;
+  background-color: #333333;
   border-bottom: 1px solid #1a1a1a;
   height: 60px;
   z-index: 999; }
@@ -3171,7 +3178,7 @@ a:hover {
     margin: 0;
     padding: 0; }
   .navigation ul li.nav-link {
-    background: #333;
+    background: #333333;
     display: block;
     line-height: 60px;
     overflow: hidden;
@@ -3254,7 +3261,7 @@ a:hover {
         display: inline-block;
         text-align: right;
         width: 100%;
-        background-color: #333;
+        background-color: #333333;
         padding-left: 1em;
         text-align: left; }
   .navigation .navigation-search {
@@ -3285,7 +3292,7 @@ html, body {
   min-height: 85%; }
 
 .footer {
-  background: #294253;
+  background: gray;
   width: 100%; }
   .footer .footer-logo {
     text-align: center;
@@ -3363,22 +3370,22 @@ html, body {
     text-align: center; }
 
 .success {
-  background: rgba(74, 155, 23, 0.2);
-  color: #4a9b17;
+  background: rgba(39, 128, 111, 0.2);
+  color: #27806f;
   font-weight: bold;
   margin-bottom: 0.75em;
   padding: 0.75em; }
 
 .error {
-  background: rgba(201, 17, 17, 0.2);
-  color: #c91111;
+  background: rgba(200, 61, 61, 0.2);
+  color: #C83D3D;
   font-weight: bold;
   margin-bottom: 0.75em;
   padding: 0.75em; }
 
 .alert {
-  background: rgba(255, 156, 0, 0.2);
-  color: #ff9c00;
+  background: rgba(255, 98, 44, 0.2);
+  color: #FF622C;
   font-weight: bold;
   margin-bottom: 0.75em;
   padding: 0.75em; }
@@ -3413,7 +3420,7 @@ label {
   margin-bottom: 0.375em; }
   label.required:after {
     content: "*";
-    color: #c91111;
+    color: #C83D3D;
     font-weight: 900; }
   label abbr {
     display: none; }
@@ -3426,7 +3433,7 @@ select[multiple=multiple] {
   border-top-right-radius: 3px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  border: 1px solid #DDD;
+  border: 1px solid #cccccc;
   box-shadow: none;
   /*font-family: $form-font-family;
   font-size: $form-font-size; */
@@ -3436,7 +3443,7 @@ select[multiple=multiple] {
   textarea:hover,
   input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover,
   select[multiple=multiple]:hover {
-    border-color: #c4c4c4; }
+    border-color: #b3b3b3; }
   textarea:focus,
   input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus,
   select[multiple=multiple]:focus {
@@ -3545,7 +3552,7 @@ form li label {
         box-shadow: none; }
   .sc-button.green {
     color: #fff;
-    background: #4a9b17;
+    background: #27806f;
     border: medium none;
     box-shadow: none;
     padding: 8px 12px;
@@ -3560,19 +3567,19 @@ form li label {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
     .sc-button.green:hover, .sc-button.green:active {
-      background: #3f8514;
+      background: #216c5e;
       color: #fff;
       text-decoration: none; }
     .sc-button.green:focus {
-      background: #3f8514; }
+      background: #216c5e; }
     .sc-button.green[disabled] {
-      background: rgba(74, 155, 23, 0.6);
-      color: #356f10; }
+      background: rgba(39, 128, 111, 0.6);
+      color: #1b594d; }
       .sc-button.green[disabled]:hover {
         box-shadow: none; }
   .sc-button.orange {
     color: #fff;
-    background: #ff9c00;
+    background: #FF622C;
     border: medium none;
     box-shadow: none;
     padding: 8px 12px;
@@ -3587,19 +3594,19 @@ form li label {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
     .sc-button.orange:hover, .sc-button.orange:active {
-      background: #e68c00;
+      background: #ff4f13;
       color: #fff;
       text-decoration: none; }
     .sc-button.orange:focus {
-      background: #e68c00; }
+      background: #ff4f13; }
     .sc-button.orange[disabled] {
-      background: rgba(255, 156, 0, 0.6);
-      color: #cc7d00; }
+      background: rgba(255, 98, 44, 0.6);
+      color: #f83f00; }
       .sc-button.orange[disabled]:hover {
         box-shadow: none; }
   .sc-button.red {
     color: #fff;
-    background: #c91111;
+    background: #C83D3D;
     border: medium none;
     box-shadow: none;
     padding: 8px 12px;
@@ -3614,14 +3621,14 @@ form li label {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px; }
     .sc-button.red:hover, .sc-button.red:active {
-      background: #b10f0f;
+      background: #b73434;
       color: #fff;
       text-decoration: none; }
     .sc-button.red:focus {
-      background: #b10f0f; }
+      background: #b73434; }
     .sc-button.red[disabled] {
-      background: rgba(201, 17, 17, 0.6);
-      color: #9a0d0d; }
+      background: rgba(200, 61, 61, 0.6);
+      color: #a42e2e; }
       .sc-button.red[disabled]:hover {
         box-shadow: none; }
   .sc-button.black {
@@ -3697,7 +3704,7 @@ form li label {
       padding: 0.5em;
       padding-left: 1em;
       font-weight: 900;
-      background-color: #ff9c00;
+      background-color: #FF622C;
       color: #fff;
       border-top-left-radius: 3px;
       border-top-right-radius: 3px;
@@ -3713,7 +3720,7 @@ form li label {
       cursor: pointer;
       border: 3px solid transparent; }
       .tab-nav > li > a:hover, .tab-nav > li > a:active {
-        border: 3px solid #ff9c00;
+        border: 3px solid #FF622C;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         border-bottom-left-radius: 3px;
@@ -3729,19 +3736,19 @@ table {
     text-align: left;
     padding: 0.3em; }
   table thead {
-    background-color: #ff9c00;
+    background-color: #FF622C;
     color: #fff; }
   table tr:nth-of-type(even) {
     background-color: #f2f2f2; }
 
 div#general {
-  background: none repeat scroll 0 0 #2980b9;
+  background: none repeat scroll 0 0 #27806f;
   color: #FFF;
   padding: 0.5em; }
 
 html, body {
   min-height: 100%;
-  background-color: #294253; }
+  background-color: gray; }
 
 .cf-title {
   font-size: 2em; }
@@ -3768,7 +3775,7 @@ ul.custom_fields.choice li {
 
 .sticky-form-buttons {
   margin-top: 1em;
-  background-color: #ff9c00;
+  background-color: #FF622C;
   position: sticky;
   bottom: 0.5em;
   text-align: center;
@@ -3784,7 +3791,7 @@ ul.custom_fields.choice li {
   margin-right: 10%; }
 
 .errors {
-  color: #c91111; }
+  color: #C83D3D; }
 
 .blop label {
   line-height: 1.5em; }

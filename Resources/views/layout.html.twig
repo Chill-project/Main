@@ -157,6 +157,13 @@
 
     init_pikaday('{{ app.request.locale }}');
 
+    $('.input-text-other-value').each(function() {
+        $(this).change(function() {
+            checkbox = $(this).parent().find("input[type=checkbox][value=_other]")[0];
+            $(checkbox).prop('checked', ($(this).val() !== ""))
+        });
+    });
+
     $('.select2').select2();
     </script>
 

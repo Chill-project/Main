@@ -49,8 +49,7 @@
         {{ form_label(child, '', {'label_attr': { 'class' : 'inline'} }) }}
         </div>
     {% endfor %}
-    {{ form_widget(form._choices) }}
-    {{ form_widget(form._other) }}
+    {{ form_widget(form._other, {'attr': {'class': 'input-text-other-value'} }) }}
 {% endspaceless %}
 {% endblock  choice_with_other_widget %}
 

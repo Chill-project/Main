@@ -1,7 +1,9 @@
-Search a person: Zoek een persoon
-'Search persons, ...': 'Zoek persoons, ...'
 Search: Zoek
-Person name: Naam / Voornaam
+'Search persons, ...': 'Zoek persoons, ...'
+Search a person: Zoek een persoon
 Login: Log in
 Logout: Log out
-Homepage: Homepage
+Username: Gebruikersnaam
+Password: Wachtworrd
+Login to %installation_name%: Log in bij %installation_name%
+Welcome to %installation_name%: Welkom bij %installation_name%

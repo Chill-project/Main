@@ -60,6 +60,7 @@ services:
         class: Chill\MainBundle\Form\Type\Select2LanguageType
         arguments:
             - "@request_stack"
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type, alias: select2_chill_language }
 

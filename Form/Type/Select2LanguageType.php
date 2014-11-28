@@ -21,10 +21,12 @@
 namespace Chill\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Chill\MainBundle\Templating\TranslatableStringHelper;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Chill\MainBundle\Entity\Language;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Form\FormBuilderInterface;
+use Chill\MainBundle\Form\Type\DataTransformer\MultipleObjectsToIdTransformer;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Extends choice to allow adding select2 library on widget for languages (multiple)
@@ -32,14 +34,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class Select2LanguageType extends AbstractType
 {
     /**
-     * 
      * @var RequestStack
      */
     private $requestStack;
+
+    /**
+     * @var ObjectManager
+     */
+    private $em;
     
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack,ObjectManager $em)
     {
         $this->requestStack = $requestStack;
+        $this->em = $em;
     }
     
     public function getName()
@@ -47,18 +54,32 @@ class Select2LanguageType extends AbstractType
         return 'select2_chill_language';
     }
     
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $transformer = new MultipleObjectsToIdTransformer($this->em,'Chill\MainBundle\Entity\Language');
+        $builder->addModelTransformer($transformer);
+    }
+
     public function getParent()
     {
-        return 'select2_entity';
+        return 'select2_choice';
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $locale = $this->requestStack->getCurrentRequest()->getLocale();
-        
+        $languages = $this->em->getRepository('Chill\MainBundle\Entity\Language')->findAll();
+        $choices = array();
+
+        foreach ($languages as $l) {
+            $choices[$l->getId()] = $l->getName()[$locale];
+        }
+
+        asort($choices, SORT_STRING | SORT_FLAG_CASE);
+
         $resolver->setDefaults(array(
            'class' => 'Chill\MainBundle\Entity\Language',
-           'property' => 'name['.$locale.']'
+           'choices' => $choices
         ));
     }
 }

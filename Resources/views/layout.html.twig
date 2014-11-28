@@ -165,6 +165,41 @@
     });
 
     $('.select2').select2();
+
+
+    $('.sticky-form-buttons').each(function(i,stick_element) {
+        if($(stick_element).css('position') !== 'sticky') {
+            var sticky_form_buttons_offset_top = $(stick_element).offset().top;
+
+            function stickyEmulate() {
+                if (($(window).scrollTop() + $(window).height()) < sticky_form_buttons_offset_top) {
+                    //sticky at bottom
+                    $(stick_element).css('position','fixed');
+                    $(stick_element).css('bottom','0');
+                    $(stick_element).css('top','');
+                    $(stick_element).css('width',$(stick_element).parent().outerWidth());
+                } else if (sticky_form_buttons_offset_top < $(window).scrollTop()) {
+                    //sticky at top
+                    $(stick_element).css('position','fixed');
+                    $(stick_element).css('top','0');
+                    $(stick_element).css('bottom','');
+                    $(stick_element).css('width',$(stick_element).parent().outerWidth());
+                } else {
+                    //no sticky
+                    $(stick_element).css('position','initial');
+                    $(stick_element).css('bottom','');
+                    $(stick_element).css('width','');
+                    $(stick_element).css('top','');
+                }
+            }
+
+            $(window).scroll(function() {
+                stickyEmulate();
+            });
+
+            stickyEmulate();
+        }
+    });
     </script>
 
 </body>

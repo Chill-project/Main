@@ -52,6 +52,7 @@ services:
         class: Chill\MainBundle\Form\Type\Select2CountryType
         arguments:
             - "@request_stack"
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type, alias: select2_chill_country }
 

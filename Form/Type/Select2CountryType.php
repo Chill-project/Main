@@ -2,7 +2,7 @@
 
 /*
  * Chill is a software for social workers
- * Copyright (C) 2014 Champs-Libres <info@champs-libres.coop>
+ * Copyright (C) 2014, Champs Libres Cooperative SCRLFS, <http://www.champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,11 +21,9 @@
 namespace Chill\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Chill\MainBundle\Templating\TranslatableStringHelper;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Chill\MainBundle\Entity\Country;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Form\Type\DataTransformer\ObjectToIdTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -34,6 +32,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  * Extends choice to allow adding select2 library on widget
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @author Marc Ducobu <marc.ducobu@champs-libres.coop>
  */
 class Select2CountryType extends AbstractType
 {
@@ -79,7 +78,7 @@ class Select2CountryType extends AbstractType
             $choices[$c->getId()] = $c->getName()[$locale];
         }
 
-        asort($choices);
+        asort($choices, SORT_STRING | SORT_FLAG_CASE);
 
         $resolver->setDefaults(array(
            'class' => 'Chill\MainBundle\Entity\Country',

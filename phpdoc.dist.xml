@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <parser>
+    <target>data/output</target>
+    <default-package-name>Chill\MainBundle</default-package-name>
+  </parser>
+  <transformer>
+    <target>data/output</target>
+  </transformer>
+  <files>
+    <directory>.</directory>
+    <ignore>Tests/Fixtures/App/AppKernel.php</ignore>
+  </files>
+</phpdoc>

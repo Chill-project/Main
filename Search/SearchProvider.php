@@ -39,6 +39,55 @@ class SearchProvider
                 
         return $this->searchServices;
     }
+    
+    /**
+     * parse the search string to extract domain and terms
+     * 
+     * @param string $pattern
+     * @return string[] an array where the keys are _domain, _default (residual terms) or term
+     */
+    public function parse($pattern)
+    {
+        $terms = array();
+        
+        $terms['_domain'] = $this->getDomain($pattern);
+        
+        return $terms;
+    }
+    
+    private function getDomain($subject)
+    {
+        preg_match_all( '/@([a-z]+)/', $subject, $terms);
+        
+        if (count($terms[0]) > 1) {
+            throw new ParsingException('You should not have more than one domain');
+        }
+        
+        return isset($terms[1][0]) ? $terms[1][0] : '';
+    }
+    
+    /**
+     * search through services which supports domain and give
+     * results as html string
+     * 
+     * @param string $pattern
+     * @param number $start
+     * @param number $limit
+     * @return array of html results
+     */
+    public function getResults($pattern, $start = 0, $limit = 50)
+    {
+        $terms = $this->parse($pattern);
+        $results = array();
+        
+        foreach ($searchServices as $service) {
+            if ($service->supports($terms['_domain'])) {
+                $results[] = $service->renderResult($terms, $start, $limit);
+            }
+        }
+    
+        return $results;
+    }
 
     /*
      * return search services with a specific name, defined in service

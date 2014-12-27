@@ -31,7 +31,7 @@ namespace Chill\MainBundle\Search;
  */
 interface SearchInterface #-> good name ?
 {
-   /* 
+   /** 
     * return the result in a html string. The string will be inclued (as raw)
     * into a global view.
     * 
@@ -40,15 +40,15 @@ interface SearchInterface #-> good name ?
     *    {{ result|raw }}
     * {% endfor %}
     *
-    * @param string $pattern the string to search
+    * @param array  $terms   the string to search
     * @param int    $start   the first result (for pagination)
     * @param int    $limit   the number of result (for pagination)
     * @param array  $option  the options, specific for each search
     * @return string, an HTML string
     */
-   public function renderResult($pattern, $start=0, $limit=50, array $options = array());
+   public function renderResult($terms, $start=0, $limit=50, array $options = array());
 
-   /* 
+   /** 
     * we may desactive the search interface by default. in this case,
     * the search will be launch and rendered only with "advanced search" 
     * 
@@ -58,14 +58,7 @@ interface SearchInterface #-> good name ?
     */
    public function isActiveByDefault();
 
-   /*
-    * a string used in advanced search to activate the search
-    * 
-    * @return string a string which will be translated by twig
-    */
-   public function getLabel();
-
-   /*
+   /**
     * the order in which the results will appears in the global view
     * 
     * (this may be eventually defined in config.yml)
@@ -73,4 +66,12 @@ interface SearchInterface #-> good name ?
     * @return int 
     */
    public function getOrder();
+   
+   /**
+    * indicate if the implementation supports the given domain
+    * 
+    * @return boolean
+    */
+   public function supports($domain);
+   
 }

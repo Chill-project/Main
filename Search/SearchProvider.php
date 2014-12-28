@@ -48,14 +48,19 @@ class SearchProvider
      */
     public function parse($pattern)
     {
-        $terms = array();
+        //reset must be extracted
+        $this->mustBeExtracted = array();
+        //filter to lower and remove accentued
+        $filteredPattern = mb_strtolower($pattern);
         
-        $terms['_domain'] = $this->getDomain($pattern);
+        $terms = $this->extractTerms($filteredPattern);      
+        $terms['_domain'] = $this->extractDomain($filteredPattern);
+        $terms['_default'] = $this->extractDefault($filteredPattern);
         
         return $terms;
     }
     
-    private function getDomain($subject)
+    private function extractDomain(&$subject)
     {
         preg_match_all( '/@([a-z]+)/', $subject, $terms);
         
@@ -63,8 +68,50 @@ class SearchProvider
             throw new ParsingException('You should not have more than one domain');
         }
         
+        //add pattern to be extracted
+        if (isset($terms[0][0])) {
+            $this->mustBeExtracted[] = $terms[0][0];
+        }
+        
         return isset($terms[1][0]) ? $terms[1][0] : NULL;
     }
+    
+    private function extractTerms(&$subject)
+    {
+        $terms = array();
+        preg_match_all('/([a-z]+):([\w\-]+|\([^\(\r\n]+\))/', $subject, $matches);
+        
+        foreach ($matches[2] as $key => $match) {
+            //remove from search pattern
+            $this->mustBeExtracted[] = $matches[0][$key];
+             //strip parenthesis
+            if (mb_substr($match, 0, 1) === '(' && 
+                  mb_substr($match, mb_strlen($match) - 1) === ')') {
+                $match = mb_substr($match, 1, mb_strlen($match)-2);
+            }
+            $terms[$matches[1][$key]] = $match;
+        }
+        
+        return $terms;
+    }
+    
+    /**
+     * store string which must be extracted to find default arguments
+     * 
+     * @var string[]
+     */
+    private $mustBeExtracted = array();
+    
+    /**
+     * extract default (residual) arguments
+     * 
+     * @param string $subject
+     * @return string
+     */
+    private function extractDefault($subject) {
+        return trim(str_replace($this->mustBeExtracted, '', $subject));
+    }
+    
     
     /**
      * search through services which supports domain and give

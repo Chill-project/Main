@@ -39,9 +39,14 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
     
     public function testDomain()
     {
-        $term = $this->p("@person is not my name");
+        $terms = $this->p("@person birthdate:2014-01-02 name:(my name) is not my name");
         
-        $this->assertEquals('person', $term['_domain']);
+        $this->assertEquals(array(
+           '_domain' => 'person',
+           'birthdate' => '2014-01-02',
+           '_default' => 'is not my name',
+           'name' => 'my name'
+        ), $terms);
     }
     
     /**

@@ -29,6 +29,14 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
         $this->search = new SearchProvider();
     }
     
+    /**
+     * @expectedException \Chill\MainBundle\Search\UnknowSearchNameException
+     */
+    public function testInvalidSearchName()
+    {
+        $this->search->getByName("invalid name");
+    }
+    
     public function testDomain()
     {
         $term = $this->p("@person is not my name");

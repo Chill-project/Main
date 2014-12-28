@@ -63,7 +63,7 @@ class SearchProvider
             throw new ParsingException('You should not have more than one domain');
         }
         
-        return isset($terms[1][0]) ? $terms[1][0] : '';
+        return isset($terms[1][0]) ? $terms[1][0] : NULL;
     }
     
     /**
@@ -89,15 +89,20 @@ class SearchProvider
         return $results;
     }
 
-    /*
+    /**
      * return search services with a specific name, defined in service
      * definition.
      *
      * @return SearchInterface
+     * @throws UnknowSearchNameException if not exists
      */
     public function getByName($name)
     {
-        return $this->searchServices[$name];
+        if (isset($this->searchServices[$name])) {
+            return $this->searchServices; 
+        } else {
+          throw new UnknowSearchNameException($name);
+        }
     }
 
     public function addSearchService(SearchInterface $service, $name)

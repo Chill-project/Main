@@ -105,7 +105,7 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
     
     public function testAccentued()
     {
-        $this->markTestSkipped('accentued characters must be implemented');
+        //$this->markTestSkipped('accentued characters must be implemented');
         
         $terms = $this->p('manço bélier aztèque à saloù ê');
         
@@ -117,7 +117,7 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
     
     public function testAccentuedCapitals()
     {
-        $this->markTestSkipped('accentued characters must be implemented');
+        //$this->markTestSkipped('accentued characters must be implemented');
         
         $terms = $this->p('MANÉÀ oÛ lÎ À');
         

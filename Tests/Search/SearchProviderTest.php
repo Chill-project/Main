@@ -37,7 +37,7 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
         $this->search->getByName("invalid name");
     }
     
-    public function testDomain()
+    public function testSimplePattern()
     {
         $terms = $this->p("@person birthdate:2014-01-02 name:(my name) is not my name");
         
@@ -49,13 +49,103 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
         ), $terms);
     }
     
+    public function testWithoutDomain()
+    {
+        $terms = $this->p('foo:bar residual');
+        
+        $this->assertEquals(array(
+           '_domain' => null,
+           'foo' => 'bar',
+           '_default' => 'residual'
+        ), $terms);
+    }
+    
+    public function testWithoutDefault()
+    {
+        $terms = $this->p('@person foo:bar');
+        
+        $this->assertEquals(array(
+           '_domain' => 'person',
+           'foo' => 'bar',
+           '_default' => ''
+        ), $terms);
+    }
+    
+    public function testCapitalLetters()
+    {
+        $terms = $this->p('Foo:Bar LOL marCi @PERSON');
+        
+        $this->assertEquals(array(
+           '_domain' => 'person',
+           '_default' => 'lol marci',
+           'foo' => 'bar'
+        ), $terms);
+    }
+    
     /**
      * @expectedException Chill\MainBundle\Search\ParsingException
      */
     public function testMultipleDomainError()
     {
         $term = $this->p("@person @report");
-        var_dump($term);
+    }
+    
+    public function testDoubleParenthesis()
+    {
+        $terms = $this->p("@papamobile name:(my beautiful name) residual "
+              . "surname:(i love techno)");
+        
+        $this->assertEquals(array(
+           '_domain' => 'papamobile',
+           'name' => 'my beautiful name',
+           '_default' => 'residual',
+           'surname' => 'i love techno'
+        ), $terms);
+    }
+    
+    public function testAccentued()
+    {
+        $this->markTestSkipped('accentued characters must be implemented');
+        
+        $terms = $this->p('manço bélier aztèque à saloù ê');
+        
+        $this->assertEquals(array(
+           '_domain' => NULL,
+           '_default' => 'manco belier azteque a salou e'
+        ), $terms);
+    }
+    
+    public function testAccentuedCapitals()
+    {
+        $this->markTestSkipped('accentued characters must be implemented');
+        
+        $terms = $this->p('MANÉÀ oÛ lÎ À');
+        
+        $this->assertEquals(array(
+           '_domain' => null,
+           '_default' => 'manea ou li a'
+        ), $terms);
+    }
+    
+    public function testTrimInParenthesis()
+    {
+        $terms = $this->p('foo:(bar     )');
+        
+        $this->assertEquals(array(
+           '_domain' => null,
+           'foo' => 'bar',
+           '_default' => ''
+        ), $terms);
+    }
+    
+    public function testTrimInDefault()
+    {
+        $terms = $this->p('  foo bar     ');
+        
+        $this->assertEquals(array(
+           '_domain' => null,
+           '_default' => 'foo bar'
+        ), $terms);
     }
     
     /**

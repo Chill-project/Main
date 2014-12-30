@@ -87,7 +87,7 @@ class SearchProvider
              //strip parenthesis
             if (mb_substr($match, 0, 1) === '(' && 
                   mb_substr($match, mb_strlen($match) - 1) === ')') {
-                $match = mb_substr($match, 1, mb_strlen($match)-2);
+                $match = trim(mb_substr($match, 1, mb_strlen($match)-2));
             }
             $terms[$matches[1][$key]] = $match;
         }

@@ -46,7 +46,7 @@ interface SearchInterface #-> good name ?
     * @param array  $option  the options, specific for each search
     * @return string, an HTML string
     */
-   public function renderResult($terms, $start=0, $limit=50, array $options = array());
+   public function renderResult(array $terms, $start=0, $limit=50, array $options = array());
 
    /** 
     * we may desactive the search interface by default. in this case,

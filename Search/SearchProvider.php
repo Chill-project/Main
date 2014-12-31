@@ -130,7 +130,7 @@ class SearchProvider
         $terms = $this->parse($pattern);
         $results = array();
 
-        foreach ($searchServices as $service) {
+        foreach ($this->searchServices as $service) {
             if ($service->supports($terms['_domain'])) {
                 $results[] = $service->renderResult($terms, $start, $limit);
             }

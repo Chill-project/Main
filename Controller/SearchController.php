@@ -36,13 +36,11 @@ class SearchController extends Controller
 {
     public function searchAction(Request $request)
     {
-        $searches = $this->get('chill.main.search_provider')->getByOrder();
-        $results = array();
-        
-        foreach ($searches as $search ) {
-            $results[] = $search->renderResult($request->get('q'));
-        }
+        $results = $this->get('chill.main.search_provider')
+              ->getResults($request->query->get('q'));
     
-        return $this->render('ChillMainBundle:Search:list.html.twig', array('results' => $results) );
+        return $this->render('ChillMainBundle:Search:list.html.twig', 
+              array('results' => $results) 
+              );
     }
 }

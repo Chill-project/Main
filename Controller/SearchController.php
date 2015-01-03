@@ -45,7 +45,8 @@ class SearchController extends Controller
             return $this->render('ChillMainBundle:Search:error.html.twig',
                   array(
                      'message' => $this->get('translator')->trans("Your search is empty. "
-                           . "Please provide search terms.")
+                           . "Please provide search terms."),
+                     'pattern' => $pattern
                   ));
             
         }
@@ -64,7 +65,8 @@ class SearchController extends Controller
             return $this->render('ChillMainBundle:Search:error.html.twig', 
                   array(
                      "message" => $this->get('translator')->trans("The domain %domain% "
-                           . "is unknow. Please check your search.", array('%domain%' => $ex->getDomain()))
+                           . "is unknow. Please check your search.", array('%domain%' => $ex->getDomain())),
+                     'pattern' => $pattern
                   ));
         } catch (UnknowSearchNameException $ex) {
             throw $this->createNotFoundException("The name ".$ex->getName()." is not found");
@@ -72,13 +74,14 @@ class SearchController extends Controller
             return $this->render('ChillMainBundle:Search:error.html.twig', 
                   array(
                      "message" => $this->get('translator')->trans('Invalid terms').
-                     ": ".$this->get('translator')->trans($ex->getMessage())
+                     ": ".$this->get('translator')->trans($ex->getMessage()),
+                     'pattern' => $pattern
                   ));
         }
         
     
         return $this->render('ChillMainBundle:Search:list.html.twig', 
-              array('results' => $results) 
+              array('results' => $results, 'pattern' => $pattern) 
               );
     }
     

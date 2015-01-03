@@ -33,7 +33,7 @@
         </div>
         <div class="grid-4 navigation-search">
             <form action="{{ path('chill_main_search') }}" method="get">
-                <input name="q" type="search" placeholder="{{ 'Search'|trans }}" />
+                <input name="q" type="search" placeholder="{{ 'Search'|trans }}" {% if _search_pattern is defined %}value="{{ _search_pattern }}"{% endif %}/>
                 <button type="submit" class="sc-button white border"><i class="fa fa-search"></i></button>
             </form>
         </div>

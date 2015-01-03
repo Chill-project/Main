@@ -20,13 +20,30 @@
 namespace Chill\MainBundle\Test\Search;
 
 use Chill\MainBundle\Search\SearchProvider;
+use Chill\MainBundle\Search\SearchInterface;
 
 
 class SearchProviderTest extends \PHPUnit_Framework_TestCase
 {
+    
+    /**
+     *
+     * @var SearchProvider 
+     */
+    private $search;
+    
     public function setUp()
     {
         $this->search = new SearchProvider();
+        
+        //add a default service
+        $this->addSearchService(
+              $this->createDefaultSearchService('I am default', 10), 'default'
+              );
+        //add a domain service
+        $this->addSearchService(
+              $this->createDefaultSearchService('I am domain bar', 20), 'bar'
+              );
     }
     
     /**
@@ -149,6 +166,74 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * Test the behaviour when no domain is provided in the search pattern : 
+     * the default search should be enabled
+     */
+    public function testDefaultSearch()
+    {
+        $response = $this->search->getSearchResults('default search');
+
+        $this->markTestSkipped();
+        
+        $this->assertEquals(array(
+           "I am default"
+        ), $response);      
+    }
+    
+    /**
+     * @expectedException \Chill\MainBundle\Search\UnknowSearchDomainException
+     */
+    public function testDomainUnknow()
+    {
+        $response = $this->search->getSearchResults('@unknow domain');
+
+        $this->markTestSkipped();
+        
+    }
+    
+    public function testDomainSearch()
+    {
+        //add a search service which will be supported
+        $this->addSearchService(
+              $this->createNonDefaultDomainSearchService("I am domain foo", 100, TRUE), 'foo'
+              );
+        
+        $response = $this->search->getSearchResults('@foo default search');
+        
+        $this->assertEquals(array(
+           "I am domain foo"
+        ), $response);
+        
+    }
+    
+    public function testSearchWithinSpecificSearchName()
+    {
+        $this->markTestSkipped();
+        //add a search service which will be supported
+        $this->addSearchService(
+              $this->createNonDefaultDomainSearchService("I am domain foo", 100, TRUE), 'foo'
+              );
+        
+        $response = $this->search->getResultByName('@foo search', 'foo');
+        
+        $this->assertEquals(array(
+           'I am domain foo'
+        ), $response);
+        
+    }
+    
+    /**
+     * @expectedException \Chill\MainBundle\Search\ParsingException
+     */
+    public function testSearchWithinSpecificSearchNameInConflictWithSupport()
+    {
+        $this->markTestSkipped();
+        
+        $response = $this->search->getResultByName('@foo default search', 'bar');
+        
+    }
+    
+    /**
      * shortcut for executing parse method
      * 
      * @param unknown $pattern
@@ -157,5 +242,67 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
     private function p($pattern)
     {
         return $this->search->parse($pattern);
+    }
+    
+    /**
+     * Add a search service to the chill.main.search_provider
+     * 
+     * Useful for mocking the SearchInterface
+     * 
+     * @param SearchInterface $search
+     * @param string $name
+     */
+    private function addSearchService(SearchInterface $search,  $name)
+    {
+        $this->search
+              ->addSearchService($search, $name);
+    }
+    
+    private function createDefaultSearchService($result, $order)
+    {
+        $mock = $this
+              ->getMockForAbstractClass('Chill\MainBundle\Search\AbstractSearch');
+        
+        //set the mock as default
+        $mock->expects($this->any())
+              ->method('isActiveByDefault')
+              ->will($this->returnValue(TRUE));
+        
+        $mock->expects($this->any())
+              ->method('getOrder')
+              ->will($this->returnValue($order));
+        
+        //set the return value
+        $mock->expects($this->any())
+              ->method('renderResult')
+              ->will($this->returnValue($result));
+        
+        return $mock;
+    }
+    
+    private function createNonDefaultDomainSearchService($result, $order, $domain)
+    {
+        $mock = $this
+              ->getMockForAbstractClass('Chill\MainBundle\Search\AbstractSearch');
+        
+        //set the mock as default
+        $mock->expects($this->any())
+              ->method('isActiveByDefault')
+              ->will($this->returnValue(FALSE));
+        
+        $mock->expects($this->any())
+              ->method('getOrder')
+              ->will($this->returnValue($order));
+        
+        $mock->expects($this->any())
+              ->method('supports')
+              ->will($this->returnValue($domain));
+        
+        //set the return value
+        $mock->expects($this->any())
+              ->method('renderResult')
+              ->will($this->returnValue($result));
+        
+        return $mock;
     }
 }

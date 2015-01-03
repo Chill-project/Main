@@ -29,7 +29,6 @@ class UnknowSearchNameException extends \Exception
 {
     public function __construct($name)
     {
-        parent::__construct( "The module search with name $name "
-              . "is not found");
+        parent::__construct( "No module search supports with the name $name");
     }
 }

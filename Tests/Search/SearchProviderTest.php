@@ -42,7 +42,7 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
               );
         //add a domain service
         $this->addSearchService(
-              $this->createDefaultSearchService('I am domain bar', 20), 'bar'
+              $this->createNonDefaultDomainSearchService('I am domain bar', 20, FALSE), 'bar'
               );
     }
     
@@ -169,11 +169,11 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
      * Test the behaviour when no domain is provided in the search pattern : 
      * the default search should be enabled
      */
-    public function testDefaultSearch()
+    public function testSearchResultDefault()
     {
         $response = $this->search->getSearchResults('default search');
 
-        $this->markTestSkipped();
+        //$this->markTestSkipped();
         
         $this->assertEquals(array(
            "I am default"
@@ -183,15 +183,15 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Chill\MainBundle\Search\UnknowSearchDomainException
      */
-    public function testDomainUnknow()
+    public function testSearchResultDomainUnknow()
     {
         $response = $this->search->getSearchResults('@unknow domain');
 
-        $this->markTestSkipped();
+        //$this->markTestSkipped();
         
     }
     
-    public function testDomainSearch()
+    public function testSearchResultDomainSearch()
     {
         //add a search service which will be supported
         $this->addSearchService(
@@ -208,7 +208,6 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
     
     public function testSearchWithinSpecificSearchName()
     {
-        $this->markTestSkipped();
         //add a search service which will be supported
         $this->addSearchService(
               $this->createNonDefaultDomainSearchService("I am domain foo", 100, TRUE), 'foo'
@@ -216,9 +215,7 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
         
         $response = $this->search->getResultByName('@foo search', 'foo');
         
-        $this->assertEquals(array(
-           'I am domain foo'
-        ), $response);
+        $this->assertEquals('I am domain foo', $response);
         
     }
     
@@ -227,8 +224,6 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testSearchWithinSpecificSearchNameInConflictWithSupport()
     {
-        $this->markTestSkipped();
-        
         $response = $this->search->getResultByName('@foo default search', 'bar');
         
     }

@@ -124,19 +124,54 @@ class SearchProvider
      * @param number $start
      * @param number $limit
      * @return array of html results
+     * @throws UnknowSearchDomainException if the domain is unknow
      */
-    public function getResults($pattern, $start = 0, $limit = 50)
+    public function getSearchResults($pattern, $start = 0, $limit = 50)
     {
         $terms = $this->parse($pattern);
         $results = array();
-
-        foreach ($this->searchServices as $service) {
-            if ($service->supports($terms['_domain'])) {
-                $results[] = $service->renderResult($terms, $start, $limit);
+        
+        //sort searchServices by order
+        $sortedSearchServices = array();
+        foreach($this->searchServices as $service) {
+            $sortedSearchServices[$service->getOrder()] = $service;
+        }
+        
+        if ($terms['_domain'] !== NULL) {
+            foreach ($sortedSearchServices as $service) {
+                if ($service->supports($terms['_domain'])) {
+                    $results[] = $service->renderResult($terms, $start, $limit);
+                }
+            }
+            
+            if (count($results) === 0) {
+                throw new UnknowSearchDomainException($terms['_domain']);
+            }
+        } else { // no domain provided, we use default search
+            foreach($sortedSearchServices as $service) {
+                if ($service->isActiveByDefault()) {
+                    $results[] = $service->renderResult($terms, $start, $limit);
+                }
             }
         }
+        
+        //sort array
+        ksort($results);
 
         return $results;
+    }
+    
+    public function getResultByName($pattern, $name, $start = 0, $limit = 50) 
+    {
+        $terms = $this->parse($pattern);
+        $search = $this->getByName($name);
+        
+        if ($terms['_domain'] !== NULL && !$search->supports($terms['_domain']))
+        {
+            throw new ParsingException("The domain is not supported for the search name");
+        }
+        
+        return $search->renderResult($terms, $start, $limit);
     }
 
     /**
@@ -149,7 +184,7 @@ class SearchProvider
     public function getByName($name)
     {
         if (isset($this->searchServices[$name])) {
-            return $this->searchServices;
+            return $this->searchServices[$name];
         } else {
             throw new UnknowSearchNameException($name);
         }

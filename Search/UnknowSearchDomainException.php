@@ -25,11 +25,19 @@ namespace Chill\MainBundle\Search;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class UnknowSearchNameException extends \Exception
+class UnknowSearchDomainException extends \Exception
 {
-    public function __construct($name)
+    
+    private $domain;
+    
+    public function __construct($domain)
     {
-        parent::__construct( "The module search with name $name "
-              . "is not found");
+        parent::__construct( "The domain $domain is not found");
+        $this->domain = $domain;
+    }
+    
+    public function getDomain() 
+    {
+        return $this->domain;
     }
 }

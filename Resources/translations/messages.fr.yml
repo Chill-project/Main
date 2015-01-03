@@ -9,3 +9,9 @@ Username: Nom d'utilisateur
 Password: Mot de passe
 Welcome to %installation_name%: Bienvenue à %installation_name%
 Login to %installation_name%: Connexion à %installation_name%
+
+#serach
+Your search is empty. Please provide search terms.: La recherche est vide. Merci de fournir des termes de recherche.
+The domain %domain% is unknow. Please check your search.: Le domaine de recherche "%domain%" est inconnu. Merci de vérifier votre recherche.
+Invalid terms : Recherche invalide
+You should not have more than one domain. : Vous ne devriez pas avoir plus d'un domaine de recherche.

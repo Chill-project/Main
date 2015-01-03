@@ -68,7 +68,7 @@ class SearchProvider
         preg_match_all('/@([a-z]+)/', $subject, $terms);
 
         if (count($terms[0]) > 1) {
-            throw new ParsingException('You should not have more than one domain');
+            throw new ParsingException('You should not have more than one domain.');
         }
 
         //add pattern to be extracted

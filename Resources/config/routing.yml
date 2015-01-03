@@ -30,7 +30,7 @@ chill_main_admin_central:
                 icons: [gears]
                 
 chill_main_search:
-    pattern: /{_locale}/person/search
+    pattern: /{_locale}/search
     defaults: { _controller: ChillMainBundle:Search:search }
 
 login:

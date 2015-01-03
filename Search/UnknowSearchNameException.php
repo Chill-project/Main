@@ -27,8 +27,17 @@ namespace Chill\MainBundle\Search;
  */
 class UnknowSearchNameException extends \Exception
 {
+    
+    private $name;
+    
     public function __construct($name)
     {
         parent::__construct( "No module search supports with the name $name");
+        $this->name = $name;
+    }
+    
+    public function getName()
+    {
+        return $this->name;
     }
 }

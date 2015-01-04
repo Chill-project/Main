@@ -60,5 +60,16 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
                 'resources' => array('ChillMainBundle:Form:fields.html.twig'))
         );
         $container->prependExtensionConfig('twig', $twigConfig);
+        
+        //add DQL function to ORM (default entity_manager)
+        $container->prependExtensionConfig('doctrine', array(
+           'orm' => array(
+              'dql' => array(
+                 'string_functions' => array(
+                    'unaccent' => 'Chill\MainBundle\Doctrine\DQL\Unaccent'
+                 )
+              )
+           )
+        ));
     }
 }

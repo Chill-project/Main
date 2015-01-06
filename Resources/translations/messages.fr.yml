@@ -15,3 +15,5 @@ Your search is empty. Please provide search terms.: La recherche est vide. Merci
 The domain %domain% is unknow. Please check your search.: Le domaine de recherche "%domain%" est inconnu. Merci de vérifier votre recherche.
 Invalid terms : Recherche invalide
 You should not have more than one domain. : Vous ne devriez pas avoir plus d'un domaine de recherche.
+#used for page title
+Search %pattern%: Recherche de "%pattern%"

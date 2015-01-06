@@ -18,6 +18,8 @@
 
 {% set _search_pattern = pattern %}
 
+{% block title %}{{ 'Search %pattern%'|trans({ '%pattern%' : pattern }) }}{% endblock title %}
+
 {%  block content %}
 
 {% for result in results %}

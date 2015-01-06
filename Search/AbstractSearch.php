@@ -36,6 +36,7 @@ use Chill\MainBundle\Search\ParsingException;
 abstract class AbstractSearch implements SearchInterface
 {
     /**
+     * parse string expected to be a date and transform to a DateTime object
      * 
      * @param type $string
      * @return \DateTime
@@ -53,11 +54,21 @@ abstract class AbstractSearch implements SearchInterface
         
     }
     
-    protected function recomposePattern(array $terms, array $supportedTerms, $domain = '')
+    /**
+     * recompose a pattern, retaining only supported terms
+     * 
+     * the outputted string should be used to show users their search
+     * 
+     * @param array $terms
+     * @param array $supportedTerms
+     * @param string $domain if your domain is NULL, you should set NULL. You should set used domain instead
+     * @return string
+     */
+    protected function recomposePattern(array $terms, array $supportedTerms, $domain = NULL)
     {
         $recomposed = '';
         
-        if ($domain !== '')
+        if ($domain !== NULL)
         {
             $recomposed .= '@'.$domain.' ';
         }
@@ -71,6 +82,11 @@ abstract class AbstractSearch implements SearchInterface
         
         if ($terms['_default'] !== '') {
             $recomposed .= ' '.$terms['_default'];
+        }
+        
+        //strip first character if empty
+        if (mb_strcut($recomposed, 0, 1) === ' '){
+            $recomposed = mb_strcut($recomposed, 1);
         }
         
         return $recomposed;

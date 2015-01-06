@@ -28,31 +28,28 @@ namespace Chill\MainBundle\Tests\Search;
 class AbstractSearchTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Ab
-     * @var type
-     * @var typestractS
+     * @var \Chill\MainBundle\Search\AbstractSearch
      */
     private $stub;
     
     public function setUp()
     {
-        $this->stub = $this->getMockForAbstractClass('Chill\MainBundle\Search\AbstractSearch',
-                array(),
-                '',
-                true,
-                true,
-                true,
-                array('parseDate'));
+        $this->stub = $this->getMockForAbstractClass('Chill\MainBundle\Search\AbstractSearch');
     }
     
     public function testParseDateRegular()
     {
-        $this->markTestSkipped('We have to learn how to mock concret methods for abstract class');
-
-        $date = $this->stub->parseDate('2014-05-01');
         
+        //var_dump($this->stub);
+        $date = $this->stub->parseDate('2014-05-01');
+
         $this->assertEquals('2014', $date->format('Y'));
         $this->assertEquals('05', $date->format('m'));
         $this->assertEquals('01', $date->format('d'));
+    }
+    
+    public function testRecompose()
+    {
+        $this->markTestSkipped();
     }
 }

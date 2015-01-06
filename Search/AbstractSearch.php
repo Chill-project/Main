@@ -52,4 +52,27 @@ abstract class AbstractSearch implements SearchInterface
         }
         
     }
+    
+    protected function recomposePattern(array $terms, array $supportedTerms, $domain = '')
+    {
+        $recomposed = '';
+        
+        if ($domain !== '')
+        {
+            $recomposed .= '@'.$domain.' ';
+        }
+        
+        foreach ($supportedTerms as $term) {
+            if (array_key_exists($term, $terms) && $term !== '_default') {
+                $recomposed .= ' '.$term.':';
+                $recomposed .= (mb_stristr(' ', $terms[$term]) === FALSE) ?  $terms[$term] : '('.$terms[$term].')';
+            }
+        }
+        
+        if ($terms['_default'] !== '') {
+            $recomposed .= ' '.$terms['_default'];
+        }
+        
+        return $recomposed;
+    }
 }

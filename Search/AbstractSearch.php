@@ -22,6 +22,7 @@
 namespace Chill\MainBundle\Search;
 
 use Chill\MainBundle\Search\SearchInterface;
+use Chill\MainBundle\Search\ParsingException;
 
 /**
  * This class implements abstract search with most common responses.
@@ -34,5 +35,21 @@ use Chill\MainBundle\Search\SearchInterface;
  */
 abstract class AbstractSearch implements SearchInterface
 {
-    
+    /**
+     * 
+     * @param type $string
+     * @return \DateTime
+     * @throws ParsingException if the  date is not parseable
+     */
+    public function parseDate($string)
+    {
+        try {
+            return new \DateTime($string);
+        } catch (ParsingException $ex) {
+            $exception = new ParsingException('The date is '
+                      . 'not parsable', 0, $ex);
+            throw $exception;
+        }
+        
+    }
 }

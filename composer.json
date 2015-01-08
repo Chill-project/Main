@@ -23,8 +23,8 @@
         "symfony/framework-bundle": "2.5.*",
         "symfony/yaml": "2.5.*",
         "symfony/symfony": "2.5.*",
-        "doctrine/dbal": "2.5.*@dev",
-        "doctrine/orm": "2.5.*@dev",
+        "doctrine/dbal": "~2.5",
+        "doctrine/orm": "2.5.x-dev@dev",
         "doctrine/common": "2.4.*@dev",
         "doctrine/doctrine-bundle": "~1.2@dev"
     },

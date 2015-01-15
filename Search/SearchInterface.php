@@ -29,7 +29,7 @@ namespace Chill\MainBundle\Search;
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  *
  */
-interface SearchInterface #-> good name ?
+interface SearchInterface
 {
    /** 
     * return the result in a html string. The string will be inclued (as raw)

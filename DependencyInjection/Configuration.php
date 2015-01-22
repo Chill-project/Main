@@ -30,6 +30,12 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array('fr'))
                     ->prototype('scalar')->end()
                 ->end()
+                ->arrayNode('routing')
+                    ->children()
+                        ->arrayNode('resources')
+                        ->prototype('scalar')->end()
+                        ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

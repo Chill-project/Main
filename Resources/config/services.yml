@@ -2,6 +2,13 @@ parameters:
 #    cl_chill_main.example.class: Chill\MainBundle\Example
 
 services:
+    chill.main.routes_loader:
+        class: Chill\MainBundle\Routing\Loader\ChillRoutesLoader
+        arguments:
+            - "%chill_main.routing.resources%"
+        tags:
+            - { name: routing.loader }
+            
     chill.main.menu_composer:
         class: Chill\MainBundle\Routing\MenuComposer
         #must be set in function to avoid circular reference with chill.main.twig.chill_menu

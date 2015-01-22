@@ -28,6 +28,9 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('chill_main.available_languages',
             $config['available_languages']);
+        
+        $container->setParameter('chill_main.routing.resources', 
+            $config['routing']['resources']); 
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -69,6 +72,16 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
                     'unaccent' => 'Chill\MainBundle\Doctrine\DQL\Unaccent'
                  )
               )
+           )
+        ));
+        
+        //add current route to chill main
+        $container->prependExtensionConfig('chill_main', array(
+           'routing' => array(
+              'resources' => array(
+                 '@ChillMainBundle/Resources/config/routing.yml'
+              )
+              
            )
         ));
     }

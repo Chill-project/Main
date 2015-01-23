@@ -23,6 +23,11 @@ services:
             - [setContainer, ["@service_container"]]
         tags:
             - { name: twig.extension }
+            
+    twig_intl:
+        class: Twig_Extensions_Extension_Intl
+        tags: 
+            - { name: twig.extension }
 
     chill.main.form.type.translatable.string:
         class: Chill\MainBundle\Form\Type\TranslatableStringFormType

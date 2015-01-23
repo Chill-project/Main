@@ -11,6 +11,8 @@ php:
 addons:
   postgresql: "9.3"
 
+sudo: false
+
 install: 
    - composer install --dev
    - cp Tests/Fixtures/App/config/parameters.travis.yml Tests/Fixtures/App/config/parameters.yml

@@ -56,7 +56,6 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
             'globals' => array(
                 'installation' => array(
                     'name' => $config['installation_name']),
-                'date_format' => 'd-M-Y',
                 'available_languages' => $config['available_languages']
             ),
             'form' => array(

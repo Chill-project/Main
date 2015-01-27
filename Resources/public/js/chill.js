@@ -82,6 +82,42 @@ var chill = function() {
       }
    }
 
+
+   /**
+   * Protect to leave a page where the form  'form_id' has unsaved changes by displaying
+   * a popup-containing a warning.
+   *
+   * @param{string} form_id A identification string of the form
+   * @param{string} unsaved_data_message The string to display in the warning pop-up
+   * @return nothing
+   */
+   function protectUnsavedDataForFrom(form_id, unsaved_data_message) {
+      var form_submitted = false;
+      var unsaved_data = false;
+
+      $(form_id)
+         .submit(function() {
+            form_submitted = true;
+         })
+         .on('reset', function() {
+            unsaved_data = false;
+         });
+
+
+
+      $.each($(form_id).find(':input'), function(i,e) {
+         $(e).change(function() {
+            unsaved_data = true;
+         });
+      });
+
+      $(window).bind('beforeunload', function(){
+         if((!form_submitted) && unsaved_data) {
+            return unsaved_data_message;
+         }
+      });
+   }
+
    /* Enable the following behavior : when the user change the value
    of an other field, its checkbox is checked.
    */
@@ -98,5 +134,6 @@ var chill = function() {
       initPikaday: initPikaday,
       emulateSticky: emulateSticky,
       checkOtherValueOnChange: checkOtherValueOnChange,
+      protectUnsavedDataForFrom: protectUnsavedDataForFrom,
    };
 } ();

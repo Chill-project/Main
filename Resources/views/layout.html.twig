@@ -4,9 +4,9 @@
     <title>{{ installation.name }} - {% block title %}{% endblock %}</title>
     
     {% stylesheets  output="css/all.css" filter="cssrewrite"
-          "bundles/chillmain/stylesheets/scratch.css"
+          "bundles/chillmain/css/scratch.css"
           "bundles/chillmain/css/chillmain.css"
-          "bundles/chillmain/select2.css"
+          "bundles/chillmain/css/select2/select2.css"
           "bundles/chillmain/css/pikaday.css" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
@@ -14,12 +14,12 @@
     {% block css%}<!-- nothing added to css -->{% endblock %}
 
     {% javascripts output="js/libs.js"
-        "bundles/chillmain/js/modernizr-2.6.2.min.js"
         "bundles/chillmain/js/jquery.js"
-        "bundles/chillmain/moment.js"
-        "bundles/chillmain/pikaday.js"
-        "bundles/chillmain/select2.js"
-        "bundles/chillmain/plugins/pikaday.jquery.js" %}
+        "bundles/chillmain/js/moment.js"
+        "bundles/chillmain/js/pikaday/pikaday.js"
+        "bundles/chillmain/js/select2/select2.js"
+        "bundles/chillmain/js/pikaday/plugins/pikaday.jquery.js"
+        "bundles/chillmain/js/chill.js" %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     {% endjavascripts %}    
 </head>
@@ -123,6 +123,13 @@
     </footer>
 
     <script type="text/javascript">
+        chill.initPikaday('{{ app.request.locale }}');
+        chill.emulateSticky();
+        chill.checkOtherValueOnChange();
+        $('.select2').select2();
+
+    /*
+
     function init_pikaday(locale) {
         var i18n_trad = {
             fr: {
@@ -200,7 +207,11 @@
             stickyEmulate();
         }
     });
+*/
     </script>
+
+    {% block js%}<!-- nothing added to js -->{% endblock %}
+
 
 </body>
 </html>

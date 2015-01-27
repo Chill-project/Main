@@ -26,5 +26,13 @@ Resources/assets/gumpy/.sass-cache
 Resources/.sass-cache/
 Resources/bower_components/
 Resources/node_modules/
-Resources/public/stylesheets/sass/*
-!Resources/public/stylesheets/sass/_custom.scss
+Resources/public/css/sass/*
+!Resources/public/css/sass/_custom.scss
+Resources/public/js/select2/
+Resources/public/js/pikaday/
+Resources/public/css/select2/
+Resources/public/js/moment.js
+Resources/public/js/pikaday/
+Resources/public/js/select2/
+Resources/public/js/jquery*
+Resources/public/css/scratch*

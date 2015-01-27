@@ -7,12 +7,9 @@ module.exports = function(grunt) {
             pub: './public',
             fonts: '<%= chill.folders.pub %>/fonts',
             bower: './bower_components/',
-            css: {
-               dist: '<%= chill.folders.pub %>/stylesheets/',
-            },
-            sass: {
-               src: '<%= chill.folders.css.dist %>/sass/',
-            }
+            css: '<%= chill.folders.pub %>/css/',
+            js: '<%= chill.folders.pub %>/js/',
+            sass: '<%= chill.folders.css %>/sass/',
          }
       },
       bower: {
@@ -32,7 +29,7 @@ module.exports = function(grunt) {
                {
                   cwd: '<%= chill.folders.bower %>Scratch-CSS-Design/stylesheets/sass',
                   src: ['**', '!_custom.scss'],
-                  dest: '<%= chill.folders.sass.src %>',
+                  dest: '<%= chill.folders.sass %>',
                   expand: true,
                },
                {
@@ -45,22 +42,34 @@ module.exports = function(grunt) {
          },
          select2: {
             files: [
-                {
-                    cwd: '<%= chill.folders.bower %>select2',
-                    src: ['*'],
-                    dest: '<%= chill.folders.pub %>',
-                    expand: true,
-                }
+               {
+                  cwd: '<%= chill.folders.bower %>select2',
+                  src: ['*.js'],
+                  dest: '<%= chill.folders.js %>select2',
+                  expand: true,
+               },
+               {
+                  cwd: '<%= chill.folders.bower %>select2',
+                  src: ['*.css', 'select2.png'],
+                  dest: '<%= chill.folders.css %>select2',
+                  expand: true,
+               }
             ]
          },
          pikaday: {
             files: [
-                {
-                    cwd: '<%= chill.folders.bower %>pikaday',
-                    src: ['css/pikaday.css', 'pikaday.js',  'plugins/pikaday.jquery.js'],
-                    dest: '<%= chill.folders.pub %>',
-                    expand: true,
-                }
+               {
+                  cwd: '<%= chill.folders.bower %>pikaday/css',
+                  src: ['pikaday.css'],
+                  dest: '<%= chill.folders.css %>',
+                  expand: true,
+               },
+               {
+                  cwd: '<%= chill.folders.bower %>pikaday',
+                  src: ['pikaday.js',  'plugins/pikaday.jquery.js'],
+                  dest: '<%= chill.folders.js %>pikaday',
+                  expand: true,
+               }
             ]
          },
          moment: {
@@ -68,12 +77,12 @@ module.exports = function(grunt) {
                 {
                     cwd: '<%= chill.folders.bower %>moment',
                     src: ['moment.js'],
-                    dest: '<%= chill.folders.pub %>',
+                    dest: '<%= chill.folders.js %>',
                     expand: true,
                 }
             ]
          },
-         chill_standard: {
+         chill_standard: { /* copy all files in chill standard */
             files: [
                {
                   cwd: './public',
@@ -85,16 +94,19 @@ module.exports = function(grunt) {
          },
          jquery: {
             src: '<%= chill.folders.bower %>jquery/dist/jquery.js',
-            dest: '<%= chill.folders.pub %>/js/jquery.js'
+            dest: '<%= chill.folders.js %>/jquery.js'
          }
       },
       sass: {
          dist: {
+            options: {
+               debugInfo: true,
+            },
             files: [{
                expand: true,
                cwd: '<%= chill.folders.sass.src %>',
                src: ['*.scss'],
-               dest: '<%= chill.folders.css.dist %>',
+               dest: '<%= chill.folders.css %>',
                ext: '.css'
             }]
          }
@@ -112,7 +124,9 @@ module.exports = function(grunt) {
          }
       },
       clean: {
-         css: ['<%= chill.folders.css.dist %>/*.css'],
+         /*css: ['<%= chill.folders.css %>*',  '!<%= chill.folders.css %>sass/_custom.scss'], */
+         js: ['<%= chill.folders.js %>*',  '!<%= chill.folders.js %>/main.js'],
+         chill_standard: ['../../../../web/bundles/chillmain/'],
          bowerDir: ['<%= chill.folders.bower %>'] 
       }
    });
@@ -123,7 +137,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-contrib-clean');
 
-   grunt.registerTask('generatecss', ['clean:css', 'sass', 'copy:chill_standard']);
+   grunt.registerTask('generatecss', [/*'clean:css',*/ 'copy:scratch', 'sass', 'copy:chill_standard']);
    grunt.registerTask('dependencies', ['bower', 'copy']);
    grunt.registerTask('default', ['dependencies', 'generatecss']);
 };

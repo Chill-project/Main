@@ -82,7 +82,7 @@ module.exports = function(grunt) {
                 }
             ]
          },
-         chill_standard: { /* copy all files in chill standard */
+         chill_standard: { /* copy all files in chill standard (done by app/console assets:install) */
             files: [
                {
                   cwd: './public',
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-contrib-clean');
 
-   grunt.registerTask('generatecss', [/*'clean:css',*/ 'copy:scratch', 'sass', 'copy:chill_standard']);
+   grunt.registerTask('generatecss', [/*'clean:css',*/ 'copy:scratch', 'sass']);
    grunt.registerTask('dependencies', ['bower', 'copy']);
    grunt.registerTask('default', ['dependencies', 'generatecss']);
 };

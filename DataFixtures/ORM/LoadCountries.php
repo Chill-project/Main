@@ -14,7 +14,7 @@ use Chill\MainBundle\Command\LoadCountriesCommand;
  *
  * @author Julien Fastré <julien arobase fastre point info>
  */
-class LoadCountries extends AbstractFixture implements ContainerAwareInterface {
+class LoadCountries extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface {
     
     /**
      * 
@@ -28,7 +28,7 @@ class LoadCountries extends AbstractFixture implements ContainerAwareInterface {
     }
     
     public function getOrder() {
-        return 1001;
+        return 20;
     }
     
     public function load(ObjectManager $manager) {

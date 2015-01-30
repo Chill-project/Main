@@ -84,14 +84,20 @@ var chill = function() {
 
 
    /**
-   * Protect to leave a page where the form  'form_id' has unsaved changes by displaying
-   * a popup-containing a warning.
+   * Display an alert message when the user wants to leave a page containing a given form
+   * in a given state.
    *
-   * @param{string} form_id A identification string of the form
-   * @param{string} unsaved_data_message The string to display in the warning pop-up
+   * The action of displaying the form be parametrised as :
+   * - always display the alert message when leaving
+   * - only display the alert message when the form contains some modified fields.
+   *
+   * @param{string} form_id An identification string of the form
+   * @param{string} alert_message The alert message to display
+   * @param{boolean} check_unsaved_data If true display the alert message only when the form 
+   * contains some modified fields otherwise always display the alert when leaving
    * @return nothing
    */
-   function protectUnsavedDataForFrom(form_id, unsaved_data_message) {
+   function _generalDisplayAlertWhenLeavingForm(form_id, alert_message, check_unsaved_data) {
       var form_submitted = false;
       var unsaved_data = false;
 
@@ -103,8 +109,6 @@ var chill = function() {
             unsaved_data = false;
          });
 
-
-
       $.each($(form_id).find(':input'), function(i,e) {
          $(e).change(function() {
             unsaved_data = true;
@@ -112,10 +116,34 @@ var chill = function() {
       });
 
       $(window).bind('beforeunload', function(){
-         if((!form_submitted) && unsaved_data) {
-            return unsaved_data_message;
+         if((!form_submitted) && (unsaved_data || !check_unsaved_data)) {
+            return alert_message;
          }
       });
+   }
+
+   /**
+   * Display an alert message when the user wants to leave a page containing a given
+   * modified form.
+   *
+   * @param{string} form_id An identification string of the form
+   * @param{string} alert_message The alert message to display
+   * @return nothing
+   */
+   function displayAlertWhenLeavingModifiedForm(form_id, alert_message) {
+      _generalDisplayAlertWhenLeavingForm(form_id, alert_message, true);
+   }
+
+   /**
+   * Display an alert message when the user wants to leave a page containing a given
+   * form that was not submitted.
+   *
+   * @param{string} form_id An identification string of the form
+   * @param{string} alert_message The alert message to display
+   * @return nothing
+   */
+   function displayAlertWhenLeavingUnsubmittedForm(form_id, alert_message) {
+      _generalDisplayAlertWhenLeavingForm(form_id, alert_message, false);
    }
 
    /* Enable the following behavior : when the user change the value
@@ -134,6 +162,7 @@ var chill = function() {
       initPikaday: initPikaday,
       emulateSticky: emulateSticky,
       checkOtherValueOnChange: checkOtherValueOnChange,
-      protectUnsavedDataForFrom: protectUnsavedDataForFrom,
+      displayAlertWhenLeavingModifiedForm: displayAlertWhenLeavingModifiedForm,
+      displayAlertWhenLeavingUnsubmittedForm: displayAlertWhenLeavingUnsubmittedForm,
    };
 } ();

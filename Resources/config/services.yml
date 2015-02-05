@@ -34,7 +34,7 @@ services:
         arguments:
             - "%chill_main.available_languages%"
             #- "%framework.translator.fallback%"
-            - "%locale%"
+            - "@translator.default"
         tags:
             - { name: form.type, alias: translatable_string }
 

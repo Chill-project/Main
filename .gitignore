@@ -20,7 +20,7 @@ Tests/Fixtures/App/config/parameters.yml
 composer.lock
 #sass-cache
 Resources/assets/gumpy/.sass-cache
-
+Resources/public/stylesheets/sass
 *~
 
 Resources/.sass-cache/

@@ -42,6 +42,7 @@ services:
         class: Chill\MainBundle\Templating\TranslatableStringHelper
         arguments:
             - "@request_stack"
+            - "@translator.default"
 
     chill.main.twig.translatable_string:
         class: Chill\MainBundle\Templating\TranslatableStringTwig

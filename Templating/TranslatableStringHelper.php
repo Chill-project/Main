@@ -22,6 +22,7 @@
 namespace Chill\MainBundle\Templating;
 
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Translation\Translator;
 
 /**
  * 
@@ -38,9 +39,12 @@ class TranslatableStringHelper
      */
     private $requestStack;
     
-    public function __construct(RequestStack $requestStack)
+    private $fallbackLocales;
+    
+    public function __construct(RequestStack $requestStack, Translator $translator)
     {
         $this->requestStack = $requestStack;
+        $this->fallbackLocales = $translator->getFallbackLocales();
     }
     
     /**
@@ -64,13 +68,16 @@ class TranslatableStringHelper
         
 
         if (isset($translatableStrings[$language])) {
+            
             return $translatableStrings[$language];
         } else {
-            foreach ($translatableStrings as $string) {
-                if (!empty($string)) {
-                    return $string;
+            foreach ($this->fallbackLocales as $locale) {
+                if (array_key_exists($locale, $translatableStrings)) {
+                    
+                    return $translatableStrings[$locale];
                 }
             }
+            
         }
     
         return '';

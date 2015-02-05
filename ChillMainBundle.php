@@ -5,6 +5,7 @@ namespace Chill\MainBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Chill\MainBundle\DependencyInjection\SearchableServicesCompilerPass;
+use Chill\MainBundle\DependencyInjection\ConfigConsistencyCompilerPass;
 
 class ChillMainBundle extends Bundle
 {
@@ -12,5 +13,6 @@ class ChillMainBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new SearchableServicesCompilerPass());
+        $container->addCompilerPass(new ConfigConsistencyCompilerPass());
     }
 }

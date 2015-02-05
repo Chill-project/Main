@@ -36,3 +36,6 @@ assetic:
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
+        
+chill_main:
+    available_languages: [fr, en]

@@ -33,7 +33,7 @@ class SearchableServicesCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-    if (!$container->hasDefinition('chill.main.search_provider')) {
+        if (!$container->hasDefinition('chill.main.search_provider')) {
             throw new \LogicException('service chill.main.search_provider '
                     . 'is not defined.');
         }

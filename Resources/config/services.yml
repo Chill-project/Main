@@ -79,3 +79,10 @@ services:
 
     chill.main.search_provider:
         class: Chill\MainBundle\Search\SearchProvider
+        
+    chill.main.timeline_builder:
+        class: Chill\MainBundle\Timeline\TimelineBuilder
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        calls:
+            - [ setContainer, ["@service_container"]]

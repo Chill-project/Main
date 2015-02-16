@@ -1,0 +1,64 @@
+{#
+ * Copyright (C) 2014-2015, Champs Libres Cooperative SCRLFS, 
+ <info@champs-libres.coop> / <http://www.champs-libres.coop>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{#
+    Layout with a vertical menu and a conainer for the content (like admin, export)
+    ( for the vertical menu you can extends Menu/veticalMenu.html.twig ).
+#}
+
+{% extends "ChillMainBundle::layout.html.twig" %}
+
+{% block layout_content %}
+
+<div class="container content"> 
+    {% block vertical_menu_content %}<!-- vertical menu of the layoutWithVerticalMenu is empty -->
+    {% endblock %}
+
+    <div class="grid-8">
+        {# Flash messages ! #}
+        <div class="container">
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="grid-8 centered success">
+                    <span>
+                        {{ flashMessage|raw }}
+                    </span>
+                </div>
+            {% endfor %}
+                
+            {% for flashMessage in app.session.flashbag.get('danger') %}
+                <div class="grid-8 centered error">
+                    <span>
+                        {{ flashMessage|raw }}
+                    </span>
+                </div>
+            {% endfor %}
+                
+            {% for flashMessage in app.session.flashbag.get('info') %}
+                <div class="grid-8 centered notice">
+                    <span>
+                        {{ flashMessage|raw }}
+                    </span>
+                </div>
+            {% endfor %}    
+        </div>
+
+        {% block layout_wvm_content %}<!-- content of the layoutWithVerticalMenu is empty -->
+        {% endblock  %}
+    </div>
+</div>
+{% endblock %}

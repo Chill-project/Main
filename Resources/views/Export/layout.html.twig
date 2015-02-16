@@ -19,13 +19,13 @@
 {% extends "ChillMainBundle::layoutWithVerticalMenu.html.twig" %}
 
 {% block vertical_menu_content %}
-    {{ chill_menu('admin', {
-        'layout': 'ChillMainBundle::Menu/admin.html.twig',
+    {{ chill_menu('export', {
+        'layout': 'ChillMainBundle::Menu/export.html.twig',
     }) }}
 {% endblock %}
 
 {% block layout_wvm_content %}
-    {% block admin_content %}<!-- block personcontent empty -->
-        Welcome to the admin section !
+    {% block export_content %}<!-- block personcontent empty -->
+        Welcome to the Export section !
     {% endblock %}
 {% endblock  %}

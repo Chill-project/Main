@@ -19,16 +19,26 @@ chill_main_homepage:
                 label: Homepage
                 icons: [home]
 
+chill_main_export_index:
+    pattern: /{_locale}/export
+    defaults: { _controller: ChillMainBundle:Export:index }
+    options:
+        menus:
+            section:
+                order: 20
+                label: Export Menu
+                icons: [upload]
+
 chill_main_admin_central:
     pattern: /{_locale}/admin
     defaults: { _controller: ChillMainBundle:Admin:index }
     options:
         menus:
             section:
-                order: 20
+                order: 30
                 label: Admin Menu
                 icons: [gears]
-                
+
 chill_main_search:
     pattern: /{_locale}/search
     defaults: { _controller: ChillMainBundle:Search:search }

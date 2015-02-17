@@ -21,31 +21,109 @@ namespace Chill\MainBundle\Timeline;
 
 /**
  * Interface for service providing info to timeline
+ * 
+ * Services implementing those interface must be tagged like this :
+ * 
+ * ```
+ * services:
+ *    my_timeline:
+ *       class: My\Class
+ *       tags:
+ *          #a first 'person' context :
+ *          - { name: timeline, context: person }
+ *          # a second 'center' context :
+ *          - { name: timeline, context: center }
+ * ```
+ * 
+ * The bundle which will call the timeline will document available context and
+ * the arguments provided by the context.
+ * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
 interface TimelineProviderInterface
 {
+    
     /**
-     * Indicate if the result id may be handled by the service
+     * provide data to build a SQL SELECT query to fetch entities
      * 
-     * @param string $key the key present in the SELECT query
+     * The TimeLineBuilder will create a full SELECT query and append
+     * the query into an UNION of SELECT queries. This permit to fetch
+     * all entities from different table in a single query.
+     * 
+     * The associative array MUST have the following key :
+     * - `id` : the name of the id column
+     * - `type`: a string to indicate the type
+     * - `date`: the name of the datetime column, used to order entities by date
+     * - `FROM` (in capital) : the FROM clause. May contains JOIN instructions
+     * 
+     * Those key are optional:
+     * - `WHERE` (in capital) : the WHERE clause. 
+     * 
+     * Where relevant, the data must be quoted to avoid SQL injection.
+     * 
+     * `$context` and `$args` are defined by the bundle which will call the timeline
+     * rendering. 
+     * 
+     * @param string $context
+     * @param mixed[] $args the argument to the context.
+     * @return string[]
+     */
+    public function fetchQuery($context, array $args);
+    
+    /**
+     * Indicate if the result type may be handled by the service
+     * 
+     * @param string $type the key present in the SELECT query
      * @return boolean
      */
-    public function supportsKey($key);
+    public function supportsType($type);
 
     /**
      * fetch entities from db and indicate how to render them
      * 
+     * All id returned by all SELECT queries 
+     * (@see TimeLineProviderInterface::fetchQuery) and with the type
+     * supported by the provider (@see TimelineProviderInterface::supportsType)
+     * will be passed as argument.
+     * 
+     * The function must return all object with the given id.
+     * 
      * @param array $ids
-     * @return array[] an array of an associative array. 'template' will indicate a template name on how to render the entity, 'entity' will be the arguments of the template
+     * @return mixed[] an array of entities
      */
     public function getEntities(array $ids);
-
+    
     /**
-     * provide a SQL SELECT query to fetch entities id
+     * return an associative array with argument to render the entity
+     * in an html template, which will be included in the timeline page
      * 
-     * @return string an SQL SELECT query which will fetch ID. The query must have and id (INT), a key (STRING), and a datetime to order results
+     * The result must have the following key :
+     * 
+     * - `template` : the template FQDN
+     * - `template_data`: the data required by the template
+     * 
+     * 
+     * Example:
+     * 
+     * ```
+     * array( 
+     *    'template'      => 'ChillMyBundle:timeline:template.html.twig',
+     *    'template_data' => array(
+     *             'accompanyingPeriod' => $entity, 
+     *              'person' => $args['person'] 
+     *         )
+     *    );
+     * ```
+     * 
+     * `$context` and `$args` are defined by the bundle which will call the timeline
+     * rendering. 
+     * 
+     * @param type $entity
+     * @param type $context
+     * @param array $args
+     * @return mixed[]
      */
-    public function fetchUnion($context, array $args); 
+    public function getEntityTemplate($entity, $context, array $args);
+ 
 }

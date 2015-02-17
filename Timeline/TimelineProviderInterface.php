@@ -68,6 +68,7 @@ interface TimelineProviderInterface
      * @param string $context
      * @param mixed[] $args the argument to the context.
      * @return string[]
+     * @throw  \LogicException if the context is not supported
      */
     public function fetchQuery($context, array $args);
     
@@ -80,17 +81,16 @@ interface TimelineProviderInterface
     public function supportsType($type);
 
     /**
-     * fetch entities from db and indicate how to render them
+     * fetch entities from db into an associative array. The keys **MUST BE**
+     * the id
      * 
-     * All id returned by all SELECT queries 
+     * All ids returned by all SELECT queries 
      * (@see TimeLineProviderInterface::fetchQuery) and with the type
      * supported by the provider (@see TimelineProviderInterface::supportsType)
      * will be passed as argument.
      * 
-     * The function must return all object with the given id.
-     * 
-     * @param array $ids
-     * @return mixed[] an array of entities
+     * @param array $ids an array of id
+     * @return mixed[] an associative array of entities, with id as key
      */
     public function getEntities(array $ids);
     
@@ -123,6 +123,7 @@ interface TimelineProviderInterface
      * @param type $context
      * @param array $args
      * @return mixed[]
+     * @throws \LogicException if the context is not supported
      */
     public function getEntityTemplate($entity, $context, array $args);
  

@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * Chill is a suite of a modules, Chill is a software for social workers
  * Copyright (C) 2014, Champs Libres Cooperative SCRLFS, <http://www.champs-libres.coop>

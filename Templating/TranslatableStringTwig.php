@@ -35,8 +35,20 @@ class TranslatableStringTwig extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('localize_translatable_string', array($this, 'localize'))
+            new \Twig_SimpleFilter('localize_translatable_string', array($this, 'localize')),
+            new \Twig_SimpleFilter(
+                'csv_cell',
+                array($this, 'csvCellFilter'),
+                array('is_safe' => array('html')))
         );
+    }
+
+    /*
+     *
+     */
+    public function csvCellFilter($content)
+    {
+        return str_replace('"', '""', $content);
     }
     
     public function localize(array $translatableStrings)

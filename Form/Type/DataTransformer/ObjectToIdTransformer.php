@@ -2,7 +2,7 @@
 
 /*
  * Chill is a software for social workers
- * Copyright (C) 2014 Julien Fastré <julien.fastre@champs-libres.coop>
+ * Copyright (C) 2014 Champs-Libres Coopérative <info@champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by

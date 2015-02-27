@@ -28,6 +28,7 @@ Resources/bower_components/
 Resources/node_modules/
 Resources/public/css/sass/*
 !Resources/public/css/sass/_custom.scss
+!Resources/public/css/sass/_timeline.scss
 Resources/public/js/select2/
 Resources/public/js/pikaday/
 Resources/public/css/select2/

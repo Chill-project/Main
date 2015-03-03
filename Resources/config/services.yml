@@ -50,6 +50,11 @@ services:
             - [ setContainer, ["@service_container"]]
         tags:
             - { name: twig.extension }
+            
+    chill.main.twig.csv_cell:
+        class: Chill\MainBundle\Templating\CSVCellTwig
+        tags:
+            - { name: twig.extension }
 
     chill.main.form.type.select2choice:
         class: Chill\MainBundle\Form\Type\Select2ChoiceType

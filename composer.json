@@ -35,5 +35,16 @@
         "symfony/dom-crawler": "2.5",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "symfony/security": "~2.5"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "ComposerBundleMigration\\Composer\\Migrations::synchronizeMigrations"
+        ],
+        "post-update-cmd": [
+            "ComposerBundleMigration\\Composer\\Migrations::synchronizeMigrations"
+        ]
+    },
+    "extra": {
+        "app-migrations-dir": "Tests/Fixtures/App/DoctrineMigrations"
     }
 }

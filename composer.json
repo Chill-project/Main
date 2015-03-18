@@ -26,7 +26,10 @@
         "doctrine/dbal": "~2.5",
         "doctrine/orm": "~2.4",
         "doctrine/common": "~2.4",
-        "doctrine/doctrine-bundle": "~1.2@dev"
+        "doctrine/doctrine-bundle": "~1.2@dev",
+        "champs-libres/composer-bundle-migration": "~1.0",
+        "doctrine/doctrine-migrations-bundle": "dev-master@dev",
+        "doctrine/migrations": "~1.0@dev"
     },
     "require-dev": {
         "symfony/dom-crawler": "2.5",

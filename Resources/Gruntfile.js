@@ -125,7 +125,7 @@ module.exports = function(grunt) {
       },
       clean: {
          /*css: ['<%= chill.folders.css %>*',  '!<%= chill.folders.css %>sass/_custom.scss'], */
-         js: ['<%= chill.folders.js %>*',  '!<%= chill.folders.js %>/main.js'],
+         js: ['<%= chill.folders.js %>/select2*', '<%= chill.folders.js %>/pikaday*', '<%= chill.folders.js %>/moment*', '<%= chill.folders.js %>/jquery*'],
          chill_standard: ['../../../../web/bundles/chillmain/'],
          bowerDir: ['<%= chill.folders.bower %>'] 
       }

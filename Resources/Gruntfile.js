@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             bower: './bower_components/',
             css: '<%= chill.folders.pub %>/css/',
             js: '<%= chill.folders.pub %>/js/',
-            sass: '<%= chill.folders.css %>/sass/',
+            sass: '<%= chill.folders.pub %>/sass/',
          }
       },
       bower: {

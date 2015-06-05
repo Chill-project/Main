@@ -21,7 +21,7 @@
 namespace Chill\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Extends choice to allow adding select2 library on widget
@@ -40,9 +40,9 @@ class Select2ChoiceType extends AbstractType
         return 'choice';
     }
     
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->replaceDefaults(
+        $resolver->setDefaults(
               array('attr' => array('class' => 'select2 '))
               );
     }

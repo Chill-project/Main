@@ -18,5 +18,6 @@
     </filter>
     <php>
         <server name="KERNEL_DIR" value="./Tests/Fixtures/App/" />
+        <ini name="error_reporting" value="-16385"/>
     </php>
 </phpunit>

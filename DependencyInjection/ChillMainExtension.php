@@ -58,8 +58,7 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
                     'name' => $config['installation_name']),
                 'available_languages' => $config['available_languages']
             ),
-            'form' => array(
-                'resources' => array('ChillMainBundle:Form:fields.html.twig'))
+            'form_themes' => array('ChillMainBundle:Form:fields.html.twig')
         );
         $container->prependExtensionConfig('twig', $twigConfig);
         

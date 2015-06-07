@@ -32,31 +32,54 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
         return 1000;
     }
     
-    public static $refs = array();
+    public static $refs = array(
+        'center a_social' => array(
+            'groupCenterRefs' => ['centerA_permission_group_social']
+        ),
+        'center a_administrative' => array(
+            'groupCenterRefs' => ['centerA_permission_group_administrative']
+        ),
+        'center a_direction' => array(
+            'groupCenterRefs' => ['centerA_permission_group_direction']
+        ),
+        'center b_social' => array(
+            'groupCenterRefs' => ['centerB_permission_group_social']
+        ),
+        'center b_administrative' => array(
+            'groupCenterRefs' => ['centerB_permission_group_administrative']
+        ),
+        'center b_direction' => array(
+            'groupCenterRefs' => ['centerB_permission_group_direction']
+        ),
+        'multi_center' => array(
+            'groupCenterRefs' => ['centerA_permission_group_social', 
+                'centerB_permission_group_social']
+        )
+        
+    );
 
     public function load(ObjectManager $manager)
     {
-        foreach(LoadCenters::$refs as $centerRef) {
-            foreach(LoadPermissionsGroup::$refs as $permissionGroupRef) {
-                $user = new User();
-                
-                $permissionGroup = $this->getReference($permissionGroupRef);
-                $center = $this->getReference($centerRef);
-                $username = strtolower($center->getName().'_'.$permissionGroup->getName());
-                
-                $user->setUsername($username)
-                        ->setPassword($this->container->get('security.encoder_factory')
+        foreach (self::$refs as $username => $params) {
+
+            $user = new User();
+
+            $user->setUsername($username)
+                    ->setPassword(
+                            $this->container->get('security.encoder_factory')
                                 ->getEncoder($user)
-                                ->encodePassword('password', $user->getSalt()));
-                $user->addGroupCenter($this->getReference($centerRef.'_'.$permissionGroupRef));
-                
-                $manager->persist($user);
-                $this->addReference($username, $user);
-                static::$refs[] = $user->getUsername();
-                echo "Creating user with username '".$user->getUsername()."' and password 'password'.. \n";
+                                ->encodePassword('password', $user->getSalt())
+                            );
+
+            foreach ($params['groupCenterRefs'] as $groupCenterRef) {
+                $user->addGroupCenter($this->getReference($groupCenterRef));
             }
+            
+            echo 'Creating user ' . $username ."... \n";
+            $manager->persist($user);
+            $this->addReference($username, $user);
         }
-        
+
         $manager->flush();
     }
 

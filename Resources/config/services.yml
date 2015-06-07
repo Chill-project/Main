@@ -91,3 +91,6 @@ services:
             - "@doctrine.orm.entity_manager"
         calls:
             - [ setContainer, ["@service_container"]]
+            
+    chill.main.security.authorization.helper:
+        class: Chill\MainBundle\Security\Authorization\AuthorizationHelper

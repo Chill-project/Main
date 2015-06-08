@@ -1,0 +1,69 @@
+// YOUR CUSTOM SCSS
+@import 'custom/timeline';
+
+div#general {
+    background: none repeat scroll 0 0 $green;
+    color: #FFF;
+    padding: 0.5em;
+}
+
+html,body { 
+   min-height:100%; 
+   background-color: $footer-background;
+}
+
+.cf-title {
+   font-size: 2em;
+}
+
+.cf-subtitle {
+   font-size: 1.5em;
+}
+
+@each $len in 11, 15 {
+   ul.submenu.width-#{$len}-em {
+      min-width: #{$len}em;
+   }
+}
+
+.content {
+   padding-top: 1em;
+   padding-bottom: 1em;
+   background-color: $white;
+}
+
+.select2 {
+   width: 100%;
+}
+
+ul.custom_fields.choice li {
+   list-style:none;
+}
+
+.sticky-form-buttons {
+   margin-top:1em;
+   background-color:$orange;//$grey-5;
+   position:sticky;
+   bottom:0.5em;
+   text-align:center;
+   padding:0.5em;
+   border-radius: $base-border-radius;
+}
+
+.sticky-form-buttons .margin-5 {
+   margin-left: 5%;
+   margin-right: 5%;
+}
+
+.sticky-form-buttons .margin-10 {
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+.errors {
+   color: $red;
+}
+
+.blop label {
+   line-height: 1 + ($base-spacing / 3);
+}

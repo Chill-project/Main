@@ -26,7 +26,7 @@ Resources/public/stylesheets/sass
 Resources/.sass-cache/
 Resources/bower_components/
 Resources/node_modules/
-Resources/public/sass/
+Resources/public/sass/*
 !Resources/public/sass/_custom.scss
 !Resources/public/sass/_timeline.scss
 !Resources/public/sass/custom/

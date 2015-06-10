@@ -76,6 +76,11 @@ class Center
         $this->groupCenters->add($groupCenter);
         return $this;
     }
+    
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
 
 }

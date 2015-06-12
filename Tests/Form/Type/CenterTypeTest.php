@@ -22,10 +22,7 @@ namespace Chill\MainBundle\Form\Type;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Chill\MainBundle\Form\Type\CenterType;
 use Chill\MainBundle\Entity\User;
-use Chill\MainBundle\Entity\RoleScope;
-use Chill\MainBundle\Entity\Scope;
 use Chill\MainBundle\Entity\GroupCenter;
-use Chill\MainBundle\Entity\PermissionsGroup;
 
 
 /**
@@ -35,26 +32,75 @@ use Chill\MainBundle\Entity\PermissionsGroup;
  */
 class CenterTypeTest extends TypeTestCase
 {
-    
+    /**
+     * Test that a user which can reach only one center 
+     * render as an hidden field
+     */
     public function testUserCanReachSingleCenter()
     {
         //prepare user
-        $roleScope = (new RoleScope())
-                ->setRole('CHILL_DUMMY_ROLE')
-                ->setScope((new Scope())->setName('default'))
-                ;
+        $center = $this->prepareCenter(1, 'center');
         $groupCenter = (new GroupCenter())
-                ->setCenter($this->prepareCenter(1, 'center'))
+                ->setCenter($center)
                 ;
         $user = (new User())
                 ->addGroupCenter($groupCenter);
         
         $type = $this->prepareType($user);
-        
+      
         $this->assertEquals('hidden', $type->getParent());
     }
     
     /**
+     * Test that a user which can reach only one center 
+     * render as an hidden field
+     */
+    public function testUserCanReachMultipleSameCenter()
+    {
+        //prepare user
+        $center = $this->prepareCenter(1, 'center');
+        $groupCenterA = (new GroupCenter())
+                ->setCenter($center)
+                ;
+        $groupCenterB = (new GroupCenter())
+                ->setCenter($center)
+                ;
+        $user = (new User())
+                ->addGroupCenter($groupCenterA)
+                ->addGroupCenter($groupCenterB);
+        
+        $type = $this->prepareType($user);
+      
+        $this->assertEquals('hidden', $type->getParent());
+    }
+    
+    /**
+     * Test that a user which can reach multiple center 
+     * make CenterType render as "entity" type.
+     */
+    public function testUserCanReachMultipleCenters()
+    {
+        //prepare user
+        $centerA = $this->prepareCenter(1, 'centerA');
+        $centerB = $this->prepareCenter(2, 'centerB');
+        $groupCenterA = (new GroupCenter())
+                ->setCenter($centerA)
+                ;
+        $groupCenterB = (new GroupCenter())
+              ->setCenter($centerB)
+              ;
+        $user = (new User())
+                ->addGroupCenter($groupCenterA)
+                ->addGroupCenter($groupCenterB)
+              ;
+        
+        $type = $this->prepareType($user);
+        
+        $this->assertEquals('entity', $type->getParent());
+    }
+    
+    /**
+     * prepare a mocked center, with and id and name given
      * 
      * @param int $id
      * @param string $name
@@ -74,22 +120,20 @@ class CenterTypeTest extends TypeTestCase
     
     
     /**
+     * prepare the type with mocked center transformer and token storage
      * 
-     * @param User $user
+     * @param User $user the user for wich the form will be prepared
      * @return CenterType
      */
     private function prepareType(User $user)
     {
-        $prophet = new \Prophecy\Prophet;
+        $prophet = new \Prophecy\Prophet;       
         
-        
-        
+        //create a center transformer
         $centerTransformerProphecy = $prophet->prophesize();
-        $centerTransformerProphecy->willExtend('Chill\MainBundle\Form\Type\DataTransformer\CenterTransformer')
-                //->read('transform')->willReturn(1)
-                //->read('reverseTransform')->willReturn($center)
-                ;
-        $centerTransformer = $centerTransformerProphecy->reveal();
+        $centerTransformerProphecy
+              ->willExtend('Chill\MainBundle\Form\Type\DataTransformer\CenterTransformer');
+        $transformer = $centerTransformerProphecy->reveal();
         
         $tokenProphecy = $prophet->prophesize();
         $tokenProphecy
@@ -103,7 +147,7 @@ class CenterTypeTest extends TypeTestCase
         $tokenStorageProphecy->getToken()->willReturn($token);
         $tokenStorage = $tokenStorageProphecy->reveal();
         
-        return new CenterType($tokenStorage, $centerTransformer);
+        return new CenterType($tokenStorage, $transformer);
     }
     
 }

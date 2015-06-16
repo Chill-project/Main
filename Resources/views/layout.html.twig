@@ -20,11 +20,13 @@
 <html lang="fr">
 <head>    
     <title>{{ installation.name }} - {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="/bundles/chillmain/img/favicon.ico" type="image/x-icon">
     
     {% stylesheets  output="css/all.css" filter="cssrewrite"
           "bundles/chillmain/css/scratch.css"
           "bundles/chillmain/css/chillmain.css"
           "bundles/chillmain/css/select2/select2.css"
+          "bundles/chillmain/fonts/OpenSans/OpenSans.css"
           "bundles/chillmain/css/pikaday.css" %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
@@ -44,48 +46,53 @@
 
 <body>
     <header class="navigation container">
-        <div class="nav grid-2">
-            <ul id="navigation-menu">
-                <li class="nav-link nav-title"><a href="{{ path('chill_main_homepage') }}">{{  installation.name }}</a>
-            </ul>
+        <div class="grid-3 parent">
+            <div class="grid-10 push-2 logo-container">
+                <a href="{{ path('chill_main_homepage') }}">
+                    <img class="logo" src="/bundles/chillmain/img/logo-chill-outil-accompagnement_white.png">
+                </a>
+            </div>
         </div>
-        <div class="grid-4 navigation-search">
-            <form action="{{ path('chill_main_search') }}" method="get">
-                <input name="q" type="search" placeholder="{{ 'Search'|trans }}" {% if _search_pattern is defined %}value="{{ _search_pattern }}"{% endif %}/>
-                <button type="submit" class="sc-button white border"><i class="fa fa-search"></i></button>
-            </form>
-        </div>
+        <div class="grid-9 text-right">
+            <div class="nav">
+                <ul id="navigation-menu">
+                    {{ chill_menu('section', {
+                        'layout': 'ChillMainBundle::Menu/section.html.twig',
+                    }) }}
 
-        <div class="nav grid-6 text-right">
-            <ul id="navigation-menu">
+                    {{ chill_menu('user', {
+                        'layout': 'ChillMainBundle::Menu/user.html.twig',
+                    }) }}
 
+                    {% if  available_languages|length == 1 %}
+                        <li class="nav-link lang-selection">
+                            <a href="">{{ available_languages[0] | capitalize }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-link more lang-selection">
+                            <a href="">{{ app.request.locale | capitalize }}</a>
+                            <ul class="submenu">
+                                {% for lang in available_languages  %}
+                                    <li {% if lang == app.request.locale %}class="active"{% endif %}>
+                                        <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : lang})) }}">{{ lang | capitalize }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
 
-                {{ chill_menu('section', {
-                    'layout': 'ChillMainBundle::Menu/section.html.twig',
-                }) }}
-
-                {{ chill_menu('user', {
-                    'layout': 'ChillMainBundle::Menu/user.html.twig',
-                }) }}
-
-                {% if  available_languages|length == 1 %}
-                    <li class="nav-link">
-                        <a href="">{{ available_languages[0] | upper }}</a>
-                    </li>
-                {% else %}
-                    <li class="nav-link more"><a href="">{{ app.request.locale | upper }}</a>
-                        <ul class="submenu">
-                            {% for lang in available_languages  %}
-                                <li {% if lang == app.request.locale %}class="active"{% endif %}>
-                                    <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : lang})) }}">{{ lang | upper }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endif %}
-            </ul>
+            <div class="navigation-search">
+                <form action="{{ path('chill_main_search') }}" method="get">
+                    <input name="q" type="search" placeholder="{{ 'Search'|trans }}" {% if _search_pattern is defined %}value="{{ _search_pattern }}"{% endif %}/>
+                    <button type="submit" class="sc-button"><i class="fa fa-search fa-flip-horizontal"></i></button>
+                </form>
+            </div>
         </div>
     </header>
+
+    <div id="content_conainter">
         {% block layout_content %}
             <div class="container content">
                 {# Flash messages ! #}
@@ -135,9 +142,10 @@
                 {% endblock %}
             </div> 
         {% endblock %}
+    </div>
 
     <footer class="footer">
-        <p>License AGPL</p>
+        <p>Programme sous license <b>AGPL</b></p>
     </footer>
 
     <script type="text/javascript">

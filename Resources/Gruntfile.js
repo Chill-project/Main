@@ -28,7 +28,7 @@ module.exports = function(grunt) {
             files: [
                {
                   cwd: '<%= chill.folders.bower %>Scratch-CSS-Design/stylesheets/sass',
-                  src: ['**', '!_custom.scss'],
+                  src: ['**', '!_custom.scss', '!custom/**/*'],
                   dest: '<%= chill.folders.sass %>',
                   expand: true,
                },
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
       },
       watch: {
          css: {
-            files: [ '<%= chill.folders.sass.src %>/*.scss', '<%= chill.folders.sass.src %>/**/*.scss' ],
+            files: [ '<%= chill.folders.sass %>/*.scss', '<%= chill.folders.sass %>/**/*.scss' ],
             tasks: ['generatecss'],
             /*
             options: {
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-contrib-clean');
 
-   grunt.registerTask('generatecss', [/*'clean:css',*/ 'copy:scratch', 'sass']);
+   grunt.registerTask('generatecss', [/*'clean:css',*/'copy:scratch', 'sass']);
    grunt.registerTask('dependencies', ['bower', 'copy']);
    grunt.registerTask('default', ['dependencies', 'generatecss']);
 };

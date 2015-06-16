@@ -2,14 +2,34 @@
 @import 'custom/timeline';
 
 div#general {
-    background: none repeat scroll 0 0 $green;
-    color: #FFF;
-    padding: 0.5em;
+   background: none repeat scroll 0 0 $green;
+   color: #FFF;
+   padding: 0.5em;
 }
 
 html,body { 
-   min-height:100%; 
-   background-color: $footer-background;
+   min-height:100%;
+   font-family: 'open_sansregular';
+}
+
+#content_conainter {
+   position: relative;
+}
+
+#content_conainter:before {
+   bottom: 0;
+   content: "";
+   left: 0;
+   opacity: 0.1;
+   position: absolute;
+   right: 0;
+   top: 0;
+   z-index: -1;
+   background-image: url("/bundles/chillmain/img/background/desert.jpg");
+   background-attachment: fixed;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center;
 }
 
 .cf-title {
@@ -29,7 +49,6 @@ html,body {
 .content {
    padding-top: 1em;
    padding-bottom: 1em;
-   background-color: $white;
 }
 
 .select2 {

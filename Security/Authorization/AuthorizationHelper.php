@@ -21,6 +21,10 @@ namespace Chill\MainBundle\Security\Authorization;
 
 use Chill\MainBundle\Entity\User;
 use Chill\MainBundle\Entity\Center;
+use Chill\MainBundle\Entity\HasCenterInterface;
+use Chill\MainBundle\Entity\HasScopeInterface;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+use Symfony\Component\Security\Core\Role\Role;
 
 /**
  * Helper for authorizations. 
@@ -31,7 +35,17 @@ use Chill\MainBundle\Entity\Center;
  */
 class AuthorizationHelper
 {
-    // I wonder if this function should not be moved into the class user itself --JF
+    /**
+     *
+     * @var RoleHierarchyInterface
+     */
+    protected $roleHierarchy;
+    
+    public function __construct(RoleHierarchyInterface $roleHierarchy)
+    {
+        $this->roleHierarchy = $roleHierarchy;
+    }
+    
     /**
      * Determines if a user is active on this center
      * 
@@ -45,6 +59,59 @@ class AuthorizationHelper
             if ($center->getId() === $groupCenter->getCenter()->getId()) {
                 
                 return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 
+     * Determines if the user has access to the given entity.
+     * 
+     * if the entity implements Chill\MainBundle\Entity\HasScopeInterface,
+     * the scope is taken into account.
+     * 
+     * @param User $user
+     * @param HasCenterInterface $entity the entity may also implement HasScopeInterface
+     * @param string|Role $attribute
+     * @return boolean true if the user has access
+     */
+    public function userHasAccess(User $user, HasCenterInterface $entity, $attribute)
+    {
+        
+        $center = $entity->getCenter();
+        
+        if (!$this->userCanReachCenter($user, $center)) {
+            return false;
+        }
+        
+        $role = ($attribute instanceof Role) ? $attribute : new Role($attribute);
+        $reachableRoles = $this->roleHierarchy
+                ->getReachableRoles([$role]);
+        
+        foreach ($user->getGroupCenters() as $groupCenter){
+            //filter on center
+            if ($groupCenter->getCenter()->getId() === $entity->getCenter()->getId()) {
+                //iterate on permissionGroup
+                foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
+                    //iterate on roleScopes
+                    foreach($permissionGroup->getRoleScopes() as $roleScope) {
+                        //check that the role is in the reachable roles
+                        if (in_array(new Role($roleScope->getRole()), $reachableRoles)) {
+                            //if yes, we have a right on something...
+                            // perform check on scope if necessary
+                            if ($entity instanceof HasScopeInterface) {
+                                $scope = $entity->getScope();
+                                if ($scope->getId() === $roleScope->getScope()->getId()) {
+                                    return true;
+                                }
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
+                }
             }
         }
         

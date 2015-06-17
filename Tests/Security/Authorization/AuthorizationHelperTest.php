@@ -33,8 +33,9 @@ class AuthorizationHelperTest extends KernelTestCase
 {
     
     use PrepareUserTrait, PrepareCenterTrait, PrepareScopeTrait {
-                PrepareUserTrait::setUpTrait insteadof PrepareCenterTrait, PrepareScopeTrait;
-                PrepareUserTrait::tearDownTrait insteadof PrepareCenterTrait, PrepareScopeTrait;
+                PrepareCenterTrait::setUpTrait insteadof PrepareScopeTrait;
+                PrepareCenterTrait::tearDownTrait insteadof PrepareScopeTrait;
+                PrepareCenterTrait::getProphet insteadof PrepareScopeTrait;
             }
     
     public function setUp() 

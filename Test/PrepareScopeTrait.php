@@ -41,12 +41,8 @@ trait PrepareScopeTrait
      */
     protected function prepareScope($id, $name)
     {
-        if ($this->prophet === NULL) {
-            throw new \LogicException('You must set up trait using the `setUpTrait`'
-                    . ' before any invocation');
-        }
         
-        $scope = $this->prophet->prophesize();
+        $scope = $this->getProphet()->prophesize();
         $scope->willExtend('\Chill\MainBundle\Entity\Scope');
         $scope->getId()->willReturn($id);
         $scope->getName()->willReturn($name);

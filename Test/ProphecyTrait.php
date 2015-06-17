@@ -30,7 +30,11 @@ namespace Chill\MainBundle\Test;
 trait ProphecyTrait
 {
         
-    protected $prophet;
+    /**
+     *
+     * @var \Prophecy\Prophet()
+     */
+    private $prophet;
     
     public function setUpTrait()
     {
@@ -42,8 +46,18 @@ trait ProphecyTrait
         $this->prophet->checkPredictions();
     }
     
-    abstract public function setUp();
-    
-    abstract public function tearDown();
+    /**
+     * 
+     * @return \Prophecy\Prophet()
+     */
+    public function getProphet()
+    {
+        if ($this->prophet === NULL) {
+            throw new \LogicException('You should set up the prophet before '
+                    . 'any usage. Use $this->setUpTrait() in your method.');
+        }
+        
+        return $this->prophet;
+    }
     
 }

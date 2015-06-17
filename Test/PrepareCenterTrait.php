@@ -41,12 +41,8 @@ trait PrepareCenterTrait
      */
     protected function prepareCenter($id, $name)
     {
-        if ($this->prophet === NULL) {
-            throw new \LogicException('You must set up trait using the `setUpTrait`'
-                    . ' before any invocation');
-        }
         
-        $center = $this->prophet->prophesize();
+        $center = $this->getProphet()->prophesize();
         $center->willExtend('\Chill\MainBundle\Entity\Center');
         $center->getId()->willReturn($id);
         $center->getName()->willReturn($name);

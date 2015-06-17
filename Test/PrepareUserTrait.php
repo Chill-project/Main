@@ -37,9 +37,6 @@ use Chill\MainBundle\Entity\PermissionsGroup;
 trait PrepareUserTrait
 {
     
-    use \Chill\MainBundle\Test\ProphecyTrait;
-
-    
     /**
      * prepare a user with correct permissions
      * 
@@ -64,12 +61,6 @@ trait PrepareUserTrait
      */
     protected function prepareUser(array $permissions)
     {
-        if ($this->prophet === NULL) {
-            throw new \LogicException('You must set up trait using the `setUpTrait`'
-                    . ' before any invocation');
-        }
-        
-        
         $user = new User();
         
         foreach ($permissions as $permission) {

@@ -27,6 +27,7 @@ namespace Chill\MainBundle\Test;
  * and use tearDownTrait after usage.
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @codeCoverageIgnore
  */
 trait PrepareCenterTrait
 {

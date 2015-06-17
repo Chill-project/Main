@@ -33,6 +33,7 @@ use Chill\MainBundle\Entity\PermissionsGroup;
  * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @codeCoverageIgnore
  */
 trait PrepareUserTrait
 {

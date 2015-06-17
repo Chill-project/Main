@@ -33,15 +33,12 @@ class AuthorizationHelperTest extends KernelTestCase
 {
     
     use PrepareUserTrait, PrepareCenterTrait, PrepareScopeTrait {
-                PrepareCenterTrait::setUpTrait insteadof PrepareScopeTrait;
-                PrepareCenterTrait::tearDownTrait insteadof PrepareScopeTrait;
                 PrepareCenterTrait::getProphet insteadof PrepareScopeTrait;
             }
     
     public function setUp() 
     {
         static::bootKernel();
-        $this->setUpTrait();
     }
     
     /**
@@ -111,7 +108,7 @@ class AuthorizationHelperTest extends KernelTestCase
             )
         ));
         $helper = $this->getAuthorizationHelper();
-        $entity = $this->prophet->prophesize();
+        $entity = $this->getProphet()->prophesize();
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->getCenter()->willReturn($center);
         
@@ -131,7 +128,7 @@ class AuthorizationHelperTest extends KernelTestCase
             )
         ));
         $helper = $this->getAuthorizationHelper();
-        $entity = $this->prophet->prophesize();
+        $entity = $this->getProphet()->prophesize();
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->getCenter()->willReturn($center);
         
@@ -161,7 +158,7 @@ class AuthorizationHelperTest extends KernelTestCase
             )
         ));
         $helper = $this->getAuthorizationHelper();
-        $entity = $this->prophet->prophesize();
+        $entity = $this->getProphet()->prophesize();
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->getCenter()->willReturn($centerA);
         
@@ -180,7 +177,7 @@ class AuthorizationHelperTest extends KernelTestCase
             )
         ));
         $helper = $this->getAuthorizationHelper();
-        $entity = $this->prophet->prophesize();
+        $entity = $this->getProphet()->prophesize();
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->willImplement('\Chill\MainBundle\Entity\HasScopeInterface');
         $entity->getCenter()->willReturn($center);
@@ -201,7 +198,7 @@ class AuthorizationHelperTest extends KernelTestCase
             )
         ));
         $helper = $this->getAuthorizationHelper();
-        $entity = $this->prophet->prophesize();
+        $entity = $this->getProphet()->prophesize();
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->willImplement('\Chill\MainBundle\Entity\HasScopeInterface');
         $entity->getCenter()->willReturn($center);
@@ -223,7 +220,7 @@ class AuthorizationHelperTest extends KernelTestCase
             )
         ));
         $helper = $this->getAuthorizationHelper();
-        $entity = $this->prophet->prophesize();
+        $entity = $this->getProphet()->prophesize();
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->willImplement('\Chill\MainBundle\Entity\HasScopeInterface');
         $entity->getCenter()->willReturn($centerB);
@@ -245,7 +242,7 @@ class AuthorizationHelperTest extends KernelTestCase
             )
         ));
         $helper = $this->getAuthorizationHelper();
-        $entity = $this->prophet->prophesize();
+        $entity = $this->getProphet()->prophesize();
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->willImplement('\Chill\MainBundle\Entity\HasScopeInterface');
         $entity->getCenter()->willReturn($center);

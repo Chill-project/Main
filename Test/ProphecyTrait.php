@@ -26,6 +26,7 @@ namespace Chill\MainBundle\Test;
  * and use tearDownTrait after usage.
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @codeCoverageIgnore
  */
 trait ProphecyTrait
 {
@@ -34,17 +35,7 @@ trait ProphecyTrait
      *
      * @var \Prophecy\Prophet()
      */
-    private $prophet;
-    
-    public function setUpTrait()
-    {
-        $this->prophet = new \Prophecy\Prophet();
-    }
-    
-    public function tearDownTrait()
-    {
-        $this->prophet->checkPredictions();
-    }
+    private static $prophet;
     
     /**
      * 
@@ -52,12 +43,11 @@ trait ProphecyTrait
      */
     public function getProphet()
     {
-        if ($this->prophet === NULL) {
-            throw new \LogicException('You should set up the prophet before '
-                    . 'any usage. Use $this->setUpTrait() in your method.');
+        if (self::$prophet === NULL) {
+            self::$prophet = new \Prophecy\Prophet();
         }
         
-        return $this->prophet;
+        return self::$prophet;
     }
     
 }

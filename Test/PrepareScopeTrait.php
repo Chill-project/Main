@@ -27,6 +27,7 @@ namespace Chill\MainBundle\Test;
  * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @codeCoverageIgnore
  */
 trait PrepareScopeTrait
 {

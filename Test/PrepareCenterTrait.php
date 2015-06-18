@@ -31,7 +31,8 @@ namespace Chill\MainBundle\Test;
  */
 trait PrepareCenterTrait
 {
-    use ProphecyTrait;
+    
+    private $centerProphet;
     
     /**
      * prepare a mocked center, with and id and name given
@@ -43,7 +44,11 @@ trait PrepareCenterTrait
     protected function prepareCenter($id, $name)
     {
         
-        $center = $this->getProphet()->prophesize();
+        if ($this->centerProphet === NULL) {
+            $this->centerProphet = new \Prophecy\Prophet();
+        }
+        
+        $center = $this->centerProphet->prophesize();
         $center->willExtend('\Chill\MainBundle\Entity\Center');
         $center->getId()->willReturn($id);
         $center->getName()->willReturn($name);

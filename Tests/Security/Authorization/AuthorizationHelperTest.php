@@ -23,6 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Chill\MainBundle\Test\PrepareUserTrait;
 use Chill\MainBundle\Test\PrepareCenterTrait;
 use Chill\MainBundle\Test\PrepareScopeTrait;
+use Chill\MainBundle\Test\ProphecyTrait;
 
 /**
  * 
@@ -32,9 +33,7 @@ use Chill\MainBundle\Test\PrepareScopeTrait;
 class AuthorizationHelperTest extends KernelTestCase
 {
     
-    use PrepareUserTrait, PrepareCenterTrait, PrepareScopeTrait {
-                PrepareCenterTrait::getProphet insteadof PrepareScopeTrait;
-            }
+    use PrepareUserTrait, PrepareCenterTrait, PrepareScopeTrait, ProphecyTrait;
     
     public function setUp() 
     {

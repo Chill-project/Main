@@ -31,7 +31,7 @@ namespace Chill\MainBundle\Test;
  */
 trait PrepareScopeTrait
 {
-    use ProphecyTrait;
+    private $scopeProphet;
     
     /**
      * prepare a mocked center, with and id and name given
@@ -43,7 +43,11 @@ trait PrepareScopeTrait
     protected function prepareScope($id, $name)
     {
         
-        $scope = $this->getProphet()->prophesize();
+        if ($this->scopeProphet === NULL) {
+            $this->scopeProphet = new \Prophecy\Prophet();
+        }
+        
+        $scope = $this->scopeProphet->prophesize();
         $scope->willExtend('\Chill\MainBundle\Entity\Scope');
         $scope->getId()->willReturn($id);
         $scope->getName()->willReturn($name);

@@ -35,19 +35,19 @@ trait ProphecyTrait
      *
      * @var \Prophecy\Prophet()
      */
-    private static $prophet;
+    private $prophet;
     
     /**
      * 
-     * @return \Prophecy\Prophet()
+     * @return \Prophecy\Prophet
      */
     public function getProphet()
     {
-        if (self::$prophet === NULL) {
-            self::$prophet = new \Prophecy\Prophet();
+        if ($this->prophet === NULL) {
+            $this->prophet = new \Prophecy\Prophet();
         }
         
-        return self::$prophet;
+        return $this->prophet;
     }
     
 }

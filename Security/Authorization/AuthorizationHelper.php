@@ -25,6 +25,7 @@ use Chill\MainBundle\Entity\HasCenterInterface;
 use Chill\MainBundle\Entity\HasScopeInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Role\Role;
+use Chill\MainBundle\Entity\Scope;
 
 /**
  * Helper for authorizations. 
@@ -121,6 +122,43 @@ class AuthorizationHelper
         return false;
     }
     
+    /**
+     * Get reachable Centers for the given user, role,
+     * and optionnaly Scope
+     * 
+     * @param User $user
+     * @param Role $role
+     * @param null|Scope $scope
+     * @return Center[]
+     */
+    public function getReachableCenters(User $user, Role $role, Scope $scope = null)
+    {
+        $centers = array();
+        
+        foreach ($user->getGroupCenters() as $groupCenter){
+            //iterate on permissionGroup
+            foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
+                //iterate on roleScopes
+                foreach($permissionGroup->getRoleScopes() as $roleScope) {
+                    //check that the role is in the reachable roles
+                    if ($this->isRoleReached($role, 
+                          new Role($roleScope->getRole()))) {
+                        if ($scope === null) {
+                            $centers[] = $groupCenter->getCenter();
+                            break 2;
+                        } else {
+                            if ($scope->getId() == $roleScope->getScope()->getId()){
+                                $centers[] = $groupCenter->getCenter();
+                                break 2;
+                            }      
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $centers;
+    }
     
     /**
      * Test if a parent role may give access to a given child role

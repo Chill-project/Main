@@ -24,6 +24,10 @@ use Chill\MainBundle\Test\PrepareUserTrait;
 use Chill\MainBundle\Test\PrepareCenterTrait;
 use Chill\MainBundle\Test\PrepareScopeTrait;
 use Chill\MainBundle\Test\ProphecyTrait;
+use Chill\MainBundle\Entity\User;
+use Symfony\Component\Security\Core\Role\Role;
+use Chill\MainBundle\Entity\Scope;
+use Chill\MainBundle\Entity\Center;
 
 /**
  * 
@@ -56,7 +60,7 @@ class AuthorizationHelperTest extends KernelTestCase
      * 
      * A user can reach center => the function should return true.
      */
-    public function testUserCanReach_UserShouldReach() 
+    public function testUserCanReachCenter_UserShouldReach() 
     {
         $center = $this->prepareCenter(1, 'center');
         $scope = $this->prepareScope(1, 'default');
@@ -77,7 +81,7 @@ class AuthorizationHelperTest extends KernelTestCase
      * 
      * A user can not reachcenter =>W the function should return false
      */
-    public function testUserCanReach_UserShouldNotReach() 
+    public function testUserCanReachCenter_UserShouldNotReach() 
     {
         $centerA = $this->prepareCenter(1, 'center');
         $centerB = $this->prepareCenter(2, 'centerB');
@@ -95,7 +99,7 @@ class AuthorizationHelperTest extends KernelTestCase
         
     }
     
-    public function testUserHasAccess_EntityWithoutScope()
+    public function testUserHasAccess_shouldHaveAccess_EntityWithoutScope()
     {
         $center = $this->prepareCenter(1, 'center');
         $scope = $this->prepareScope(1, 'default');
@@ -115,7 +119,7 @@ class AuthorizationHelperTest extends KernelTestCase
               'CHILL_ROLE'));
     }
     
-    public function testUserHasAccessWithInheritance_EntityWithoutScope()
+    public function testUserHasAccess_ShouldHaveAccessWithInheritance_EntityWithoutScope()
     {
         $center = $this->prepareCenter(1, 'center');
         $scope = $this->prepareScope(1, 'default');
@@ -137,7 +141,7 @@ class AuthorizationHelperTest extends KernelTestCase
     }
     
     
-    public function testUserHasNoRole_EntityWithoutScope()
+    public function testuserHasAccess_UserHasNoRole_EntityWithoutScope()
     {
         $center = $this->prepareCenter(1, 'center');
         $scope = $this->prepareScope(1, 'default');
@@ -160,7 +164,7 @@ class AuthorizationHelperTest extends KernelTestCase
      * test that a user has no access on a entity, but is granted on the same role
      * on another center
      */
-    public function testUserHasNoRole_UserHasRoleOnAnotherCenter_EntityWithoutScope()
+    public function testUserHasAccess_userHasNoRole_UserHasRoleOnAnotherCenter_EntityWithoutScope()
     {
         $centerA = $this->prepareCenter(1, 'center');
         $centerB = $this->prepareCenter(2, 'centerB');
@@ -186,7 +190,7 @@ class AuthorizationHelperTest extends KernelTestCase
         $this->assertFalse($helper->userHasAccess($user, $entity->reveal(), 'CHILL_ROLE'));
     }
     
-    public function testUserHasAccess_EntityWithScope()
+    public function testtestUserHasAccess_UserShouldHaveAccess_EntityWithScope()
     {
         $center = $this->prepareCenter(1, 'center');
         $scope = $this->prepareScope(1, 'default');
@@ -207,7 +211,7 @@ class AuthorizationHelperTest extends KernelTestCase
         $this->assertTrue($helper->userHasAccess($user, $entity->reveal(), 'CHILL_ROLE'));
     }
     
-    public function testUserHasNoRole_EntityWithScope()
+    public function testUserHasAccess_UserHasNoRole_EntityWithScope()
     {
         $center = $this->prepareCenter(1, 'center');
         $scope = $this->prepareScope(1, 'default');
@@ -228,7 +232,7 @@ class AuthorizationHelperTest extends KernelTestCase
         $this->assertFalse($helper->userHasAccess($user, $entity->reveal(), 'ANOTHER_ROLE'));
     }
     
-    public function testUserHasNoCenter_EntityWithScope()
+    public function testUserHasAccess_UserHasNoCenter_EntityWithScope()
     {
         $centerA = $this->prepareCenter(1, 'center'); //the user will have this center
         $centerB = $this->prepareCenter(2, 'centerB'); //the entity will have another center
@@ -250,7 +254,7 @@ class AuthorizationHelperTest extends KernelTestCase
         $this->assertFalse($helper->userHasAccess($user, $entity->reveal(), 'CHILL_ROLE'));
     }
     
-    public function testUserHasNoScope_EntityWithScope()
+    public function testUserHasAccess_UserHasNoScope_EntityWithScope()
     {
         $center = $this->prepareCenter(1, 'center');
         $scopeA = $this->prepareScope(1, 'default'); //the entity will have this scope
@@ -270,6 +274,97 @@ class AuthorizationHelperTest extends KernelTestCase
         $entity->getScope()->willReturn($scopeA);
         
         $this->assertFalse($helper->userHasAccess($user, $entity->reveal(), 'CHILL_ROLE'));
+    }
+    
+    /**
+     * 
+     * @dataProvider dataProvider_getReachableCenters
+     * @param Center $shouldHaveCenter
+     * @param User $user
+     * @param Role $role
+     * @param Scope $scope
+     */
+    public function testGetReachableCenters($test, $result, $msg)
+    {
+        $this->assertEquals($test, $result, $msg);
+    }
+    
+    public function dataProvider_getReachableCenters()
+    {
+        $this->setUp();
+        $centerA = $this->prepareCenter(1, 'center A');
+        $centerB = $this->prepareCenter(2, 'center B');
+        $scopeA = $this->prepareScope(1, 'scope default');
+        $scopeB = $this->prepareScope(2, 'scope B');
+        $scopeC = $this->prepareScope(3, 'scope C');
+        
+        $userA = $this->prepareUser(array(
+            array(
+                'center' => $centerA, 
+                'permissionsGroup' => array(
+                    ['scope' => $scopeB, 'role' => 'CHILL_ROLE_1'],
+                    ['scope' => $scopeA, 'role' => 'CHILL_ROLE_2']
+                )
+            ),
+            array(
+               'center' => $centerB,
+               'permissionsGroup' => array(
+                     ['scope' => $scopeA, 'role' => 'CHILL_ROLE_2'],
+                     ['scope' => $scopeC, 'role' => 'CHILL_ROLE_2']
+               )
+            )
+            
+        ));
+        
+        $ah = $this->getAuthorizationHelper();
+        
+        return array(
+           // without scopes
+            array(
+                true, 
+                in_array($centerA, $ah->getReachableCenters($userA, 
+                    new Role('CHILL_ROLE_1'), null)),
+                'center A should be available for userA, with role 1 '
+           ),
+            array(
+                true, 
+                in_array($centerA, $ah->getReachableCenters($userA, 
+                    new Role('CHILL_ROLE_2'), null)),
+                'center A should be available for userA, with role 2 '
+           ),
+           array(
+                true, 
+                in_array($centerB, $ah->getReachableCenters($userA, 
+                    new Role('CHILL_ROLE_2'), null)),
+                'center A should be available for userA, with role 2 '
+           ),
+           array(
+                false, 
+                in_array($centerB, $ah->getReachableCenters($userA,
+                    new Role('CHILL_ROLE_1'), null)),
+                'center B should NOT be available for userA, with role 1 '
+            ),
+           // with scope
+           array(
+                true, 
+                in_array($centerA, $ah->getReachableCenters($userA, 
+                    new Role('CHILL_ROLE_1'), $scopeB)),
+                'center A should be available for userA, with role 1, scopeC '
+           ),
+           array(
+                false, 
+                in_array($centerA, $ah->getReachableCenters($userA, 
+                    new Role('CHILL_ROLE_2'), $scopeC)),
+                'center A should NOT be available for userA, with role 2, scopeA '
+           ),
+           array(
+                true, 
+                in_array($centerB, $ah->getReachableCenters($userA, 
+                    new Role('CHILL_ROLE_2'), $scopeA)),
+                'center B should be available for userA, with role 2, scopeA '
+           ),
+        );
+        
     }
     
     

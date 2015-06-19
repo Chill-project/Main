@@ -41,6 +41,9 @@ class AuthorizationHelper
      */
     protected $roleHierarchy;
     
+    protected $existingRoles = array('CHILL_MASTER_ROLE', 'CHILL_PERSON_SEE', 
+       'CHILL_PERSON_UPDATE',);
+    
     public function __construct(RoleHierarchyInterface $roleHierarchy)
     {
         $this->roleHierarchy = $roleHierarchy;
@@ -87,8 +90,6 @@ class AuthorizationHelper
         }
         
         $role = ($attribute instanceof Role) ? $attribute : new Role($attribute);
-        $reachableRoles = $this->roleHierarchy
-                ->getReachableRoles([$role]);
         
         foreach ($user->getGroupCenters() as $groupCenter){
             //filter on center
@@ -97,13 +98,15 @@ class AuthorizationHelper
                 foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
                     //iterate on roleScopes
                     foreach($permissionGroup->getRoleScopes() as $roleScope) {
-                        //check that the role is in the reachable roles
-                        if (in_array(new Role($roleScope->getRole()), $reachableRoles)) {
+                        //check that the role allow to reach the required role
+                        if ($this->isRoleReached($role, 
+                              new Role($roleScope->getRole()))){
                             //if yes, we have a right on something...
                             // perform check on scope if necessary
                             if ($entity instanceof HasScopeInterface) {
                                 $scope = $entity->getScope();
-                                if ($scope->getId() === $roleScope->getScope()->getId()) {
+                                if ($scope->getId() === $roleScope
+                                      ->getScope()->getId()) {
                                     return true;
                                 }
                             } else {
@@ -116,5 +119,21 @@ class AuthorizationHelper
         }
         
         return false;
+    }
+    
+    
+    /**
+     * Test if a parent role may give access to a given child role
+     * 
+     * @param Role $childRole The role we want to test if he is reachable
+     * @param Role $parentRole The role which should give access to $childRole
+     * @return boolean true if the child role is granted by parent role
+     */
+    protected function isRoleReached(Role $childRole, Role $parentRole)
+    {
+        $reachableRoles = $this->roleHierarchy
+                ->getReachableRoles([$parentRole]);
+        
+        return in_array($childRole, $reachableRoles);
     }
 }

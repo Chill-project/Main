@@ -111,7 +111,29 @@ class AuthorizationHelperTest extends KernelTestCase
         $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
         $entity->getCenter()->willReturn($center);
         
-        $this->assertTrue($helper->userHasAccess($user, $entity->reveal(), 'CHILL_ROLE'));
+        $this->assertTrue($helper->userHasAccess($user, $entity->reveal(), 
+              'CHILL_ROLE'));
+    }
+    
+    public function testUserHasAccessWithInheritance_EntityWithoutScope()
+    {var_dump('test with hierarchy');
+        $center = $this->prepareCenter(1, 'center');
+        $scope = $this->prepareScope(1, 'default');
+        $user = $this->prepareUser(array(
+            array(
+                'center' => $center, 'permissionsGroup' => array(
+                    ['scope' => $scope, 'role' => 'CHILL_MASTER_ROLE']
+                )
+            )
+        ));
+        
+        $helper = $this->getAuthorizationHelper();
+        $entity = $this->getProphet()->prophesize();
+        $entity->willImplement('\Chill\MainBundle\Entity\HasCenterInterface');
+        $entity->getCenter()->willReturn($center);
+        
+        $this->assertTrue($helper->userHasAccess($user, $entity->reveal(), 
+              'CHILL_INHERITED_ROLE_1'));
     }
     
     

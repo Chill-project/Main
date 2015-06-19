@@ -116,7 +116,7 @@ class AuthorizationHelperTest extends KernelTestCase
     }
     
     public function testUserHasAccessWithInheritance_EntityWithoutScope()
-    {var_dump('test with hierarchy');
+    {
         $center = $this->prepareCenter(1, 'center');
         $scope = $this->prepareScope(1, 'default');
         $user = $this->prepareUser(array(

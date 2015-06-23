@@ -173,15 +173,17 @@ class AuthorizationHelper
         $scopes = array();
         
         foreach ($user->getGroupCenters() as $groupCenter){
-            //iterate on permissionGroup
-            foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
-                //iterate on roleScopes
-                foreach($permissionGroup->getRoleScopes() as $roleScope) {
-                    //check that the role is in the reachable roles
-                    if ($this->isRoleReached($role, 
-                          new Role($roleScope->getRole()))) {
-                        
-                        $scopes[] = $roleScope->getScope();
+            if ($center->getId() === $groupCenter->getCenter()->getId()) {
+                //iterate on permissionGroup
+                foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
+                    //iterate on roleScopes
+                    foreach($permissionGroup->getRoleScopes() as $roleScope) {
+                        //check that the role is in the reachable roles
+                        if ($this->isRoleReached($role, 
+                              new Role($roleScope->getRole()))) {
+
+                            $scopes[] = $roleScope->getScope();
+                        }
                     }
                 }
             }

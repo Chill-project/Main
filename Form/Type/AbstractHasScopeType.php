@@ -26,6 +26,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Security\Authorization\AuthorizationHelper;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Chill\MainBundle\Templating\TranslatableStringHelper;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Chill\MainBundle\Entity\Center;
+use Chill\MainBundle\Entity\Scope;
+use Chill\MainBundle\Entity\User;
 
 /**
  * Type to show reachable scope for a given center and role.
@@ -33,7 +38,7 @@ use Chill\MainBundle\Templating\TranslatableStringHelper;
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  * @author Champs Libres <info@champs-libres.coop>
  */
-class ScopeType extends AbstractType
+abstract class AbstractHasScopeType extends AbstractType
 {
     /**
      *
@@ -63,7 +68,8 @@ class ScopeType extends AbstractType
     }
 
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    protected function appendScopeChoices(FormBuilderInterface $builder, 
+            array $options, $name = 'scope')
     {
         $reachableScopes = $this->authorizationHelper
               ->getReachableScopes($this->user, $options['role'], 
@@ -75,33 +81,29 @@ class ScopeType extends AbstractType
                   ->localize($scope->getName());
         }
         
-        $options['choices'] = $choices;
-        
-        $builder->create('reachable_scope', 'choice', $options);
-    }
-    
-    public function getParent()
-    {
-        return 'choice';
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, 
+                function (FormEvent $event) use ($choices, $name) {
+                    $form = $event->getForm();
+                    $form->add($name, 'choice', array(
+                        'choices' => $choices 
+                    ));
+                
+                });
     }
     
     public function configureOptions(OptionsResolver $resolver)
     {
         // configure scope type
-        $resolver->addAllowedTypes(array('center', 'role'))
-              ->addAllowedValues('center', 
-                    array('Chill\MainBundle\Entity\Center'))
-              ->addAllowedValues('role', 
-                    array('Symfony\Component\Security\Core\Role\Role'))
+        $resolver
               ->setRequired(array('center', 'role'))
+              ->setAllowedTypes(array(
+                  'center' => 'Chill\MainBundle\Entity\Center',
+                  'role'   => 'Symfony\Component\Security\Core\Role\Role'
+              ))
               ;
         
         //configure parent type
         $resolver->setDefault('data_class', 'Chill\MainBundle\Entity\Scope');
     }
     
-    public function getName()
-    {
-        return 'scope';
-    }
 }

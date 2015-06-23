@@ -367,6 +367,82 @@ class AuthorizationHelperTest extends KernelTestCase
         
     }
     
+    /**
+     * 
+     * @dataProvider dataProvider_getReachableScopes
+     * @param boolean $expectedResult
+     * @param Scope $testedScope
+     * @param User $user
+     * @param Role $role
+     * @param Center $center
+     * @param string $message
+     */
+    public function testGetReachableScopes($expectedResult, Scope $testedScope,
+            User $user, Role $role, Center $center, $message)
+    {
+        $reachableScopes = $this->getAuthorizationHelper()
+                ->getReachableScopes($user, $role, $center);
+        
+        $this->assertEquals($expectedResult, in_array($testedScope, $reachableScopes),
+                $message);
+    }
+    
+    public function dataProvider_getReachableScopes()
+    {
+        $centerA = $this->prepareCenter(1, 'center A');
+        $centerB = $this->prepareCenter(2, 'center B');
+        $scopeA = $this->prepareScope(1, 'scope default');
+        $scopeB = $this->prepareScope(2, 'scope B');
+        $scopeC = $this->prepareScope(3, 'scope C');
+        
+        $userA = $this->prepareUser(array(
+            array(
+                'center' => $centerA, 
+                'permissionsGroup' => array(
+                    ['scope' => $scopeB, 'role' => 'CHILL_ROLE_1'],
+                    ['scope' => $scopeA, 'role' => 'CHILL_ROLE_2']
+                )
+            ),
+            array(
+               'center' => $centerB,
+               'permissionsGroup' => array(
+                     ['scope' => $scopeA, 'role' => 'CHILL_ROLE_2'],
+                     ['scope' => $scopeC, 'role' => 'CHILL_ROLE_2'],
+                     ['scope' => $scopeB, 'role' => 'CHILL_ROLE_2']
+               )
+            )
+            
+        ));
+        
+        return array(
+            array(
+                true,
+                $scopeA,
+                $userA,
+                new Role('CHILL_ROLE_2'),
+                $centerA,
+                "Assert that a scope is found within accessible scopes"
+            ),
+            array(
+                false,
+                $scopeB,
+                $userA,
+                new Role('CHILL_ROLE_2'),
+                $centerA,
+                "Assert that a scope not reachable is NOT found within accessible scopes"
+            ),
+            array(
+                false,
+                $scopeB,
+                $userA,
+                new Role('CHILL_ROLE_1'),
+                $centerB,
+                "Assert that a scope not reachable is not found within accessible scopes."
+                . " Trying on filter centering"
+            )
+        );
+    }
+    
     
     
 }

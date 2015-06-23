@@ -90,6 +90,15 @@ services:
         tags:
             - { name: form.type, alias: center }
             
+    chill.main.form.type.scope:
+        class: Chill\MainBundle\Form\Type\ScopeType
+        arguments:
+            - "@chill.main.security.authorization.helper"
+            - "@security.token_storage"
+            - "@chill.main.helper.translatable_string"
+        tags:
+            - { name: form.type, alias: scope }
+            
     chill.main.form.data_transformer.center_transformer:
         class: Chill\MainBundle\Form\Type\DataTransformer\CenterTransformer
         arguments:

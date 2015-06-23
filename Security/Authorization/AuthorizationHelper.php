@@ -161,6 +161,36 @@ class AuthorizationHelper
     }
     
     /**
+     * Return all reachable scope for a given user, center and role
+     * 
+     * @param User $user
+     * @param Role $role
+     * @param Center $center
+     * @return Scope[]
+     */
+    public function getReachableScopes(User $user, Role $role, Center $center)
+    {
+        $scopes = array();
+        
+        foreach ($user->getGroupCenters() as $groupCenter){
+            //iterate on permissionGroup
+            foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
+                //iterate on roleScopes
+                foreach($permissionGroup->getRoleScopes() as $roleScope) {
+                    //check that the role is in the reachable roles
+                    if ($this->isRoleReached($role, 
+                          new Role($roleScope->getRole()))) {
+                        
+                        $scopes[] = $roleScope->getScope();
+                    }
+                }
+            }
+        }
+        
+        return $scopes;
+    }
+    
+    /**
      * Test if a parent role may give access to a given child role
      * 
      * @param Role $childRole The role we want to test if he is reachable

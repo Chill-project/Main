@@ -2,8 +2,6 @@
 
 namespace Chill\MainBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Country
  */

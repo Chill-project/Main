@@ -28,9 +28,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Chill\MainBundle\Templating\TranslatableStringHelper;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Chill\MainBundle\Entity\Center;
-use Chill\MainBundle\Entity\Scope;
-use Chill\MainBundle\Entity\User;
 
 /**
  * Type to show reachable scope for a given center and role.

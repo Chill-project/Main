@@ -32,7 +32,7 @@ class MenuComposer implements ContainerAwareInterface
     public function setContainer(ContainerInterface $container = null)
     {
         if (NULL === $container) {
-            throw new LogicException('container should not be null');
+            throw new \LogicException('container should not be null');
         }
         //see remark in MenuComposer::setRouteCollection
         $this->container = $container;

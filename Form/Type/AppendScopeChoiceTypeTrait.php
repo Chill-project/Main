@@ -44,14 +44,17 @@ use Chill\MainBundle\Form\Type\DataTransformer\ScopeTransformer;
  *     protected $authorizationHelper;
  *     protected $translatableStringHelper;
  *     protected $user;
+ *     protected $om;
  * 
  *     public function __construct(AuthorizationHelper $helper,
  *       TokenStorageInterface $tokenStorage, 
- *       TranslatableStringHelper $translatableStringHelper)
+ *       TranslatableStringHelper $translatableStringHelper,
+ *       ObjectManager $om)
  *     {
  *         $this->authorizationHelper = $helper;
  *         $this->user = $tokenStorage->getToken()->getUser();
  *         $this->translatableStringHelper = $translatableStringHelper;
+ *         $this->om = $om;
  *     }
  * 
  *     public function buildForm(FormBuilder $builder, array $options)
@@ -61,7 +64,7 @@ use Chill\MainBundle\Form\Type\DataTransformer\ScopeTransformer;
  *         // append the scope using FormEvents: PRE_SET_DATA
  *         $this->appendScopeChoices($builder, $options['role'], 
  *              $options['center'], $this->user, $this->authorizationHelper, 
- *              $this->translatableStringHelper);
+ *              $this->translatableStringHelper, $this->om);
  *      }
  * 
  *      public function configureOptions(OptionsResolver $resolver)

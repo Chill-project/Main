@@ -121,7 +121,6 @@ trait AppendScopeChoiceTypeTrait
                             $builder
                             ->create($name, 'choice', array(
                                 'choices' => $choices,
-                                'data_class' => 'Chill\MainBundle\Entity\Scope',
                                 'auto_initialize' => false
                                 )
                             )

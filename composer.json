@@ -3,8 +3,14 @@
     "license": "AGPL-3.0",
     "type": "symfony-bundle",
     "description": "The main bundle for the Chill App",
-    "keywords" : ["chill", "social work"],
-    "homepage" : "https://github.com/Chill-project/Main",
+    "keywords" : ["chill", "social work", "software for social service"],
+    "homepage" : "http://chill.social",
+    "support": {
+        "email": "dev@lists.chill.social",
+        "issues": "https://redmine.champs-libres.coop/projects/chillmain/issues",
+        "sources": "https://github.com/chill-project/main",
+        "docs": "http://chill.readthedocs.org"
+    },
     "autoload": {
         "psr-4": { "Chill\\MainBundle\\": "" }
     },

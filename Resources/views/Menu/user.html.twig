@@ -16,7 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-<li class="nav-link more"><a href="javascript:void(0)">{{ app.user.username }}</a>
+<li class="nav-link more">
+	<a href="javascript:void(0)">
+		{{ 'Welcome' | trans }}
+		<b>{{ app.user.username }}</b>
+	</a>
     <ul class="submenu width-11-em">
         {% for route in routes %}
             <li><a href="{{ path(route.key, args ) }}"><i class="fa fa-{{ route.icon }}"></i> {{ route.label|trans }}</a></li>

@@ -1,9 +1,11 @@
-// For cutomizing the navigation
-
 .navigation {
    background-color: $chill-blue;
 
    li.more.nav-link {
+      a {
+         margin-bottom: 2px;
+      }
+
       a:after {
          color: $chill-dark-gray;
       }

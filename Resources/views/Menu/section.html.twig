@@ -19,13 +19,17 @@
 <li class="nav-link more"><a href="javascript:void(0)">Sections</a>
     <ul class="submenu width-15-em">
         {% for route in routes %}
-            <li><a href="{{ path(route.key, args ) }}">
-                {% spaceless %}
-                    {% for icon in route.icons %}
-                        <i class="fa fa-{{ icon }}"></i> 
-                    {% endfor %}
-                {% endspaceless %}
-                {{ route.label|trans }}</a></li>
+            <li>
+                <a href="{{ path(route.key, args ) }}" style="background-color:transparent;">
+                    <div style="background-color: #333333; width: calc(100% - 3em); float: left; text-align:center;">
+                    {{ route.label|trans }}</div>
+                    <div style="background-color: #333333; width: 3em; color: rgba(255, 255, 255, 0.7); text-align:center;width: 2em; float: left; margin-left:1px;">{% spaceless %}
+                        {% for icon in route.icons %}
+                            <i class="fa fa-{{ icon }}"></i> 
+                        {% endfor %}
+                    {% endspaceless %}</div>
+                </a>
+            </li>
         {% endfor %}
     </ul>
 </li>

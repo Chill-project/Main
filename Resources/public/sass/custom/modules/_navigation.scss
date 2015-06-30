@@ -1,0 +1,37 @@
+// For cutomizing the navigation
+
+.navigation {
+   background-color: $chill-blue;
+
+   li.more.nav-link {
+      a:after {
+         color: $chill-dark-gray;
+      }
+
+      &.lang-selection {
+         color: $chill-light-gray;
+         font-size: 0.7em;
+
+         a:after {
+            color: $chill-light-gray;
+         }
+      }
+   }
+
+   div.nav, div.navigation-search {
+      float: right;
+
+      input[type=search] {
+         padding: 0.2em;
+         float: left;
+      }
+   
+      button {
+         color: $chill-light-gray;
+         background-color: $chill-blue;
+         position: relative;
+         left: unset;
+         top: unset;
+      }
+   }
+}

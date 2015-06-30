@@ -33,9 +33,11 @@
       button {
          color: $chill-light-gray;
          background-color: $chill-blue;
-         padding: 0 0 0 5px;
-         float: left;
+         padding: 0 0 0 7px;
+         top: inherit;
          font-size: 1.2em;
+         position: unset;
+         float: left;
       }
    }
 }

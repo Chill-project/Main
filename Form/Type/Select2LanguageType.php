@@ -22,7 +22,6 @@ namespace Chill\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Chill\MainBundle\Entity\Language;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Form\Type\DataTransformer\MultipleObjectsToIdTransformer;

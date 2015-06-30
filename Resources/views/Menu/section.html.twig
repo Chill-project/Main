@@ -19,16 +19,17 @@
 <li class="nav-link more"><a href="javascript:void(0)">Sections</a>
     <ul class="submenu width-15-em">
         {% for route in routes %}
-            <li style="padding-top: 2px;">
-                <a href="{{ path(route.key, args ) }}" style="background-color:transparent; display:block;">
-                    <div style="background-color: #333333; width: calc(100% - 4em - 1px); float: left; text-align:center; font-family: 'open_sanslight'; font-size: 0.75em; color: rgba(255, 255, 255, 0.5); border-bottom: 1px solid tansparent;">
-                    {{ route.label|trans }}</div>
-                    <div style="background-color: #333333; width: 3em; text-align:center;width: 2em; float: left; margin-left:1px; font-size:1.5em;">{% spaceless %}
-                        {% for icon in route.icons %}
-                            <i class="fa fa-{{ icon }}"></i> 
-                        {% endfor %}
-                    {% endspaceless %}</div>
-                </a>
+            <li>
+                <div style="margin-bottom:2px;">
+                        <div style="background-color: #333333;font-family: 'open_sanslight'; font-size: 0.75em; color: rgba(255, 255, 255, 0.5); text-align:center; height: 46px; display:inline-block;  width: calc(100% - 5em - 1px); vertical-align:top;">
+                            <a href="{{ path(route.key, args ) }}" style="text-align:center; color:rgba(255, 255, 255, 0.5);">{{ route.label|trans }}</a>
+                        </div>
+                        <div style="background-color: #333333;  text-align:center;width: 2em; margin-left:-0.15em; font-size:1.5em; color:#FFF; height: 46px; display:inline-block; vertical-align:top;">{% spaceless %}
+                            {% for icon in route.icons %}
+                                <i class="fa fa-{{ icon }}"></i> 
+                            {% endfor %}
+                        {% endspaceless %}</div>
+                </div>
             </li>
         {% endfor %}
     </ul>

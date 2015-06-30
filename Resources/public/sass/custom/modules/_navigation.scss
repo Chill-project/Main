@@ -26,14 +26,16 @@
       input[type=search] {
          padding: 0.2em;
          float: left;
+
+         border: none;
       }
    
       button {
          color: $chill-light-gray;
          background-color: $chill-blue;
-         position: relative;
-         left: unset;
-         top: unset;
+         padding: 0 0 0 5px;
+         float: left;
+         font-size: 1.2em;
       }
    }
 }

@@ -4,8 +4,9 @@ $form-border-radius: 0;
 $navigation-border-radius: 0;
 
 // Footer
-$footer-vertical-padding: 20px;
+$footer-vertical-padding: 10px;
 $footer-background: $chill-dark-gray;
+$footer-disclaimer-color: transparentize($footer-color, .5);
 
 // Navigation
 $navigation-background: $dark-grey;

@@ -14,6 +14,7 @@ html,body {
 
 #content_conainter {
    position: relative;
+   min-height: calc(100% - 100px);
 }
 
 #content_conainter:before {
@@ -85,4 +86,10 @@ ul.custom_fields.choice li {
 
 .blop label {
    line-height: 1 + ($base-spacing / 3);
+}
+
+.footer {
+   p {
+      font-family: 'open_sanslight';
+   }
 }

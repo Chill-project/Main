@@ -1,8 +1,7 @@
 <?php
 
 /*
- * Chill is a software for social workers
- * Copyright (C) 2014 Champs-Libres Coopérative <info@champs-libres.coop>
+ * Copyright (C) 2015 Julien Fastré <julien.fastre@champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,32 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Chill\MainBundle\Form\Type;
-
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+namespace Chill\MainBundle\Entity;
 
 /**
- * Extends choice to allow adding select2 library on widget
+ * Interface for entities which may be linked to a center
+ * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class Select2ChoiceType extends AbstractType
+interface HasCenterInterface
 {
-    public function getName()
-    {
-        return 'select2_choice';
-    }
-    
-    public function getParent()
-    {
-        return 'choice';
-    }
-    
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-              array('attr' => array('class' => 'select2 '))
-              );
-    }
+    /**
+     * the linked center
+     * 
+     * @return Center
+     */
+    public function getCenter();
 }

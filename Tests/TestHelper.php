@@ -36,11 +36,12 @@ class TestHelper
      * @param WebTestCase $testCase
      * @return \Symfony\Component\BrowserKit\Client authenticated client
      */
-    public static function getAuthenticatedClientOptions()
+    public static function getAuthenticatedClientOptions($username = 'center a_social',
+            $password = 'password')
     {
        return array(
-           'PHP_AUTH_USER' => 'center a_social',
-           'PHP_AUTH_PW'   => 'password',
+           'PHP_AUTH_USER' => $username,
+           'PHP_AUTH_PW'   => $password,
         );
     }
 }

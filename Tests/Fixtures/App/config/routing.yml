@@ -2,7 +2,7 @@ hello_bundle:
     resource: "@ChillMainBundle/Resources/config/routing.yml"
     
 chill_main_dummy_0:
-    pattern: /dummy
+    path: /dummy
     defaults: { _controller: ChillMainBundle:Default:index }
     options:
         menus:
@@ -15,7 +15,7 @@ chill_main_dummy_0:
                 label: test dummy 1
 
 chill_main_dummy_1:
-    pattern: /dummy1
+    path: /dummy1
     defaults: { _controller: ChillMainBundle:Default:index }
     options:
         menus:
@@ -25,7 +25,7 @@ chill_main_dummy_1:
                 helper: 'great helper'
                 
 chill_main_dummy_2:
-    pattern: /dummy2/{param}
+    path: /dummy2/{param}
     defaults: {_controller: ChillMainBundle:Default:index }
     options:
         menus:

@@ -1,8 +1,7 @@
 <?php
 
 /*
- * Chill is a software for social workers
- * Copyright (C) 2014 Champs-Libres Coopérative <info@champs-libres.coop>
+ * Copyright (C) 2015 Julien Fastré <julien.fastre@champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,32 +17,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Chill\MainBundle\Form\Type;
-
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+namespace Chill\MainBundle\Test;
 
 /**
- * Extends choice to allow adding select2 library on widget
+ * a trait to prepare prophecy
+ * 
+ * **Usage : ** You must set up trait with `setUpTrait` before use
+ * and use tearDownTrait after usage.
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
+ * @codeCoverageIgnore
  */
-class Select2ChoiceType extends AbstractType
+trait ProphecyTrait
 {
-    public function getName()
+        
+    /**
+     *
+     * @var \Prophecy\Prophet()
+     */
+    private $prophet;
+    
+    /**
+     * 
+     * @return \Prophecy\Prophet
+     */
+    public function getProphet()
     {
-        return 'select2_choice';
+        if ($this->prophet === NULL) {
+            $this->prophet = new \Prophecy\Prophet();
+        }
+        
+        return $this->prophet;
     }
     
-    public function getParent()
-    {
-        return 'choice';
-    }
-    
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-              array('attr' => array('class' => 'select2 '))
-              );
-    }
 }

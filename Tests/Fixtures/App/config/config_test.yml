@@ -7,6 +7,8 @@ framework:
         storage_id: session.storage.filesystem
         
 security:
+    role_hierarchy:
+        CHILL_MASTER_ROLE: [CHILL_INHERITED_ROLE_1]
     providers:
         users:
             entity:

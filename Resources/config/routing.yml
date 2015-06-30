@@ -1,16 +1,16 @@
 root:
-    pattern: /
+    path: /
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /homepage
         permanent: true
 
 chill_main_homepage_without_locale:
-    pattern:  /homepage
+    path:  /homepage
     defaults: { _controller: ChillMainBundle:Default:indexWithoutLocale }
 
 chill_main_homepage:
-    pattern:  /{_locale}/homepage
+    path:  /{_locale}/homepage
     defaults: { _controller: ChillMainBundle:Default:index }
     options:
         menus:
@@ -20,7 +20,7 @@ chill_main_homepage:
                 icons: [home]
 
 chill_main_export_index:
-    pattern: /{_locale}/export
+    path: /{_locale}/export
     defaults: { _controller: ChillMainBundle:Export:index }
     options:
         menus:
@@ -30,7 +30,7 @@ chill_main_export_index:
                 icons: [upload]
 
 chill_main_admin_central:
-    pattern: /{_locale}/admin
+    path: /{_locale}/admin
     defaults: { _controller: ChillMainBundle:Admin:index }
     options:
         menus:
@@ -40,7 +40,7 @@ chill_main_admin_central:
                 icons: [gears]
 
 chill_main_search:
-    pattern: /{_locale}/search
+    path: /{_locale}/search
     defaults: { _controller: ChillMainBundle:Search:search }
 
 login:

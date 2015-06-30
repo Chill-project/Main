@@ -150,8 +150,8 @@ class TimelineBuilder implements ContainerAwareInterface
         $data = $provider->fetchQuery($context, $args);
         
         return sprintf(
-                'SELECT "%s" AS id, '
-                . '"%s" AS "date", '
+                'SELECT %s AS id, '
+                . '%s AS "date", '
                 . "'%s' AS type "
                 . 'FROM %s '
                 . 'WHERE %s',

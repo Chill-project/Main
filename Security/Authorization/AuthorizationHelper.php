@@ -106,6 +106,9 @@ class AuthorizationHelper
                             // perform check on scope if necessary
                             if ($entity instanceof HasScopeInterface) {
                                 $scope = $entity->getScope();
+                                if ($scope === NULL) {
+                                    return true;
+                                }
                                 if ($scope->getId() === $roleScope
                                       ->getScope()->getId()) {
                                     return true;

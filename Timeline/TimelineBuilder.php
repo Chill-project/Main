@@ -130,7 +130,7 @@ class TimelineBuilder implements ContainerAwareInterface
             $union .= $append;
         }
         //add ORDER BY clause and LIMIT
-        $union .= sprintf(' ORDER BY date LIMIT %d OFFSET %d',
+        $union .= sprintf(' ORDER BY date DESC LIMIT %d OFFSET %d',
                 $number, $page * $number);
         
         return $union;

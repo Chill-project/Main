@@ -20,13 +20,58 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <title>
+            {{ 'Login to %installation_name%' | trans({ '%installation_name%' : installation.name } ) }}
+        </title>
+        <link rel="shortcut icon" href="/bundles/chillmain/img/favicon.ico" type="image/x-icon">
+        {% stylesheets  output="css/all.css" filter="cssrewrite"
+           
+            "bundles/chillmain/fonts/OpenSans/OpenSans.css" %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
 
-        <title>{{ 'Login to %installation_name%' | trans({ '%installation_name%' : installation.name } ) }}</title>
+
         <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-color: #333;
+                color: white;
+                text-align: center;
+            }
+
+            #content {
+                position: relative;
+                height: 90%;
+                padding-top: 10%;
+            }
+
+            #content:before {
+               bottom: 0;
+               content: "";
+               left: 0;
+               opacity: 0.2;
+               position: absolute;
+               right: 0;
+               top: 0;
+               z-index: -1;
+               background-image: url("/bundles/chillmain/img/background/desert.jpg");
+               background-attachment: fixed;
+               background-repeat: no-repeat;
+               background-size: cover;
+               background-position: center;
+            }
+
             label {
                 width : 15em;
                 text-align: right;
                 display: inline-block;
+                font-family: 'open_sanslight';
+                padding-right: 5px;
             }
             input {
                 
@@ -37,11 +82,22 @@
             button {
                 margin-left: 15em;
                 margin-top: 1em;
+                background-color: #df4949;
+                border: medium none;
+                border-radius: 0;
+                box-shadow: none;
+                color: #fff;
+                padding: 4px 8px;
+                font-family: 'open_sanslight';
             }
+
+
+
         </style>
     </head>
     <body>
-        <h1>{{ 'Welcome to %installation_name%' | trans({ '%installation_name%' : installation.name } ) }}</h1>
+        <div id="content">
+        <img class="logo" src="/bundles/chillmain/img/logo-chill-outil-accompagnement_white.png">
 
         <p>{{ error|trans }}</p>
 
@@ -56,7 +112,7 @@
             <button type="submit" name="login">{{ 'Login'|trans }}</button>
 
         </form>
-
+        </div>
     </body>
 </html>
 

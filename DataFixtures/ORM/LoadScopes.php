@@ -63,10 +63,7 @@ class LoadScopes extends AbstractFixture implements OrderedFixtureInterface
     public static $references = array();
 
     public function load(ObjectManager $manager)
-    {
-        
-        $scopesReferences = array();
-        
+    { 
         foreach ($this->scopes as $new) {
             $scope = new \Chill\MainBundle\Entity\Scope();
             $scope->setName($new['names']);

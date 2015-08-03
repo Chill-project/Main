@@ -30,7 +30,6 @@
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
 
-
         <style>
             html, body {
                 height: 100%;
@@ -90,28 +89,25 @@
                 padding: 4px 8px;
                 font-family: 'open_sanslight';
             }
-
-
-
         </style>
     </head>
     <body>
         <div id="content">
-        <img class="logo" src="/bundles/chillmain/img/logo-chill-outil-accompagnement_white.png">
+            <img class="logo" src="/bundles/chillmain/img/logo-chill-outil-accompagnement_white.png">
 
-        <p>{{ error|trans }}</p>
+            <p>{{ error|trans }}</p>
 
-        <form method="POST" action="{{ path('login_check') }}">
-            <label for="_username">{{ 'Username'|trans }}</label>
-            <input type="text" name="_username" value="{{ last_username }}" />
-            <br/>
-            <label for="_password">{{ 'Password'|trans }}</label>
-            <input type="password" name="_password" />
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
-            <br/>
-            <button type="submit" name="login">{{ 'Login'|trans }}</button>
+            <form method="POST" action="{{ path('login_check') }}">
+                <label for="_username">{{ 'Username'|trans }}</label>
+                <input type="text" name="_username" value="{{ last_username }}" />
+                <br/>
+                <label for="_password">{{ 'Password'|trans }}</label>
+                <input type="password" name="_password" />
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                <br/>
+                <button type="submit" name="login">{{ 'Login'|trans }}</button>
 
-        </form>
+            </form>
         </div>
     </body>
 </html>

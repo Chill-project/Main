@@ -49,13 +49,13 @@
         <div class="grid-3 parent">
             <div class="grid-10 push-2 logo-container">
                 <a href="{{ path('chill_main_homepage') }}">
-                    <img class="logo" src="/bundles/chillmain/img/logo-chill-sans-slogan_white.png">
+                    <img class="logo" src="/bundles/chillmain/img/logo-chill-sans-slogan_white_2.png">
                 </a>
             </div>
         </div>
         <div class="grid-9 text-right">
             <div class="nav">
-                <ul id="navigation-menu">
+                <ul class="navigation-menu">
                     {{ chill_menu('section', {
                         'layout': 'ChillMainBundle::Menu/section.html.twig',
                     }) }}
@@ -65,12 +65,12 @@
                     }) }}
 
                     {% if  available_languages|length == 1 %}
-                        <li class="nav-link lang-selection">
+                        <li class="nav-link2 lang-selection">
                             <a href="">{{ available_languages[0] | capitalize }}</a>
                         </li>
                     {% else %}
-                        <li class="nav-link more lang-selection">
-                            <a href="">{{ app.request.locale | capitalize }}</a>
+                        <li class="nav-link2 lang-selection">
+                            <a href="#" class="more">{{ app.request.locale | capitalize }}</a>
                             <ul class="submenu">
                                 {% for lang in available_languages  %}
                                     <li {% if lang == app.request.locale %}class="active"{% endif %}>

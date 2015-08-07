@@ -4197,7 +4197,7 @@ a {
   .navigation .nav {
     z-index: 9999999; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000338}}
-  .navigation ul#navigation-menu {
+  .navigation ul.navigation-menu {
     -webkit-transform-style: preserve-3d;
     clear: both;
     display: none;
@@ -4209,7 +4209,7 @@ a {
     display: inline;
     margin: 0;
     padding: 0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000358}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000356}}
   .navigation ul li.nav-link {
     background: #333333;
     display: block;
@@ -4224,90 +4224,90 @@ a {
     line-height: 60px;
     text-decoration: none;
     width: auto; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000376}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000374}}
     .navigation ul li.nav-link a {
       color: white;
       display: inline-block;
       font-weight: 400;
       padding-right: 1em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000385}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000383}}
       .navigation ul li.nav-link a:hover {
         color: white; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000391}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000389}}
   .navigation .active-nav-item a {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     padding-bottom: 3px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000397}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000395}}
   .navigation li.more.nav-link {
     padding-right: 0;
     padding-right: 1em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003104}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003102}}
     .navigation li.more.nav-link > ul > li:first-child a {
       padding-top: 0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003108}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003106}}
     .navigation li.more.nav-link a {
       margin-right: 1em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003112}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003110}}
     .navigation li.more.nav-link > a {
       padding-right: 0.6em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003116}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003114}}
     .navigation li.more.nav-link > a:after {
       position: absolute;
       top: auto;
       right: -0.4em;
       bottom: auto;
       left: auto;
-      content: '\25BE';
-      color: white; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003123}}
+      content: "▾";
+      color: rgba(255, 255, 255, 0.7); }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003121}}
   .navigation li.more {
     overflow: visible;
     padding-right: 0;
     padding-right: .8em;
     position: relative; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003127}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003125}}
     .navigation li.more a {
       padding-right: .8em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003131}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003129}}
     .navigation li.more > a {
       padding-right: 1.6em;
       position: relative;
       margin-right: 1em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003139}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003137}}
       .navigation li.more > a:after {
         content: '›';
         font-size: 1.2em;
         position: absolute;
         right: 0.5em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003147}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003145}}
     .navigation li.more:hover > .submenu {
       display: block; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003157}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003155}}
   .navigation ul.submenu {
     display: none;
     padding-left: 0;
     left: -1em;
     position: absolute;
     top: 1.5em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003167}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003164}}
     .navigation ul.submenu .submenu {
       left: 11.8em;
       top: 0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003174}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003171}}
     .navigation ul.submenu li {
       display: block;
       padding-right: 0;
       line-height: 46.15385px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003181}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003178}}
       .navigation ul.submenu li:first-child > a {
         border-top-left-radius: 0;
         border-top-right-radius: 0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003186}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003183}}
       .navigation ul.submenu li:last-child > a {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding-bottom: 0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003193}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003190}}
       .navigation ul.submenu li a {
         background-color: #2b2b2b;
         display: inline-block;
@@ -4316,49 +4316,106 @@ a {
         background-color: #333333;
         padding-left: 1em;
         text-align: left; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003210}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003207}}
   .navigation .navigation-search {
     padding: .85em .6em;
     position: relative; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003214}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003211}}
     .navigation .navigation-search input[type=search] {
       padding: .6em .55em;
       padding-right: 3.5em;
       width: calc(100% - 4.5em);
       font-size: .9em;
       margin: 0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003228}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003225}}
     .navigation .navigation-search button {
       padding: 7px 12px;
       position: absolute;
       top: .99em;
       right: 1em; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003233}}
+  .navigation ul li.nav-link2 {
+    position: relative;
+    display: inline-block;
+    padding-right: 2em;
+    text-align: left;
+    line-height: 60px;
+    z-index: 9999; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003241}}
+    .navigation ul li.nav-link2 a.more:after {
+      content: "▾";
+      color: rgba(255, 255, 255, 0.7);
+      padding-left: 0.4em;
+      font-size: 1.2em; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003248}}
+    .navigation ul li.nav-link2 div.multiple_lines {
+      display: inline-block;
+      line-height: normal;
+      vertical-align: middle; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003254}}
+    .navigation ul li.nav-link2 ul {
+      display: none;
+      position: absolute;
+      line-height: normal;
+      list-style: none;
+      background-color: #333;
+      padding-right: 1.5em;
+      padding-left: 1.5em;
+      width: 100%; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003266}}
+    .navigation ul li.nav-link2 ul li {
+      padding-top: 0.7em;
+      padding-bottom: 0.7em; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003270}}
+      .navigation ul li.nav-link2 ul li:first-child {
+        padding-top: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003274}}
+      .navigation ul li.nav-link2 ul li:last-child {
+        padding-bottom: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003280}}
+    .navigation ul li.nav-link2:hover ul {
+      display: block; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003284}}
+    .navigation ul li.nav-link2 a {
+      display: inline-block;
+      width: 100%;
+      color: white;
+      font-weight: 400; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\00003290}}
+      .navigation ul li.nav-link2 a:hover {
+        color: white; }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\000031}}
 .navigation {
   background-color: #334d5c; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\000035}}
-  .navigation li.more.nav-link a {
-    margin-bottom: 2px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\000039}}
-  .navigation li.more.nav-link a:after {
+  .navigation a.more:after {
     color: #333333; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000313}}
-  .navigation li.more.nav-link.lang-selection {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000310}}
+  .navigation li.nav-link2 a {
+    margin-bottom: 2px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000314}}
+  .navigation li.nav-link2.lang-selection {
     color: #b2b2b2;
     font-size: 0.7em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000317}}
-    .navigation li.more.nav-link.lang-selection a:after {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000318}}
+    .navigation li.nav-link2.lang-selection a.more:after {
       color: #b2b2b2; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000323}}
+  .navigation li.nav-link2 ul {
+    top: 58px; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000326}}
+    .navigation li.nav-link2 ul a {
+      padding-left: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000332}}
   .navigation div.nav, .navigation div.navigation-search {
     float: right; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000326}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000335}}
     .navigation div.nav input[type=search], .navigation div.navigation-search input[type=search] {
       padding: 0.2em;
       float: left;
       border: none; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000333}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_navigation\.scss}line{font-family:\0000342}}
     .navigation div.nav button, .navigation div.navigation-search button {
       color: #b2b2b2;
       background-color: #334d5c;

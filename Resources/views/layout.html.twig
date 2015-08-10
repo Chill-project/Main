@@ -66,11 +66,15 @@
 
                     {% if  available_languages|length == 1 %}
                         <li class="nav-link2 lang-selection">
-                            <a href="">{{ available_languages[0] | capitalize }}</a>
+                            <div class="li-content">
+                                <a href="">{{ available_languages[0] | capitalize }}</a>
+                            </div>
                         </li>
                     {% else %}
                         <li class="nav-link2 lang-selection">
-                            <a href="#" class="more">{{ app.request.locale | capitalize }}</a>
+                            <div class="li-content">
+                                <a href="#" class="more">{{ app.request.locale | capitalize }}</a>
+                            </div>
                             <ul class="submenu">
                                 {% for lang in available_languages  %}
                                     <li {% if lang == app.request.locale %}class="active"{% endif %}>

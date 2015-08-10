@@ -1,8 +1,13 @@
 // YOUR CUSTOM SCSS
 @import 'custom/timeline';
+div#header-person-name {
+   background: none repeat scroll 0 0 $chill-green-dark;
+   color: #FFF;
+   padding: 0.5em;
+}
 
-div#general {
-   background: none repeat scroll 0 0 $green;
+div#header-person-details {
+   background: none repeat scroll 0 0 $chill-green;
    color: #FFF;
    padding: 0.5em;
 }

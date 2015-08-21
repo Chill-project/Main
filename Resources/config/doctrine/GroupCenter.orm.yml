@@ -11,6 +11,5 @@ Chill\MainBundle\Entity\GroupCenter:
         center:
             targetEntity: Chill\MainBundle\Entity\Center
             inversedBy: groupCenters
-    manyToMany:
-        permissionGroups:
+        permissionsGroup:
             targetEntity: Chill\MainBundle\Entity\PermissionsGroup

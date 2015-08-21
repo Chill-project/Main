@@ -52,9 +52,9 @@ class GroupCenter
     
     /**
      *
-     * @var Collection
+     * @var PermissionsGroup
      */
-    private $permissionGroups;
+    private $permissionsGroup;
     
     public function __construct()
     {
@@ -78,11 +78,16 @@ class GroupCenter
 
     /**
      * 
-     * @return PermissionGroup[]
+     * @return PermissionsGroup[]
+     * @deprecated
      */
     public function getPermissionGroups()
     {
-        return $this->permissionGroups;
+        trigger_error("This function is deprecated, association "
+                . "between PermissionGroup and GroupCenter has changed,"
+                . "see #578", E_USER_DEPRECATED);
+        
+        return array($this->permissionGroup);
     }
 
     /**
@@ -98,12 +103,18 @@ class GroupCenter
 
     /**
      * 
-     * @param PermissionGroup $permission
+     * @param PermissionsGroup $permission
      * @return \Chill\MainBundle\Entity\GroupCenter
+     * @deprecated
      */
     public function addPermissionGroup(PermissionsGroup $permission)
     {
-        $this->permissionGroups->add($permission);
+        trigger_error("This function is deprecated, association "
+                . "between PermissionGroup and GroupCenter has changed,"
+                . "see #578", E_USER_DEPRECATED);
+        
+        $this->setPermissionsGroup($permission);
+        
         return $this;
     }
     
@@ -111,6 +122,27 @@ class GroupCenter
     {
         return $this->users;
     }
+    
+    /**
+     * 
+     * @return PermissionGroup
+     */
+    public function getPermissionsGroup()
+    {
+        return $this->permissionGroup;
+    }
+
+    /**
+     * 
+     * @param \Chill\MainBundle\Entity\PermissionsGroup $permissionGroup
+     * @return \Chill\MainBundle\Entity\GroupCenter
+     */
+    public function setPermissionsGroup(PermissionsGroup $permissionGroup)
+    {
+        $this->permissionGroup = $permissionGroup;
+        return $this;
+    }
+
 
 
 

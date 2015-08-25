@@ -68,6 +68,7 @@ trait PrepareUserTrait
             $groupCenter = (new GroupCenter())
                     ->setCenter($permission['center']);
             $permissionGroup = new PermissionsGroup();
+            
             foreach ($permission['permissionsGroup'] as $pg) {
                 
                 $roleScope = (new RoleScope())
@@ -75,11 +76,14 @@ trait PrepareUserTrait
                         ->setScope($pg['scope']);
                         ;
                 $permissionGroup->addRoleScope($roleScope);
-                $groupCenter->addPermissionGroup($permissionGroup);
+                
             }
+            
+            $groupCenter->setPermissionsGroup($permissionGroup);
             $user->addGroupCenter($groupCenter);
-        }
-        
+            
+            }
+            
         return $user;
     }
 }

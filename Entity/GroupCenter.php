@@ -78,43 +78,12 @@ class GroupCenter
 
     /**
      * 
-     * @return PermissionsGroup[]
-     * @deprecated
-     */
-    public function getPermissionGroups()
-    {
-        trigger_error("This function is deprecated, association "
-                . "between PermissionGroup and GroupCenter has changed,"
-                . "see #578", E_USER_DEPRECATED);
-        
-        return array($this->permissionGroup);
-    }
-
-    /**
-     * 
      * @param Center $center
      * @return \Chill\MainBundle\Entity\GroupCenter
      */
     public function setCenter(Center $center)
     {
         $this->center = $center;
-        return $this;
-    }
-
-    /**
-     * 
-     * @param PermissionsGroup $permission
-     * @return \Chill\MainBundle\Entity\GroupCenter
-     * @deprecated
-     */
-    public function addPermissionGroup(PermissionsGroup $permission)
-    {
-        trigger_error("This function is deprecated, association "
-                . "between PermissionGroup and GroupCenter has changed,"
-                . "see #578", E_USER_DEPRECATED);
-        
-        $this->setPermissionsGroup($permission);
-        
         return $this;
     }
     

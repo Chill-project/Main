@@ -129,7 +129,7 @@ class GroupCenter
      */
     public function getPermissionsGroup()
     {
-        return $this->permissionGroup;
+        return $this->permissionsGroup;
     }
 
     /**
@@ -137,9 +137,9 @@ class GroupCenter
      * @param \Chill\MainBundle\Entity\PermissionsGroup $permissionGroup
      * @return \Chill\MainBundle\Entity\GroupCenter
      */
-    public function setPermissionsGroup(PermissionsGroup $permissionGroup)
+    public function setPermissionsGroup(PermissionsGroup $permissionsGroup)
     {
-        $this->permissionGroup = $permissionGroup;
+        $this->permissionsGroup = $permissionsGroup;
         return $this;
     }
 

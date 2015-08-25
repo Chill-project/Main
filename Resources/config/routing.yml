@@ -1,3 +1,7 @@
+chill_main_admin_user:
+    resource: "@ChillMainBundle/Resources/config/routing/user.yml"
+    prefix:   /admin/user
+
 chill_main_admin_scope:
     resource: "@ChillMainBundle/Resources/config/routing/scope.yml"
     prefix:   /admin/scope

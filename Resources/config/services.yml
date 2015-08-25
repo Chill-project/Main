@@ -81,7 +81,6 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type, alias: select2_chill_language }
-            
     chill.main.form.type.center:
         class: Chill\MainBundle\Form\Type\CenterType
         arguments:
@@ -89,7 +88,6 @@ services:
             - "@chill.main.form.data_transformer.center_transformer"
         tags:
             - { name: form.type, alias: center }
-            
     chill.main.form.data_transformer.center_transformer:
         class: Chill\MainBundle\Form\Type\DataTransformer\CenterTransformer
         arguments:

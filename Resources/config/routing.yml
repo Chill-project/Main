@@ -1,3 +1,7 @@
+chill_main_admin_permissionsgroup:
+    resource: "@ChillMainBundle/Resources/config/routing/permissionsgroup.yml"
+    prefix:   /admin/permissionsgroup
+
 chill_main_admin_user:
     resource: "@ChillMainBundle/Resources/config/routing/user.yml"
     prefix:   /admin/user

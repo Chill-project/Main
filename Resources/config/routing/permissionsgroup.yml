@@ -1,0 +1,30 @@
+admin_permissionsgroup:
+    path:     /
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:index" }
+
+admin_permissionsgroup_show:
+    path:     /{id}/show
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:show" }
+
+admin_permissionsgroup_new:
+    path:     /new
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:new" }
+
+admin_permissionsgroup_create:
+    path:     /create
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:create" }
+    methods:  POST
+
+admin_permissionsgroup_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:edit" }
+
+admin_permissionsgroup_update:
+    path:     /{id}/update
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:update" }
+    methods:  [POST, PUT]
+
+admin_permissionsgroup_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:delete" }
+    methods:  [POST, DELETE]

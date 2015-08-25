@@ -1,3 +1,7 @@
+chill_main_admin:
+    resource: "@ChillMainBundle/Resources/config/routing/center.yml"
+    prefix:   /admin
+
 root:
     path: /
     defaults:

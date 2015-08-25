@@ -1,17 +1,17 @@
-{% extends '::base.html.twig' %}
+{% extends 'ChillMainBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Scope</h1>
+{% block content -%}
+    <h1>{{ 'Circle'|trans }}</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'| trans }}</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
-                <td>{{ entity.name }}</td>
+                <th>{{ 'Name'|trans }}</th>
+                <td>{{ entity.name|localize_translatable_string }}</td>
             </tr>
         </tbody>
     </table>
@@ -19,14 +19,13 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin_scope') }}">
-            Back to the list
+            {{ 'Back to the list'|trans }}
         </a>
     </li>
     <li>
         <a href="{{ path('admin_scope_edit', { 'id': entity.id }) }}">
-            Edit
+            {{ 'Edit'| trans }}
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

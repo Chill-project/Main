@@ -35,20 +35,20 @@ class ScopeController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Scope();
-        $form = $this->createCreateForm($entity);
+        $scope = new Scope();
+        $form = $this->createCreateForm($scope);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($scope);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_scope_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_scope_show', array('id' => $scope->getId())));
         }
 
         return $this->render('ChillMainBundle:Scope:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $scope,
             'form'   => $form->createView(),
         ));
     }
@@ -56,13 +56,13 @@ class ScopeController extends Controller
     /**
      * Creates a form to create a Scope entity.
      *
-     * @param Scope $entity The entity
+     * @param Scope $scope The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Scope $entity)
+    private function createCreateForm(Scope $scope)
     {
-        $form = $this->createForm(new ScopeType(), $entity, array(
+        $form = $this->createForm(new ScopeType(), $scope, array(
             'action' => $this->generateUrl('admin_scope_create'),
             'method' => 'POST',
         ));
@@ -78,11 +78,11 @@ class ScopeController extends Controller
      */
     public function newAction()
     {
-        $entity = new Scope();
-        $form   = $this->createCreateForm($entity);
+        $scope = new Scope();
+        $form   = $this->createCreateForm($scope);
 
         return $this->render('ChillMainBundle:Scope:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $scope,
             'form'   => $form->createView(),
         ));
     }
@@ -95,17 +95,14 @@ class ScopeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:Scope')->find($id);
+        $scope = $em->getRepository('ChillMainBundle:Scope')->find($id);
 
-        if (!$entity) {
+        if (!$scope) {
             throw $this->createNotFoundException('Unable to find Scope entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('ChillMainBundle:Scope:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $scope
         ));
     }
 
@@ -117,33 +114,31 @@ class ScopeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:Scope')->find($id);
+        $scope = $em->getRepository('ChillMainBundle:Scope')->find($id);
 
-        if (!$entity) {
+        if (!$scope) {
             throw $this->createNotFoundException('Unable to find Scope entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($scope);
 
         return $this->render('ChillMainBundle:Scope:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $scope,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
     * Creates a form to edit a Scope entity.
     *
-    * @param Scope $entity The entity
+    * @param Scope $scope The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Scope $entity)
+    private function createEditForm(Scope $scope)
     {
-        $form = $this->createForm(new ScopeType(), $entity, array(
-            'action' => $this->generateUrl('admin_scope_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ScopeType(), $scope, array(
+            'action' => $this->generateUrl('admin_scope_update', array('id' => $scope->getId())),
             'method' => 'PUT',
         ));
 
@@ -159,14 +154,13 @@ class ScopeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:Scope')->find($id);
+        $scope = $em->getRepository('ChillMainBundle:Scope')->find($id);
 
-        if (!$entity) {
+        if (!$scope) {
             throw $this->createNotFoundException('Unable to find Scope entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($scope);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -176,49 +170,8 @@ class ScopeController extends Controller
         }
 
         return $this->render('ChillMainBundle:Scope:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $scope,
+            'edit_form'   => $editForm->createView()
         ));
-    }
-    /**
-     * Deletes a Scope entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ChillMainBundle:Scope')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Scope entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('admin_scope'));
-    }
-
-    /**
-     * Creates a form to delete a Scope entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_scope_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
     }
 }

@@ -17,3 +17,11 @@ Invalid terms : Recherche invalide
 You should not have more than one domain. : Vous ne devriez pas avoir plus d'un domaine de recherche.
 #used for page title
 Search %pattern%: Recherche de "%pattern%"
+
+#admin
+Create: Créer
+show: voir
+edit: modifier
+
+#admin scope
+Create a new circle: Créer un nouveau cercle

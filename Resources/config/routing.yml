@@ -1,18 +1,18 @@
 chill_main_admin_permissionsgroup:
     resource: "@ChillMainBundle/Resources/config/routing/permissionsgroup.yml"
-    prefix:   /admin/permissionsgroup
+    prefix:   "{_locale}/admin/permissionsgroup"
 
 chill_main_admin_user:
     resource: "@ChillMainBundle/Resources/config/routing/user.yml"
-    prefix:   /admin/user
+    prefix:   "{_locale}/admin/user"
 
 chill_main_admin_scope:
     resource: "@ChillMainBundle/Resources/config/routing/scope.yml"
-    prefix:   /admin/scope
+    prefix:   "{_locale}/admin/scope"
 
 chill_main_admin:
     resource: "@ChillMainBundle/Resources/config/routing/center.yml"
-    prefix:   /admin
+    prefix:   "{_locale}/admin/center"
 
 root:
     path: /

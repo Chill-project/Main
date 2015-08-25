@@ -2732,6 +2732,50 @@ th {
 .fa-medium:before {
   content: ""; }
 
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-blue {
+  color: #334d5c; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-green {
+  color: #43b29d; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-green-dark {
+  color: #328474; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-yellow {
+  color: #eec84a; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-orange {
+  color: #e2793d; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-red {
+  color: #df4949; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-gray {
+  color: #ececec; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-beige {
+  color: #cabb9f; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-pink {
+  color: #dd506d; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-dark-gray {
+  color: #333333; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/config\/_colors\.scss}line{font-family:\0000318}}
+.chill-light-gray {
+  color: #b2b2b2; }
+
 /*
 // Flash Colors
 $alert-color: $light-yellow;

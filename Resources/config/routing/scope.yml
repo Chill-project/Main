@@ -1,0 +1,30 @@
+admin_scope:
+    path:     /
+    defaults: { _controller: "ChillMainBundle:Scope:index" }
+
+admin_scope_show:
+    path:     /{id}/show
+    defaults: { _controller: "ChillMainBundle:Scope:show" }
+
+admin_scope_new:
+    path:     /new
+    defaults: { _controller: "ChillMainBundle:Scope:new" }
+
+admin_scope_create:
+    path:     /create
+    defaults: { _controller: "ChillMainBundle:Scope:create" }
+    methods:  POST
+
+admin_scope_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ChillMainBundle:Scope:edit" }
+
+admin_scope_update:
+    path:     /{id}/update
+    defaults: { _controller: "ChillMainBundle:Scope:update" }
+    methods:  [POST, PUT]
+
+admin_scope_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ChillMainBundle:Scope:delete" }
+    methods:  [POST, DELETE]

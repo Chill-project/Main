@@ -4967,22 +4967,23 @@ table {
   width: 100%; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\000034}}
   table thead {
-    background-color: unset;
-    color: #fff; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\000038}}
+    background-color: unset; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\000037}}
     table thead tr th {
       border: unset;
       text-align: center;
-      padding: 0.3em; }
+      padding: 0.3em;
+      color: #334d5c; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\0000317}}
   table tbody tr td {
     border: 1px solid #000;
     text-align: left;
-    padding: 0.3em; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\0000323}}
+    padding: 0.3em;
+    color: unset; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\0000324}}
   table tbody tr:nth-of-type(even) {
     background-color: #e6e6e6; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\0000327}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_table\.scss}line{font-family:\0000328}}
   table tbody tr:nth-of-type(odd) {
     background-color: #fff; }
 

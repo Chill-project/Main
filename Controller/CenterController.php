@@ -101,11 +101,8 @@ class CenterController extends Controller
             throw $this->createNotFoundException('Unable to find Center entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('ChillMainBundle:Center:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $entity
         ));
     }
 
@@ -124,13 +121,10 @@ class CenterController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('ChillMainBundle:Center:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+            'edit_form'   => $editForm->createView()
+            ));
     }
 
     /**
@@ -165,7 +159,6 @@ class CenterController extends Controller
             throw $this->createNotFoundException('Unable to find Center entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
@@ -177,48 +170,7 @@ class CenterController extends Controller
 
         return $this->render('ChillMainBundle:Center:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         ));
-    }
-    /**
-     * Deletes a Center entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ChillMainBundle:Center')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Center entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('admin'));
-    }
-
-    /**
-     * Creates a form to delete a Center entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
     }
 }

@@ -23,8 +23,3 @@ admin_update:
     path:     /{id}/update
     defaults: { _controller: "ChillMainBundle:Center:update" }
     methods:  [POST, PUT]
-
-admin_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "ChillMainBundle:Center:delete" }
-    methods:  [POST, DELETE]

@@ -101,11 +101,8 @@ class PermissionsGroupController extends Controller
             throw $this->createNotFoundException('Unable to find PermissionsGroup entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('ChillMainBundle:PermissionsGroup:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -124,12 +121,10 @@ class PermissionsGroupController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -165,7 +160,6 @@ class PermissionsGroupController extends Controller
             throw $this->createNotFoundException('Unable to find PermissionsGroup entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
@@ -178,47 +172,6 @@ class PermissionsGroupController extends Controller
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
-    }
-    /**
-     * Deletes a PermissionsGroup entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ChillMainBundle:PermissionsGroup')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find PermissionsGroup entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('admin_permissionsgroup'));
-    }
-
-    /**
-     * Creates a form to delete a PermissionsGroup entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_permissionsgroup_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
     }
 }

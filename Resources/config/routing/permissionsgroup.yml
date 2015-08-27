@@ -23,8 +23,3 @@ admin_permissionsgroup_update:
     path:     /{id}/update
     defaults: { _controller: "ChillMainBundle:PermissionsGroup:update" }
     methods:  [POST, PUT]
-
-admin_permissionsgroup_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "ChillMainBundle:PermissionsGroup:delete" }
-    methods:  [POST, DELETE]

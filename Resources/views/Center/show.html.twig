@@ -1,16 +1,18 @@
-{% extends '::base.html.twig' %}
+{% extends 'ChillMainBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Center</h1>
+{% block title %}{{ 'Centre %name%'|trans({ '%name%': entity.name }) }}{% endblock %}
+
+{% block content -%}
+    <h1>{{ 'Centre %name%'|trans({ '%name%': entity.name }) }}</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>{{ 'Name'|trans }}</th>
                 <td>{{ entity.name }}</td>
             </tr>
         </tbody>
@@ -19,12 +21,12 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin') }}">
-            Back to the list
+            {{ 'Back to the list'|trans }}
         </a>
     </li>
     <li>
         <a href="{{ path('admin_edit', { 'id': entity.id }) }}">
-            Edit
+            {{ 'Edit'|trans }}
         </a>
     </li>
 </ul>

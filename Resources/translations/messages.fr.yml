@@ -23,5 +23,11 @@ Create: Créer
 show: voir
 edit: modifier
 
-#admin scope
+#admin section for scope's administration
 Create a new circle: Créer un nouveau cercle
+
+#admin section for center's administration
+Create a new center: Créer un nouveau centre
+Center list: Liste des centres
+Center edit: Édition d'un centre
+Center creation: Création d'un centre

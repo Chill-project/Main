@@ -35,20 +35,20 @@ class CenterController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Center();
-        $form = $this->createCreateForm($entity);
+        $center = new Center();
+        $form = $this->createCreateForm($center);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($center);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_show', array('id' => $center->getId())));
         }
 
         return $this->render('ChillMainBundle:Center:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $center,
             'form'   => $form->createView(),
         ));
     }
@@ -56,13 +56,13 @@ class CenterController extends Controller
     /**
      * Creates a form to create a Center entity.
      *
-     * @param Center $entity The entity
+     * @param Center $center The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Center $entity)
+    private function createCreateForm(Center $center)
     {
-        $form = $this->createForm(new CenterType(), $entity, array(
+        $form = $this->createForm(new CenterType(), $center, array(
             'action' => $this->generateUrl('admin_create'),
             'method' => 'POST',
         ));
@@ -78,11 +78,11 @@ class CenterController extends Controller
      */
     public function newAction()
     {
-        $entity = new Center();
-        $form   = $this->createCreateForm($entity);
+        $center = new Center();
+        $form   = $this->createCreateForm($center);
 
         return $this->render('ChillMainBundle:Center:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $center,
             'form'   => $form->createView(),
         ));
     }
@@ -95,14 +95,14 @@ class CenterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:Center')->find($id);
+        $center = $em->getRepository('ChillMainBundle:Center')->find($id);
 
-        if (!$entity) {
+        if (!$center) {
             throw $this->createNotFoundException('Unable to find Center entity.');
         }
 
         return $this->render('ChillMainBundle:Center:show.html.twig', array(
-            'entity'      => $entity
+            'entity'      => $center
         ));
     }
 
@@ -114,15 +114,15 @@ class CenterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:Center')->find($id);
+        $center = $em->getRepository('ChillMainBundle:Center')->find($id);
 
-        if (!$entity) {
+        if (!$center) {
             throw $this->createNotFoundException('Unable to find Center entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($center);
         return $this->render('ChillMainBundle:Center:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $center,
             'edit_form'   => $editForm->createView()
             ));
     }
@@ -130,14 +130,14 @@ class CenterController extends Controller
     /**
     * Creates a form to edit a Center entity.
     *
-    * @param Center $entity The entity
+    * @param Center $center The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Center $entity)
+    private function createEditForm(Center $center)
     {
-        $form = $this->createForm(new CenterType(), $entity, array(
-            'action' => $this->generateUrl('admin_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new CenterType(), $center, array(
+            'action' => $this->generateUrl('admin_update', array('id' => $center->getId())),
             'method' => 'PUT',
         ));
 
@@ -153,13 +153,13 @@ class CenterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:Center')->find($id);
+        $center = $em->getRepository('ChillMainBundle:Center')->find($id);
 
-        if (!$entity) {
+        if (!$center) {
             throw $this->createNotFoundException('Unable to find Center entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($center);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -169,7 +169,7 @@ class CenterController extends Controller
         }
 
         return $this->render('ChillMainBundle:Center:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $center,
             'edit_form'   => $editForm->createView()
         ));
     }

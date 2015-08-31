@@ -36,6 +36,11 @@ class Configuration implements ConfigurationInterface
                         ->prototype('scalar')->end()
                         ->end()
                 ->end()
+                ->end()
+                ->arrayNode('available_roles')
+                    ->defaultValue(array())
+                    ->prototype('scalar')->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

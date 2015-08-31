@@ -4,9 +4,11 @@ namespace Chill\MainBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Chill\MainBundle\Entity\RoleScope;
 use Chill\MainBundle\Entity\PermissionsGroup;
 use Chill\MainBundle\Form\PermissionsGroupType;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * PermissionsGroup controller.
@@ -29,26 +31,27 @@ class PermissionsGroupController extends Controller
             'entities' => $entities,
         ));
     }
+    
     /**
      * Creates a new PermissionsGroup entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new PermissionsGroup();
-        $form = $this->createCreateForm($entity);
+        $permissionsGroup = new PermissionsGroup();
+        $form = $this->createCreateForm($permissionsGroup);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($permissionsGroup);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_permissionsgroup_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_permissionsgroup_show', array('id' => $permissionsGroup->getId())));
         }
 
         return $this->render('ChillMainBundle:PermissionsGroup:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $permissionsGroup,
             'form'   => $form->createView(),
         ));
     }
@@ -56,13 +59,13 @@ class PermissionsGroupController extends Controller
     /**
      * Creates a form to create a PermissionsGroup entity.
      *
-     * @param PermissionsGroup $entity The entity
+     * @param PermissionsGroup $permissionsGroup The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(PermissionsGroup $entity)
+    private function createCreateForm(PermissionsGroup $permissionsGroup)
     {
-        $form = $this->createForm(new PermissionsGroupType(), $entity, array(
+        $form = $this->createForm(new PermissionsGroupType(), $permissionsGroup, array(
             'action' => $this->generateUrl('admin_permissionsgroup_create'),
             'method' => 'POST',
         ));
@@ -78,11 +81,11 @@ class PermissionsGroupController extends Controller
      */
     public function newAction()
     {
-        $entity = new PermissionsGroup();
-        $form   = $this->createCreateForm($entity);
+        $permissionsGroup = new PermissionsGroup();
+        $form   = $this->createCreateForm($permissionsGroup);
 
         return $this->render('ChillMainBundle:PermissionsGroup:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $permissionsGroup,
             'form'   => $form->createView(),
         ));
     }
@@ -95,14 +98,43 @@ class PermissionsGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:PermissionsGroup')->find($id);
+        $permissionsGroup = $em->getRepository('ChillMainBundle:PermissionsGroup')->find($id);
 
-        if (!$entity) {
+        if (!$permissionsGroup) {
             throw $this->createNotFoundException('Unable to find PermissionsGroup entity.');
+        }
+        
+        $translatableStringHelper = $this->get('chill.main.helper.translatable_string');
+        $roleScopes = $permissionsGroup->getRoleScopes()->toArray();
+        usort($roleScopes,
+              function(RoleScope $a, RoleScope $b) use ($translatableStringHelper) {
+                  return strcmp(
+                        $translatableStringHelper->localize($a->getScope()->getName()),
+                        $translatableStringHelper->localize($b->getScope()->getName())
+                        );
+              });
+              
+        $expandedRoles = array();
+        foreach ($roleScopes as $roleScope) {
+            if (!array_key_exists($roleScope->getRole(), $expandedRoles)) {
+                $expandedRoles[$roleScope->getRole()] = 
+                      array_map(
+                            function(RoleInterface $role) {
+                          
+                                return $role->getRole();
+                            },
+                            $this->get('security.role_hierarchy')
+                                ->getReachableRoles(
+                                      array(new Role($roleScope->getRole()))
+                                    )
+                        );
+            }
         }
 
         return $this->render('ChillMainBundle:PermissionsGroup:show.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $permissionsGroup,
+            'role_scopes' => $roleScopes,
+            'expanded_roles' => $expandedRoles
         ));
     }
 
@@ -114,16 +146,16 @@ class PermissionsGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:PermissionsGroup')->find($id);
+        $permissionsGroup = $em->getRepository('ChillMainBundle:PermissionsGroup')->find($id);
 
-        if (!$entity) {
+        if (!$permissionsGroup) {
             throw $this->createNotFoundException('Unable to find PermissionsGroup entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($permissionsGroup);
 
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
         ));
     }
@@ -131,14 +163,14 @@ class PermissionsGroupController extends Controller
     /**
     * Creates a form to edit a PermissionsGroup entity.
     *
-    * @param PermissionsGroup $entity The entity
+    * @param PermissionsGroup $permissionsGroup The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(PermissionsGroup $entity)
+    private function createEditForm(PermissionsGroup $permissionsGroup)
     {
-        $form = $this->createForm(new PermissionsGroupType(), $entity, array(
-            'action' => $this->generateUrl('admin_permissionsgroup_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new PermissionsGroupType(), $permissionsGroup, array(
+            'action' => $this->generateUrl('admin_permissionsgroup_update', array('id' => $permissionsGroup->getId())),
             'method' => 'PUT',
         ));
 
@@ -146,6 +178,7 @@ class PermissionsGroupController extends Controller
 
         return $form;
     }
+    
     /**
      * Edits an existing PermissionsGroup entity.
      *
@@ -154,13 +187,13 @@ class PermissionsGroupController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ChillMainBundle:PermissionsGroup')->find($id);
+        $permissionsGroup = $em->getRepository('ChillMainBundle:PermissionsGroup')->find($id);
 
-        if (!$entity) {
+        if (!$permissionsGroup) {
             throw $this->createNotFoundException('Unable to find PermissionsGroup entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($permissionsGroup);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -170,7 +203,7 @@ class PermissionsGroupController extends Controller
         }
 
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
         ));
     }

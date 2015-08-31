@@ -1,30 +1,57 @@
-{% extends '::base.html.twig' %}
+{% extends 'ChillMainBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>PermissionsGroup</h1>
+{% block title %}{{ 'Permission group "%name%"'|trans({ '%name%': entity.name }) }}{% endblock %}
+
+{% block content -%}
+    <h1>{{ 'Permission group "%name%"'|trans({ '%name%': entity.name }) }}</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>{{ 'Name'|trans }}</th>
                 <td>{{ entity.name }}</td>
             </tr>
+        </tbody>
+    </table>
+            
+    <h2>{{ 'Grant those permissions'|trans }}&nbsp;:</h2>
+            
+    <table class="striped rounded">
+        <thead>
+            <tr>
+                <th>{{ 'Role'|trans }}</th>
+                <th>{{ 'Circle'|trans }}</th>
+            </tr>            
+        </thead>
+        <tbody>
+            {% for role_scope in role_scopes %}
+            <tr>
+                <td>
+                    {{ role_scope.role|trans }} 
+                    {% if expanded_roles[role_scope.role]|length > 1 %}
+                        <br/>
+                        <small>{{ 'Which implies'|trans }}&nbsp;: {% for role in expanded_roles[role_scope.role] %}{{ role }}{% if not loop.last %}, {% endif %}{% endfor %}</small>
+                    {% endif %}
+                </td>
+                <td>{{ role_scope.scope.name|localize_translatable_string }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin_permissionsgroup') }}">
-            Back to the list
+            {{ 'Back to the list'|trans }}
         </a>
     </li>
     <li>
         <a href="{{ path('admin_permissionsgroup_edit', { 'id': entity.id }) }}">
-            Edit
+           {{ 'Edit'|trans }}
         </a>
     </li>
 </ul>

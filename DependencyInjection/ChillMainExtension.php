@@ -31,6 +31,9 @@ class ChillMainExtension extends Extension implements PrependExtensionInterface
         
         $container->setParameter('chill_main.routing.resources', 
             $config['routing']['resources']); 
+        
+        $container->setParameter('chill_main.available_roles',
+            $config['available_roles']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

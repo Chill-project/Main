@@ -31,3 +31,10 @@ Create a new center: Créer un nouveau centre
 Center list: Liste des centres
 Center edit: Édition d'un centre
 Center creation: Création d'un centre
+
+#admin section for permissions group
+Permissions group list: Liste des groupes de permissions
+Create a new permissions group: Créer un nouveau groupe de permissions
+Permission group "%name%": Groupe de permissions "%name%"
+Grant those permissions: Attribue ces permissions
+Which implies: Ce qui implique

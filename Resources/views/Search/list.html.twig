@@ -22,8 +22,12 @@
 
 {%  block content %}
 
-{% for result in results %}
-{{ result|raw }}
-{%  endfor %}
+    <div class="grid-12 parent" >
+        <div class="grid-10 push-1 parent">
+            {% for result in results %}
+                {{ result|raw }}
+            {%  endfor %}
+        </div>
+    </div>
 
 {%  endblock %}

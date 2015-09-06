@@ -18,7 +18,8 @@ class PermissionsGroupType extends AbstractType
             ->add('name')
             ->add('roleScopes', 'collection', array(
                'type' => 'composed_role_scope',
-               'allow_add' => true
+               'allow_add' => true,
+               'allow_delete' => true
             ))
         ;
     }

@@ -9,6 +9,7 @@ use Chill\MainBundle\Entity\PermissionsGroup;
 use Chill\MainBundle\Form\PermissionsGroupType;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleInterface;
+use Chill\MainBundle\Entity\Scope;
 
 /**
  * PermissionsGroup controller.
@@ -197,6 +198,46 @@ class PermissionsGroupController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            /* 
+             * check if role scopes are managed
+             * if a roleScope is not managed, try to retrieve the equivalent (same role and
+             * scope) and replace the role scope by this one.
+             * it doesn't exist in database, persist the new one
+             */
+            foreach ($permissionsGroup->getRoleScopes() as $roleScope) {
+                if (!$em->contains($roleScope)) {
+                    // try to get the same roleScope from database
+                    $existingRoleScope = $this->getRoleScopeBy($roleScope->getScope(),
+                            $roleScope->getRole(), false);
+                    
+                    if ($existingRoleScope === NULL) {
+                        $em->persist($roleScope);
+                    } else {
+                        $permissionsGroup->removeRoleScope($roleScope);
+                        $permissionsGroup->addRoleScope($existingRoleScope);
+                    }
+                } else {
+                    /*
+                     * if a roleScope is changed, we should not persist the modifications,
+                     * but, instead, create a new one.
+                     */
+                    if ($roleScope->hasChanges()) {
+                        $newRoleScope = $this->getRoleScopeBy($roleScope->getScope(),
+                                $roleScope->getRole(), true);
+                        $em->persist($newRoleScope);
+                        $permissionsGroup->removeRoleScope($roleScope);
+                        $permissionsGroup->addRoleScope($newRoleScope);
+                        $mustBeReset[] = $roleScope;
+                    }
+                }
+            }
+            // reset the updated roleScope, preventing them to be modified
+            if (isset($mustBeReset)) {
+                foreach ($mustBeReset as $entity) {
+                    $em->refresh($entity);
+                }
+            }
+            
             $em->flush();
 
             return $this->redirect($this->generateUrl('admin_permissionsgroup_edit', array('id' => $id)));
@@ -206,5 +247,27 @@ class PermissionsGroupController extends Controller
             'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
         ));
+    }
+    
+    protected function getRoleScopeBy(Scope $scope, $role, $createIfNotExist = false) 
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $existingRoleScope = $em->getRepository('ChillMainBundle:RoleScope')
+                ->findOneBy(array('role' => $role, 'scope' => $scope));
+        
+        if ($createIfNotExist == FALSE) {
+            
+            return $existingRoleScope;
+        }
+        
+        if ($existingRoleScope === NULL) {
+            $existingRoleScope = (new RoleScope())
+                    ->setRole($role)
+                    ->setScope($scope)
+                    ;
+        }
+        
+        return $existingRoleScope;
     }
 }

@@ -79,9 +79,27 @@ class PermissionsGroup
         return $this;
     }
 
+    /**
+     * 
+     * @param RoleScope $roleScope
+     */
     public function addRoleScope(RoleScope $roleScope)
     {
         $this->roleScopes->add($roleScope);
+    }
+    
+    /**
+     * 
+     * @param RoleScope $roleScope
+     * @throws \RuntimeException if the roleScope could not be removed.
+     */
+    public function removeRoleScope(RoleScope $roleScope)
+    {
+        $result = $this->roleScopes->removeElement($roleScope);
+        if ($result === FALSE) {
+            throw new \RuntimeException(sprintf("The roleScope '%s' could not be removed, "
+                    . "aborting.", spl_object_hash($roleScope)));
+        }
     }
 
 

@@ -14,5 +14,4 @@ Chill\MainBundle\Entity\PermissionsGroup:
     manyToMany:
         roleScopes:
             targetEntity: Chill\MainBundle\Entity\RoleScope
-            cascade: [persist]
             

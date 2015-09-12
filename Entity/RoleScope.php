@@ -22,7 +22,6 @@ namespace Chill\MainBundle\Entity;
 
 /**
  * 
- * Note: changes are tracked on this class.
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
@@ -45,20 +44,6 @@ class RoleScope
      * @var Scope 
      */
     private $scope;
-    
-    /**
-     * track changes. 
-     *
-     * @var bool
-     */
-    private $hasChanges = false;
-    
-    /**
-     * disabled change tracking if the roleScope is new.
-     *
-     * @var bool
-     */
-    private $new = false;
     
     public function __construct() {
         $this->new = true;
@@ -94,11 +79,8 @@ class RoleScope
      */
     public function setRole($role)
     {
-        if ($role !== $this->role) {
-            $this->role = $role;
-            $this->registerChange();
-        }
-        
+        $this->role = $role;
+
         return $this;
     }
 
@@ -109,37 +91,8 @@ class RoleScope
      */
     public function setScope(Scope $scope)
     {
-        if ($scope !== $this->scope) {
-            $this->scope = $scope;
-            $this->registerChange();
-        }
+        $this->scope = $scope;
         
         return $this;
     }
-    
-    /**
-     * set the class as changed.
-     * 
-     * If the class is new (never persisted by doctrine), changes are always false.
-     */
-    private function registerChange()
-    {
-        if (! $this->new) {
-            $this->hasChanges = true;
-        }
-    }
-    
-    /**
-     * return true if the class has changed during his lifetime.
-     * 
-     * Always false if the class is new (= not created from doctrine)
-     * 
-     * @return bool
-     */
-    public function hasChanges()
-    {
-        return $this->hasChanges;
-    }
-
-
 }

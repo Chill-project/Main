@@ -9,18 +9,22 @@
 
     <p>{{ form_label(edit_form.name) }} {{ form_widget(edit_form.name) }}</p>
     
-    {% for role_scope in edit_form['roleScopes'] %}
-        <ul id="list-role_scopes" data-prototype="{{ form_widget(edit_form['roleScopes'].vars.prototype)|e }} {{ form_widget(edit_form['roleScopes'].vars.prototype)|e }}">
+    {{ form_end(edit_form) }}
+    
+    {% for role_scope in entity.getRoleScopes %}
+        <ul>
             <li>
-                {{ form_widget(role_scope.role) }} {{ form_widget(role_scope.scope) }}
+                <span class="role_scope role">{{ role_scope.role|trans }}</span> - 
+                <span class="role_scope scope">{{ role_scope.scope.name|localize_translatable_string }}</span>
+                {{ form(delete_role_scopes_form[role_scope.id]) }}
             </li>
         </ul>
         
     {% endfor %}
     
-    <button id="add-another-role_scope" type="button">{{ 'Add another role scope'|trans }}</button>
+    {{ form(add_role_scopes_form) }}
 
-    {{ form_end(edit_form) }}
+    
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin_permissionsgroup') }}">
@@ -28,27 +32,4 @@
         </a>
     </li>
 </ul>
-            
-<script type="text/javascript">
-    // keep track of how many email fields have been rendered
-    var roleScopesCount = '{{ edit_form['roleScopes']|length }}';
-
-    jQuery(document).ready(function() {
-        jQuery('#add-another-role_scope').click(function(e) {
-            e.preventDefault();
-
-            var roleScopesList = jQuery('#list-role_scopes');
-
-            // grab the prototype template
-            var newWidget = roleScopesList.attr('data-prototype');
-            // replace the "__name__" used in the id and name of the prototype
-            newWidget = newWidget.replace(/__name__/g, roleScopesCount);
-            roleScopesCount++;
-
-            // create a new list element and add it to the list
-            var newLi = jQuery('<li></li>').html(newWidget);
-            newLi.appendTo(roleScopesList);
-        });
-    })
-</script>
 {% endblock %}

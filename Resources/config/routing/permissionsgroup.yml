@@ -23,3 +23,13 @@ admin_permissionsgroup_update:
     path:     /{id}/update
     defaults: { _controller: "ChillMainBundle:PermissionsGroup:update" }
     methods:  [POST, PUT]
+    
+admin_permissionsgroup_delete_role_scope:
+    path:     /{pgid}/delete_link_role_scope/{rsid}
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:deleteLinkRoleScope" }
+    methods: [DELETE]
+    
+admin_permissionsgroup_add_role_scope:
+    path:     /{id}/add_link_role_scope
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:addLinkRoleScope" }
+    methods: [PUT]

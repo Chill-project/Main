@@ -168,8 +168,8 @@ class PermissionsGroupController extends Controller
             'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
             'delete_role_scopes_form' => array_map( function($form) { 
-                return $form->createView(); 
                 
+                return $form->createView(); 
             }, $deleteRoleScopesForm),
             'add_role_scopes_form' => $addRoleScopesForm->createView()
         ));
@@ -217,10 +217,23 @@ class PermissionsGroupController extends Controller
 
             return $this->redirect($this->generateUrl('admin_permissionsgroup_edit', array('id' => $id)));
         }
+        
+        $deleteRoleScopesForm = array();
+        foreach ($permissionsGroup->getRoleScopes() as $roleScope) {
+            $deleteRoleScopesForm[$roleScope->getId()] = $this->createDeleteRoleScopeForm(
+                    $permissionsGroup, $roleScope);
+        }
+        
+        $addRoleScopesForm = $this->createAddRoleScopeForm($permissionsGroup);
 
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
             'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
+            'delete_role_scopes_form' => array_map( function($form) { 
+                
+                return $form->createView(); 
+            }, $deleteRoleScopesForm),
+            'add_role_scopes_form' => $addRoleScopesForm->createView()
         ));
     }
     
@@ -329,20 +342,49 @@ class PermissionsGroupController extends Controller
                     );
             
             $permissionsGroup->addRoleScope($roleScope);
+            $violations = $this->get('validator')->validate($permissionsGroup);
             
-            $em->flush();
+            if ($violations->count() === 0) {
+                $em->flush();
             
-            $this->addFlash('notice', 
-                $this->get('translator')->trans("The role '%role%' on circle "
-                        . "'%scope%' has been added", array(
-                            '%role%' => $this->get('translator')->trans($roleScope->getRole()),
-                            '%scope%' => $this->get('chill.main.helper.translatable_string')
-                                ->localize($roleScope->getScope()->getName())
-                        )));
+                $this->addFlash('notice', 
+                    $this->get('translator')->trans("The role '%role%' on circle "
+                            . "'%scope%' has been added", array(
+                                '%role%' => $this->get('translator')->trans($roleScope->getRole()),
+                                '%scope%' => $this->get('chill.main.helper.translatable_string')
+                                    ->localize($roleScope->getScope()->getName())
+                            )));
+            
+                return $this->redirect($this->generateUrl('admin_permissionsgroup_edit', 
+                    array('id' => $id)));
+            } else {
+                foreach($violations as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+            }
+
         }
         
-        return $this->redirect($this->generateUrl('admin_permissionsgroup_edit', 
-                array('id' => $id)));
+        $editForm = $this->createEditForm($permissionsGroup);
+        
+        $deleteRoleScopesForm = array();
+        foreach ($permissionsGroup->getRoleScopes() as $roleScope) {
+            $deleteRoleScopesForm[$roleScope->getId()] = $this->createDeleteRoleScopeForm(
+                    $permissionsGroup, $roleScope);
+        }
+        
+        $addRoleScopesForm = $this->createAddRoleScopeForm($permissionsGroup);
+
+        return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
+            'entity'      => $permissionsGroup,
+            'edit_form'   => $editForm->createView(),
+            'delete_role_scopes_form' => array_map( function($form) { 
+                
+                return $form->createView(); 
+            }, $deleteRoleScopesForm),
+            'add_role_scopes_form' => $addRoleScopesForm->createView()
+        ));
+        
     }
     
     /**

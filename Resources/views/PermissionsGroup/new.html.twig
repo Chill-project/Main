@@ -1,14 +1,16 @@
-{% extends '::base.html.twig' %}
+{% extends 'ChillMainBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>PermissionsGroup creation</h1>
+{% block title %}{{ 'PermissionsGroup creation'|trans }}{% endblock %}
+
+{% block content -%}
+    <h1>{{ 'PermissionsGroup creation'|trans }}</h1>
 
     {{ form(form) }}
 
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin_permissionsgroup') }}">
-            Back to the list
+            {{ 'Back to the list'|trans }}
         </a>
     </li>
 </ul>

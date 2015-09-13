@@ -48,7 +48,8 @@ class PermissionsGroupController extends Controller
             $em->persist($permissionsGroup);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_permissionsgroup_show', array('id' => $permissionsGroup->getId())));
+            return $this->redirect($this->generateUrl('admin_permissionsgroup_edit', 
+                    array('id' => $permissionsGroup->getId())));
         }
 
         return $this->render('ChillMainBundle:PermissionsGroup:new.html.twig', array(

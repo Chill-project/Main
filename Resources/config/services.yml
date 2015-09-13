@@ -110,10 +110,13 @@ services:
         arguments:
             - "@security.role_hierarchy"
             
+    chill.main.role_provider:
+        class: Chill\MainBundle\Security\RoleProvider
+            
     chill.main.form.type.composed_role_scope:
         class: Chill\MainBundle\Form\Type\ComposedRoleScopeType
         arguments:
             - "@chill.main.helper.translatable_string"
-            - "%chill_main.available_roles%"
+            - "@chill.main.role_provider"
         tags:
             - { name: form.type, alias: composed_role_scope }

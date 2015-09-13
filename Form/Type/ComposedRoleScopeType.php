@@ -25,6 +25,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Templating\TranslatableStringHelper;
 use Chill\MainBundle\Entity\Scope;
+use Chill\MainBundle\Security\RoleProvider;
 
 /**
  * Form to Edit/create a role scope. If the role scope does not
@@ -43,21 +44,29 @@ class ComposedRoleScopeType extends AbstractType
     
     /**
      *
+     * @var string[]
+     */
+    private $rolesWithoutScope = array();
+    
+    /**
+     *
      * @var TranslatableStringHelper
      */
     private $translatableStringHelper;
     
     public function __construct(TranslatableStringHelper $translatableStringHelper,
-          array $availableRoles)
+          RoleProvider $roleProvider)
     {
-        $this->roles = $availableRoles;
-        
+        $this->roles = $roleProvider->getRoles();
+        $this->rolesWithoutScope = $roleProvider->getRolesWithoutScopes();
         $this->translatableStringHelper = $translatableStringHelper;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // store values used in internal function
         $translatableStringHelper = $this->translatableStringHelper;
+        $rolesWithoutScopes = $this->rolesWithoutScope;
         
         //build roles
         $values = array();
@@ -68,7 +77,14 @@ class ComposedRoleScopeType extends AbstractType
         $builder
             ->add('role', 'choice', array(
                'choices' => $values,
-               'placeholder' => 'Choose amongst roles'
+               'placeholder' => 'Choose amongst roles',
+               'choice_attr' => function($role) use ($rolesWithoutScopes) {
+                    if (in_array($role, $rolesWithoutScopes)) {
+                        return array('data-has-scope' => '0');
+                    } else {
+                        return array('data-has-scope' => '1');
+                    }
+               }
             ))
             ->add('scope', 'entity', array(
                 'class' => 'ChillMainBundle:Scope',

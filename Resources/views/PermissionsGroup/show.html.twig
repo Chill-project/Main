@@ -17,7 +17,7 @@
             </tr>
         </tbody>
     </table>
-            
+    {% if role_scopes|length > 0 %}        
     <h2>{{ 'Grant those permissions'|trans }}&nbsp;:</h2>
             
     <table class="striped rounded">
@@ -42,6 +42,13 @@
             {% endfor %}
         </tbody>
     </table>
+        
+    {% else %}
+        
+        <p>{{ 'This group does not provide any permission'|trans }}. 
+            <a href="{{ path('admin_permissionsgroup_edit', { 'id': entity.id }) }}">
+                {{ 'add permissions'|trans|capitalize }}</a></p>
+    {% endif %}
 
         <ul class="record_actions">
     <li>

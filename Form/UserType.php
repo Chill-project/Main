@@ -16,11 +16,18 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('password')
-            ->add('salt')
+            /*->add('password', 'repeated', array(
+                'type' => 'password',
+                'required' => false,
+                'options' => array(),
+                'first_options' => array(
+                    'label' => 'Password'
+                ), 
+                'second_options' => array(
+                    'label' => 'Repeat the password'
+                )
+            ))*/
             ->add('enabled')
-            ->add('locked')
-            ->add('groupCenters')
         ;
     }
     

@@ -184,5 +184,18 @@ class User implements AdvancedUserInterface {
         $this->groupCenters->add($groupCenter);
         return $this;
     }
+    
+    /**
+     * 
+     * @param \Chill\MainBundle\Entity\GroupCenter $groupCenter
+     * @throws \RuntimeException if the groupCenter is not in the collection
+     */
+    public function removeGroupCenter(GroupCenter $groupCenter)
+    {
+        if ($this->groupCenters->removeElement($groupCenter) === FALSE) {
+            throw new \RuntimeException(sprintf("The groupCenter could not be removed, "
+                    . "it seems not to be associated with the user. Aborting."));
+        }
+    }
 
 }

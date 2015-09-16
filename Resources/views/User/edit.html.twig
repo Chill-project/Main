@@ -1,16 +1,33 @@
-{% extends '::base.html.twig' %}
+{% extends 'ChillMainBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>User edit</h1>
+{% block title %}{{ 'User edit'|trans }}{% endblock %}
 
-    {{ form(edit_form) }}
+{% block content -%}
+    <h1>{{ 'User edit'|trans }}</h1>
 
+    {{ form_row(edit_form.username) }}
+    {{ form_row(edit_form.enabled) }}
+    
+    {% if entity.groupcenters|length > 0 %}
+        <ul>
+        {% for groupcenter in entity.groupcenters %}
+            <li>
+                <span class="user_group permissionsgroup">
+                    {{ groupcenter.permissionsgroup.name }}
+                </span>
+                <span class="user_group center">
+                    {{ groupcenter.center.name }}
+                </span>
+                {{ form(delete_groupcenter_form[groupcenter.id]) }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin_user') }}">
-            Back to the list
+            {{ 'Back to the list'|trans }}
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

@@ -1,48 +1,61 @@
-{% extends '::base.html.twig' %}
+{% extends 'ChillMainBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>User</h1>
+{% block title %}{{ 'User %username%'|trans({ '%username%': entity.username }) }}{% endblock %}
+
+{% block content -%}
+    <h1>{{ 'User %username%'|trans({ '%username%': entity.username }) }}</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id'|trans }}</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>{{ 'Username' }}</th>
                 <td>{{ entity.username }}</td>
             </tr>
             <tr>
-                <th>Password</th>
-                <td>{{ entity.password }}</td>
-            </tr>
-            <tr>
-                <th>Salt</th>
-                <td>{{ entity.salt }}</td>
-            </tr>
-            <tr>
-                <th>Enabled</th>
+                <th>{{ 'Enabled'|trans }}</th>
                 <td>{{ entity.enabled }}</td>
             </tr>
             <tr>
-                <th>Locked</th>
-                <td>{{ entity.locked }}</td>
-            </tr>
+                <th>{{ 'Center & groups' }}</th>
+                <td>
+                    {% if entity.groupcenters|length > 0 %}
+                        <ul>
+                        {% for groupcenter in entity.groupcenters %}
+                            <li>
+                            <span class="user_group permissionsgroup">
+                                {{ groupcenter.permissionsgroup.name }}
+                            </span>
+                            <span class="user_group center">
+                                {{ groupcenter.center.name }}
+                            </span>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>{{ 'The user does not belong to any groupcenter'|trans }}.
+                            <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                                {{ 'Add new group centers'|trans }}
+                            </a>
+                    {% endif %}
+                </td>
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin_user') }}">
-            Back to the list
+            {{ 'Back to the list'|trans }}
         </a>
     </li>
     <li>
         <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
-            Edit
+            {{ 'Edit'|trans }}
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
-{% endblock %}
+{% endblock content %}

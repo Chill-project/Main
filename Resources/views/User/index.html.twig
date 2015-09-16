@@ -1,36 +1,30 @@
-{% extends '::base.html.twig' %}
+{% extends 'ChillMainBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>User list</h1>
+{% block title %}{{ 'user list'|trans|capitalize }}{% endblock %}
+
+{% block content -%}
+    <h1>{{ 'user list'|trans|capitalize }}</h1>
 
     <table class="records_list">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Salt</th>
-                <th>Enabled</th>
-                <th>Locked</th>
-                <th>Actions</th>
+                <th>{{ 'Id'|trans }}</th>
+                <th>{{ 'Username'|trans|capitalize }}</th>
+                <th>{{ 'Actions'|trans|capitalize }}</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="{% if entity.isEnabled == false %}user-disabled{% else %}user-enabled{% endif %}" >
                 <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.username }}</td>
-                <td>{{ entity.password }}</td>
-                <td>{{ entity.salt }}</td>
-                <td>{{ entity.enabled }}</td>
-                <td>{{ entity.locked }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                     </li>
                 </ul>
                 </td>
@@ -42,8 +36,8 @@
         <ul>
         <li>
             <a href="{{ path('admin_user_new') }}">
-                Create a new entry
+                {{ 'Add a new user'|trans|capitalize  }}
             </a>
         </li>
     </ul>
-    {% endblock %}
+{% endblock content %}

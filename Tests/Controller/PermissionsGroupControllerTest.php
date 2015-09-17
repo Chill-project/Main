@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PermissionsGroupControllerTest extends WebTestCase
 {
+    public function testEmpty()
+    {
+        $this->markTestSkipped();
+    }
     /*
     public function testCompleteScenario()
     {

@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
+    public function testBlank()
+    {
+        $this->markTestSkipped();
+    }
     /*
     public function testCompleteScenario()
     {

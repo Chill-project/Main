@@ -5,8 +5,14 @@
 {% block content -%}
     <h1>{{ 'User edit'|trans }}</h1>
 
+    {{ form_start(edit_form) }}
+    
     {{ form_row(edit_form.username) }}
     {{ form_row(edit_form.enabled) }}
+    
+    {{ form_row(edit_form.submit) }}
+    
+    {{ form_end(edit_form) }}
     
     {% if entity.groupcenters|length > 0 %}
         <ul>
@@ -23,6 +29,8 @@
         {% endfor %}
         </ul>
     {% endif %}
+    {{ form(add_groupcenter_form) }}
+    
         <ul class="record_actions">
     <li>
         <a href="{{ path('admin_user') }}">

@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Chill\MainBundle\Entity\User;
 use Chill\MainBundle\Form\UserType;
 use Chill\MainBundle\Entity\GroupCenter;
+use Chill\MainBundle\Form\Type\ComposedGroupCenterType;
+use Chill\MainBundle\Entity\PermissionsGroup;
+use Chill\MainBundle\Entity\Center;
 
 /**
  * User controller.
@@ -15,6 +18,8 @@ use Chill\MainBundle\Entity\GroupCenter;
  */
 class UserController extends Controller
 {
+    
+    const FORM_GROUP_CENTER_COMPOSED = 'composed_groupcenter';
 
     /**
      * Lists all User entities.
@@ -110,6 +115,7 @@ class UserController extends Controller
         return $this->render('ChillMainBundle:User:edit.html.twig', array(
             'entity'      => $user,
             'edit_form'   => $editForm->createView(),
+            'add_groupcenter_form' => $this->createAddLinkGroupCenterForm($user)->createView(),
             'delete_groupcenter_form' => array_map( 
                     function(\Symfony\Component\Form\Form $form) {
                         return $form->createView();
@@ -151,9 +157,69 @@ class UserController extends Controller
         
         return $this->redirect($this->generateUrl('admin_user_edit', array('id' => $uid)));
         
+    }
+    
+    public function addLinkGroupCenterAction(Request $request, $uid) 
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('ChillMainBundle:User')->find($uid);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
         
+        $form = $this->createAddLinkGroupCenterForm($user);
+        $form->handleRequest($request);
         
+        if ($form->isValid()) {
+            $groupCenter = $this->getPersistedGroupCenter(
+                    $form[self::FORM_GROUP_CENTER_COMPOSED]->getData());
+            $user->addGroupCenter($groupCenter);
+            
+            if ($this->get('validator')->validate($user)->count() === 0) {
+                $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')->trans('The '
+                    . 'permissions have been successfully added to the user'));
+            
+            return $this->redirect($this->generateUrl('admin_user_edit',
+                    array('id' => $uid)));
+            } else {
+                foreach($this->get('validator')->validate($user) as $error)
+                $this->addFlash('error', $error->getMessage());
+            }
+        }
         
+        return $this->render('ChillMainBundle:User:edit.html.twig', array(
+            'entity'      => $user,
+            'edit_form'   => $this->createEditForm($user)->createView(),
+            'add_groupcenter_form' => $this->createAddLinkGroupCenterForm($user)->createView(),
+            'delete_groupcenter_form' => array_map( 
+                    function(\Symfony\Component\Form\Form $form) {
+                        return $form->createView();
+                
+                    },
+                    iterator_to_array($this->getDeleteLinkGroupCenterByUser($user), true))
+        ));
+    }
+    
+    private function getPersistedGroupCenter(GroupCenter $groupCenter)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $groupCenterManaged = $em->getRepository('ChillMainBundle:GroupCenter')
+                ->findOneBy(array(
+                    'center' => $groupCenter->getCenter(),
+                    'permissionsGroup' => $groupCenter->getPermissionsGroup()
+                ));
+        
+        if (!$groupCenterManaged) {
+            $em->persist($groupCenter);
+            return $groupCenter;
+        }
+        
+        return $groupCenterManaged;
     }
 
     /**
@@ -188,7 +254,6 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($user);
         $editForm->handleRequest($request);
 
@@ -201,49 +266,16 @@ class UserController extends Controller
         return $this->render('ChillMainBundle:User:edit.html.twig', array(
             'entity'      => $user,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'add_groupcenter_form' => $this->createAddLinkGroupCenterForm($user)->createView(),
+            'delete_groupcenter_form' => array_map( 
+                    function(\Symfony\Component\Form\Form $form) {
+                        return $form->createView();
+                
+                    },
+                    iterator_to_array($this->getDeleteLinkGroupCenterByUser($user), true))
         ));
     }
-    /**
-     * Deletes a User entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('ChillMainBundle:User')->find($id);
-
-            if (!$user) {
-                throw $this->createNotFoundException('Unable to find User entity.');
-            }
-
-            $em->remove($user);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('admin_user'));
-    }
-
-    /**
-     * Creates a form to delete a User entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_user_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
     
     /**
      * Creates a form to delete a link to a GroupCenter
@@ -261,6 +293,24 @@ class UserController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    /**
+     * create a form to add a link to a groupcenter
+     * 
+     * @param User $user
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createAddLinkGroupCenterForm(User $user)
+    {
+        return $this->createFormBuilder()
+                ->setAction($this->generateUrl('admin_user_add_group_center', 
+                        array('uid' => $user->getId())))
+                ->setMethod('POST')
+                ->add(self::FORM_GROUP_CENTER_COMPOSED, new ComposedGroupCenterType())
+                ->add('submit', 'submit', array('label' => 'Add a new groupCenter'))
+                ->getForm()
+                ;
     }
     
     /**

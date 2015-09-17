@@ -23,13 +23,13 @@ admin_user_update:
     path:     /{id}/update
     defaults: { _controller: "ChillMainBundle:User:update" }
     methods:  [POST, PUT]
-
-admin_user_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "ChillMainBundle:User:delete" }
-    methods:  [POST, DELETE]
     
 admin_user_delete_group_center:
     path:     /{uid}/delete_link_groupcenter/{gcid}
     defaults: { _controller: "ChillMainBundle:User:deleteLinkGroupCenter" }
     methods: [DELETE]
+    
+admin_user_add_group_center:
+    path:     /{uid}/add_link_groupcenter
+    defaults: { _controller: "ChillMainBundle:User:addLinkGroupCenter" }
+    methods: [POST]

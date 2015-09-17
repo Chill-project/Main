@@ -5,6 +5,7 @@ namespace Chill\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\DataTransformer\BooleanToStringTransformer;
 
 class UserType extends AbstractType
 {
@@ -27,7 +28,16 @@ class UserType extends AbstractType
                     'label' => 'Repeat the password'
                 )
             ))*/
-            ->add('enabled')
+            ->add($builder
+                    ->create('enabled', 'choice', array(
+                        'choices' => array(
+                            0 => 'Disabled, the user is not allowed to login',
+                            1  => 'Enabled, the user is active'
+                        ),
+                        'expanded' => false,
+                        'multiple' => false
+                        ))
+                )
         ;
     }
     

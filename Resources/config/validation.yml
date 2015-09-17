@@ -6,3 +6,12 @@ Chill\MainBundle\Entity\PermissionsGroup:
                 max: 50
     constraints:
         - Callback: [isRoleScopePresentOnce]
+        
+Chill\MainBundle\Entity\User:
+    properties:
+        username:
+            - Length: 
+                max: 70
+                min: 3
+    constraints:
+        - Callback: [isGroupCenterPresentOnce]

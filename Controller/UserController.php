@@ -46,6 +46,10 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $user->setPassword($this->get('security.password_encoder')
+                    ->encodePassword($user, $form['plainPassword']['password']->getData()));
+            
             $em->persist($user);
             $em->flush();
 
@@ -56,6 +60,26 @@ class UserController extends Controller
             'entity' => $user,
             'form'   => $form->createView(),
         ));
+    }
+
+    /**
+     * Creates a form to create a User entity.
+     *
+     * @param User $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(User $entity)
+    {
+        $form = $this->createForm(new UserType(), $entity, array(
+            'action' => $this->generateUrl('admin_user_create'),
+            'method' => 'POST',
+            'is_creation' => true
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return $form;
     }
 
     /**
@@ -87,11 +111,8 @@ class UserController extends Controller
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('ChillMainBundle:User:show.html.twig', array(
             'entity'      => $user,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 

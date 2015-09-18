@@ -5,6 +5,7 @@ namespace Chill\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Chill\MainBundle\Form\UserPasswordType;
 
 class UserType extends AbstractType
 {
@@ -16,18 +17,14 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            /*->add('password', 'repeated', array(
-                'type' => 'password',
-                'required' => false,
-                'options' => array(),
-                'first_options' => array(
-                    'label' => 'Password'
-                ), 
-                'second_options' => array(
-                    'label' => 'Repeat the password'
-                )
-            ))*/
-            ->add($builder
+            ;
+        if ($options['is_creation']) {
+            $builder->add('plainPassword', new UserPasswordType(), array(
+                'mapped' => false
+            ));
+            
+        } else {
+            $builder->add($builder
                     ->create('enabled', 'choice', array(
                         'choices' => array(
                             0 => 'Disabled, the user is not allowed to login',
@@ -36,8 +33,8 @@ class UserType extends AbstractType
                         'expanded' => false,
                         'multiple' => false
                         ))
-                )
-        ;
+                );
+        }
     }
     
     /**
@@ -48,6 +45,11 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Chill\MainBundle\Entity\User'
         ));
+        
+        $resolver
+                ->setDefaults(array('is_creation' => false))
+                ->addAllowedValues(array('is_creation' => array(true, false)))
+                ;
     }
 
     /**

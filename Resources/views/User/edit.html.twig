@@ -10,7 +10,7 @@
     {{ form_row(edit_form.username) }}
     {{ form_row(edit_form.enabled) }}
     
-    {{ form_row(edit_form.submit) }}
+    {{ form_row(edit_form.submit) }} <a href="{{ path('admin_user_edit_password',  { 'id' : entity.id }) }}">{{ 'Edit password'|trans }}</a>
     
     {{ form_end(edit_form) }}
     

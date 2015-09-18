@@ -18,10 +18,19 @@ admin_user_create:
 admin_user_edit:
     path:     /{id}/edit
     defaults: { _controller: "ChillMainBundle:User:edit" }
+    
+admin_user_edit_password:
+    path:     /{id}/edit_password
+    defaults: { _controller: "ChillMainBundle:User:editPassword" }
 
 admin_user_update:
     path:     /{id}/update
     defaults: { _controller: "ChillMainBundle:User:update" }
+    methods:  [POST, PUT]
+    
+admin_user_update_password:
+    path:     /{id}/update_password
+    defaults: { _controller: "ChillMainBundle:User:updatePassword" }
     methods:  [POST, PUT]
     
 admin_user_delete_group_center:

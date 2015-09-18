@@ -9,8 +9,7 @@ use Chill\MainBundle\Entity\User;
 use Chill\MainBundle\Form\UserType;
 use Chill\MainBundle\Entity\GroupCenter;
 use Chill\MainBundle\Form\Type\ComposedGroupCenterType;
-use Chill\MainBundle\Entity\PermissionsGroup;
-use Chill\MainBundle\Entity\Center;
+use Chill\MainBundle\Form\UserPasswordType;
 
 /**
  * User controller.
@@ -123,6 +122,45 @@ class UserController extends Controller
                     },
                     iterator_to_array($this->getDeleteLinkGroupCenterByUser($user), true))
         ));
+    }
+    
+    /**
+     * Displays a form to edit the user password.
+     *
+     */
+    public function editPasswordAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('ChillMainBundle:User')->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+        $editForm = $this->createEditPasswordForm($user);
+
+        return $this->render('ChillMainBundle:User:edit_password.html.twig', array(
+            'entity'      => $user,
+            'edit_form'   => $editForm->createView()
+        ));
+    }
+    
+    /**
+     * 
+     * 
+     * @param User $user
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createEditPasswordForm(User $user)
+    {
+        return $this->createForm(new UserPasswordType(), $user, array(
+            'action' => 
+                $this->generateUrl('admin_user_update_password', array('id' => $user->getId())),
+            'method' => 'PUT'
+            ))
+                ->add('submit', 'submit', array('label' => 'Change password'))
+                ;
     }
     
     public function deleteLinkGroupCenterAction($uid, $gcid) 
@@ -240,6 +278,7 @@ class UserController extends Controller
 
         return $form;
     }
+    
     /**
      * Edits an existing User entity.
      *
@@ -273,6 +312,42 @@ class UserController extends Controller
                 
                     },
                     iterator_to_array($this->getDeleteLinkGroupCenterByUser($user), true))
+        ));
+    }
+    
+    /**
+     * Edits the user password
+     *
+     */
+    public function updatePasswordAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('ChillMainBundle:User')->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User entity.');
+        }
+
+        $editForm = $this->createEditPasswordForm($user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $password = $editForm->getData();
+            
+            $user->setPassword($this->get('security.password_encoder')
+                    ->encodePassword($user, $password));
+            
+            $em->flush();
+            
+            $this->addFlash('success', $this->get('translator')->trans('Password successfully updated!'));
+
+            return $this->redirect($this->generateUrl('admin_user_edit', array('id' => $id)));
+        }
+
+        return $this->render('ChillMainBundle:User:edit_password.html.twig', array(
+            'entity'      => $user,
+            'edit_form'   => $editForm->createView(),
         ));
     }
 

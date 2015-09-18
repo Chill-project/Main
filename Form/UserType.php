@@ -5,7 +5,6 @@ namespace Chill\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\Extension\Core\DataTransformer\BooleanToStringTransformer;
 
 class UserType extends AbstractType
 {

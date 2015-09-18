@@ -245,7 +245,7 @@ class PermissionsGroupController extends Controller
      * @param string $role
      * @return RoleScope
      */
-    protected function getPersistentRoleScopeBy(Scope $scope, $role) 
+    protected function getPersistentRoleScopeBy($role, Scope $scope = null) 
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -337,8 +337,8 @@ class PermissionsGroupController extends Controller
         
         if ($form->isValid()) {
             $roleScope = $this->getPersistentRoleScopeBy(
-                    $form['composed_role_scope']->getData()->getScope(), 
-                    $form['composed_role_scope']->getData()->getRole()
+                    $form['composed_role_scope']->getData()->getRole(),
+                    $form['composed_role_scope']->getData()->getScope()
                     );
             
             $permissionsGroup->addRoleScope($roleScope);
@@ -348,12 +348,7 @@ class PermissionsGroupController extends Controller
                 $em->flush();
             
                 $this->addFlash('notice', 
-                    $this->get('translator')->trans("The role '%role%' on circle "
-                            . "'%scope%' has been added", array(
-                                '%role%' => $this->get('translator')->trans($roleScope->getRole()),
-                                '%scope%' => $this->get('chill.main.helper.translatable_string')
-                                    ->localize($roleScope->getScope()->getName())
-                            )));
+                    $this->get('translator')->trans("The permissions have been added"));
             
                 return $this->redirect($this->generateUrl('admin_permissionsgroup_edit', 
                     array('id' => $id)));
@@ -363,6 +358,10 @@ class PermissionsGroupController extends Controller
                 }
             }
 
+        } else {
+            foreach ($form->getErrors() as $error) {
+                $this->addFlash('error', $error->getMessage());
+            }
         }
         
         $editForm = $this->createEditForm($permissionsGroup);

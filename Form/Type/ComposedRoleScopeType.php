@@ -26,6 +26,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Templating\TranslatableStringHelper;
 use Chill\MainBundle\Entity\Scope;
 use Chill\MainBundle\Security\RoleProvider;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Form to Edit/create a role scope. If the role scope does not
@@ -91,8 +93,10 @@ class ComposedRoleScopeType extends AbstractType
                 'choice_label' => function(Scope $scope) use ($translatableStringHelper) {
                     return $translatableStringHelper->localize($scope->getName());
                 },
-                 
+                'required' => false,
+                'data' => null
             ));
+            
     }
     
     public function getName()

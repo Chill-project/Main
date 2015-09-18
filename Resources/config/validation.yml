@@ -4,6 +4,8 @@ Chill\MainBundle\Entity\PermissionsGroup:
             - NotBlank: ~
             - Length:
                 max: 50
+        roleScopes:
+            - Valid: ~
     constraints:
         - Callback: [isRoleScopePresentOnce]
         
@@ -15,3 +17,7 @@ Chill\MainBundle\Entity\User:
                 min: 3
     constraints:
         - Callback: [isGroupCenterPresentOnce]
+
+Chill\MainBundle\Entity\RoleScope:
+    constraints:
+        - \Chill\MainBundle\Validation\Constraint\RoleScopeScopePresenceConstraint: ~

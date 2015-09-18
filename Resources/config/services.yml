@@ -120,3 +120,11 @@ services:
             - "@chill.main.role_provider"
         tags:
             - { name: form.type, alias: composed_role_scope }
+            
+    chill.main.validator.role_scope_scope_presence:
+        class: Chill\MainBundle\Validation\Validator\RoleScopeScopePresence
+        arguments:
+            - "@chill.main.role_provider"
+            - "@logger"
+        tags:
+            - { name: validator.constraint_validator, alias: 'role_scope_scope_presence' }

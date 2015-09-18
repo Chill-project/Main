@@ -14,8 +14,12 @@
     {% for role_scope in entity.getRoleScopes %}
         <ul>
             <li>
-                <span class="role_scope role">{{ role_scope.role|trans }}</span> - 
-                <span class="role_scope scope">{{ role_scope.scope.name|localize_translatable_string }}</span>
+                <span class="role_scope role">{{ role_scope.role|trans }}</span> 
+                {%- if role_scope.scope is not null -%}
+                 - <span class="role_scope scope">
+                    {{ role_scope.scope.name|localize_translatable_string }}
+                </span>
+                {%- endif -%}
                 {{ form(delete_role_scopes_form[role_scope.id]) }}
             </li>
         </ul>

@@ -89,7 +89,7 @@ class RoleScope
      * @param \Chill\MainBundle\Entity\Scope $scope
      * @return \Chill\MainBundle\Entity\RoleScope
      */
-    public function setScope(Scope $scope)
+    public function setScope(Scope $scope = null)
     {
         $this->scope = $scope;
         

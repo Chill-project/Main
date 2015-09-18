@@ -110,6 +110,13 @@ class PermissionsGroupController extends Controller
         $roleScopes = $permissionsGroup->getRoleScopes()->toArray();
         usort($roleScopes,
               function(RoleScope $a, RoleScope $b) use ($translatableStringHelper) {
+                  if ($a->getScope() === NULL) {
+                      return 1;
+                  } 
+                  if ($b->getScope() === NULL) {
+                      return +1;
+                  }
+                  
                   return strcmp(
                         $translatableStringHelper->localize($a->getScope()->getName()),
                         $translatableStringHelper->localize($b->getScope()->getName())

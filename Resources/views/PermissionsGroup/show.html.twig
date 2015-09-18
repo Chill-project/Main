@@ -37,7 +37,10 @@
                         <small>{{ 'Which implies'|trans }}&nbsp;: {% for role in expanded_roles[role_scope.role] %}{{ role }}{% if not loop.last %}, {% endif %}{% endfor %}</small>
                     {% endif %}
                 </td>
-                <td>{{ role_scope.scope.name|localize_translatable_string }}</td>
+                <td>{%- if role_scope.scope is not null -%}
+                    {{ role_scope.scope.name|localize_translatable_string }}
+                    {%- endif -%}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

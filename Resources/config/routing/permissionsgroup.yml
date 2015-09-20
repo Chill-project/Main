@@ -1,6 +1,11 @@
 admin_permissionsgroup:
     path:     /
     defaults: { _controller: "ChillMainBundle:PermissionsGroup:index" }
+    options:
+        menus:
+            admin_permissions:
+                order: 300
+                label: List permissions group
 
 admin_permissionsgroup_show:
     path:     /{id}/show
@@ -9,6 +14,11 @@ admin_permissionsgroup_show:
 admin_permissionsgroup_new:
     path:     /new
     defaults: { _controller: "ChillMainBundle:PermissionsGroup:new" }
+    options:
+        menus:
+            admin_permissions:
+                order: 301
+                label: New permission group
 
 admin_permissionsgroup_create:
     path:     /create

@@ -1,8 +1,8 @@
-{% extends 'ChillMainBundle::layout.html.twig' %}
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
 
 {% block title %}{{ 'user list'|trans|capitalize }}{% endblock %}
 
-{% block content -%}
+{% block admin_content -%}
     <h1>{{ 'user list'|trans|capitalize }}</h1>
 
     <table class="records_list">
@@ -40,4 +40,4 @@
             </a>
         </li>
     </ul>
-{% endblock content %}
+{% endblock admin_content %}

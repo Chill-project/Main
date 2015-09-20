@@ -1,7 +1,9 @@
-{% extends 'ChillMainBundle::layout.html.twig' %}
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
 
-{% block content -%}
-    <h1>{{ 'Scope list'|trans }}</h1>
+{% block title %}{{ 'Circle list'|trans }}{% endblock %}
+
+{% block admin_content -%}
+    <h1>{{ 'Circle list'|trans }}</h1>
 
     <table class="records_list">
         <thead>

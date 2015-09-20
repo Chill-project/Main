@@ -54,6 +54,18 @@ chill_main_admin_central:
                 order: 30
                 label: Admin Menu
                 icons: [gears]
+            admin_permissions:
+                order: 0
+                label: Main admin menu
+                
+chill_main_admin_permissions:
+    path: /{_locale}/admin/permissions
+    defaults: {_controller: ChillMainBundle:Admin:indexPermissions }
+    options:
+        menus:
+            admin:
+                order: 200
+                label: Permissions
 
 chill_main_search:
     path: /{_locale}/search

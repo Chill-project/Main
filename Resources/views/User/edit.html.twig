@@ -1,8 +1,8 @@
-{% extends 'ChillMainBundle::layout.html.twig' %}
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
 
 {% block title %}{{ 'User edit'|trans }}{% endblock %}
 
-{% block content -%}
+{% block admin_content -%}
     <h1>{{ 'User edit'|trans }}</h1>
 
     {{ form_start(edit_form) }}

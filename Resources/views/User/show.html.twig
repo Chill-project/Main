@@ -1,8 +1,8 @@
-{% extends 'ChillMainBundle::layout.html.twig' %}
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
 
 {% block title %}{{ 'User %username%'|trans({ '%username%': entity.username }) }}{% endblock %}
 
-{% block content -%}
+{% block admin_content -%}
     <h1>{{ 'User %username%'|trans({ '%username%': entity.username }) }}</h1>
 
     <table class="record_properties">
@@ -57,4 +57,4 @@
         </a>
     </li>
 </ul>
-{% endblock content %}
+{% endblock admin_content %}

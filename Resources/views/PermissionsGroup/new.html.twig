@@ -1,8 +1,8 @@
-{% extends 'ChillMainBundle::layout.html.twig' %}
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
 
 {% block title %}{{ 'PermissionsGroup creation'|trans }}{% endblock %}
 
-{% block content -%}
+{% block admin_content -%}
     <h1>{{ 'PermissionsGroup creation'|trans }}</h1>
 
     {{ form(form) }}

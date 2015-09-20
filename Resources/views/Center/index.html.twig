@@ -16,15 +16,15 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('admin_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('admin_center_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.name }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('admin_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>
+                        <a href="{{ path('admin_center_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('admin_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
+                        <a href="{{ path('admin_center_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                     </li>
                 </ul>
                 </td>
@@ -35,7 +35,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('admin_new') }}">
+            <a href="{{ path('admin_center_new') }}">
                 {{ 'Create a new center'|trans }}
             </a>
         </li>

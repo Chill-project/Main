@@ -44,7 +44,7 @@ class CenterController extends Controller
             $em->persist($center);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_show', array('id' => $center->getId())));
+            return $this->redirect($this->generateUrl('admin_center_show', array('id' => $center->getId())));
         }
 
         return $this->render('ChillMainBundle:Center:new.html.twig', array(
@@ -63,7 +63,7 @@ class CenterController extends Controller
     private function createCreateForm(Center $center)
     {
         $form = $this->createForm(new CenterType(), $center, array(
-            'action' => $this->generateUrl('admin_create'),
+            'action' => $this->generateUrl('admin_center_create'),
             'method' => 'POST',
         ));
 
@@ -137,7 +137,7 @@ class CenterController extends Controller
     private function createEditForm(Center $center)
     {
         $form = $this->createForm(new CenterType(), $center, array(
-            'action' => $this->generateUrl('admin_update', array('id' => $center->getId())),
+            'action' => $this->generateUrl('admin_center_update', array('id' => $center->getId())),
             'method' => 'PUT',
         ));
 
@@ -165,7 +165,7 @@ class CenterController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_center_edit', array('id' => $id)));
         }
 
         return $this->render('ChillMainBundle:Center:edit.html.twig', array(

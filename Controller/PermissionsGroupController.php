@@ -122,7 +122,22 @@ class PermissionsGroupController extends Controller
                         $translatableStringHelper->localize($b->getScope()->getName())
                         );
               });
-              
+
+        return $this->render('ChillMainBundle:PermissionsGroup:show.html.twig', array(
+            'entity'      => $permissionsGroup,
+            'role_scopes' => $roleScopes,
+            'expanded_roles' => $this->getExpandedRoles($roleScopes)
+        ));
+    }
+    
+    /**
+     * expand roleScopes to be easily shown in template
+     * 
+     * @param array $roleScopes
+     * @return array
+     */
+    private function getExpandedRoles(array $roleScopes)
+    {
         $expandedRoles = array();
         foreach ($roleScopes as $roleScope) {
             if (!array_key_exists($roleScope->getRole(), $expandedRoles)) {
@@ -139,12 +154,7 @@ class PermissionsGroupController extends Controller
                         );
             }
         }
-
-        return $this->render('ChillMainBundle:PermissionsGroup:show.html.twig', array(
-            'entity'      => $permissionsGroup,
-            'role_scopes' => $roleScopes,
-            'expanded_roles' => $expandedRoles
-        ));
+        return $expandedRoles;
     }
 
     /**
@@ -174,6 +184,7 @@ class PermissionsGroupController extends Controller
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
             'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
+            'expanded_roles' => $this->getExpandedRoles($permissionsGroup->getRoleScopes()->toArray()),
             'delete_role_scopes_form' => array_map( function($form) { 
                 
                 return $form->createView(); 
@@ -236,6 +247,7 @@ class PermissionsGroupController extends Controller
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
             'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
+            'expanded_roles' => $this->getExpandedRoles($permissionsGroup->getRoleScopes()->toArray()),
             'delete_role_scopes_form' => array_map( function($form) { 
                 
                 return $form->createView(); 
@@ -384,6 +396,7 @@ class PermissionsGroupController extends Controller
         return $this->render('ChillMainBundle:PermissionsGroup:edit.html.twig', array(
             'entity'      => $permissionsGroup,
             'edit_form'   => $editForm->createView(),
+            'expanded_roles' => $this->getExpandedRoles($permissionsGroup->getRoleScopes()->toArray()),
             'delete_role_scopes_form' => array_map( function($form) { 
                 
                 return $form->createView(); 

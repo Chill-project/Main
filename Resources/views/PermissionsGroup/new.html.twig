@@ -1,11 +1,14 @@
 {% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
 
-{% block title %}{{ 'PermissionsGroup creation'|trans }}{% endblock %}
+{% block title %}{{ 'New permission group'|trans }}{% endblock %}
 
 {% block admin_content -%}
-    <h1>{{ 'PermissionsGroup creation'|trans }}</h1>
+    <h1>{{ 'New permission group'|trans }}</h1>
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.submit, { 'attr': { 'class': 'sc-button green' } } ) }}
+    {{ form_end(form) }}
 
         <ul class="record_actions">
     <li>

@@ -5,28 +5,67 @@
 {% block admin_content -%}
     <h1>{{ 'PermissionsGroup "%name%" edit'|trans( { '%name%': entity.name } ) }}</h1>
     
-    {{ form_start(edit_form) }}
-
-    <p>{{ form_label(edit_form.name) }} {{ form_widget(edit_form.name) }}</p>
+    <h2>{{ 'Details'|trans }}</h2>
     
+    {{ form_start(edit_form) }}
+    {{ form_row(edit_form.name) }}
+    {{ form_row(edit_form.submit, { 'attr': { 'class': 'sc-button green' } } ) }}
     {{ form_end(edit_form) }}
     
+    <h2>{{ 'Grant those permissions'|trans }} :</h2>
+    
+    {%- if entity.getRoleScopes|length > 0 -%}
+    <table class="striped rounded">
+        <thead>
+            <tr>
+                <th>{{ 'Role'|trans }}</th>
+                <th>{{ 'Circle'|trans }}</th>
+                <th>{{ 'Actions'|trans }}</th>
+            </tr>            
+        </thead>
+        <tbody>
+    
     {% for role_scope in entity.getRoleScopes %}
-        <ul>
-            <li>
+        <tr>
+            <td>
                 <span class="role_scope role">{{ role_scope.role|trans }}</span> 
+                {% if expanded_roles[role_scope.role]|length > 1 %}
+                        <br/>
+                        <small>{{ 'Which implies'|trans }}&nbsp;: {% for role in expanded_roles[role_scope.role] %}{{ role }}{% if not loop.last %}, {% endif %}{% endfor %}</small>
+                    {% endif %}
+            </td>
+            <td>
                 {%- if role_scope.scope is not null -%}
-                 - <span class="role_scope scope">
+                <span class="role_scope scope">
                     {{ role_scope.scope.name|localize_translatable_string }}
                 </span>
+                {%- else -%}
+                    <em>N/A</em>
                 {%- endif -%}
-                {{ form(delete_role_scopes_form[role_scope.id]) }}
-            </li>
-        </ul>
+            </td>
+            <td>
+                {{ form_start(delete_role_scopes_form[role_scope.id]) }}
+                {{ form_widget(delete_role_scopes_form[role_scope.id].submit, { 'attr': { 'class': 'sc-button red' } } ) }}
+                {{ form_end(delete_role_scopes_form[role_scope.id]) }}
+            </td>
+        </tr>
         
     {% endfor %}
+        </tbody>
+    </table>
     
-    {{ form(add_role_scopes_form) }}
+    {%- else -%}
+        <p>{{ 'This group does not provide any permission'|trans }}</p>
+    {%- endif -%}
+    
+    <h2>{{ 'Grant new permissions'|trans }}</h2>
+    
+    {{ form_start(add_role_scopes_form) }}
+    {{ form_errors(add_role_scopes_form) }}
+    {{ form_row(add_role_scopes_form.composed_role_scope.role) }}
+    {{ form_row(add_role_scopes_form.composed_role_scope.scope) }}
+    {{ form_row(add_role_scopes_form.submit, { 'attr' : { 'class': 'sc-button green' } } ) }}
+    {{ form_end(add_role_scopes_form) }}
 
     
         <ul class="record_actions">

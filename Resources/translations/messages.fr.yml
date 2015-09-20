@@ -16,6 +16,7 @@ Homepage: Accueil
 Welcome: Bienvenue
 Export Menu: Export
 Admin Menu: Menu d'administration
+Details: Détails
 
 #serach
 Your search is empty. Please provide search terms.: La recherche est vide. Merci de fournir des termes de recherche.
@@ -55,6 +56,11 @@ Which implies: Ce qui implique
 Permission group: Groupe de permissions
 Permissionsgroup: Group de permissions
 New permission group: Nouveau groupe de permissions
+PermissionsGroup "%name%" edit: Modification du groupe de permission '%name%'
+Grant new permissions: Attribuer de nouvelles permissions
+Role: Rôle
+Choose amongst roles: Choisir parmi les rôles
+Add permission: Ajouter les permissions
 
 #admin section for users
 List users: Liste des utilisateurs
@@ -70,6 +76,7 @@ Add a new groupCenter: Ajout de permissions
 Center & groups: Centre et groupes
 User %username%: Utilisateur %username%
 Add a new user: Ajouter un nouvel utilisateur
+The permissions have been added: Les permissions ont été ajoutées
 
 #admin section for circles (old: scopes)
 List circles: Liste des cercles

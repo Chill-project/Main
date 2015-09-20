@@ -5,7 +5,7 @@ admin_permissionsgroup:
         menus:
             admin_permissions:
                 order: 300
-                label: List permissions group
+                label: Permissions group list
 
 admin_permissionsgroup_show:
     path:     /{id}/show

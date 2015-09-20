@@ -8,42 +8,58 @@
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'Username' }}</th>
                 <td>{{ entity.username }}</td>
             </tr>
             <tr>
-                <th>{{ 'Enabled'|trans }}</th>
-                <td>{{ entity.enabled }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'Center & groups' }}</th>
+                <th>{{ "User'status"|trans }}</th>
                 <td>
-                    {% if entity.groupcenters|length > 0 %}
-                        <ul>
-                        {% for groupcenter in entity.groupcenters %}
-                            <li>
-                            <span class="user_group permissionsgroup">
-                                {{ groupcenter.permissionsgroup.name }}
-                            </span>
-                            <span class="user_group center">
-                                {{ groupcenter.center.name }}
-                            </span>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>{{ 'The user does not belong to any groupcenter'|trans }}.
-                            <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
-                                {{ 'Add new group centers'|trans }}
-                            </a>
-                    {% endif %}
+                    {%- if entity.enabled -%}
+                    {{ 'Enabled, the user is active'|trans }}
+                    {%- else -%}
+                    {{ 'Disabled, the user is not allowed to login'|trans }}
+                    {%- endif -%}
                 </td>
+            </tr>
         </tbody>
     </table>
+                
+    <h2>{{ 'Permissions granted'|trans }}</h2>
+    
+    {% if entity.groupcenters|length > 0 %}
+    <table>
+            <thead>
+                <tr>
+                    <th>{{ 'Permission group'|trans }}</th>
+                    <th>{{ 'Center'|trans }}</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for groupcenter in entity.groupcenters %}
+                <tr>
+                    <td>
+                    <span class="user_group permissionsgroup">
+                        {{ groupcenter.permissionsgroup.name }}
+                    </span>
+                    </td>
+                    <td>
+                    <span class="user_group center">
+                        {{ groupcenter.center.name }}
+                    </span>
+                    </td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    {% else %}
+        <p>{{ 'The user does not belong to any groupcenter'|trans }}.
+            <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                {{ 'Add new group centers'|trans }}
+            </a>
+        </p>
+    {% endif %}
 
         <ul class="record_actions">
     <li>

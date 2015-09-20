@@ -211,7 +211,7 @@ class UserController extends Controller
         
         $em->flush();
         
-        $this->addFlash('notice', $this->get('translator')
+        $this->addFlash('success', $this->get('translator')
                 ->trans('The permissions where removed.'));
         
         return $this->redirect($this->generateUrl('admin_user_edit', array('id' => $uid)));

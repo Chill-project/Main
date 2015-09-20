@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Chill\MainBundle\Validation\Constraint\RoleScopeScopePresenceConstraint;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * 
@@ -45,10 +46,18 @@ class RoleScopeScopePresence extends ConstraintValidator
      */
     private $logger;
     
-    public function __construct(RoleProvider $roleProvider, LoggerInterface $logger)
+    /**
+     *
+     * @var TranslatorInterface
+     */
+    private $translator;
+    
+    public function __construct(RoleProvider $roleProvider, LoggerInterface $logger,
+            TranslatorInterface $translator)
     {
         $this->roleProvider = $roleProvider;
         $this->logger = $logger;
+        $this->translator = $translator;
     }
 
     public function validate($value, Constraint $constraint)
@@ -63,17 +72,29 @@ class RoleScopeScopePresence extends ConstraintValidator
         
         $this->logger->debug('begin validation of a role scope instance');
         
-        //check that : the role IS NOT in getRolesWithoutScopes + 
+        //if the role scope should have a scope
         if (
                 !in_array($value->getRole(), $this->roleProvider->getRolesWithoutScopes())
                 &&
                 $value->getScope() === NULL
                 ) {
             $this->context->buildViolation($constraint->messagePresenceRequired)
-                    ->setParameter('%role%', $value->getRole())
+                    ->setParameter('%role%', $this->translator->trans($value->getRole()))
                     ->addViolation();
-            $this->logger->debug('the role scole is not valid. Violation build.');
-        } else {
+            $this->logger->debug('the role scope should have a scope, but scope is null. Violation build.');
+        } elseif // if the scope should be null
+            (
+                in_array($value->getRole(), $this->roleProvider->getRolesWithoutScopes())
+                &&
+                ! is_null($value->getScope())
+            )
+        {
+            $this->context->buildViolation($constraint->messageNullRequired)
+                    ->setParameter('%role%', $this->translator->trans($value->getRole()))
+                    ->addViolation();
+            $this->logger->debug('the role scole should not have a scope, but scope is not null. Violation build.');
+        } // everything is fine !
+        else {
             $this->logger->debug('role scope is valid. Validation finished.');
         }
     }

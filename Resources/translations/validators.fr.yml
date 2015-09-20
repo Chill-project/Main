@@ -1,0 +1,4 @@
+# role_scope constraint
+# scope presence
+The role "%role%" require to be associated with a scope.: Le rôle "%role%" doit être associé à un cercle.
+The role "%role%" should not be associated with a scope.: Le rôle "%role%" ne doit pas être associé à un cercle.

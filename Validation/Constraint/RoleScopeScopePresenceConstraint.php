@@ -31,6 +31,7 @@ class RoleScopeScopePresenceConstraint extends Constraint
     
     public $messagePresenceRequired = "The role \"%role%\" require to be associated with "
             . "a scope.";
+    public $messageNullRequired = "The role \"%role%\" should not be associated with a scope.";
     
     public function validatedBy()
     {

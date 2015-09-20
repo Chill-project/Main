@@ -21,3 +21,11 @@ Chill\MainBundle\Entity\User:
 Chill\MainBundle\Entity\RoleScope:
     constraints:
         - \Chill\MainBundle\Validation\Constraint\RoleScopeScopePresenceConstraint: ~
+        
+Chill\MainBundle\Entity\Center:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 50
+                min: 3

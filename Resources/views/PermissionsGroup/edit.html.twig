@@ -31,7 +31,7 @@
                 <span class="role_scope role">{{ role_scope.role|trans }}</span> 
                 {% if expanded_roles[role_scope.role]|length > 1 %}
                         <br/>
-                        <small>{{ 'Which implies'|trans }}&nbsp;: {% for role in expanded_roles[role_scope.role] %}{{ role }}{% if not loop.last %}, {% endif %}{% endfor %}</small>
+                        <small>{{ 'Which implies'|trans }}&nbsp;: {% for role in expanded_roles[role_scope.role] %}{{ role|trans }}{% if not loop.last %}, {% endif %}{% endfor %}</small>
                     {% endif %}
             </td>
             <td>

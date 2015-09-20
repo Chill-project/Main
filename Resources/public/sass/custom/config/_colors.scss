@@ -1,3 +1,4 @@
+
 $chill-blue: #334d5c;
 $chill-green: #43b29d;
 $chill-green-dark: #328474;
@@ -7,12 +8,22 @@ $chill-red: #df4949;
 $chill-gray: #ececec;
 $chill-beige :#cabb9f;
 $chill-pink :#dd506d;
-
 $chill-dark-gray: #333333;
 $chill-light-gray: #b2b2b2;
+$chill-llight-gray: $grey-10;
+
+$color-name: "blue" "green" "green-dark" "yellow" "orange" "red" "gray" "beige" "pink" "dark-gray" "light-gray";
+$color-code: #334d5c #43b29d #328474 #eec84a #e2793d #df4949 #ececec #cabb9f #dd506d #333333 #b2b2b2;
+
+@for $i from 1 through length($color-name) {
+  .chill-#{nth($color-name, $i)} {
+    color: nth($color-code, $i);
+  }
+}
 
 $orange: $chill-orange;
 $red: $chill-red;
 $green: $chill-green;
 $blue: $chill-blue;
 $yellow: $chill-yellow;
+

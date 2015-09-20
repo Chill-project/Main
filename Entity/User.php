@@ -5,6 +5,7 @@ namespace Chill\MainBundle\Entity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * User
@@ -167,6 +168,15 @@ class User implements AdvancedUserInterface {
     
     /**
      * 
+     * @param bool $enabled
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    }
+    
+    /**
+     * 
      * @return GroupCenter[]
      */
     public function getGroupCenters()
@@ -183,6 +193,38 @@ class User implements AdvancedUserInterface {
     {
         $this->groupCenters->add($groupCenter);
         return $this;
+    }
+    
+    /**
+     * 
+     * @param \Chill\MainBundle\Entity\GroupCenter $groupCenter
+     * @throws \RuntimeException if the groupCenter is not in the collection
+     */
+    public function removeGroupCenter(GroupCenter $groupCenter)
+    {
+        if ($this->groupCenters->removeElement($groupCenter) === FALSE) {
+            throw new \RuntimeException(sprintf("The groupCenter could not be removed, "
+                    . "it seems not to be associated with the user. Aborting."));
+        }
+    }
+    
+    /**
+     * This function check that groupCenter are present only once. The validator 
+     * use this function to avoid a user to be associated to the same groupCenter
+     * more than once.
+     */
+    public function isGroupCenterPresentOnce(ExecutionContextInterface $context)
+    {
+        $groupCentersIds = array();
+        foreach ($this->getGroupCenters() as $groupCenter) {
+            if (in_array($groupCenter->getId(), $groupCentersIds)) {
+                $context->buildViolation("The user has already those permissions")
+                        ->addViolation();
+                
+            } else {
+                $groupCentersIds[] = $groupCenter->getId();
+            }
+        }
     }
 
 }

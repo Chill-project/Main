@@ -1,0 +1,29 @@
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
+
+{% block title %}{{ 'Centre %name%'|trans({ '%name%': entity.name }) }}{% endblock %}
+
+{% block admin_content -%}
+    <h1>{{ 'Centre %name%'|trans({ '%name%': entity.name }) }}</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>{{ 'Name'|trans }}</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_center') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_center_edit', { 'id': entity.id }) }}">
+            {{ 'Edit'|trans }}
+        </a>
+    </li>
+</ul>
+{% endblock %}

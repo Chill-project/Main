@@ -15,3 +15,4 @@ Chill\MainBundle\Entity\RoleScope:
         scope:
             targetEntity: Chill\MainBundle\Entity\Scope
             inversedBy: roleScopes
+            nullable: true

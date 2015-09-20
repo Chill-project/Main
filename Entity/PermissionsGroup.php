@@ -21,7 +21,7 @@
 namespace Chill\MainBundle\Entity;
 
 use Chill\MainBundle\Entity\RoleScope;
-
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 /**
@@ -79,9 +79,49 @@ class PermissionsGroup
         return $this;
     }
 
+    /**
+     * 
+     * @param RoleScope $roleScope
+     */
     public function addRoleScope(RoleScope $roleScope)
     {
         $this->roleScopes->add($roleScope);
+    }
+    
+    /**
+     * 
+     * @param RoleScope $roleScope
+     * @throws \RuntimeException if the roleScope could not be removed.
+     */
+    public function removeRoleScope(RoleScope $roleScope)
+    {
+        $result = $this->roleScopes->removeElement($roleScope);
+        if ($result === FALSE) {
+            throw new \RuntimeException(sprintf("The roleScope '%s' could not be removed, "
+                    . "aborting.", spl_object_hash($roleScope)));
+        }
+    }
+    
+    /**
+     * Test that a role scope is associated only once with the permission group
+     * 
+     * @param ExecutionContextInterface $context
+     */
+    public function isRoleScopePresentOnce(ExecutionContextInterface $context) 
+    {
+        $roleScopesId = array_map(function(RoleScope $roleScope) {
+                    return $roleScope->getId();
+                }, 
+                $this->getRoleScopes()->toArray());
+        $countedIds = array_count_values($roleScopesId);
+        
+        foreach ($countedIds as $id => $nb) {
+            if ($nb > 1) {
+                $context->buildViolation("A permission is already present "
+                        . "for the same role and scope")
+                        ->addViolation();
+            }
+        }
     }
 
 

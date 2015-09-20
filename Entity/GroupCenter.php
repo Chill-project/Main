@@ -52,9 +52,9 @@ class GroupCenter
     
     /**
      *
-     * @var Collection
+     * @var PermissionsGroup
      */
-    private $permissionGroups;
+    private $permissionsGroup;
     
     public function __construct()
     {
@@ -78,15 +78,6 @@ class GroupCenter
 
     /**
      * 
-     * @return PermissionGroup[]
-     */
-    public function getPermissionGroups()
-    {
-        return $this->permissionGroups;
-    }
-
-    /**
-     * 
      * @param Center $center
      * @return \Chill\MainBundle\Entity\GroupCenter
      */
@@ -95,22 +86,32 @@ class GroupCenter
         $this->center = $center;
         return $this;
     }
-
-    /**
-     * 
-     * @param PermissionGroup $permission
-     * @return \Chill\MainBundle\Entity\GroupCenter
-     */
-    public function addPermissionGroup(PermissionsGroup $permission)
-    {
-        $this->permissionGroups->add($permission);
-        return $this;
-    }
     
     public function getUsers()
     {
         return $this->users;
     }
+    
+    /**
+     * 
+     * @return PermissionGroup
+     */
+    public function getPermissionsGroup()
+    {
+        return $this->permissionsGroup;
+    }
+
+    /**
+     * 
+     * @param \Chill\MainBundle\Entity\PermissionsGroup $permissionGroup
+     * @return \Chill\MainBundle\Entity\GroupCenter
+     */
+    public function setPermissionsGroup(PermissionsGroup $permissionsGroup)
+    {
+        $this->permissionsGroup = $permissionsGroup;
+        return $this;
+    }
+
 
 
 

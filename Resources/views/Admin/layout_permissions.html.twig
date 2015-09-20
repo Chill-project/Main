@@ -1,0 +1,31 @@
+{#
+ * Copyright (C) 2014-2015, Champs Libres Cooperative SCRLFS, 
+ <info@champs-libres.coop> / <http://www.champs-libres.coop>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "ChillMainBundle::layoutWithVerticalMenu.html.twig" %}
+
+{% block vertical_menu_content %}
+    {{ chill_menu('admin_permissions', {
+        'layout': 'ChillMainBundle::Menu/admin_permissions.html.twig',
+    }) }}
+{% endblock %}
+
+{% block layout_wvm_content %}
+    {% block admin_content %}<!-- block personcontent empty -->
+        <h1>{{ 'Permissions management of your chill installation' |trans }}</h1>
+    {% endblock %}
+{% endblock  %}

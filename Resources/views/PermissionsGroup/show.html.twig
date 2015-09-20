@@ -1,0 +1,66 @@
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
+
+{% block title %}{{ 'Permission group "%name%"'|trans({ '%name%': entity.name }) }}{% endblock %}
+
+{% block admin_content -%}
+    <h1>{{ 'Permission group "%name%"'|trans({ '%name%': entity.name }) }}</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>{{ 'Name'|trans }}</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% if role_scopes|length > 0 %}        
+    <h2>{{ 'Grant those permissions'|trans }}&nbsp;:</h2>
+            
+    <table class="striped rounded">
+        <thead>
+            <tr>
+                <th>{{ 'Role'|trans }}</th>
+                <th>{{ 'Circle'|trans }}</th>
+            </tr>            
+        </thead>
+        <tbody>
+            {% for role_scope in role_scopes %}
+            <tr>
+                <td>
+                    {{ role_scope.role|trans }} 
+                    {% if expanded_roles[role_scope.role]|length > 1 %}
+                        <br/>
+                        <small>{{ 'Which implies'|trans }}&nbsp;: {% for role in expanded_roles[role_scope.role] %}{{ role }}{% if not loop.last %}, {% endif %}{% endfor %}</small>
+                    {% endif %}
+                </td>
+                <td>{%- if role_scope.scope is not null -%}
+                    {{ role_scope.scope.name|localize_translatable_string }}
+                    {%- else -%}
+                    <em>N/A</em>
+                {%- endif -%}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        
+    {% else %}
+        
+        <p>{{ 'This group does not provide any permission'|trans }}. 
+            <a href="{{ path('admin_permissionsgroup_edit', { 'id': entity.id }) }}">
+                {{ 'add permissions'|trans|capitalize }}</a></p>
+    {% endif %}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_permissionsgroup') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_permissionsgroup_edit', { 'id': entity.id }) }}">
+           {{ 'Edit'|trans }}
+        </a>
+    </li>
+</ul>
+{% endblock %}

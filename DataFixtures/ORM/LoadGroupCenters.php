@@ -47,7 +47,7 @@ class LoadGroupCenters extends AbstractFixture implements OrderedFixtureInterfac
             foreach (LoadPermissionsGroup::$refs as $permissionGroupRef) {
                 $GroupCenter = new GroupCenter();
                 $GroupCenter->setCenter($this->getReference($centerRef));
-                $GroupCenter->addPermissionGroup($this->getReference($permissionGroupRef));
+                $GroupCenter->setPermissionsGroup($this->getReference($permissionGroupRef));
                 
                 $manager->persist($GroupCenter);
                 

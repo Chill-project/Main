@@ -107,3 +107,23 @@ services:
         class: Chill\MainBundle\Security\Authorization\AuthorizationHelper
         arguments:
             - "@security.role_hierarchy"
+            
+    chill.main.role_provider:
+        class: Chill\MainBundle\Security\RoleProvider
+            
+    chill.main.form.type.composed_role_scope:
+        class: Chill\MainBundle\Form\Type\ComposedRoleScopeType
+        arguments:
+            - "@chill.main.helper.translatable_string"
+            - "@chill.main.role_provider"
+        tags:
+            - { name: form.type, alias: composed_role_scope }
+            
+    chill.main.validator.role_scope_scope_presence:
+        class: Chill\MainBundle\Validation\Validator\RoleScopeScopePresence
+        arguments:
+            - "@chill.main.role_provider"
+            - "@logger"
+            - "@translator"
+        tags:
+            - { name: validator.constraint_validator, alias: 'role_scope_scope_presence' }

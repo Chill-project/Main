@@ -1,0 +1,35 @@
+admin_scope:
+    path:     /
+    defaults: { _controller: "ChillMainBundle:Scope:index" }
+    options:
+        menus:
+            admin_permissions:
+                order: 200
+                label: List circles
+
+admin_scope_show:
+    path:     /{id}/show
+    defaults: { _controller: "ChillMainBundle:Scope:show" }
+
+admin_scope_new:
+    path:     /new
+    defaults: { _controller: "ChillMainBundle:Scope:new" }
+    options:
+        menus:
+            admin_permissions:
+                order: 201
+                label: New circle
+
+admin_scope_create:
+    path:     /create
+    defaults: { _controller: "ChillMainBundle:Scope:create" }
+    methods:  POST
+
+admin_scope_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ChillMainBundle:Scope:edit" }
+
+admin_scope_update:
+    path:     /{id}/update
+    defaults: { _controller: "ChillMainBundle:Scope:update" }
+    methods:  [POST, PUT]

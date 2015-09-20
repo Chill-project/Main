@@ -1,3 +1,19 @@
+chill_main_admin_permissionsgroup:
+    resource: "@ChillMainBundle/Resources/config/routing/permissionsgroup.yml"
+    prefix:   "{_locale}/admin/permissionsgroup"
+
+chill_main_admin_user:
+    resource: "@ChillMainBundle/Resources/config/routing/user.yml"
+    prefix:   "{_locale}/admin/user"
+
+chill_main_admin_scope:
+    resource: "@ChillMainBundle/Resources/config/routing/scope.yml"
+    prefix:   "{_locale}/admin/scope"
+
+chill_main_admin:
+    resource: "@ChillMainBundle/Resources/config/routing/center.yml"
+    prefix:   "{_locale}/admin/center"
+
 root:
     path: /
     defaults:
@@ -38,6 +54,18 @@ chill_main_admin_central:
                 order: 30
                 label: Admin Menu
                 icons: [gears]
+            admin_permissions:
+                order: 0
+                label: Main admin menu
+                
+chill_main_admin_permissions:
+    path: /{_locale}/admin/permissions
+    defaults: {_controller: ChillMainBundle:Admin:indexPermissions }
+    options:
+        menus:
+            admin:
+                order: 200
+                label: Permissions
 
 chill_main_search:
     path: /{_locale}/search

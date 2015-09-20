@@ -1,0 +1,45 @@
+admin_permissionsgroup:
+    path:     /
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:index" }
+    options:
+        menus:
+            admin_permissions:
+                order: 300
+                label: Permissions group list
+
+admin_permissionsgroup_show:
+    path:     /{id}/show
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:show" }
+
+admin_permissionsgroup_new:
+    path:     /new
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:new" }
+    options:
+        menus:
+            admin_permissions:
+                order: 301
+                label: New permission group
+
+admin_permissionsgroup_create:
+    path:     /create
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:create" }
+    methods:  POST
+
+admin_permissionsgroup_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:edit" }
+
+admin_permissionsgroup_update:
+    path:     /{id}/update
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:update" }
+    methods:  [POST, PUT]
+    
+admin_permissionsgroup_delete_role_scope:
+    path:     /{pgid}/delete_link_role_scope/{rsid}
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:deleteLinkRoleScope" }
+    methods: [DELETE]
+    
+admin_permissionsgroup_add_role_scope:
+    path:     /{id}/add_link_role_scope
+    defaults: { _controller: "ChillMainBundle:PermissionsGroup:addLinkRoleScope" }
+    methods: [PUT]

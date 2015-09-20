@@ -37,4 +37,9 @@ class AdminController extends Controller {
         return $this->render('ChillMainBundle:Admin:layout.html.twig');
     }
     
+    public function indexPermissionsAction()
+    {
+        return $this->render('ChillMainBundle:Admin:layout_permissions.html.twig');
+    }
+    
 }

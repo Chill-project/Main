@@ -1,0 +1,17 @@
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
+
+{% block title %}{{ 'User creation'|trans }}{% endblock %}
+
+{% block admin_content -%}
+    <h1>{{ 'User creation'|trans }}</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_user') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+</ul>
+{% endblock %}

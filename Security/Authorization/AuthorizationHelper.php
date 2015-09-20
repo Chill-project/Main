@@ -95,30 +95,29 @@ class AuthorizationHelper
         foreach ($user->getGroupCenters() as $groupCenter){
             //filter on center
             if ($groupCenter->getCenter()->getId() === $entity->getCenter()->getId()) {
-                //iterate on permissionGroup
-                foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
-                    //iterate on roleScopes
-                    foreach($permissionGroup->getRoleScopes() as $roleScope) {
-                        //check that the role allow to reach the required role
-                        if ($this->isRoleReached($role, 
-                              new Role($roleScope->getRole()))){
-                            //if yes, we have a right on something...
-                            // perform check on scope if necessary
-                            if ($entity instanceof HasScopeInterface) {
-                                $scope = $entity->getScope();
-                                if ($scope === NULL) {
-                                    return true;
-                                }
-                                if ($scope->getId() === $roleScope
-                                      ->getScope()->getId()) {
-                                    return true;
-                                }
-                            } else {
+                $permissionGroup = $groupCenter->getPermissionsGroup();
+                //iterate on roleScopes
+                foreach($permissionGroup->getRoleScopes() as $roleScope) {
+                    //check that the role allow to reach the required role
+                    if ($this->isRoleReached($role, 
+                          new Role($roleScope->getRole()))){
+                        //if yes, we have a right on something...
+                        // perform check on scope if necessary
+                        if ($entity instanceof HasScopeInterface) {
+                            $scope = $entity->getScope();
+                            if ($scope === NULL) {
                                 return true;
                             }
+                            if ($scope->getId() === $roleScope
+                                  ->getScope()->getId()) {
+                                return true;
+                            }
+                        } else {
+                            return true;
                         }
                     }
                 }
+                
             }
         }
         
@@ -139,25 +138,24 @@ class AuthorizationHelper
         $centers = array();
         
         foreach ($user->getGroupCenters() as $groupCenter){
-            //iterate on permissionGroup
-            foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
-                //iterate on roleScopes
-                foreach($permissionGroup->getRoleScopes() as $roleScope) {
-                    //check that the role is in the reachable roles
-                    if ($this->isRoleReached($role, 
-                          new Role($roleScope->getRole()))) {
-                        if ($scope === null) {
+            $permissionGroup = $groupCenter->getPermissionsGroup();
+            //iterate on roleScopes
+            foreach($permissionGroup->getRoleScopes() as $roleScope) {
+                //check that the role is in the reachable roles
+                if ($this->isRoleReached($role, 
+                      new Role($roleScope->getRole()))) {
+                    if ($scope === null) {
+                        $centers[] = $groupCenter->getCenter();
+                        break 1;
+                    } else {
+                        if ($scope->getId() == $roleScope->getScope()->getId()){
                             $centers[] = $groupCenter->getCenter();
-                            break 2;
-                        } else {
-                            if ($scope->getId() == $roleScope->getScope()->getId()){
-                                $centers[] = $groupCenter->getCenter();
-                                break 2;
-                            }      
-                        }
+                            break 1;
+                        }      
                     }
                 }
             }
+            
         }
         
         return $centers;
@@ -178,15 +176,14 @@ class AuthorizationHelper
         foreach ($user->getGroupCenters() as $groupCenter){
             if ($center->getId() === $groupCenter->getCenter()->getId()) {
                 //iterate on permissionGroup
-                foreach($groupCenter->getPermissionGroups() as $permissionGroup) {
-                    //iterate on roleScopes
-                    foreach($permissionGroup->getRoleScopes() as $roleScope) {
-                        //check that the role is in the reachable roles
-                        if ($this->isRoleReached($role, 
-                              new Role($roleScope->getRole()))) {
+                $permissionGroup = $groupCenter->getPermissionsGroup();
+                //iterate on roleScopes
+                foreach($permissionGroup->getRoleScopes() as $roleScope) {
+                    //check that the role is in the reachable roles
+                    if ($this->isRoleReached($role, 
+                          new Role($roleScope->getRole()))) {
 
-                            $scopes[] = $roleScope->getScope();
-                        }
+                        $scopes[] = $roleScope->getScope();
                     }
                 }
             }

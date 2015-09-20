@@ -45,6 +45,10 @@ class RoleScope
      */
     private $scope;
     
+    public function __construct() {
+        $this->new = true;
+    }
+    
     public function getId()
     {
         return $this->id;
@@ -76,6 +80,7 @@ class RoleScope
     public function setRole($role)
     {
         $this->role = $role;
+
         return $this;
     }
 
@@ -84,11 +89,10 @@ class RoleScope
      * @param \Chill\MainBundle\Entity\Scope $scope
      * @return \Chill\MainBundle\Entity\RoleScope
      */
-    public function setScope(Scope $scope)
+    public function setScope(Scope $scope = null)
     {
         $this->scope = $scope;
+        
         return $this;
     }
-
-
 }

@@ -1,0 +1,35 @@
+admin_center:
+    path:     /
+    defaults: { _controller: "ChillMainBundle:Center:index" }
+    options:
+        menus:
+            admin_rpermissions:
+                order: 100
+                label: List centers
+
+admin_center_show:
+    path:     /{id}/show
+    defaults: { _controller: "ChillMainBundle:Center:show" }
+
+admin_center_new:
+    path:     /new
+    defaults: { _controller: "ChillMainBundle:Center:new" }
+    options:
+        menus:
+            admin_permissions:
+                order: 101
+                label: New center
+
+admin_center_create:
+    path:     /create
+    defaults: { _controller: "ChillMainBundle:Center:create" }
+    methods:  POST
+
+admin_center_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ChillMainBundle:Center:edit" }
+
+admin_center_update:
+    path:     /{id}/update
+    defaults: { _controller: "ChillMainBundle:Center:update" }
+    methods:  [POST, PUT]

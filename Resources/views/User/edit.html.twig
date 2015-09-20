@@ -1,0 +1,72 @@
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
+
+{% block title %}{{ 'User edit'|trans }}{% endblock %}
+
+{% block admin_content -%}
+    <h1>{{ 'User edit'|trans }}</h1>
+
+    {{ form_start(edit_form) }}
+    
+    {{ form_row(edit_form.username) }}
+    {{ form_row(edit_form.enabled, { 'label': "User'status"}) }}
+    
+    {{ form_widget(edit_form.submit, { 'attr': { 'class' : 'sc-button green center' } } ) }} 
+    <a href="{{ path('admin_user_edit_password',  { 'id' : entity.id }) }}" class="sc-button orange">{{ 'Edit password'|trans }}</a>
+    
+    {{ form_end(edit_form) }}
+    
+    <h2>{{ 'Permissions granted'|trans }}</h2>
+    
+    {% if entity.groupcenters|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ 'Permission group'|trans }}</th>
+                    <th>{{ 'Center'|trans }}</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for groupcenter in entity.groupcenters %}
+                <tr>
+                    <td>
+                    <span class="user_group permissionsgroup">
+                        {{ groupcenter.permissionsgroup.name }}
+                    </span>
+                    </td>
+                    <td>
+                    <span class="user_group center">
+                        {{ groupcenter.center.name }}
+                    </span>
+                    </td>
+                    <td>
+                        {{ form_start(delete_groupcenter_form[groupcenter.id]) }}
+                        {{ form_row(delete_groupcenter_form[groupcenter.id].submit, { 'attr': { 'class': 'sc-button red' } } ) }}
+                        {{ form_rest(delete_groupcenter_form[groupcenter.id]) }}
+                        {{ form_end(delete_groupcenter_form[groupcenter.id]) }}
+                    </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ 'no permissions granted to this user'|trans }}</p>
+    {% endif %}
+    
+    <h2>{{ 'Grant new permissions'|trans }}</h2>
+    
+    {{ form_start(add_groupcenter_form) }}
+    {{ form_row(add_groupcenter_form.composed_groupcenter.center) }}
+    {{ form_row(add_groupcenter_form.composed_groupcenter.permissionsgroup) }}
+    {{ form_row(add_groupcenter_form.submit, { 'attr' : { 'class': 'sc-button green' } } ) }}
+
+    {{ form_end(add_groupcenter_form) }}
+    
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_user') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+</ul>
+{% endblock %}

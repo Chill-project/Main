@@ -1,0 +1,76 @@
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
+
+{% block title %}{{ 'User %username%'|trans({ '%username%': entity.username }) }}{% endblock %}
+
+{% block admin_content -%}
+    <h1>{{ 'User %username%'|trans({ '%username%': entity.username }) }}</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>{{ 'Username' }}</th>
+                <td>{{ entity.username }}</td>
+            </tr>
+            <tr>
+                <th>{{ "User'status"|trans }}</th>
+                <td>
+                    {%- if entity.enabled -%}
+                    {{ 'Enabled, the user is active'|trans }}
+                    {%- else -%}
+                    {{ 'Disabled, the user is not allowed to login'|trans }}
+                    {%- endif -%}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+                
+    <h2>{{ 'Permissions granted'|trans }}</h2>
+    
+    {% if entity.groupcenters|length > 0 %}
+    <table>
+            <thead>
+                <tr>
+                    <th>{{ 'Permission group'|trans }}</th>
+                    <th>{{ 'Center'|trans }}</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for groupcenter in entity.groupcenters %}
+                <tr>
+                    <td>
+                    <span class="user_group permissionsgroup">
+                        {{ groupcenter.permissionsgroup.name }}
+                    </span>
+                    </td>
+                    <td>
+                    <span class="user_group center">
+                        {{ groupcenter.center.name }}
+                    </span>
+                    </td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    {% else %}
+        <p>{{ 'The user does not belong to any groupcenter'|trans }}.
+            <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                {{ 'Add new group centers'|trans }}
+            </a>
+        </p>
+    {% endif %}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_user') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+            {{ 'Edit'|trans }}
+        </a>
+    </li>
+</ul>
+{% endblock admin_content %}

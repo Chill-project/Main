@@ -1,0 +1,31 @@
+Chill\MainBundle\Entity\PermissionsGroup:
+    properties:
+        name: 
+            - NotBlank: ~
+            - Length:
+                max: 50
+        roleScopes:
+            - Valid: ~
+    constraints:
+        - Callback: [isRoleScopePresentOnce]
+        
+Chill\MainBundle\Entity\User:
+    properties:
+        username:
+            - Length: 
+                max: 70
+                min: 3
+    constraints:
+        - Callback: [isGroupCenterPresentOnce]
+
+Chill\MainBundle\Entity\RoleScope:
+    constraints:
+        - \Chill\MainBundle\Validation\Constraint\RoleScopeScopePresenceConstraint: ~
+        
+Chill\MainBundle\Entity\Center:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 50
+                min: 3

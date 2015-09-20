@@ -1,0 +1,29 @@
+{% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
+
+{% block title %}{{ 'Circle'|trans }}{% endblock %}
+
+{% block admin_content -%}
+    <h1>{{ 'Circle'|trans }}</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>{{ 'Name'|trans }}</th>
+                <td>{{ entity.name|localize_translatable_string }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_scope') }}">
+            {{ 'Back to the list'|trans }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_scope_edit', { 'id': entity.id }) }}">
+            {{ 'Edit'| trans }}
+        </a>
+    </li>
+</ul>
+{% endblock %}

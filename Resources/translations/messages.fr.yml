@@ -6,9 +6,17 @@ Logout: Se déconnecter
 Bad credentials: Le mot de passe et le nom d'utilisateur ne correspondent pas
 Invalid CSRF token.: Votre session a expirée ou est devenue invalide.
 Username: Nom d'utilisateur
+username: nom d'utilisateur
 Password: Mot de passe
 Welcome to %installation_name%: Bienvenue à %installation_name%
 Login to %installation_name%: Connexion à %installation_name%
+Enabled: activé
+Id: identifiant
+Homepage: Accueil
+Welcome: Bienvenue
+Export Menu: Export
+Admin Menu: Menu d'administration
+Details: Détails
 
 #serach
 Your search is empty. Please provide search terms.: La recherche est vide. Merci de fournir des termes de recherche.
@@ -17,3 +25,62 @@ Invalid terms : Recherche invalide
 You should not have more than one domain. : Vous ne devriez pas avoir plus d'un domaine de recherche.
 #used for page title
 Search %pattern%: Recherche de "%pattern%"
+
+#admin
+Create: Créer
+show: voir
+edit: modifier
+Main admin menu: Menu d'administration principal
+Actions: Actions
+
+#permissions
+Permissions Menu: Gestion des droits
+Permissions management of your chill installation: Gestion des permissions de votre instance
+
+#admin section for center's administration
+Create a new center: Créer un nouveau centre
+Center list: Liste des centres
+Center edit: Édition d'un centre
+Center creation: Création d'un centre
+New center: Nouveau centre
+Center: Centre
+
+#admin section for permissions group
+Permissions group list: Liste des groupes de permissions
+Create a new permissions group: Créer un nouveau groupe de permissions
+Permission group "%name%": Groupe de permissions "%name%"
+Grant those permissions: Attribue ces permissions
+Which implies: Ce qui implique
+Permission group: Groupe de permissions
+Permissionsgroup: Group de permissions
+New permission group: Nouveau groupe de permissions
+PermissionsGroup "%name%" edit: Modification du groupe de permission '%name%'
+Grant new permissions: Attribuer de nouvelles permissions
+Role: Rôle
+Choose amongst roles: Choisir parmi les rôles
+Add permission: Ajouter les permissions
+This group does not provide any permission: Ce groupe n'attribue aucune permission
+
+#admin section for users
+List users: Liste des utilisateurs
+user list: liste des utilisateurs
+User edit: Modification d'un utilisateur
+User'status: Statut de l'utilisateur
+Disabled, the user is not allowed to login: Désactivé, l'utilisateur n'est pas autorisé à se connecter
+Enabled, the user is active: Actif, l'utilisateur peut se connecter
+Edit password: Modifier le mot de passe
+Permissions granted: Permissions accordées
+Grant new permissions: Ajout de permissions
+Add a new groupCenter: Ajout de permissions
+Center & groups: Centre et groupes
+User %username%: Utilisateur %username%
+Add a new user: Ajouter un nouvel utilisateur
+The permissions have been added: Les permissions ont été ajoutées
+
+#admin section for circles (old: scopes)
+List circles: Liste des cercles
+New circle: Nouveau cercle
+Circle: Cercle
+Circle edit: Modification du cercle
+Circle creation: Création d'un cercle
+Create a new circle: Créer un nouveau cercle

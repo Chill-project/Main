@@ -1,0 +1,54 @@
+admin_user:
+    path:     /
+    defaults: { _controller: "ChillMainBundle:User:index" }
+    options:
+        menus:
+            admin_permissions:
+                order: 400
+                label: List users
+
+admin_user_show:
+    path:     /{id}/show
+    defaults: { _controller: "ChillMainBundle:User:show" }
+
+admin_user_new:
+    path:     /new
+    defaults: { _controller: "ChillMainBundle:User:new" }
+    options:
+        menus:
+            admin_permissions:
+                order: 401
+                label: Add a new user
+
+admin_user_create:
+    path:     /create
+    defaults: { _controller: "ChillMainBundle:User:create" }
+    methods:  POST
+
+admin_user_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ChillMainBundle:User:edit" }
+    
+admin_user_edit_password:
+    path:     /{id}/edit_password
+    defaults: { _controller: "ChillMainBundle:User:editPassword" }
+
+admin_user_update:
+    path:     /{id}/update
+    defaults: { _controller: "ChillMainBundle:User:update" }
+    methods:  [POST, PUT]
+    
+admin_user_update_password:
+    path:     /{id}/update_password
+    defaults: { _controller: "ChillMainBundle:User:updatePassword" }
+    methods:  [POST, PUT]
+    
+admin_user_delete_group_center:
+    path:     /{uid}/delete_link_groupcenter/{gcid}
+    defaults: { _controller: "ChillMainBundle:User:deleteLinkGroupCenter" }
+    methods: [DELETE]
+    
+admin_user_add_group_center:
+    path:     /{uid}/add_link_groupcenter
+    defaults: { _controller: "ChillMainBundle:User:addLinkGroupCenter" }
+    methods: [POST]

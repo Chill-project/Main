@@ -35,9 +35,7 @@ Actions: Actions
 
 #permissions
 Permissions Menu: Gestion des droits
-
-#admin section for scope's administration
-Create a new circle: Créer un nouveau cercle
+Permissions management of your chill installation: Gestion des permissions de votre instance
 
 #admin section for center's administration
 Create a new center: Créer un nouveau centre
@@ -84,3 +82,4 @@ New circle: Nouveau cercle
 Circle: Cercle
 Circle edit: Modification du cercle
 Circle creation: Création d'un cercle
+Create a new circle: Créer un nouveau cercle

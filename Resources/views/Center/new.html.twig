@@ -5,7 +5,10 @@
 {% block admin_content -%}
     <h1>{{ 'Center creation'|trans }}</h1>
 
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.submit, { 'attr' : { 'class' : 'sc-button green' } } ) }}
+    {{ form_end(form) }}
 
         <ul class="record_actions">
     <li>

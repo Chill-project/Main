@@ -40,7 +40,7 @@
                 </div>
             {% endfor %}
                 
-            {% for flashMessage in app.session.flashbag.get('danger') %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="grid-8 centered error">
                     <span>
                         {{ flashMessage|raw }}
@@ -48,7 +48,7 @@
                 </div>
             {% endfor %}
                 
-            {% for flashMessage in app.session.flashbag.get('info') %}
+            {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="grid-8 centered notice">
                     <span>
                         {{ flashMessage|raw }}

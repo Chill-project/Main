@@ -1,14 +1,13 @@
 {% extends 'ChillMainBundle::Admin/layout_permissions.html.twig' %}
 
-{% block title %}{{ 'Circle list'|trans }}{% endblock %}
+{% block title %}{{ 'List circles'|trans }}{% endblock %}
 
 {% block admin_content -%}
-    <h1>{{ 'Circle list'|trans }}</h1>
+    <h1>{{ 'List circles'|trans }}</h1>
 
     <table class="records_list">
         <thead>
             <tr>
-                <th>{{ 'Id'|trans }}</th>
                 <th>{{ 'Name'|trans }}</th>
                 <th>{{ 'Actions'|trans }}</th>
             </tr>
@@ -16,8 +15,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('admin_scope_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.name|localize_translatable_string }}</td>
+                <td><a href="{{ path('admin_scope_show', { 'id': entity.id }) }}">{{ entity.name|localize_translatable_string }}</a></td>
                 <td>
                 <ul>
                     <li>

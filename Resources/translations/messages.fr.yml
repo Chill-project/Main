@@ -81,3 +81,6 @@ The permissions have been added: Les permissions ont été ajoutées
 #admin section for circles (old: scopes)
 List circles: Liste des cercles
 New circle: Nouveau cercle
+Circle: Cercle
+Circle edit: Modification du cercle
+Circle creation: Création d'un cercle

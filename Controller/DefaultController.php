@@ -8,6 +8,11 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {        
+        if ($this->isGranted('ROLE_ADMIN')) {
+            
+            return $this->redirectToRoute('chill_main_admin_central');
+        }
+        
         return $this->render('ChillMainBundle::layout.html.twig');
     }
 

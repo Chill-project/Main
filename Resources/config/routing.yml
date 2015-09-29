@@ -65,7 +65,7 @@ chill_main_admin_permissions:
         menus:
             admin:
                 order: 200
-                label: Permissions
+                label: Users and permissions
 
 chill_main_search:
     path: /{_locale}/search

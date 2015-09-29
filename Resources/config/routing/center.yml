@@ -3,9 +3,9 @@ admin_center:
     defaults: { _controller: "ChillMainBundle:Center:index" }
     options:
         menus:
-            admin_rpermissions:
+            admin_permissions:
                 order: 100
-                label: List centers
+                label: Center list
 
 admin_center_show:
     path:     /{id}/show

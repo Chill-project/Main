@@ -2,3 +2,5 @@
 # scope presence
 The role "%role%" require to be associated with a scope.: Le rôle "%role%" doit être associé à un cercle.
 The role "%role%" should not be associated with a scope.: Le rôle "%role%" ne doit pas être associé à un cercle.
+"The password must contains one letter, one capitalized letter, one number and one special character as *[@#$%!,;:+\"'-/{}~=µ()£]). Other characters are allowed.": "Le mot de passe doit contenir une majuscule, une minuscule, et au moins un caractère spécial parmi *[@#$%!,;:+\"'-/{}~=µ()£]). Les autres caractères sont autorisés."
+The password fields must match: Les mots de passe doivent correspondre

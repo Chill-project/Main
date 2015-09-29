@@ -24,6 +24,9 @@
                     <li>
                         <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                     </li>
+                    <li>
+                        <a href="{{ path('admin_user_edit_password',  { 'id' : entity.id }) }}">{{ 'Edit password'|trans }}</a>
+                    </li>
                 </ul>
                 </td>
             </tr>

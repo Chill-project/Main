@@ -54,9 +54,9 @@
     </table>
     
     {% else %}
-        <p>{{ 'The user does not belong to any groupcenter'|trans }}.
+        <p>{{ 'Any permissions granted to this user'|trans }}.
             <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
-                {{ 'Add new group centers'|trans }}
+                {{ 'Grant new permissions'|trans }}
             </a>
         </p>
     {% endif %}

@@ -50,10 +50,10 @@
             </tbody>
         </table>
     {% else %}
-        <p>{{ 'no permissions granted to this user'|trans }}</p>
+        <p>{{ 'Any permissions granted to this user'|trans }}.</p>
     {% endif %}
     
-    <h2>{{ 'Grant new permissions'|trans }}</h2>
+    <h3>{{ 'Grant new permissions'|trans }}</h3>
     
     {{ form_start(add_groupcenter_form) }}
     {{ form_row(add_groupcenter_form.composed_groupcenter.center) }}
@@ -63,10 +63,15 @@
     {{ form_end(add_groupcenter_form) }}
     
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_user') }}">
-            {{ 'Back to the list'|trans }}
-        </a>
-    </li>
-</ul>
+            <li>
+                <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">
+                    {{ 'show'|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('admin_user') }}">
+                    {{ 'Back to the list'|trans }}
+                </a>
+            </li>
+        </ul>
 {% endblock %}

@@ -63,19 +63,27 @@ This group does not provide any permission: Ce groupe n'attribue aucune permissi
 
 #admin section for users
 List users: Liste des utilisateurs
-user list: liste des utilisateurs
+user list: Liste des utilisateurs
 User edit: Modification d'un utilisateur
+User creation: Créer un utilisateur
 User'status: Statut de l'utilisateur
 Disabled, the user is not allowed to login: Désactivé, l'utilisateur n'est pas autorisé à se connecter
 Enabled, the user is active: Actif, l'utilisateur peut se connecter
 Edit password: Modifier le mot de passe
+Repeat the password: Répéter le mot de passe
 Permissions granted: Permissions accordées
+Any permissions granted to this user: Aucune permission n'est accordée à cet utilisateur
 Grant new permissions: Ajout de permissions
 Add a new groupCenter: Ajout de permissions
+The permissions have been successfully added to the user: Les permissions ont été accordées à l'utilisateur
+The permissions where removed.: Les permissions ont été enlevées.
 Center & groups: Centre et groupes
 User %username%: Utilisateur %username%
 Add a new user: Ajouter un nouvel utilisateur
 The permissions have been added: Les permissions ont été ajoutées
+Edit password for %username%: Éditer le mot de passe de %username%
+Change password: Changer le mot de passe
+Back to the user edition: Retour au formulaire d'édition
 
 #admin section for circles (old: scopes)
 List circles: Liste des cercles

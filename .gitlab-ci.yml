@@ -1,8 +1,11 @@
+image: chill/standard-fpm
 services:
    - postgres:9.4
 
  
 before_script:
+   - cd /tmp
+   - apt-get install -qy git
    - composer install --dev
    - cp Tests/Fixtures/App/config/parameters.travis.yml Tests/Fixtures/App/config/parameters.yml
    - psql -c 'create database test0;' -U postgres

@@ -1,4 +1,4 @@
-image: chill/standard-fpm
+image: chill/standard-fpm:latest
 services:
    - postgres:9.4
 

@@ -6,6 +6,10 @@ html,body {
    font-family: 'open_sansregular';
 }
 
+header {
+   position: relative;
+}
+
 #content_conainter {
    position: relative;
    min-height: calc(100% - 100px);

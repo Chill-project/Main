@@ -4250,7 +4250,7 @@ a {
     padding: 0;
     width: 100%;
     z-index: 9999;
-    display: inline;
+    display: inline-block;
     margin: 0;
     padding: 0; }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_navigation\.scss}line{font-family:\0000356}}
@@ -5019,11 +5019,15 @@ html, body {
   font-family: 'open_sansregular'; }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\000039}}
+header {
+  position: relative; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000313}}
 #content_conainter {
   position: relative;
   min-height: calc(100% - 100px); }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000314}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000318}}
 #content_conainter:before {
   bottom: 0;
   content: "";
@@ -5039,36 +5043,36 @@ html, body {
   background-size: cover;
   background-position: center; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000330}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000334}}
 .cf-title {
   font-size: 2em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000334}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000338}}
 .cf-subtitle {
   font-size: 1.5em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000339}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000343}}
 ul.submenu.width-11-em {
   min-width: 11em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000339}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000343}}
 ul.submenu.width-15-em {
   min-width: 15em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000344}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000348}}
 .content {
   padding-top: 1em;
   padding-bottom: 1em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000349}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000353}}
 .select2 {
   width: 100%; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000353}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000357}}
 ul.custom_fields.choice li {
   list-style: none; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000357}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000361}}
 .sticky-form-buttons {
   margin-top: 1em;
   background-color: #e2793d;
@@ -5078,39 +5082,39 @@ ul.custom_fields.choice li {
   padding: 0.5em;
   border-radius: 0; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000367}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000371}}
 .sticky-form-buttons .margin-5 {
   margin-left: 5%;
   margin-right: 5%; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000372}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000376}}
 .sticky-form-buttons .margin-10 {
   margin-left: 10%;
   margin-right: 10%; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000377}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000381}}
 .errors {
   color: #df4949; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000381}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000385}}
 .blop label {
   line-height: 1.5em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000386}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000390}}
 .footer p {
   font-family: 'open_sanslight'; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000393}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000397}}
 .time_compound input[type=text], .time_compound select {
   width: 4em;
   display: inline-block;
   text-align: center; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\0000399}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003103}}
 .time_compound .separator {
   margin-left: 0.2em;
   margin-right: 0.2em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003105}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003109}}
 .open_sansbold {
   font-family: "open_sansbold"; }
 

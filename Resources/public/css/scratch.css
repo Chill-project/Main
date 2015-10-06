@@ -4920,6 +4920,103 @@ form li label {
       .sc-button.white[disabled]:hover {
         box-shadow: none; }
 
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_buttons\.scss}line{font-family:\000032}}
+.sc-button.bt-submit, .sc-button.bt-create {
+  color: #fff;
+  background: #43b29d;
+  border: medium none;
+  box-shadow: none;
+  padding: 8px 12px;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  line-height: normal;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000316}}
+  .sc-button.bt-submit:hover, .sc-button.bt-submit:active, .sc-button.bt-create:hover, .sc-button.bt-create:active {
+    background: #3c9f8d;
+    color: #fff;
+    text-decoration: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000323}}
+  .sc-button.bt-submit:focus, .sc-button.bt-create:focus {
+    background: #3c9f8d; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000327}}
+  .sc-button.bt-submit[disabled], .sc-button.bt-create[disabled] {
+    background: rgba(67, 178, 157, 0.6);
+    color: #358d7c; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000330}}
+    .sc-button.bt-submit[disabled]:hover, .sc-button.bt-create[disabled]:hover {
+      box-shadow: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_buttons\.scss}line{font-family:\000036}}
+.sc-button.bt-reset, .sc-button.bt-delete {
+  color: #fff;
+  background: #df4949;
+  border: medium none;
+  box-shadow: none;
+  padding: 8px 12px;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  line-height: normal;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000316}}
+  .sc-button.bt-reset:hover, .sc-button.bt-reset:active, .sc-button.bt-delete:hover, .sc-button.bt-delete:active {
+    background: #db3333;
+    color: #fff;
+    text-decoration: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000323}}
+  .sc-button.bt-reset:focus, .sc-button.bt-delete:focus {
+    background: #db3333; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000327}}
+  .sc-button.bt-reset[disabled], .sc-button.bt-delete[disabled] {
+    background: rgba(223, 73, 73, 0.6);
+    color: #d02525; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000330}}
+    .sc-button.bt-reset[disabled]:hover, .sc-button.bt-delete[disabled]:hover {
+      box-shadow: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/custom\/modules\/_buttons\.scss}line{font-family:\0000310}}
+.sc-button.bt-action, .sc-button.bt-edit, .sc-button.bt-update {
+  color: #fff;
+  background: #e2793d;
+  border: medium none;
+  box-shadow: none;
+  padding: 8px 12px;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  line-height: normal;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000316}}
+  .sc-button.bt-action:hover, .sc-button.bt-action:active, .sc-button.bt-edit:hover, .sc-button.bt-edit:active, .sc-button.bt-update:hover, .sc-button.bt-update:active {
+    background: #df6a27;
+    color: #fff;
+    text-decoration: none; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000323}}
+  .sc-button.bt-action:focus, .sc-button.bt-edit:focus, .sc-button.bt-update:focus {
+    background: #df6a27; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000327}}
+  .sc-button.bt-action[disabled], .sc-button.bt-edit[disabled], .sc-button.bt-update[disabled] {
+    background: rgba(226, 121, 61, 0.6);
+    color: #cd5e1f; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/mixins\/_buttons\.scss}line{font-family:\0000330}}
+    .sc-button.bt-action[disabled]:hover, .sc-button.bt-edit[disabled]:hover, .sc-button.bt-update[disabled]:hover {
+      box-shadow: none; }
+
 /* Tabs */
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/modules\/_tabs\.scss}line{font-family:\000039}}
 .tab-nav {

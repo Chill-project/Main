@@ -1,1 +1,13 @@
-// For cutomizing the buttons
+.sc-button {
+   &.bt-submit, &.bt-create {
+      @include button($green, $white); 
+   }
+
+   &.bt-reset, &.bt-delete {
+      @include button($red, $white); 
+   }
+
+   &.bt-action, &.bt-edit, &.bt-update {
+      @include button($orange, $white); 
+   }
+}

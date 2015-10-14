@@ -24,11 +24,7 @@
 {% extends "ChillMainBundle::layout.html.twig" %}
 
 {% block layout_content %}
-
 <div class="container content"> 
-    {% block vertical_menu_content %}<!-- vertical menu of the layoutWithVerticalMenu is empty -->
-    {% endblock %}
-
     <div class="grid-8">
         {# Flash messages ! #}
         <div class="container">
@@ -60,5 +56,8 @@
         {% block layout_wvm_content %}<!-- content of the layoutWithVerticalMenu is empty -->
         {% endblock  %}
     </div>
+
+    {% block vertical_menu_content %}<!-- vertical menu of the layoutWithVerticalMenu is empty -->
+    {% endblock %}
 </div>
 {% endblock %}

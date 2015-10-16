@@ -10,7 +10,6 @@ before_script:
    - php Tests/Fixtures/App/console doctrine:migrations:migrate --env=test --no-interaction
    - php Tests/Fixtures/App/console doctrine:fixtures:load --env=test --no-interaction
 
-
 test:php-5.6:
    stage: test
    script: phpunit --testdox

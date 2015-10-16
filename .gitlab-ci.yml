@@ -1,0 +1,18 @@
+services:
+   - postgres:9.4
+
+ 
+before_script:
+   - export GITHUB_COMPOSER_AUTH=$GITHUB_TOKEN
+   - composer install
+   - cp Tests/Fixtures/App/config/parameters.gitlab-ci.yml Tests/Fixtures/App/config/parameters.yml
+   - php Tests/Fixtures/App/console --env=test cache:warmup
+   - php Tests/Fixtures/App/console doctrine:migrations:migrate --env=test --no-interaction
+   - php Tests/Fixtures/App/console doctrine:fixtures:load --env=test --no-interaction
+
+test:php-5.6:
+   stage: test
+   script: phpunit --testdox
+test:php-7:
+   stage: test
+   script: phpunit --testdox

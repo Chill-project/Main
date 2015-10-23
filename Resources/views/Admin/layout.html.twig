@@ -18,6 +18,9 @@
 
 {% extends "ChillMainBundle::layoutWithVerticalMenu.html.twig" %}
 
+{% block navigation_search_bar %}{% endblock %}
+{% block navigation_section_menu %}{% endblock %}
+
 {% block vertical_menu_content %}
     {{ chill_menu('admin', {
         'layout': 'ChillMainBundle::Menu/admin.html.twig',

@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
+{#
+    The basic layout of Chill. All other layouts must extend this layout.
+#}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>    
@@ -56,9 +60,11 @@
         <div class="grid-8 text-right">
             <div class="nav">
                 <ul class="navigation-menu">
-                    {{ chill_menu('section', {
-                        'layout': 'ChillMainBundle::Menu/section.html.twig',
-                    }) }}
+                    {% block navigation_section_menu %}
+                        {{ chill_menu('section', {
+                            'layout': 'ChillMainBundle::Menu/section.html.twig',
+                        }) }}
+                    {% endblock %}
 
                     {{ chill_menu('user', {
                         'layout': 'ChillMainBundle::Menu/user.html.twig',
@@ -87,17 +93,21 @@
                 </ul>
             </div>
 
-            <div class="navigation-search">
-                <form action="{{ path('chill_main_search') }}" method="get">
-                    <input name="q" type="search" placeholder="{{ 'Search'|trans }}" {% if _search_pattern is defined %}value="{{ _search_pattern }}"{% endif %}/>
-                    <button type="submit" class="sc-button"><i class="fa fa-search fa-flip-horizontal"></i></button>
-                </form>
-            </div>
+            {% block navigation_search_bar %}
+                <div class="navigation-search">
+                    <form action="{{ path('chill_main_search') }}" method="get">
+                        <input name="q" type="search" placeholder="{{ 'Search'|trans }}" {% if _search_pattern is defined %}value="{{ _search_pattern }}"{% endif %}/>
+                        <button type="submit" class="sc-button"><i class="fa fa-search fa-flip-horizontal"></i></button>
+                    </form>
+                </div>
+            {% endblock  %}
         </div>
     </header>
 
+    {% block top_banner %}{# To use if you want to add a banner below the header (ie the menu) #}{% endblock %}
+
     <div id="content_conainter">
-        {% block layout_content %}
+        {% block sublayout_containter %}
             <div class="container content">
                 {# Flash messages ! #}
                 {% for flashMessage in app.session.flashbag.get('success') %}
@@ -149,7 +159,7 @@
     </div>
 
     <footer class="footer">
-        <p>Programme sous license <b>AGPL</b></p>
+        <p>{{ 'Programme sous license' | trans }} <b>AGPL</b></p>
     </footer>
 
     <script type="text/javascript">

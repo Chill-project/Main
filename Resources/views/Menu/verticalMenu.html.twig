@@ -20,19 +20,18 @@
     Layout for a vertical menu (like admin, export) to use with the 
     layout ../layoutWithVerticalMenu.html.twig.
 #}
-<div class="grid-4">
-    <ul class="tab-nav follow-href-path">
-        <li class="title">
-            {% block v_menu_title %}<!-- title of the verticalMenu is empty -->{% endblock %}
+
+<ul class="tab-nav follow-href-path">
+    <li class="title">
+        {% block v_menu_title %}<!-- title of the verticalMenu is empty -->{% endblock %}
+    </li>
+    {% for route in routes %}
+        <li class="{% spaceless  %}
+                    {% if route.key == activeRouteKey %}
+                        active
+                    {% endif %}
+               {% endspaceless %} ">
+            <a href="{{ path(route.key, args ) }}" >{{ route.label|trans }}</a>
         </li>
-        {% for route in routes %}
-            <li class="{% spaceless  %}
-                        {% if route.key == activeRouteKey %}
-                            active
-                        {% endif %}
-                   {% endspaceless %} ">
-                <a href="{{ path(route.key, args ) }}" >{{ route.label|trans }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+    {% endfor %}
+</ul>

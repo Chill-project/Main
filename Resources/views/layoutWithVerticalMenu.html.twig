@@ -23,41 +23,43 @@
 
 {% extends "ChillMainBundle::layout.html.twig" %}
 
-{% block layout_content %}
-<div class="container content"> 
-    <div class="grid-8">
-        {# Flash messages ! #}
-        <div class="container">
-            {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="grid-8 centered success">
-                    <span>
-                        {{ flashMessage|raw }}
-                    </span>
-                </div>
-            {% endfor %}
-                
-            {% for flashMessage in app.session.flashbag.get('error') %}
-                <div class="grid-8 centered error">
-                    <span>
-                        {{ flashMessage|raw }}
-                    </span>
-                </div>
-            {% endfor %}
-                
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div class="grid-8 centered notice">
-                    <span>
-                        {{ flashMessage|raw }}
-                    </span>
-                </div>
-            {% endfor %}    
+{% block sublayout_containter %}
+    <div class="container content"> 
+        <div class="grid-8 push-1">
+            {# Flash messages ! #}
+            <div class="container">
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="grid-8 centered success">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}
+                    
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <div class="grid-8 centered error">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}
+                    
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="grid-8 centered notice">
+                        <span>
+                            {{ flashMessage|raw }}
+                        </span>
+                    </div>
+                {% endfor %}    
+            </div>
+
+            {% block layout_wvm_content %}<!-- content of the layoutWithVerticalMenu is empty -->
+            {% endblock  %}
         </div>
 
-        {% block layout_wvm_content %}<!-- content of the layoutWithVerticalMenu is empty -->
-        {% endblock  %}
+        <div class="grid-3 float-right">
+            {% block vertical_menu_content %}<!-- vertical menu of the layoutWithVerticalMenu is empty -->
+            {% endblock %}
+        </div>
     </div>
-
-    {% block vertical_menu_content %}<!-- vertical menu of the layoutWithVerticalMenu is empty -->
-    {% endblock %}
-</div>
 {% endblock %}

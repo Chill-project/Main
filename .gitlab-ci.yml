@@ -1,9 +1,9 @@
 services:
-   - postgres:9.4
+   - chill/database:latest
 
  
 before_script:
-   - export GITHUB_COMPOSER_AUTH=$GITHUB_TOKEN
+   - composer config github-oauth.github.com $GITHUB_TOKEN
    - composer install
    - cp Tests/Fixtures/App/config/parameters.gitlab-ci.yml Tests/Fixtures/App/config/parameters.yml
    - php Tests/Fixtures/App/console --env=test cache:warmup
@@ -16,4 +16,3 @@ test:php-5.6:
 test:php-7:
    stage: test
    script: phpunit --testdox
-

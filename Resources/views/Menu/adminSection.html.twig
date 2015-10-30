@@ -1,0 +1,39 @@
+{#
+ * Copyright (C) 2014-2015, Champs Libres Cooperative SCRLFS, 
+ <info@champs-libres.coop> / <http://www.champs-libres.coop>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<li class="nav-link2">
+    <div class="li-content">
+        <a href="{{ path('chill_main_admin_central') }}" class="more">Admin Sections</a>
+    </div>
+    <ul class="submenu width-15-em" style="padding-left: 0; padding-right: 0;  background-color:transparent;">
+        {% for route in routes %}
+            <li style="display:block; background-color: #333333; padding-left:1.5em; border-bottom:1px; border-bottom: 1px solid #FFF;padding-top:0; padding-bottom:0;">
+                <div style="margin-bottom:2px;">
+                        <div style="font-family: 'open_sanslight'; font-size: 0.75em; text-align:left; height: 46px; display:inline-block;  width: calc(100% - 5em - 1px); vertical-align:top;">
+                            <a href="{{ path(route.key, args ) }}">{{ route.label|trans }}</a>
+                        </div>
+                        <div style="background-color: #333333;  text-align:center;width: 2em; margin-left:-0.15em; font-size:1.5em; color:#FFF; height: 46px; display:inline-block; vertical-align:top;float:right">{% spaceless %}
+                            {% for icon in route.icons %}
+                                <i class="fa fa-{{ icon }}"></i> 
+                            {% endfor %}
+                        {% endspaceless %}</div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</li>

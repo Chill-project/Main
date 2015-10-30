@@ -16,19 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "ChillMainBundle::layoutWithVerticalMenu.html.twig" %}
+{#
+	The layout of the admin section. All the page / template of the admin section must use this
+	layout.
+#}
+
+{% extends "ChillMainBundle::layout.html.twig" %}
 
 {% block navigation_search_bar %}{% endblock %}
-{% block navigation_section_menu %}{% endblock %}
-
-{% block vertical_menu_content %}
-    {{ chill_menu('admin', {
-        'layout': 'ChillMainBundle::Menu/admin.html.twig',
-    }) }}
+{% block navigation_section_menu %}
+	{{ chill_menu('admin_section', {
+	   	'layout': 'ChillMainBundle::Menu/adminSection.html.twig',
+	}) }}
 {% endblock %}
 
-{% block layout_wvm_content %}
+{% block content %}
     {% block admin_content %}<!-- block personcontent empty -->
-        Welcome to the admin section !
+        <div class="container">
+            <div class="grid-10 push-1">
+                Welcome to the admin section !
+            </div>
+        </div>
     {% endblock %}
 {% endblock  %}

@@ -57,15 +57,16 @@ chill_main_admin_central:
             admin_permissions:
                 order: 0
                 label: Main admin menu
-                
+
 chill_main_admin_permissions:
     path: /{_locale}/admin/permissions
     defaults: {_controller: ChillMainBundle:Admin:indexPermissions }
     options:
         menus:
-            admin:
+            admin_section:
                 order: 200
                 label: Users and permissions
+                icons: [key]
 
 chill_main_search:
     path: /{_locale}/search

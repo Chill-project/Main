@@ -34,8 +34,8 @@
         "doctrine/common": "~2.4",
         "doctrine/doctrine-bundle": "~1.2@dev",
         "champs-libres/composer-bundle-migration": "~1.0",
-        "doctrine/doctrine-migrations-bundle": "dev-master@dev",
-        "doctrine/migrations": "~1.0@dev"
+        "doctrine/doctrine-migrations-bundle": "~1.1",
+        "doctrine/migrations": "~1.0"
     },
     "require-dev": {
         "symfony/dom-crawler": "2.5",

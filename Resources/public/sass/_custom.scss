@@ -58,6 +58,7 @@ ul.custom_fields.choice li {
    list-style:none;
 }
 
+// Sticky form buttons
 .sticky-form-buttons {
    margin-top:1em;
    background-color:$orange;//$grey-5;
@@ -108,4 +109,12 @@ ul.custom_fields.choice li {
 
 .open_sansbold {
   font-family:'open_sansbold'
+}
+
+// Symfony records actions
+ul.record_actions {
+  padding-left: 0;
+}
+ul.record_actions li {
+  display: inline-block;
 }

@@ -5601,4 +5601,12 @@ ul.record_actions {
 ul.record_actions li {
   display: inline-block; }
 
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003122}}
+dd {
+  margin-left: 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/marcu\/Projects\/Chill\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003126}}
+dt {
+  font-family: "open_sanssemibold"; }
+
 /*# sourceMappingURL=scratch.css.map */

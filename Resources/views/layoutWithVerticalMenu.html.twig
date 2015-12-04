@@ -25,7 +25,7 @@
 
 {% block sublayout_containter %}
     <div class="container content"> 
-        <div class="grid-8 push-1">
+        <div class="grid-8 push-1 grid-mobile-9 grid-tablet-9 push-mobile-0 push-tablet-0">
             {# Flash messages ! #}
             <div class="container">
                 {% for flashMessage in app.session.flashbag.get('success') %}

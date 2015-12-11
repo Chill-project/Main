@@ -50,14 +50,14 @@
 
 <body>
     <header class="navigation container">
-        <div class="grid-4 parent">
-            <div class="grid-10 push-2 logo-container">
+        <div class="grid-4 hide-tablet hide-mobile parent">
+            <div class="grid-10 push-2 grid-tablet-12 grid-mobile-12 push-tablet-0 grid-mobile-0 logo-container">
                 <a href="{{ path('chill_main_homepage') }}">
-                    <img class="logo" src="/bundles/chillmain/img/logo-chill-sans-slogan_white_2.png">
+                    <img class="logo" src="/bundles/chillmain/img/logo-chill-sans-slogan_white.png">
                 </a>
             </div>
         </div>
-        <div class="grid-8 text-right">
+        <div class="grid-8 grid-tablet-12 grid-mobile-12 text-right parent">
             <div class="nav">
                 <ul class="navigation-menu">
                     {% block navigation_section_menu %}

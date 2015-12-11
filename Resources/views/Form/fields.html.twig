@@ -52,24 +52,41 @@
 {% spaceless %}
     <div {{ block('widget_container_attributes') }}>
     {% for child in form %}
-        {{ form_widget(child) }}
-        {{ form_label(child, '', {'label_attr': { 'class' : 'inline'} }) }}
+        <span class="inline-choice">
+            {{ form_widget(child) }}
+            {{ form_label(child, '', {'label_attr': { 'class' : 'inline'} }) }}
+        </span>
     {% endfor %}
     </div>
 {% endspaceless %}
 {% endblock choice_widget_expanded %}
 
+
 {% block  choice_with_other_widget %}
 {% spaceless %}
     {% for child in form._choices %}
-        <div class="blop">
-        {{ form_widget(child) }}
-        {{ form_label(child, '', {'label_attr': { 'class' : 'inline'} }) }}
-        </div>
+        {%- if child.vars.value != '_other'  -%}
+            <div class="inline-choice">
+                {{ form_widget(child) }}
+                {{ form_label(child, '', {'label_attr': { 'class' : 'inline'} }) }}
+            </div>
+        {%- else -%}
+            <div class="container">
+                <div class="grid-6 grid-tablet-12 gid-mobile-12 no-gutter">
+                    <span class="inline-choice">
+                        {{ form_widget(child) }}
+                        {{ form_label(child, '', {'label_attr': { 'class' : 'inline'} }) }}
+                    </span>
+                </div>
+                <div class="grid-6 grid-tablet-12 gid-mobile-12  no-gutter">
+                    {{ form_widget(form._other, {'attr': {'class': 'input-text-other-value'} }) }}
+                </div>
+            </div>
+        {%- endif -%}
     {% endfor %}
-    {{ form_widget(form._other, {'attr': {'class': 'input-text-other-value'} }) }}
 {% endspaceless %}
 {% endblock  choice_with_other_widget %}
+
 
 {% block date_widget %}
 {% spaceless %}

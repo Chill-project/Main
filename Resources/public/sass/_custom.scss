@@ -31,6 +31,7 @@ header {
    background-position: center;
 }
 
+/* CUSTOM FIELDS -> */
 .cf-title {
    font-size: 2em;
 }
@@ -38,6 +39,7 @@ header {
 .cf-subtitle {
    font-size: 1.5em;
 }
+/* <- CUSTOM FIELDS */
 
 @each $len in 11, 15 {
    ul.submenu.width-#{$len}-em {
@@ -126,3 +128,20 @@ dd {
 dt {
   font-family: "open_sanssemibold";
 }
+
+
+/* INPUT CLASS -> */
+div.input_with_post_text {
+    display: flex;
+    align-items: center;
+}
+
+div.input_with_post_text span {
+    flex: 1;
+}
+div.input_with_post_text input {
+    width: 70%;
+    display: inline-block;
+    flex: 2;
+}
+/* <- INPUT CLASS */

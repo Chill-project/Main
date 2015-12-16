@@ -40,7 +40,7 @@ security:
             http_basic: ~
             form_login:
                 csrf_parameter: _csrf_token
-                intention: authenticate
+                csrf_token_id: authenticate
                 csrf_provider: form.csrf_provider
             
             logout: ~

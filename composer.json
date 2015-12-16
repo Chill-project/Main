@@ -32,7 +32,7 @@
         "doctrine/dbal": "~2.5",
         "doctrine/orm": "~2.4",
         "doctrine/common": "~2.4",
-        "doctrine/doctrine-bundle": "~1.2@dev",
+        "doctrine/doctrine-bundle": "~1.2",
         "champs-libres/composer-bundle-migration": "~1.0",
         "doctrine/doctrine-migrations-bundle": "~1.1",
         "doctrine/migrations": "~1.0"

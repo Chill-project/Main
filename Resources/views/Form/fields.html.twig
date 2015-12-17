@@ -58,6 +58,7 @@
         </span>
     {% endfor %}
     </div>
+    <script type="text/javascript">chill.checkNullValuesInChoices("{{ form.vars.full_name }}");</script>
 {% endspaceless %}
 {% endblock choice_widget_expanded %}
 
@@ -81,9 +82,13 @@
                 <div class="grid-6 grid-tablet-12 gid-mobile-12  no-gutter">
                     {{ form_widget(form._other, {'attr': {'class': 'input-text-other-value'} }) }}
                 </div>
+                
             </div>
         {%- endif -%}
     {% endfor %}
+    <script type="text/javascript">
+        chill.checkNullValuesInChoices("{{ form._choices.vars.full_name }}");
+    </script>
 {% endspaceless %}
 {% endblock  choice_with_other_widget %}
 

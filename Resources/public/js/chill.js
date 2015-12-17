@@ -100,7 +100,7 @@ var chill = function() {
    function _generalDisplayAlertWhenLeavingForm(form_id, alert_message, check_unsaved_data) {
       var form_submitted = false;
       var unsaved_data = false;
-
+      
       $(form_id)
          .submit(function() {
             form_submitted = true;
@@ -121,7 +121,22 @@ var chill = function() {
          }
       });
    }
-
+   
+   function checkNullValuesInChoices(choice_name) {
+       var choices;
+       console.log(choice_name);
+          choices = $("input[name='"+choice_name+"']:checked");
+          if (choices.size() === 0) {
+            $.each($("input[name='"+choice_name+"']"), function (i, e) {
+              if (e.value === "") {
+                e.checked = true;
+              }
+            });
+          }
+        //}
+    //});
+   }
+   
    /**
    * Display an alert message when the user wants to leave a page containing a given
    * modified form.
@@ -164,5 +179,6 @@ var chill = function() {
       checkOtherValueOnChange: checkOtherValueOnChange,
       displayAlertWhenLeavingModifiedForm: displayAlertWhenLeavingModifiedForm,
       displayAlertWhenLeavingUnsubmittedForm: displayAlertWhenLeavingUnsubmittedForm,
+      checkNullValuesInChoices: checkNullValuesInChoices,
    };
 } ();

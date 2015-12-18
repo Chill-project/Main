@@ -111,7 +111,7 @@
             <div class="container content">
                 {# Flash messages ! #}
                 {% for flashMessage in app.session.flashbag.get('success') %}
-                    <div class="grid-8 centered success">
+                    <div class="grid-8 centered success flash_message">
                         <span>
                             {{ flashMessage|raw }}
                         </span>
@@ -119,7 +119,7 @@
                 {% endfor %}
                     
                 {% for flashMessage in app.session.flashbag.get('error') %}
-                    <div class="grid-8 centered error">
+                    <div class="grid-8 centered error flash_message">
                         <span>
                             {{ flashMessage|raw }}
                         </span>
@@ -127,7 +127,7 @@
                 {% endfor %}
                     
                 {% for flashMessage in app.session.flashbag.get('info') %}
-                    <div class="grid-8 centered notice">
+                    <div class="grid-8 centered notice flash_message">
                         <span>
                             {{ flashMessage|raw }}
                         </span>
@@ -136,7 +136,7 @@
 
                 {% block content %}
                     <div class="container">
-                        <div class="grid-8 centered">
+                        <div class="grid-8 centered flash_message">
                             <h2>{{ 'Search'|trans }}</h2>
 
                             <form action="{{ path('chill_main_search') }}" method="get">

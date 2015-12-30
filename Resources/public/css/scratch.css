@@ -5626,10 +5626,11 @@ div.input_with_post_text {
   align-items: center; }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/media\/ssd2\/julien\/dev\/chill-dev\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003139}}
-div.input_with_post_text span {
-  flex: 1; }
+div.input_with_post_text span.post_text {
+  flex: 1;
+  margin-left: 0.5em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/media\/ssd2\/julien\/dev\/chill-dev\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003142}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/media\/ssd2\/julien\/dev\/chill-dev\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003143}}
 div.input_with_post_text input {
   width: 70%;
   display: inline-block;

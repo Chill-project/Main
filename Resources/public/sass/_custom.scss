@@ -136,8 +136,9 @@ div.input_with_post_text {
     align-items: center;
 }
 
-div.input_with_post_text span {
+div.input_with_post_text span.post_text {
     flex: 1;
+    margin-left: 0.5em;
 }
 div.input_with_post_text input {
     width: 70%;

@@ -8,6 +8,7 @@ use Chill\MainBundle\DependencyInjection\SearchableServicesCompilerPass;
 use Chill\MainBundle\DependencyInjection\ConfigConsistencyCompilerPass;
 use Chill\MainBundle\DependencyInjection\TimelineCompilerClass;
 use Chill\MainBundle\DependencyInjection\RoleProvidersCompilerPass;
+use Chill\MainBundle\DependencyInjection\CompilerPass\ExportsCompilerPass;
 
 class ChillMainBundle extends Bundle
 {
@@ -17,6 +18,7 @@ class ChillMainBundle extends Bundle
         $container->addCompilerPass(new SearchableServicesCompilerPass());
         $container->addCompilerPass(new ConfigConsistencyCompilerPass());
         $container->addCompilerPass(new TimelineCompilerClass());
-        $container->addCompilerPass(new RoleProvidersCompilerPass);
+        $container->addCompilerPass(new RoleProvidersCompilerPass());
+        $container->addCompilerPass(new ExportsCompilerPass());
     }
 }

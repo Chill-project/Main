@@ -1,0 +1,18 @@
+chill_main_export_index:
+    path: /
+    defaults: { _controller: ChillMainBundle:Export:index }
+    options:
+        menus:
+            section:
+                order: 20
+                label: Export Menu
+                icons: [upload]
+                
+chill_main_export_new:
+    path: /new/{alias}
+    defaults: { _controller: ChillMainBundle:Export:new }
+    
+chill_main_export_generate:
+    path: /generate/{alias}
+    defaults: { _controller: ChillMainBundle:Export:generate }
+    methods: [GET]

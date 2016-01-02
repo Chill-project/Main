@@ -148,3 +148,16 @@ services:
             - "@chill.main.helper.translatable_string"
         tags:
             - { name: form.type }
+
+    chill.main.export_manager:
+        class: Chill\MainBundle\Export\ExportManager
+        arguments:
+            - "@logger"
+            - "@doctrine.orm.entity_manager"
+        
+    chill.main.form.type.export:
+        class: Chill\MainBundle\Form\Type\Export\ExportType
+        arguments:
+            - "@chill.main.export_manager"
+        tags:
+            - { name: form.type }

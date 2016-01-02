@@ -23,6 +23,9 @@
 namespace Chill\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Chill\MainBundle\Form\Type\Export\ExportType;
+
 
 /**
  * ExportController is the controller use for exporting data.
@@ -30,10 +33,62 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class ExportController extends Controller
 {
-    public function indexAction($menu = 'admin', 
-            $header_title = 'views.Main.admin.index.header_title',
-            $page_title = 'views.Main.admin.index.page_title')
+    public function indexAction(Request $request)
     {
-        return $this->render('ChillMainBundle:Export:layout.html.twig');
+        $exportManager = $this->get('chill.main.export_manager');
+        
+        $exports = $exportManager->getExports();
+        
+        return $this->render('ChillMainBundle:Export:layout.html.twig', array(
+            'exports' => $exports
+        ));
+    }
+    
+    public function newAction($alias)
+    {
+        $exportManager = $this->get('chill.main.export_manager');
+        
+        $export = $exportManager->getExport($alias);
+        
+        $form = $this->createCreateForm($alias);
+        
+        return $this->render('ChillMainBundle:Export:new.html.twig', array(
+            'form' => $form->createView(),
+            'export_alias' => $alias,
+            'export' => $export
+        ));
+        
+    }
+    
+    /**
+     * 
+     * @param string $alias
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createCreateForm($alias)
+    {
+        $form = $this->createForm(ExportType::class, array(), array(
+            'export_alias' => $alias,
+            'method' => 'GET',
+            'action' => $this->generateUrl('chill_main_export_generate', array(
+                'alias' => $alias
+            ))
+        ));
+        
+        $form->add('submit', 'submit', array(
+            'label' => 'Generate'
+        ));
+        
+        return $form;
+    }
+    
+    public function generateAction(Request $request, $alias)
+    {
+        $exportManager = $this->get('chill.main.export_manager');
+        
+        $form = $this->createCreateForm($alias);
+        $form->handleRequest($request);
+        
+        return $exportManager->generate($alias, $form->getData());
     }
 }

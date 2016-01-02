@@ -18,6 +18,8 @@
 
 {% extends "ChillMainBundle::layoutWithVerticalMenu.html.twig" %}
 
+{% block title %}{{ 'Exports list'|trans }}{% endblock %}
+
 {% block vertical_menu_content %}
     {{ chill_menu('export', {
         'layout': 'ChillMainBundle::Menu/export.html.twig',
@@ -25,7 +27,20 @@
 {% endblock %}
 
 {% block layout_wvm_content %}
-    {% block export_content %}<!-- block personcontent empty -->
-        Welcome to the Export section !
+    {% block export_content %}
+        <h1>{{ 'Exports list'|trans }}</h1>
+        
+        {% for export_alias,export in exports %}
+        <div class="export">
+            <h2>{{ export.title|trans }}</h2>
+            <p>{{ export.description|trans }}</p> 
+            
+            <p>
+                <a class="sc-button bt-action" href="{{ path('chill_main_export_new', { 'alias': export_alias } ) }}">
+                    {{ 'Create an export'|trans }}
+                </a>
+            </p>
+        </div>
+        {% endfor %}
     {% endblock %}
 {% endblock  %}

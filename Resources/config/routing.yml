@@ -13,6 +13,10 @@ chill_main_admin_scope:
 chill_main_admin:
     resource: "@ChillMainBundle/Resources/config/routing/center.yml"
     prefix:   "{_locale}/admin/center"
+    
+chill_main_exports:
+    resource: "@ChillMainBundle/Resources/config/routing/exports.yml"
+    prefix:   "{_locale}/exports"
 
 root:
     path: /
@@ -35,15 +39,6 @@ chill_main_homepage:
                 label: Homepage
                 icons: [home]
 
-chill_main_export_index:
-    path: /{_locale}/export
-    defaults: { _controller: ChillMainBundle:Export:index }
-    options:
-        menus:
-            section:
-                order: 20
-                label: Export Menu
-                icons: [upload]
 
 chill_main_admin_central:
     path: /{_locale}/admin

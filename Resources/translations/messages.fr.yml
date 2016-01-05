@@ -18,6 +18,10 @@ Export Menu: Export
 Admin Menu: Menu d'administration
 Details: Détails
 
+Edit: Modifier
+Update: Mettre à jour
+Back to the list: Retour à la liste
+
 #serach
 Your search is empty. Please provide search terms.: La recherche est vide. Merci de fournir des termes de recherche.
 The domain %domain% is unknow. Please check your search.: Le domaine de recherche "%domain%" est inconnu. Merci de vérifier votre recherche.
@@ -85,6 +89,7 @@ The permissions have been added: Les permissions ont été ajoutées
 Edit password for %username%: Éditer le mot de passe de %username%
 Change password: Changer le mot de passe
 Back to the user edition: Retour au formulaire d'édition
+Password successfully updated!: Mot de passe mis à jour
 
 #admin section for circles (old: scopes)
 List circles: Liste des cercles

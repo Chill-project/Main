@@ -354,7 +354,15 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $password = $editForm->getData();
+            $password = $editForm->getData()->getPassword();
+            
+            // logging for debug !! WARNING print the new password !!
+            $this->get('logger')->debug('update password for an user', 
+                    array('method' => __METHOD__, 'password' => $password, 
+                        'user' => $user->getUsername()));
+            // logging for prod
+            $this->get('logger')->info('update password for an user', 
+                    array('method' => __METHOD__, 'user' => $user->getUsername()));
             
             $user->setPassword($this->get('security.password_encoder')
                     ->encodePassword($user, $password));

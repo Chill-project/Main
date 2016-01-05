@@ -6,54 +6,131 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
-    public function testBlank()
+    private $client;
+    
+    public function setUp()
     {
-        $this->markTestSkipped();
+        self::bootKernel();
+        
+        $this->client = static::createClient(array(), array(
+           'PHP_AUTH_USER' => 'admin',
+           'PHP_AUTH_PW'   => 'password',
+           'HTTP_ACCEPT_LANGUAGE' => 'fr_FR'
+        ));
     }
-    /*
-    public function testCompleteScenario()
+
+    public function testList()
     {
-        // Create a new client to browse the application
-        $client = static::createClient();
-
-        // Create a new entry in the database
-        $crawler = $client->request('GET', '/admin/user/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /admin/user/");
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
-
+        // get the list
+        $crawler = $this->client->request('GET', '/fr/admin/user/');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode(), 
+                "Unexpected HTTP status code for GET /admin/user/");
+        
+        $link = $crawler->selectLink('Ajouter un nouvel utilisateur')->link();
+        $this->assertInstanceOf('Symfony\Component\DomCrawler\Link', $link);
+        $this->assertRegExp('|/fr/admin/user/new$|', $link->getUri());
+    }
+        
+    public function testNew()
+    {
+        $crawler = $this->client->request('GET', '/fr/admin/user/new');
+        
+        $username = 'Test_user'.  uniqid();
+        $password = 'Password1234!';
         // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
-            'chill_mainbundle_user[field_name]'  => 'Test',
-            // ... other fields to fill
+        $form = $crawler->selectButton('Créer')->form(array(
+            'chill_mainbundle_user[username]'  => $username,
+            'chill_mainbundle_user[plainPassword][password][first]' => $password,
+            'chill_mainbundle_user[plainPassword][password][second]' => $password
         ));
 
-        $client->submit($form);
-        $crawler = $client->followRedirect();
+        $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
+        $this->assertGreaterThan(0, $crawler->filter('td:contains("Test_user")')->count(), 
+                'Missing element td:contains("Test user")');
+        
+        $update = $crawler->selectLink('Modifier')->link();
+        
+        $this->assertInstanceOf('Symfony\Component\DomCrawler\Link', $update);
+        $this->assertRegExp('|/fr/admin/user/[0-9]{1,}/edit$|', $update->getUri());
+        
+        //test the auth of the new client
+        $this->isPasswordValid($username, $password);
+        
+        return $update;
+    }
+    
+    protected function isPasswordValid($username, $password)
+    {
+        /* @var $passwordEncoder \Symfony\Component\Security\Core\Encoder\UserPasswordEncoder */
+        $passwordEncoder = self::$kernel->getContainer()
+                ->get('security.password_encoder');
+        
+        $user = self::$kernel->getContainer()
+                ->get('doctrine.orm.entity_manager')
+                ->getRepository('ChillMainBundle:User')
+                ->findOneBy(array('username' => $username));
+        
+        $this->assertTrue($passwordEncoder->isPasswordValid($user, $password));
+    }
+    
+    /**
+     * 
+     * @param \Symfony\Component\DomCrawler\Link $update
+     * @depends testNew
+     */
+    public function testUpdate(\Symfony\Component\DomCrawler\Link $update)
+    {
+        $crawler = $this->client->click($update);
 
-        // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
-
-        $form = $crawler->selectButton('Update')->form(array(
-            'chill_mainbundle_user[field_name]'  => 'Foo',
-            // ... other fields to fill
+        $username = 'Foo bar '.uniqid();
+        $form = $crawler->selectButton('Mettre à jour')->form(array(
+            'chill_mainbundle_user[username]'  => $username,
         ));
-
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
+        
+        $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
         // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('[value="Foo"]')->count(), 'Missing element [value="Foo"]');
-
-        // Delete the entity
-        $client->submit($crawler->selectButton('Delete')->form());
-        $crawler = $client->followRedirect();
-
-        // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+        $this->assertGreaterThan(0, $crawler->filter('[value="'.$username.'"]')->count(), 
+                'Missing element [value="Foo bar"]');
+        
+        $updatePassword = $crawler->selectLink('Modifier le mot de passe')->link();
+        
+        $this->assertInstanceOf('Symfony\Component\DomCrawler\Link', $updatePassword);
+        $this->assertRegExp('|/fr/admin/user/[0-9]{1,}/edit_password$|', 
+                $updatePassword->getUri());
+        
+        return array('link' => $updatePassword, 'username' => $username);
+    }
+    
+    /**
+     * 
+     * @param \Symfony\Component\DomCrawler\Link $updatePassword
+     * @depends testUpdate
+     */
+    public function testUpdatePassword(array $params)
+    {
+        $link = $params['link'];
+        $username = $params['username'];
+        $newPassword = '1234Password!';
+        
+        $crawler = $this->client->click($link);
+        
+        $form = $crawler->selectButton('Changer le mot de passe')->form(array(
+            'chill_mainbundle_user_password[password][first]' => $newPassword,
+            'chill_mainbundle_user_password[password][second]' => $newPassword,
+        ));
+        
+        $this->client->submit($form);
+        
+        $this->assertTrue($this->client->getResponse()->isRedirect(), 
+                "the response is a redirection");
+        $this->client->followRedirect();
+        
+        $this->isPasswordValid($username, $newPassword);
     }
 
-    */
+    
 }

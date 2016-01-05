@@ -12,6 +12,7 @@ class ScopeControllerTest extends WebTestCase
         $client = static::createClient(array(), array(
            'PHP_AUTH_USER' => 'admin',
            'PHP_AUTH_PW'   => 'password',
+           'HTTP_ACCEPT_LANGUAGE' => 'fr_FR'
         ));
 
         // Create a new entry in the database
@@ -41,9 +42,9 @@ class ScopeControllerTest extends WebTestCase
                 'Missing element td:contains("Test en fr")');
 
         // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
+        $crawler = $client->click($crawler->selectLink('Modifier')->link());
         
-        $form = $crawler->selectButton('Update')->form(array(
+        $form = $crawler->selectButton('Mettre à jour')->form(array(
             'chill_mainbundle_scope[name][fr]'  => 'Foo',
             'chill_mainbundle_scope[name][en]'  => 'Foo en',
         ));

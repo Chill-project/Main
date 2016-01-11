@@ -52,6 +52,7 @@ class ExportsCompilerPass implements CompilerPassInterface
         $this->compileExports($chillManagerDefinition, $container);
         $this->compileFilters($chillManagerDefinition, $container);
         $this->compileAggregators($chillManagerDefinition, $container);
+        $this->compileFormatters($chillManagerDefinition, $container);
     }
     
     private function compileExports(Definition $chillManagerDefinition, 
@@ -138,6 +139,36 @@ class ExportsCompilerPass implements CompilerPassInterface
                 
                 $chillManagerDefinition->addMethodCall(
                     'addAggregator',
+                    array(new Reference($id), $attributes["alias"])
+                );
+            }
+        }
+    }
+    
+    private function compileFormatters(Definition $chillManagerDefinition,
+            ContainerBuilder $container)
+    {
+        $taggedServices = $container->findTaggedServiceIds(
+            'chill.export_formatter'
+        );
+        
+        $knownAliases = array();
+        
+        foreach ($taggedServices as $id => $tagAttributes) {
+            foreach ($tagAttributes as $attributes) {
+                if (!isset($attributes["alias"])) {
+                    throw new \LogicException("the 'alias' attribute is missing in your ".
+                        "service '$id' definition");
+                }
+                
+                if (array_search($attributes["alias"], $knownAliases)) {
+                    throw new \LogicException("There is already a chill.export_formatter service with alias "
+                        .$attributes["alias"].". Choose another alias.");
+                }
+                $knownAliases[] = $attributes["alias"];
+                
+                $chillManagerDefinition->addMethodCall(
+                    'addFormatter',
                     array(new Reference($id), $attributes["alias"])
                 );
             }

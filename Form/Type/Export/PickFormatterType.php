@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2015 Champs-Libres <info@champs-libres.coop>
+ * Copyright (C) 2016 Champs-Libres <info@champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,23 +20,19 @@
 namespace Chill\MainBundle\Form\Type\Export;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Chill\MainBundle\Export\ExportManager;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Chill\MainBundle\Form\Type\DataTransformer\AliasToFormatterTransformer;
 
 /**
  * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class AggregatorType extends AbstractType
+class PickFormatterType extends AbstractType
 {
-    /**
-     *
-     * @var \ExportManager
-     */
-    private $exportManager;
+    protected $exportManager;
     
     public function __construct(ExportManager $exportManager)
     {
@@ -45,36 +41,29 @@ class AggregatorType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $aggregator = $this->exportManager->getAggregator($options['aggregator_alias']);
+        $export = $this->exportManager->getExport($options['export_alias']);
+        $allowedFormatters = $this->exportManager
+                ->getFormattersByTypes($export->getAllowedFormattersTypes());
+        //$transformer = new AliasToFormatterTransformer($this->exportManager);
         
-        $builder
-                ->add('enabled', ChoiceType::class, array(
-                    'choices' => array(
-                        'enabled' => true,
-                        'disabled' => false
-                    ),
-                    'multiple' => false,
-                    'expanded' => true,
-                    'choices_as_values' => true
-                ));
+        //build choices
+        $choices = array();
+        foreach($allowedFormatters as $alias => $formatter) {
+            $choices[$formatter->getName()] = $alias;
+        }
         
-        $filterFormBuilder = $builder->create('form', 'form', array(
-            'compound' => true, 'required' => false));
-        $aggregator->buildForm($filterFormBuilder);
+        $builder->add('alias', 'choice', array(
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'multiple' => false
+        ));
         
-        $builder->add($filterFormBuilder);
-        
+        //$builder->get('type')->addModelTransformer($transformer);
     }
     
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('aggregator_alias')
-                ->setRequired('aggregators_length')
-                ->setAllowedTypes(array(
-                    'aggregators_length' => 'int'
-                ))
-                ->setDefault('compound', true)
-                ;
+        $resolver->setRequired(array('export_alias'));
     }
     
 }

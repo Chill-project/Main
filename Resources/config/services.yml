@@ -161,3 +161,30 @@ services:
             - "@chill.main.export_manager"
         tags:
             - { name: form.type }
+            
+    chill.main.form.pick_formatter_type:
+        class: Chill\MainBundle\Form\Type\Export\PickFormatterType
+        arguments:
+            - "@chill.main.export_manager"
+        tags:
+            - { name: form.type }
+            
+    chill.main.form.formatter_type:
+        class: Chill\MainBundle\Form\Type\Export\FormatterType
+        arguments:
+            - "@chill.main.export_manager"
+        tags:
+            - { name: form.type }
+            
+    chill.main.countries_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - "Chill\\MainBundle\\Entity\\Country"
+            
+    chill.main.export.csv_formatter:
+        class: Chill\MainBundle\Export\Formatter\CSVFormatter
+        arguments:
+            - "@translator"
+        tags:
+            - { name: chill.export_formatter, alias: 'csv' }

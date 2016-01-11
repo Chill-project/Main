@@ -88,6 +88,10 @@ class ExportType extends AbstractType
         
         $builder->add($aggregatorBuilder);
         
+        $builder->add('formatter', PickFormatterType::class, array(
+            'export_alias' => $options['export_alias']
+        ));
+        
     }
     
     

@@ -94,9 +94,9 @@ class ExportManager
         $this->exports[$alias] = $export;
     }
     
-    public function addFormatter(FormatterInterface $formatter)
+    public function addFormatter(FormatterInterface $formatter, $alias)
     {
-        array_push($this->formatters, $formatter);
+        $this->formatters[$alias] = $formatter;
     }
     
     /**
@@ -157,6 +157,13 @@ class ExportManager
         return $this->filters[$alias];
     }
     
+    public function getFilters(array $aliases)
+    {
+        foreach($aliases as $alias) {
+            yield $alias => $this->getFilter($alias);
+        }
+    }
+    
     /**
      * 
      * @param string $alias
@@ -170,6 +177,31 @@ class ExportManager
         }
         
         return $this->aggregators[$alias];
+    }
+    
+    public function getAggregators(array $aliases)
+    {
+        foreach ($aliases as $alias) {
+            yield $alias => $this->getAggregator($alias);
+        }
+    }
+    
+    public function getFormatter($alias)
+    {
+        if (!array_key_exists($alias, $this->formatters)) {
+            throw new \RuntimeException("The formatter with alias $alias is not known.");
+        }
+        
+        return $this->formatters[$alias];
+    }
+    
+    public function getFormattersByTypes(array $types)
+    {
+        foreach ($this->formatters as $alias => $formatter) {
+            if (in_array($formatter->getType(), $types)) {
+                yield $alias => $formatter;
+            }
+        }
     }
     
     
@@ -242,11 +274,18 @@ class ExportManager
             'class' => self::class, 'function' => __FUNCTION__
         ));
         
-        $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
+        $result = $export->getResult($qb, array());
         
-        var_dump($results);
+        /* @var $formatter Formatter\CSVFormatter */
+        $formatter = $this->getFormatter('csv');
+        $filters = array();
+        $aggregators = iterator_to_array($this->retrieveUsedAggregators($data['aggregators']));
+        $aggregatorsData = array_combine(array_keys($data['aggregators']), 
+                array_map(function($data) { return $data['form']; }, $data['aggregators'])
+            );
         
-        return new Response('everything is fine !');
+        return $formatter->getResponse($result, array(), $export, 
+                $filters, $aggregators, array(), $data['filters'], $aggregatorsData);
     }
     
     /**
@@ -257,12 +296,10 @@ class ExportManager
      */
     private function retrieveUsedModifiers($data)
     {
-        $usedTypes = array();
-        
-        // used filters
-        $this->retrieveUsedFilters($data, $usedTypes);
-        // used aggregators
-        $this->retrieveUsedAggregators($data, $usedTypes);
+        $usedTypes = array_merge(
+                $this->retrieveUsedFiltersType($data['filters']),
+                $this->retrieveUsedAggregatorsType($data['aggregators'])
+                );
         
         $this->logger->debug('Required types are '.implode(', ', $usedTypes), 
                 array('class' => self::class, 'function' => __FUNCTION__));
@@ -270,9 +307,10 @@ class ExportManager
         return $usedTypes;
     }
     
-    private function retrieveUsedFilters($data, &$usedTypes)
+    private function retrieveUsedFiltersType($data)
     {
-        foreach($data['filters'] as $alias => $filterData) {
+        $usedTypes = array();
+        foreach($data as $alias => $filterData) {
             if ($filterData['enabled'] == true){
                 $filter = $this->getFilter($alias);
                 if (!in_array($filter->applyOn(), $usedTypes)) {
@@ -280,16 +318,37 @@ class ExportManager
                 }
             }
         }
+        
+        return $usedTypes;
     }
     
-    private function retrieveUsedAggregators($data, &$usedTypes)
+    /**
+     * 
+     * @param mixed $data
+     * @return string[]
+     */
+    private function retrieveUsedAggregatorsType($data)
     {
-        foreach($data['aggregators'] as $alias => $aggregatorData) {
+        $usedTypes = array();
+        foreach($this->retrieveUsedAggregators($data) as $alias => $aggregator) {
+            if (!in_array($aggregator->applyOn(), $usedTypes)) {
+                array_push($usedTypes, $aggregator->applyOn());
+            }
+        }
+        
+        return $usedTypes;
+    }
+    
+    /**
+     * 
+     * @param mixed $data
+     * @return AggregatorInterface[]
+     */
+    private function retrieveUsedAggregators($data)
+    {
+        foreach($data as $alias => $aggregatorData) {
             if ($aggregatorData['order']> 0){
-                $aggregator = $this->getAggregator($alias);
-                if (!in_array($aggregator->applyOn(), $usedTypes)) {
-                    array_push($usedTypes, $aggregator->applyOn());
-                }
+                yield $alias => $this->getAggregator($alias);
             }
         }
     }

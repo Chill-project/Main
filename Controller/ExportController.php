@@ -25,6 +25,11 @@ namespace Chill\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Chill\MainBundle\Form\Type\Export\ExportType;
+use Chill\MainBundle\Form\Type\Export\PickFormatterType;
+use Chill\MainBundle\Form\Type\Export\FormatterType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
 /**
@@ -44,20 +49,53 @@ class ExportController extends Controller
         ));
     }
     
-    public function newAction($alias)
+    /**
+     * Render the form required to generate data for the export.
+     * 
+     * This action has two steps :
+     * 
+     * - 'export', for the export form
+     * - 'formatter', for the formatter form
+     * 
+     * @param string $alias
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function newAction(Request $request, $alias)
+    {
+        $step = $request->query->getAlpha('step', 'export');
+        
+        switch ($step) {
+            case 'export':
+                return $this->renderExportForm($alias);
+                break;
+            case 'formatter':
+                return $this->renderFormatterStep($request, $alias);
+                break;
+            default:
+                throw $this->createNotFoundException("The given step '$step' is invalid");
+        }
+    }
+    
+    /**
+     * Render the export form
+     * 
+     * @param string $alias
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderExportForm($alias)
     {
         $exportManager = $this->get('chill.main.export_manager');
         
         $export = $exportManager->getExport($alias);
-        
-        $form = $this->createCreateForm($alias);
+                
+        $form = $this->createCreateFormExport($alias);
         
         return $this->render('ChillMainBundle:Export:new.html.twig', array(
             'form' => $form->createView(),
             'export_alias' => $alias,
             'export' => $export
         ));
-        
     }
     
     /**
@@ -65,30 +103,150 @@ class ExportController extends Controller
      * @param string $alias
      * @return \Symfony\Component\Form\Form
      */
-    protected function createCreateForm($alias)
+    protected function createCreateFormExport($alias)
     {
-        $form = $this->createForm(ExportType::class, array(), array(
+        $builder = $this->get('form.factory')
+              ->createNamedBuilder(null, FormType::class, array(), array(
+                    'method' => 'GET',
+                    'csrf_protection' => false,
+                    'action' => $this->generateUrl('chill_main_export_new', array(
+                        'alias' => $alias
+                    ))               
+              ));
+        
+        $builder->add('export', ExportType::class, array(
             'export_alias' => $alias,
-            'method' => 'GET',
-            'action' => $this->generateUrl('chill_main_export_generate', array(
-                'alias' => $alias
-            ))
+
         ));
         
-        $form->add('submit', 'submit', array(
+        $builder->add('submit', 'submit', array(
+            'label' => 'Generate'
+        ));
+        $builder->add('step', 'hidden', array(
+            'data' => 'formatter'
+        ));
+        
+        return $builder->getForm();
+    }
+    
+    protected function renderFormatterStep(Request $request, $alias)
+    {
+        $export = $this->get('chill.main.export_manager')->getExport($alias);
+        
+        $exportForm = $this->createCreateFormExport($alias);
+        $exportForm->handleRequest($request);
+        $data = $exportForm->getData();
+        
+        $form = $this->createCreateFormFormatter($request, 
+                 $alias, array(), $data['export']['formatter']['alias']);
+        
+        return $this->render('ChillMainBundle:Export:new_formatter_step.html.twig',
+                array(
+                    'form' => $form->createView(),
+                    'export' => $export
+                ));
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * @param type $formatterAlias
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function createCreateFormFormatter(Request $request, 
+            $exportAlias, $aggregatorAliases, $formatterAlias = null)
+    {
+        var_dump($request->query->all());
+        $builder = $this->get('form.factory')
+                ->createNamedBuilder(null, FormType::class, array(), array(
+                    'method' => 'GET',
+                    'csrf_protection' => false,
+                    'action' => $this->generateUrl('chill_main_export_generate', array(
+                        'alias' => $exportAlias
+                    ))
+                ));
+        
+        $builder->add('formatter', FormatterType::class, array(
+            'formatter_alias' => $formatterAlias,
+            'export_alias' => $exportAlias,
+            'aggregator_aliases' => $aggregatorAliases
+        ));
+        
+        // re-add the export type under hidden fields
+        $builderExport = $builder->create('export', FormType::class, array());
+        $data = $request->query->all();
+        foreach($data['export'] as $key => $value) {
+            $this->recursiveAddHiddenFieldsToForm($builderExport, $key, $value);
+        }
+        $builder->add($builderExport);
+        
+        //add the formatter alias
+        $builder->add('formatter', HiddenType::class, array(
+            'data' => $formatterAlias
+        ));
+        
+        $builder->add('submit', 'submit', array(
             'label' => 'Generate'
         ));
         
-        return $form;
+        return $builder->getForm();
+        
     }
     
     public function generateAction(Request $request, $alias)
     {
         $exportManager = $this->get('chill.main.export_manager');
         
-        $form = $this->createCreateForm($alias);
+        $form = $this->createCreateFormGenerate($request, $alias);
         $form->handleRequest($request);
+        $data = $form->getData();
         
-        return $exportManager->generate($alias, $form->getData());
+        return $exportManager->generate($alias, $data['export']);
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     * @param string $alias
+     * @return \Symfony\Component\Form\Form
+     */
+    public function createCreateFormGenerate(Request $request, $alias, 
+            $aggregatorAliases, $formatterAlias)
+    {
+        $builder = $this->get('form.factory')
+            ->createNamedBuilder(null, FormType::class, array(), array(
+                'method' => 'GET',
+                'csrf_protection' => false,
+                'action' => $this->generateUrl('chill_main_export_generate', array(
+                    'alias' => $alias
+                ))
+            ));
+        
+        $builder->add('formatter', FormatterType::class, array(
+            'formatter_alias' => $formatterAlias,
+            'export_alias' => $exportAlias,
+            'aggregator_aliases' => $aggregatorAliases
+        ));
+        
+        $builder->add('export', ExportType::class, array(
+            'export_alias' => $alias,
+        ));
+        
+        return $builder->getForm();
+    }
+    
+    protected function recursiveAddHiddenFieldsToForm(FormBuilderInterface $builder, $key, $data)
+    {
+        if (is_array($data)) {
+            foreach($data as $subKey => $value) {
+                $subBuilder = $builder->create($subKey, FormType::class);
+                $this->recursiveAddHiddenFieldsToForm($subBuilder, $subKey, $value);
+                $builder->add($subBuilder);
+            }
+        } else {
+            $builder->add($key, 'hidden', array(
+                'data' => $data
+            ));
+        }
     }
 }

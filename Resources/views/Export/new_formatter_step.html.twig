@@ -28,26 +28,8 @@
 
     {{ form_start(form) }}
     <div>
-        <h2>{{ 'Filters'| trans }}</h2>
-        {% for filter_form in form.children.export.children.filters %}
-            {{ form_label(filter_form) }}
-            {{ form_row(filter_form.enabled) }}
-            {{ form_widget(filter_form.form) }}
-        {% endfor %}
-    </div>
-    
-    <div>
-        <h2>{{ 'Aggregators'| trans }}</h2>
-        {% for aggregator_form in form.children.export.children.aggregators %}
-            {{ form_label(aggregator_form) }}
-            {{ form_row(aggregator_form.enabled) }}
-            {{ form_widget(aggregator_form.form) }}
-        {% endfor %}
-    </div>
-    
-    <div>
         <h2>{{ 'Formatter'| trans }}</h2>
-            {{ form_row(form.children.export.children.formatter.children.alias) }}
+        {{ form_row(form.children.formatter) }}
     </div>
     
     <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>

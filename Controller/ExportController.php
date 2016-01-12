@@ -25,11 +25,8 @@ namespace Chill\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Chill\MainBundle\Form\Type\Export\ExportType;
-use Chill\MainBundle\Form\Type\Export\PickFormatterType;
 use Chill\MainBundle\Form\Type\Export\FormatterType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
 /**
@@ -108,6 +105,9 @@ class ExportController extends Controller
      */
     protected function createCreateFormExport($alias, $step, $data = array())
     {
+        /* @var $exportManager \Chill\MainBundle\Export\ExportManager */
+        $exportManager = $this->get('chill.main.export_manager');
+        
         $builder = $this->get('form.factory')
               ->createNamedBuilder(null, FormType::class, array(), array(
                     'method' => 'GET',
@@ -125,9 +125,11 @@ class ExportController extends Controller
         
         if ($step === 'formatter') {
             $builder->add('formatter', FormatterType::class, array(
-                'formatter_alias' => $data['export']['pick_formatter']['alias'],
+                'formatter_alias' => $exportManager
+                     ->getFormatterAlias($data['export']),
                 'export_alias' => $alias,
-                'aggregator_aliases' => array() //TODO
+                'aggregator_aliases' => $exportManager
+                    ->getUsedAggregatorsAliases($data['export'])
             ));
         }
         
@@ -171,7 +173,6 @@ class ExportController extends Controller
         
         if ($exportForm->isValid()) {
             $data = $exportForm->getData();
-            $this->get('session')->set('export_step', $data);
             $this->get('session')->set('export_step_raw', $request->query->all());
 
         $form = $this->createCreateFormExport($alias, 

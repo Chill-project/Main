@@ -257,7 +257,7 @@ class ExportManager
      * @param mixed[] $data
      * @return Response
      */
-    public function generate($exportAlias, array $data)
+    public function generate($exportAlias, array $data, array $formatterData)
     {
         $export = $this->getExport($exportAlias);
         $qb = $this->em->createQueryBuilder();
@@ -286,6 +286,30 @@ class ExportManager
         
         return $formatter->getResponse($result, array(), $export, 
                 $filters, $aggregators, array(), $data['filters'], $aggregatorsData);
+    }
+    
+    /**
+     * get the aggregators typse used in the form export data
+     * 
+     * @param array $data the data from the export form
+     * @return string[]
+     */
+    public function getUsedAggregatorsAliases(array $data)
+    {
+        $aggregators = $this->retrieveUsedAggregators($data['aggregators']);
+        
+        return array_keys(iterator_to_array($aggregators));
+    }
+    
+    /**
+     * get the formatter alias from the form export data
+     * 
+     * @param array $data the data from the export form
+     * @string the formatter alias
+     */
+    public function getFormatterAlias(array $data)
+    {
+        return $data['pick_formatter']['alias'];
     }
     
     /**

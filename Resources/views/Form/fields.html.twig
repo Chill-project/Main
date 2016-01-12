@@ -133,3 +133,12 @@
     {% endif %}
 {% endspaceless %}
 {% endblock form_errors %}
+
+{% block _formatter__aggregator_placement_csv_formatter_row %}
+    <h3>{{ form_label(form) }}</h3>
+    
+    {{ form_row(form.order) }}
+    
+    {{ form_row(form.position) }}
+    
+{% endblock %}

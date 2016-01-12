@@ -186,5 +186,6 @@ services:
         class: Chill\MainBundle\Export\Formatter\CSVFormatter
         arguments:
             - "@translator"
+            - "@chill.main.export_manager"
         tags:
             - { name: chill.export_formatter, alias: 'csv' }

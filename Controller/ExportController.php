@@ -326,6 +326,6 @@ class ExportController extends Controller
         $formFormatter->handleRequest($request);
         $dataFormatter = $formFormatter->getData();
         
-        return $exportManager->generate($alias, $dataExport['export']);
+        return $exportManager->generate($alias, $dataExport['export'], $dataFormatter);
     }
 }

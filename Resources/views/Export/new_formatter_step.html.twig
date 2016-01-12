@@ -29,7 +29,7 @@
     {{ form_start(form) }}
     <div>
         <h2>{{ 'Formatter'| trans }}</h2>
-        {{ form_row(form.children.formatter) }}
+        {{ form_widget(form.children.formatter) }}
     </div>
     
     <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>

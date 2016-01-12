@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Chill\MainBundle\Export\FormatterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Chill\MainBundle\Export\ExportManager;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 // command to get the report with curl : curl --user "center a_social:password" "http://localhost:8000/fr/exports/generate/count_person?export[filters][person_gender_filter][enabled]=&export[filters][person_nationality_filter][enabled]=&export[filters][person_nationality_filter][form][nationalities]=&export[aggregators][person_nationality_aggregator][order]=1&export[aggregators][person_nationality_aggregator][form][group_by_level]=country&export[submit]=&export[_token]=RHpjHl389GrK-bd6iY5NsEqrD5UKOTHH40QKE9J1edU" --globoff
 
@@ -56,10 +58,18 @@ class CSVFormatter implements FormatterInterface
     
     protected $aggregatorsData;
     
+    /**
+     *
+     * @var ExportManager
+     */
+    protected $exportManager;
     
-    public function __construct(TranslatorInterface $translator)
+    
+    public function __construct(TranslatorInterface $translator, 
+          ExportManager $manager)
     {
         $this->translator = $translator;
+        $this->exportManager = $manager;
     }
     
     public function getType()
@@ -69,12 +79,44 @@ class CSVFormatter implements FormatterInterface
     
     public function getName()
     {
-        return 'CSV';
+        return 'Comma separated values (CSV)';
     }
     
     public function buildForm(FormBuilderInterface $builder, $exportAlias, array $aggregatorAliases)
     {
+        $aggregators = $this->exportManager->getAggregators($aggregatorAliases);
+        $nb = count($aggregatorAliases);
         
+        foreach ($aggregators as $alias => $aggregator) {
+            $builderAggregator = $builder->create($alias, FormType::class, array(
+               'label' => $aggregator->getTitle(),
+               'block_name' => '_aggregator_placement_csv_formatter'
+            ));
+            $this->appendAggregatorForm($builderAggregator, $nb);
+            $builder->add($builderAggregator);
+        }
+    }
+    
+    private function appendAggregatorForm(FormBuilderInterface $builder, $nbAggregators)
+    {
+        $builder->add('order', 'choice', array(
+           'choices' => array_combine(
+                 range(1, $nbAggregators),
+                 range(1, $nbAggregators)
+                 ),
+           'multiple' => false,
+           'expanded' => false
+        ));
+        
+        $builder->add('position', 'choice', array(
+           'choices' => array(
+              'row' => 'r',
+              'column' => 'c'
+           ),
+           'choices_as_values' => true,
+           'multiple' => false,
+           'expanded' => false
+        ));
     }
     
     /**

@@ -32,9 +32,16 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 /**
  * ExportController is the controller use for exporting data.
  * 
+ * 
  */
 class ExportController extends Controller
 {
+    /**
+     * Render the list of available exports
+     * 
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction(Request $request)
     {
         $exportManager = $this->get('chill.main.export_manager');
@@ -47,15 +54,19 @@ class ExportController extends Controller
     }
     
     /**
-     * Render the form required to generate data for the export.
+     * handle the step to build a query for an export
      * 
-     * This action has two steps :
+     * This action has three steps :
      * 
-     * - 'export', for the export form
-     * - 'formatter', for the formatter form
+     * 1.'export', the export form. When the form is posted, the data is stored
+     * in the session (if valid), and then a redirection is done to next step.
+     * 2. 'formatter', the formatter form. When the form is posted, the data is
+     * stored in the session (if valid), and then a redirection is done to next step.
+     * 3. 'generate': gather data from session from the previous steps, and 
+     * make a redirection to the "generate" action with data in query (HTTP GET)
      * 
-     * @param string $alias
-     * @param Request $request
+     * @param string $request
+     * @param Request $alias
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request, $alias)
@@ -64,7 +75,7 @@ class ExportController extends Controller
         
         switch ($step) {
             case 'export':
-                return $this->exportFormStep($alias);
+                return $this->exportFormStep($request, $alias);
                 break;
             case 'formatter':
                 return $this->formatterFormStep($request, $alias);
@@ -80,16 +91,44 @@ class ExportController extends Controller
     /**
      * Render the export form
      * 
+     * When the method is POST, the form is stored if valid, and a redirection
+     * is done to next step.
+     * 
      * @param string $alias
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function exportFormStep($alias)
+    protected function exportFormStep(Request $request, $alias)
     {
         $exportManager = $this->get('chill.main.export_manager');
         
         $export = $exportManager->getExport($alias);
                 
         $form = $this->createCreateFormExport($alias, 'export');
+        
+        if ($request->getMethod() === 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                
+                $this->get('logger')->debug('form export is valid', array(
+                      'location' => __METHOD__));
+                
+                // store data for reusing in next steps
+                $data = $form->getData();
+                $this->get('session')->set('export_step_raw', 
+                      $request->request->all());
+                $this->get('session')->set('export_step', $data);
+                
+                //redirect to next step
+                return $this->redirect(
+                      $this->generateUrl('chill_main_export_new', array(
+                         'step' => $this->getNextStep('export'),
+                         'alias' => $alias
+                      )));
+            } else {
+                $this->get('logger')->debug('form export is invalid', array(
+                      'location' => __METHOD__));
+            }
+        }
         
         return $this->render('ChillMainBundle:Export:new.html.twig', array(
             'form' => $form->createView(),
@@ -99,31 +138,32 @@ class ExportController extends Controller
     }
     
     /**
+     * create a form to show on different steps. 
      * 
      * @param string $alias
+     * @param string $step, can either be 'export', 'formatter', 'generate_export' or 'generate_formatter' (last two are used by generate action)
+     * @param array $data the data from previous step. Required for steps 'formatter' and 'generate_formatter'
      * @return \Symfony\Component\Form\Form
      */
     protected function createCreateFormExport($alias, $step, $data = array())
     {
         /* @var $exportManager \Chill\MainBundle\Export\ExportManager */
         $exportManager = $this->get('chill.main.export_manager');
+        $isGenerate = strpos($step, 'generate_') === 0;
         
         $builder = $this->get('form.factory')
               ->createNamedBuilder(null, FormType::class, array(), array(
-                    'method' => 'GET',
-                    'csrf_protection' => false,
-                    'action' => $this->generateUrl($this->getNextRoute($step), array(
-                        'alias' => $alias
-                    ))               
+                    'method' => $isGenerate ? 'GET' : 'POST',
+                    'csrf_protection' => $isGenerate ? false : true,              
               ));
         
-        if ($step === 'export') {
+        if ($step === 'export' or $step === 'generate_export') {
             $builder->add('export', ExportType::class, array(
                 'export_alias' => $alias,
             ));
         }
         
-        if ($step === 'formatter') {
+        if ($step === 'formatter' or $step === 'generate_formatter') {
             $builder->add('formatter', FormatterType::class, array(
                 'formatter_alias' => $exportManager
                      ->getFormatterAlias($data['export']),
@@ -133,96 +173,155 @@ class ExportController extends Controller
             ));
         }
         
-        $builder->add('submit', 'submit', array(
-            'label' => 'Generate'
-        ));
-        
-        $builder->add('step', 'hidden', array(
-            'data' => $this->getNextStep($step)
-        ));
+        //if (strpos($step, 'generate_') !== false) {
+            $builder->add('submit', 'submit', array(
+                'label' => 'Generate'
+            ));
+        //}
         
         return $builder->getForm();
     }
     
-    private function getNextStep($step)
+    /**
+     * get the next step. If $reverse === true, the previous step is returned.
+     * 
+     * This method provides a centralized way of handling next/previous step.
+     * 
+     * @param string $step the current step
+     * @param boolean $reverse set to true to get the previous step
+     * @return string the next/current step
+     * @throws \LogicException if there is no step before or after the given step
+     */
+    private function getNextStep($step, $reverse = false)
     {
         switch($step) {
-            case 'export': return 'formatter';
-            case 'formatter' : return 'generate';
+            case 'export': 
+                if ($reverse !== false) {
+                    throw new \LogicException("there is no step before 'export'");
+                }
+                return $reverse ? 'export' : 'formatter';
+            case 'formatter' : 
+                return $reverse ? 'export' : 'generate';
+            case 'generate' : 
+                if ($reverse === false) {
+                    throw new \LogicException("there is no step after 'generate'");
+                }
+                return 'formatter';
+                
             default:
                 throw new \LogicException("the step $step is not defined.");
         }
     }
     
-    private function getNextRoute($step)
-    {
-        switch($step) {
-            case 'generate': 
-                return 'chill_main_export_generate';
-            default:
-                return 'chill_main_export_new';
-        }
-    }
-    
+    /**
+     * Render the form for formatter. 
+     * 
+     * If the form is posted and valid, store the data in session and 
+     * redirect to the next step.
+     * 
+     * @param Request $request
+     * @param string $alias
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected function formatterFormStep(Request $request, $alias)
     {
         $export = $this->get('chill.main.export_manager')->getExport($alias);
         
-        $exportForm = $this->createCreateFormExport($alias, 'export');
-        $exportForm->handleRequest($request);
+        // check we have data from the previous step (export step)
+        $data = $this->get('session')->get('export_step', null);
         
-        if ($exportForm->isValid()) {
-            $data = $exportForm->getData();
-            $this->get('session')->set('export_step_raw', $request->query->all());
+        if ($data === null) {
+            
+            return $this->redirectToRoute('chill_main_export_new', array(
+               'step' => $this->getNextStep('formatter', true),
+               'alias' => $alias
+               ));
+        }
 
-        $form = $this->createCreateFormExport($alias, 
-                 'formatter', $data);
+        $form = $this->createCreateFormExport($alias, 'formatter', $data);
+        
+        if ($request->getMethod() === 'POST') {
+            $form->handleRequest($request);
+            
+            if ($form->isValid()) {
+                $dataFormatter = $form->getData();
+                $this->get('session')->set('formatter_step', $dataFormatter);
+                $this->get('session')->set('formatter_step_raw', 
+                      $request->request->all());
+
+                //redirect to next step
+                return $this->redirect($this->generateUrl('chill_main_export_new', 
+                      array(
+                         'alias' => $alias, 
+                         'step' => $this->getNextStep('formatter')
+                )));
+            }
+        }
         
         return $this->render('ChillMainBundle:Export:new_formatter_step.html.twig',
                 array(
                     'form' => $form->createView(),
                     'export' => $export
                 ));
-        
-        } else {
-            throw new \LogicException("The form contains invalid data. Currently"
-                  . " we do not handle invalid data in forms");
-        }
     }
     
+    /**
+     * Gather data stored in session from previous steps, and redirect
+     * to the `generate` action, compiling data from previous step in the URL
+     * (to obtain a GET HTTP query).
+     * 
+     * The data from previous steps is removed from session.
+     * 
+     * @param Request $request
+     * @param string $alias
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     protected function forwardToGenerate(Request $request, $alias)
     {
-        $data = $this->get('session')->get('export_step');
+        $dataFormatter = $this->get('session')->get('formatter_step_raw', null);
+        $dataExport = $this->get('session')->get('export_step_raw', null);
         
-        $form = $this->createCreateFormExport($alias, 
-                 'formatter', $data);
-        $form->handleRequest($request);
-        
-        if ($form->isValid()) {
-            $dataFormatter = $form->getData();
-            $this->get('session')->set('formatter_step', $dataFormatter);
+        if ($dataFormatter === NULL) {
+            return $this->redirectToRoute('chill_main_export_new', array(
+               'alias' => $alias, 'step' => $this->getNextStep('generate', true)
+            ));
         }
         
+        // remove data from session
+        $this->get('session')->remove('export_step_raw');
+        $this->get('session')->remove('export_step');
+        $this->get('session')->remove('formatter_step_raw');
+        $this->get('session')->remove('formatter_step');
+        
         $redirectParameters = array_merge(
-              $this->get('session')->get('export_step_raw'),
-              $request->query->all(),
+              $dataFormatter,
+              $dataExport,
               array('alias' => $alias)
               );
+        unset($redirectParameters['_token']);
         
-        return $this->redirect($this->generateUrl(
-                'chill_main_export_generate', $redirectParameters));
-        
+        return $this->redirectToRoute('chill_main_export_generate', 
+              $redirectParameters);
     }
     
+    /**
+     * Generate a report.
+     * 
+     * This action must work with GET queries.
+     * 
+     * @param Request $request
+     * @param string $alias
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function generateAction(Request $request, $alias)
     {
         $exportManager = $this->get('chill.main.export_manager');
         
-        $formExport = $this->createCreateFormExport($alias, 'export');
+        $formExport = $this->createCreateFormExport($alias, 'generate_export');
         $formExport->handleRequest($request);
         $dataExport = $formExport->getData();
         
-        $formFormatter = $this->createCreateFormExport($alias, 'formatter', 
+        $formFormatter = $this->createCreateFormExport($alias, 'generate_formatter', 
               $dataExport);
         $formFormatter->handleRequest($request);
         $dataFormatter = $formFormatter->getData();

@@ -347,7 +347,7 @@ class ExportManager
     private function retrieveUsedAggregators($data)
     {
         foreach($data as $alias => $aggregatorData) {
-            if ($aggregatorData['order']> 0){
+            if ($aggregatorData['enabled'] === true){
                 yield $alias => $this->getAggregator($alias);
             }
         }
@@ -384,13 +384,14 @@ class ExportManager
     
     private function handleAggregators(ExportInterface $export, QueryBuilder $qb, $data)
     {
-        $aggregators = $this->getAggregatorsApplyingOn($export->supportsModifiers());
+        //$aggregators = $this->getAggregatorsApplyingOn($export->supportsModifiers());
+        $aggregators = $this->retrieveUsedAggregators($data);
         
         foreach ($aggregators as $alias => $aggregator) {
             $formData = $data[$alias];
-            if ($formData['order'] >= 0) {
+            //if ($formData['order'] >= 0) {
                 $aggregator->alterQuery($qb, $formData['form']);
-            }
+            //}
         }
     }
     

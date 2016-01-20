@@ -277,15 +277,17 @@ class ExportManager
         $result = $export->getResult($qb, array());
         
         /* @var $formatter Formatter\CSVFormatter */
-        $formatter = $this->getFormatter('csv');
+        $formatter = $this->getFormatter($this->getFormatterAlias($data));
         $filters = array();
-        $aggregators = iterator_to_array($this->retrieveUsedAggregators($data['aggregators']));
-        $aggregatorsData = array_combine(array_keys($data['aggregators']), 
-                array_map(function($data) { return $data['form']; }, $data['aggregators'])
-            );
         
-        return $formatter->getResponse($result, array(), $export, 
-                $filters, $aggregators, array(), $data['filters'], $aggregatorsData);
+        $aggregators = $this->retrieveUsedAggregators($data['aggregators']);
+        $aggregatorsData = array();
+        foreach($aggregators as $alias => $aggregator) {
+            $aggregatorsData[$alias] = $data['aggregators'][$alias]['form'];
+        }
+        
+        return $formatter->getResponse($result, $formatterData, $exportAlias, $data,
+                $filters, $aggregatorsData);
     }
     
     /**

@@ -48,13 +48,9 @@ class CSVFormatter implements FormatterInterface
     
     protected $export;
     
-    protected $filters;
-    
     protected $aggregators;
     
     protected $exportData;
-    
-    protected $filterData;
     
     protected $aggregatorsData;
     
@@ -82,6 +78,13 @@ class CSVFormatter implements FormatterInterface
         return 'Comma separated values (CSV)';
     }
     
+    /**
+     * 
+     * @uses appendAggregatorForm
+     * @param FormBuilderInterface $builder
+     * @param type $exportAlias
+     * @param array $aggregatorAliases
+     */
     public function buildForm(FormBuilderInterface $builder, $exportAlias, array $aggregatorAliases)
     {
         $aggregators = $this->exportManager->getAggregators($aggregatorAliases);
@@ -97,6 +100,15 @@ class CSVFormatter implements FormatterInterface
         }
     }
     
+    /**
+     * append a form line by aggregator on the formatter form.
+     * 
+     * This form allow to choose the aggregator position (row or column) and 
+     * the ordering
+     * 
+     * @param FormBuilderInterface $builder
+     * @param string $nbAggregators
+     */
     private function appendAggregatorForm(FormBuilderInterface $builder, $nbAggregators)
     {
         $builder->add('order', 'choice', array(
@@ -127,16 +139,15 @@ class CSVFormatter implements FormatterInterface
      * @param \Chill\MainBundle\Export\FilterInterface[] $filters
      * @param \Chill\MainBundle\Export\AggregatorInterface[] $aggregators
      */
-    public function getResponse($result, $formatterData, ExportInterface $export, $filters, 
-            $aggregators, $exportData, $filterData, $aggregatorsData)
+    public function getResponse($result, $formatterData, $exportAlias, array $exportData, array $filtersData, 
+            array $aggregatorsData)
     {
         $this->result = $result;
-        $this->formatterData = $formatterData;
-        $this->export = $export;
-        $this->filters = $filters;
-        $this->aggregators = $aggregators;
+        $this->orderingHeaders($formatterData);
+        $this->export = $this->exportManager->getExport($exportAlias);
+        $this->aggregators = iterator_to_array($this->exportManager
+                ->getAggregators(array_keys($aggregatorsData)));
         $this->exportData = $exportData;
-        $this->filterData = $filterData;
         $this->aggregatorsData = $aggregatorsData;
         
         $response = new Response();
@@ -149,12 +160,33 @@ class CSVFormatter implements FormatterInterface
         return $response;
     }
     
+    /**
+     * ordering aggregators, preserving key association.
+     * 
+     * This function do not mind about position.
+     * 
+     * If two aggregators have the same order, the second given will be placed 
+     * after.  This is not significant for the first ordering.
+     * 
+     * @param type $formatterData
+     * @return type
+     */
+    protected function orderingHeaders($formatterData)
+    {
+        $this->formatterData = $formatterData;
+        uasort($this->formatterData, function($a, $b) {
+            
+            return ($a['order'] <= $b['order'] ? -1 : 1);
+        });
+    }
+    
     protected function generateContent()
     {
         $labels = $this->gatherLabels();
-        $horizontalHeadersKeys = $this->getHorizontalHeaders();
+        $rowHeadersKeys = $this->getRowHeaders();
+        $columnHeadersKeys = $this->getColumnHeaders();
         $resultsKeys = $this->export->getQueryKeys($this->exportData);
-        
+        print_r($columnHeadersKeys);
         
         // create a file pointer connected to the output stream
         $output = fopen('php://output', 'w');
@@ -166,7 +198,7 @@ class CSVFormatter implements FormatterInterface
         
         //headers
         $headerLine = array();
-        foreach($horizontalHeadersKeys as $headerKey) {
+        foreach($rowHeadersKeys as $headerKey) {
             $headerLine[] = array_key_exists('_header', $labels[$headerKey]) ? 
                     $labels[$headerKey]['_header'] : '';
         }
@@ -178,10 +210,13 @@ class CSVFormatter implements FormatterInterface
         unset($headerLine); //free memory
 
         $content = array();
-        foreach($this->result as $row) {
+        // create an array with keys as columnHeadersKeys values, values are empty array
+        $columnHeaders = array_combine($columnHeadersKeys, array_pad(array(), 
+                count($columnHeadersKeys), array()));
+        foreach($this->result as $row) { print_r($row);
             $line = array();
             //set horizontal headers
-            foreach($horizontalHeadersKeys as $headerKey) {
+            foreach($rowHeadersKeys as $headerKey) {
                 
                 if (!array_key_exists($row[$headerKey], $labels[$headerKey])) {
                     throw new \LogicException("The value '".$row[$headerKey]."' "
@@ -190,6 +225,10 @@ class CSVFormatter implements FormatterInterface
                 }
                 
                 $line[] = $labels[$headerKey][$row[$headerKey]];
+            }
+            
+            foreach($columnHeadersKeys as $headerKey) {
+                
             }
             //append result
             foreach($resultsKeys as $key) {
@@ -200,7 +239,7 @@ class CSVFormatter implements FormatterInterface
         }
         
         //ordering content
-        array_multisort($content);
+        //array_multisort($content);
         
         //generate CSV
         foreach($content as $line) {
@@ -214,13 +253,39 @@ class CSVFormatter implements FormatterInterface
     }
 
 
-    protected function getHorizontalHeaders()
+    protected function getRowHeaders()
+    {
+        return $this->getPositionnalHeaders('r');
+    }
+    
+    protected function getColumnHeaders()
+    {
+        return $this->getPositionnalHeaders('c');
+    }
+    
+    /**
+     * 
+     * @param string $position may be 'c' (column) or 'r' (row)
+     * @return string[]
+     * @throws \RuntimeException
+     */
+    private function getPositionnalHeaders($position)
     {
         $headers = array();
-        /* @var $aggregator AggregatorInterface */
-        foreach($this->aggregators as $alias => $aggregator) {
-            $headers = array_merge($headers, $aggregator->getQueryKeys($this->aggregatorsData[$alias]));
+        foreach($this->formatterData as $alias => $data) {
+            if (!array_key_exists($alias, $this->aggregatorsData)) {
+                throw new \RuntimeException("the formatter wants to use the "
+                        . "aggregator with alias $alias, but the export do not "
+                        . "contains data about it");
+            }
+            
+            $aggregator = $this->aggregators[$alias];
+            
+            if ($data['position'] === $position) {
+                $headers = array_merge($headers, $aggregator->getQueryKeys($this->aggregatorsData[$alias]));
+            }
         }
+        
         return $headers;
     }
     

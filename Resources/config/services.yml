@@ -169,6 +169,15 @@ services:
         tags:
             - { name: form.type }
             
+    chill.main.form.pick_centers_type:
+        class: Chill\MainBundle\Form\Type\Export\PickCenterType
+        arguments:
+            - "@security.token_storage"
+            - "@chill.main.export_manager"
+            - "@chill.main.security.authorization.helper"
+        tags:
+            - { name: form.type }
+            
     chill.main.form.formatter_type:
         class: Chill\MainBundle\Form\Type\Export\FormatterType
         arguments:

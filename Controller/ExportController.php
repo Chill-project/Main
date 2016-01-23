@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Chill\MainBundle\Form\Type\Export\ExportType;
 use Chill\MainBundle\Form\Type\Export\FormatterType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Chill\MainBundle\Form\Type\Export\PickCenterType;
 
 
 /**
@@ -71,9 +72,11 @@ class ExportController extends Controller
      */
     public function newAction(Request $request, $alias)
     {
-        $step = $request->query->getAlpha('step', 'export');
+        $step = $request->query->getAlpha('step', 'centers');
         
         switch ($step) {
+            case 'centers':
+                return $this->selectCentersStep($request, $alias);
             case 'export':
                 return $this->exportFormStep($request, $alias);
                 break;
@@ -86,6 +89,40 @@ class ExportController extends Controller
             default:
                 throw $this->createNotFoundException("The given step '$step' is invalid");
         }
+    }
+    
+    public function selectCentersStep(Request $request, $alias)
+    {
+        $exportManager = $this->get('chill.main.export_manager');
+        
+        $form = $this->createCreateFormExport($alias, 'centers');
+        
+        $export = $exportManager->getExport($alias);
+        
+        if ($request->getMethod() === 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $this->get('logger')->debug('form centers is valid', array(
+                      'location' => __METHOD__));
+                
+                $data = $form->getData();
+                $this->get('session')->set('centers_step_raw', 
+                      $request->request->all());
+                $this->get('session')->set('centers_step', $data);
+                
+                return $this->redirectToRoute('chill_main_export_new', array(
+                   'step' => $this->getNextStep('centers'),
+                   'alias' => $alias
+                ));
+                
+            }
+        }
+        
+        return $this->render('ChillMainBundle:Export:new_centers_step.html.twig',
+                array(
+                    'form' => $form->createView(),
+                    'export' => $export
+                ));
     }
     
     /**
@@ -157,6 +194,12 @@ class ExportController extends Controller
                     'csrf_protection' => $isGenerate ? false : true,              
               ));
         
+        if ($step === 'centers') {
+            $builder->add('centers', PickCenterType::class, array(
+               'export_alias' => $alias
+            ));
+        }
+        
         if ($step === 'export' or $step === 'generate_export') {
             $builder->add('export', ExportType::class, array(
                 'export_alias' => $alias,
@@ -195,11 +238,13 @@ class ExportController extends Controller
     private function getNextStep($step, $reverse = false)
     {
         switch($step) {
-            case 'export': 
+            case 'centers': 
                 if ($reverse !== false) {
                     throw new \LogicException("there is no step before 'export'");
                 }
-                return $reverse ? 'export' : 'formatter';
+                return 'export';
+            case 'export':
+                return $reverse ? 'centers' : 'formatter';
             case 'formatter' : 
                 return $reverse ? 'export' : 'generate';
             case 'generate' : 

@@ -27,7 +27,10 @@
     <p>{{ export.description|trans }}</p>
 
     {{ form_start(form) }}
+    
+    <h2>{{ 'Pick centers'|trans }}</h2>
 
+    {{ form_widget(form.centers.c) }}
     
     <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>
     {{ form_end(form) }}

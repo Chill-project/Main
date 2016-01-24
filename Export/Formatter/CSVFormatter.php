@@ -54,6 +54,8 @@ class CSVFormatter implements FormatterInterface
     
     protected $aggregatorsData;
     
+    protected $labels;
+    
     /**
      *
      * @var ExportManager
@@ -149,6 +151,7 @@ class CSVFormatter implements FormatterInterface
                 ->getAggregators(array_keys($aggregatorsData)));
         $this->exportData = $exportData;
         $this->aggregatorsData = $aggregatorsData;
+        $this->labels = $this->gatherLabels();
         
         $response = new Response();
         $response->setStatusCode(200);
@@ -182,11 +185,30 @@ class CSVFormatter implements FormatterInterface
     
     protected function generateContent()
     {
-        $labels = $this->gatherLabels();
-        $rowHeadersKeys = $this->getRowHeaders();
-        $columnHeadersKeys = $this->getColumnHeaders();
-        $resultsKeys = $this->export->getQueryKeys($this->exportData);
-        print_r($columnHeadersKeys);
+        $rowKeysNb = count($this->getRowHeaders());
+        $columnKeysNb = count($this->getColumnHeaders());
+        $resultsKeysNb = count($this->export->getQueryKeys($this->exportData));
+        $results = $this->getOrderedResults();
+        /* @var $columnHeaders string[] the column headers associations */
+        $columnHeaders = array();
+        /* @var $data string[] the data of the csv file */
+        $contentData = array();
+        $content = array();
+        
+        function findColumnPosition(&$columnHeaders, $columnToFind) {
+            $i = 0;
+            foreach($columnHeaders as $set) {
+                if ($set === $columnToFind) {
+                    return $i;
+                }
+                $i++;
+            }
+            
+            //we didn't find it, adding the column
+            $columnHeaders[] = $columnToFind;
+            
+            return $i++;
+        }
         
         // create a file pointer connected to the output stream
         $output = fopen('php://output', 'w');
@@ -196,53 +218,73 @@ class CSVFormatter implements FormatterInterface
         //blank line
         fputcsv($output, array(""));
         
-        //headers
-        $headerLine = array();
-        foreach($rowHeadersKeys as $headerKey) {
-            $headerLine[] = array_key_exists('_header', $labels[$headerKey]) ? 
-                    $labels[$headerKey]['_header'] : '';
-        }
-        foreach($resultsKeys as $key) {
-            $headerLine[] = array_key_exists('_header', $labels[$key]) ? 
-                    $labels[$key]['_header'] : '';
-        }
-        fputcsv($output, $headerLine);
-        unset($headerLine); //free memory
+        // iterate on result to : 1. populate row headers, 2. populate column headers, 3. add result
+        foreach ($results as $row) {
+            $rowHeaders = array_slice($row, 0, $rowKeysNb);
+            
+            //first line : we create line and adding them row headers
+            if (!isset($line)) {
+                $line = array_slice($row, 0, $rowKeysNb);
+            }
 
-        $content = array();
-        // create an array with keys as columnHeadersKeys values, values are empty array
-        $columnHeaders = array_combine($columnHeadersKeys, array_pad(array(), 
-                count($columnHeadersKeys), array()));
-        foreach($this->result as $row) { print_r($row);
-            $line = array();
-            //set horizontal headers
-            foreach($rowHeadersKeys as $headerKey) {
-                
-                if (!array_key_exists($row[$headerKey], $labels[$headerKey])) {
-                    throw new \LogicException("The value '".$row[$headerKey]."' "
-                            . "is not available from the labels defined by aggregators. "
-                            . "The key name was $headerKey");
+            // do we have to create a new line ? if the rows are equals, continue on the line, else create a next line
+            if (array_slice($line, 0, $rowKeysNb) !== $rowHeaders) {
+                $contentData[] = $line;
+                $line = array_slice($row, 0, $rowKeysNb);
+            }
+
+            // add the column headers
+            /* @var $columns string[] the column for this row */
+            $columns = array_slice($row, $rowKeysNb, $columnKeysNb);
+            $columnPosition = findColumnPosition($columnHeaders, $columns);
+            
+            //fill with blank at the position given by the columnPosition + nbRowHeaders
+            for ($i=0; $i < $columnPosition; $i++) {
+                if (!isset($line[$rowKeysNb + $i])) {
+                    $line[$rowKeysNb + $i] = "";
                 }
-                
-                $line[] = $labels[$headerKey][$row[$headerKey]];
             }
             
-            foreach($columnHeadersKeys as $headerKey) {
+            $resultData = array_slice($row, $resultsKeysNb*-1);
+            foreach($resultData as $data) {
+                $line[] = $data;
+            }
+            
+        }
+        
+        // we add  the last line
+        $contentData[] = $line;
+        
+        //column title headers
+        for ($i=0; $i < $columnKeysNb; $i++) {
+            $line = array_fill(0, $rowKeysNb, '');
                 
+            foreach($columnHeaders as $set) {
+                $line[] = $set[$i];
             }
-            //append result
-            foreach($resultsKeys as $key) {
-                $line[] = $labels[$key][$row[$key]];
-            }
-            // append to content
+            
             $content[] = $line;
         }
         
-        //ordering content
-        //array_multisort($content);
+        
+        //row title headers
+        $headerLine = array();
+        foreach($this->getRowHeaders() as $headerKey) {
+            $headerLine[] = array_key_exists('_header', $this->labels[$headerKey]) ? 
+                    $this->labels[$headerKey]['_header'] : '';
+        }
+        foreach($this->export->getQueryKeys($this->exportData) as $key) {
+            $headerLine[] = array_key_exists('_header', $this->labels[$key]) ? 
+                    $this->labels[$key]['_header'] : '';
+        }
+        fputcsv($output, $headerLine);
+        unset($headerLine); //free memory
         
         //generate CSV
         foreach($content as $line) {
+            fputcsv($output, $line);
+        }
+        foreach($contentData as $line) {
             fputcsv($output, $line);
         }
         
@@ -250,6 +292,42 @@ class CSVFormatter implements FormatterInterface
         fclose($output);
         
         return $text;
+    }
+    
+    
+    private function getOrderedResults()
+    {
+        $r = array();
+        $results = $this->result;
+        $labels = $this->labels;
+        $rowKeys = $this->getRowHeaders();
+        $columnKeys = $this->getColumnHeaders();
+        $resultsKeys = $this->export->getQueryKeys($this->exportData);
+        $headers = array_merge($rowKeys, $columnKeys);
+        
+        foreach ($results as $row) {
+            $line = array();
+            foreach ($headers as $key) {
+                if (!array_key_exists($row[$key], $labels[$key])) {
+                    throw new \LogicException("The value '".$row[$key]."' "
+                            . "is not available from the labels defined by aggregator or report. "
+                            . "The key provided by aggregator or report is '$key'");
+                }
+                
+                $line[] = $labels[$key][$row[$key]];
+            }
+            
+            //append result
+            foreach ($resultsKeys as $key) {
+                $line[] = $labels[$key][$row[$key]];
+            }
+            
+            $r[] = $line;
+        }
+        
+        array_multisort($r);
+        
+        return $r;
     }
 
 

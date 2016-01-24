@@ -59,7 +59,8 @@ class ExportType extends AbstractType
         } */
         
         //add filters
-        $filters = $this->exportManager->getFiltersApplyingOn($export->supportsModifiers());
+        $filters = $this->exportManager->getFiltersApplyingOn($export->supportsModifiers(), 
+                $options['picked_centers']);
         $filterBuilder = $builder->create('filters', 'form', array('compound' => true));
         
         foreach($filters as $alias => $filter) {
@@ -97,7 +98,7 @@ class ExportType extends AbstractType
     
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(array('export_alias'))
+        $resolver->setRequired(array('export_alias', 'picked_centers'))
                 ->setAllowedTypes('export_alias', array('string'))
                 ->setDefault('compound', true)
                 ;

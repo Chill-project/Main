@@ -47,7 +47,7 @@ class ExportController extends Controller
     {
         $exportManager = $this->get('chill.main.export_manager');
         
-        $exports = $exportManager->getExports();
+        $exports = $exportManager->getExports(true);
         
         return $this->render('ChillMainBundle:Export:layout.html.twig', array(
             'exports' => $exports
@@ -72,6 +72,15 @@ class ExportController extends Controller
      */
     public function newAction(Request $request, $alias)
     {
+        // first check for ACL
+        $exportManager = $this->get('chill.main.export_manager');
+        $export = $exportManager->getExport($alias);
+        $centers = $this->get('chill.main.security.authorization.helper')
+                ->getReachableCenters($this->getUser(), $export->requiredRole());
+        if ($exportManager->isGrantedForElement($export, $centers) === FALSE) {
+            throw $this->createAccessDeniedException('The user does not have access to this export');
+        }
+        
         $step = $request->query->getAlpha('step', 'centers');
         
         switch ($step) {
@@ -93,6 +102,7 @@ class ExportController extends Controller
     
     public function selectCentersStep(Request $request, $alias)
     {
+        /* @var $exportManager \Chill\MainBundle\Export\ExportManager */
         $exportManager = $this->get('chill.main.export_manager');
         
         $form = $this->createCreateFormExport($alias, 'centers');
@@ -106,6 +116,14 @@ class ExportController extends Controller
                       'location' => __METHOD__));
                 
                 $data = $form->getData();
+                
+                // check ACL
+                if ($exportManager->isGrantedForElement($export, 
+                        $exportManager->getPickedCenters($data['centers'])) === FALSE) {
+                    throw $this->createAccessDeniedException('you do not have '
+                            . 'access to this export for those centers');
+                }
+                
                 $this->get('session')->set('centers_step_raw', 
                       $request->request->all());
                 $this->get('session')->set('centers_step', $data);
@@ -138,9 +156,20 @@ class ExportController extends Controller
     {
         $exportManager = $this->get('chill.main.export_manager');
         
+        // check we have data from the previous step (export step)
+        $data = $this->get('session')->get('centers_step', null);
+        
+        if ($data === null) {
+            
+            return $this->redirectToRoute('chill_main_export_new', array(
+               'step' => $this->getNextStep('export', true),
+               'alias' => $alias
+               ));
+        }
+        
         $export = $exportManager->getExport($alias);
                 
-        $form = $this->createCreateFormExport($alias, 'export');
+        $form = $this->createCreateFormExport($alias, 'export', $data);
         
         if ($request->getMethod() === 'POST') {
             $form->handleRequest($request);
@@ -196,13 +225,14 @@ class ExportController extends Controller
         
         if ($step === 'centers') {
             $builder->add('centers', PickCenterType::class, array(
-               'export_alias' => $alias
+               'export_alias' => $alias 
             ));
         }
         
         if ($step === 'export' or $step === 'generate_export') {
             $builder->add('export', ExportType::class, array(
-                'export_alias' => $alias,
+               'export_alias' => $alias,
+               'picked_centers' => $exportManager->getPickedCenters($data['centers'])
             ));
         }
         
@@ -323,6 +353,7 @@ class ExportController extends Controller
      */
     protected function forwardToGenerate(Request $request, $alias)
     {
+        $dataCenters = $this->get('session')->get('centers_step_raw', null);
         $dataFormatter = $this->get('session')->get('formatter_step_raw', null);
         $dataExport = $this->get('session')->get('export_step_raw', null);
         
@@ -341,6 +372,7 @@ class ExportController extends Controller
         $redirectParameters = array_merge(
               $dataFormatter,
               $dataExport,
+              $dataCenters,
               array('alias' => $alias)
               );
         unset($redirectParameters['_token']);

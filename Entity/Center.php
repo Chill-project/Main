@@ -25,7 +25,7 @@ namespace Chill\MainBundle\Entity;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-class Center
+class Center implements HasCenterInterface
 {
     /**
      *
@@ -82,5 +82,9 @@ class Center
         return $this->getName();
     }
 
+    public function getCenter()
+    {
+        return $this;
+    }
 
 }

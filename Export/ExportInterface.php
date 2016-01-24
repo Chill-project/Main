@@ -26,7 +26,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-interface ExportInterface
+interface ExportInterface extends ExportElementInterface
 {
     
     public function getType();

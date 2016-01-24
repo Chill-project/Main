@@ -154,6 +154,9 @@ services:
         arguments:
             - "@logger"
             - "@doctrine.orm.entity_manager"
+            - "@security.authorization_checker"
+            - "@chill.main.security.authorization.helper"
+            - "@security.token_storage"
         
     chill.main.form.type.export:
         class: Chill\MainBundle\Form\Type\Export\ExportType

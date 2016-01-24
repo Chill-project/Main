@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2015 Champs-Libres <info@champs-libres.coop>
+ * Copyright (C) 2016 Champs-Libres <info@champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,19 +19,15 @@
 
 namespace Chill\MainBundle\Export;
 
-use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Form\FormBuilderInterface;
-
 /**
- * 
+ * The common methods between different object used to build export (i.e. : ExportInterface,
+ * FilterInterface, AggregatorInterface
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-interface FilterInterface extends ExportElementInterface
+interface ExportElementInterface
 {
-    public function applyOn();
+    public function requiredRole();
     
-    public function buildForm(FormBuilderInterface $builder);
-    
-    public function alterQuery(QueryBuilder $qb, $data);
+    public function getTitle();
 }

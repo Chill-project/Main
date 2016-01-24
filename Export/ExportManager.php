@@ -27,6 +27,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Chill\MainBundle\Security\Authorization\AuthorizationHelper;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Collects all agregators, filters and export from
@@ -73,10 +76,33 @@ class ExportManager
      */
     private $em;
     
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $em)
+    /**
+     *
+     * @var AuthorizationChecker
+     */
+    private $authorizationChecker;
+    
+    /**
+     *
+     * @var AuthorizationHelper
+     */
+    private $authorizationHelper;
+    
+    /**
+     *
+     * @var \Symfony\Component\Security\Core\User\UserInterface
+     */
+    private $user;
+    
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $em,
+        AuthorizationChecker $authorizationChecker, AuthorizationHelper $authorizationHelper,
+        TokenStorageInterface $tokenStorage)
     {
         $this->logger = $logger;
         $this->em = $em;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->authorizationHelper = $authorizationHelper;
+        $this->user = $tokenStorage->getToken()->getUser();
     }
     
     public function addFilter(FilterInterface $filter, $alias)
@@ -119,11 +145,22 @@ class ExportManager
     /**
      * Return all exports. The exports's alias are the array's keys.
      * 
+     * @param boolean $whereUserIsGranted if true (default), restrict to user which are granted the right to execute the export
      * @return ExportInterface[] an array where export's alias are keys
      */
-    public function getExports()
+    public function getExports($whereUserIsGranted = true)
     {
-        return $this->exports;
+        foreach ($this->exports as $alias => $export) {
+            if ($whereUserIsGranted) {
+                $centers = $this->authorizationHelper->getReachableCenters($this->user, 
+                        $export->requiredRole());
+                if ($this->isGrantedForElement($export, $centers)) {
+                    yield $alias => $export;
+                }
+            } else {
+                yield $alias => $export;
+            }
+        }
     }
     
     /**
@@ -206,18 +243,47 @@ class ExportManager
     
     
     /**
-     * Return a \Generator containing filter which support type
+     * Return a \Generator containing filter which support type. If `$centers` is
+     * not null, restrict the given filters to the center the user have access to.
      * 
      * @param string[] $types
+     * @param \Chill\MainBundle\Entity\Center[] $centers the centers where the user have access to
      * @return FilterInterface[] a \Generator that contains filters. The key is the filter's alias
      */
-    public function &getFiltersApplyingOn(array $types)
+    public function &getFiltersApplyingOn(array $types, array $centers = null)
     {
         foreach ($this->filters as $alias => $filter) {
-            if (in_array($filter->applyOn(), $types)) {
+            if (in_array($filter->applyOn(), $types) 
+                    && $this->isGrantedForElement($filter, $centers)) {
                 yield $alias => $filter;
             }
         }
+    }
+    
+    /**
+     * Return true if the current user has access to the ExportElement for every
+     * center, false if the user hasn't access to element for at least one center.
+     * 
+     * @param \Chill\MainBundle\Export\ExportElementInterface $element
+     * @param array $centers
+     * @return boolean
+     */
+    public function isGrantedForElement(ExportElementInterface $element, array $centers)
+    {
+        foreach($centers as $center) {
+            if ($this->authorizationChecker->isGranted(
+                    $element->requiredRole()->getRole(), $center) === FALSE) {
+                //debugging
+                $this->logger->debug('user has no access to element', array(
+                    'method' => __METHOD__,  
+                    'type' => get_class($element), 'center' => $center->getName()
+                ));
+                
+                return false;
+            }
+        }
+        
+        return TRUE;
     }
     
     /**
@@ -312,6 +378,11 @@ class ExportManager
     public function getFormatterAlias(array $data)
     {
         return $data['pick_formatter']['alias'];
+    }
+    
+    public function getPickedCenters(array $data)
+    {
+        return $data['c'];
     }
     
     /**

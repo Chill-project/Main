@@ -94,9 +94,12 @@ class ExportManager
      */
     private $user;
     
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $em,
-        AuthorizationChecker $authorizationChecker, AuthorizationHelper $authorizationHelper,
-        TokenStorageInterface $tokenStorage)
+    public function __construct(
+            LoggerInterface $logger, 
+            EntityManagerInterface $em,
+            AuthorizationChecker $authorizationChecker, 
+            AuthorizationHelper $authorizationHelper,
+            TokenStorageInterface $tokenStorage)
     {
         $this->logger = $logger;
         $this->em = $em;
@@ -152,9 +155,7 @@ class ExportManager
     {
         foreach ($this->exports as $alias => $export) {
             if ($whereUserIsGranted) {
-                $centers = $this->authorizationHelper->getReachableCenters($this->user, 
-                        $export->requiredRole());
-                if ($this->isGrantedForElement($export, $centers)) {
+                if ($this->isGrantedForElement($export, null)) {
                     yield $alias => $export;
                 }
             } else {
@@ -265,14 +266,23 @@ class ExportManager
      * center, false if the user hasn't access to element for at least one center.
      * 
      * @param \Chill\MainBundle\Export\ExportElementInterface $element
-     * @param array $centers
+     * @param array|null $centers, if null, the function take into account all the reachables centers for the current user
      * @return boolean
      */
-    public function isGrantedForElement(ExportElementInterface $element, array $centers)
+    public function isGrantedForElement(ExportElementInterface $element, array $centers = null)
     {
+        if($centers === null) {
+            $centers = $this->authorizationHelper->getReachableCenters($this->user, 
+                            $element->requiredRole());
+        }
+        
+        if (count($centers) === 0) {
+            return false;
+        }
+        
         foreach($centers as $center) {
             if ($this->authorizationChecker->isGranted(
-                    $element->requiredRole()->getRole(), $center) === FALSE) {
+                    $element->requiredRole()->getRole(), $center) === false) {
                 //debugging
                 $this->logger->debug('user has no access to element', array(
                     'method' => __METHOD__,  
@@ -283,7 +293,7 @@ class ExportManager
             }
         }
         
-        return TRUE;
+        return true;
     }
     
     /**

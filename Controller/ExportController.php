@@ -75,9 +75,8 @@ class ExportController extends Controller
         // first check for ACL
         $exportManager = $this->get('chill.main.export_manager');
         $export = $exportManager->getExport($alias);
-        $centers = $this->get('chill.main.security.authorization.helper')
-                ->getReachableCenters($this->getUser(), $export->requiredRole());
-        if ($exportManager->isGrantedForElement($export, $centers) === FALSE) {
+        
+        if ($exportManager->isGrantedForElement($export) === FALSE) {
             throw $this->createAccessDeniedException('The user does not have access to this export');
         }
         

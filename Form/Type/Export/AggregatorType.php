@@ -69,10 +69,6 @@ class AggregatorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('aggregator_alias')
-                ->setRequired('aggregators_length')
-                ->setAllowedTypes(array(
-                    'aggregators_length' => 'int'
-                ))
                 ->setDefault('compound', true)
                 ;
     }

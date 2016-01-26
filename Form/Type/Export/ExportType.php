@@ -73,16 +73,14 @@ class ExportType extends AbstractType
         $builder->add($filterBuilder);
         
         //add aggregators
-        $aggregators = iterator_to_array($this->exportManager
-                ->getAggregatorsApplyingOn($export->supportsModifiers()));
+        $aggregators = $this->exportManager
+                ->getAggregatorsApplyingOn($export->supportsModifiers());
         $aggregatorBuilder = $builder->create('aggregators', 'form', 
                 array('compound' => true));
-        $nb = count($aggregators);
         
         foreach($aggregators as $alias => $aggregator) {
             $aggregatorBuilder->add($alias, new AggregatorType($this->exportManager), array(
                 'aggregator_alias' => $alias,
-                'aggregators_length' => $nb,
                 'label' => $aggregator->getTitle()
             ));
         }

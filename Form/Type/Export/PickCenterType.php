@@ -49,6 +49,8 @@ class PickCenterType extends AbstractType
      */
     protected $exportManager;
     
+    const CENTERS_IDENTIFIERS = 'c';
+    
     /**
      *
      * @var AuthorizationHelper
@@ -76,7 +78,7 @@ class PickCenterType extends AbstractType
         $centers = $this->authorizationHelper->getReachableCenters($this->user, 
               $export->requiredRole());
         
-        $builder->add('c', EntityType::class, array(
+        $builder->add(self::CENTERS_IDENTIFIERS, EntityType::class, array(
            'class' => 'ChillMainBundle:Center',
            'query_builder' => function(EntityRepository $er) use ($centers) {
                 $qb = $er->createQueryBuilder('c');

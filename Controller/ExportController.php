@@ -222,7 +222,7 @@ class ExportController extends Controller
                     'csrf_protection' => $isGenerate ? false : true,              
               ));
         
-        if ($step === 'centers') {
+        if ($step === 'centers' or $step === 'generate_centers') {
             $builder->add('centers', PickCenterType::class, array(
                'export_alias' => $alias 
             ));
@@ -393,7 +393,11 @@ class ExportController extends Controller
     {
         $exportManager = $this->get('chill.main.export_manager');
         
-        $formExport = $this->createCreateFormExport($alias, 'generate_export');
+        $formCenters = $this->createCreateFormExport($alias, 'generate_centers');
+        $formCenters->handleRequest($request);
+        $dataCenters = $formCenters->getData();
+        
+        $formExport = $this->createCreateFormExport($alias, 'generate_export', $dataCenters);
         $formExport->handleRequest($request);
         $dataExport = $formExport->getData();
         
@@ -402,6 +406,7 @@ class ExportController extends Controller
         $formFormatter->handleRequest($request);
         $dataFormatter = $formFormatter->getData();
         
-        return $exportManager->generate($alias, $dataExport['export'], $dataFormatter['formatter']);
+        return $exportManager->generate($alias, $dataCenters['centers'],
+                $dataExport['export'], $dataFormatter['formatter']);
     }
 }

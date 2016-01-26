@@ -30,6 +30,7 @@ use Doctrine\ORM\QueryBuilder;
 use Chill\MainBundle\Security\Authorization\AuthorizationHelper;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Chill\MainBundle\Form\Type\Export\PickCenterType;
 
 /**
  * Collects all agregators, filters and export from
@@ -338,12 +339,14 @@ class ExportManager
      * @param mixed[] $data
      * @return Response
      */
-    public function generate($exportAlias, array $data, array $formatterData)
+    public function generate($exportAlias, array $pickedCentersData, array $data, array $formatterData)
     {
         $export = $this->getExport($exportAlias);
         $qb = $this->em->createQueryBuilder();
+        $centers = $this->getPickedCenters($pickedCentersData);
         
-        $qb = $export->initiateQuery($qb, $this->retrieveUsedModifiers($data));
+        $qb = $export->initiateQuery($qb, $this->retrieveUsedModifiers($data), 
+                $this->buildCenterReachableScopes($centers, $export));
         
         //handle filters
         $this->handleFilters($export, $qb, $data['filters']);
@@ -372,6 +375,26 @@ class ExportManager
     }
     
     /**
+     * build the array required for defining centers and circles in the initiate 
+     * queries of ExportElementsInterfaces
+     * 
+     * @param \Chill\MainBundle\Entity\Center[] $centers
+     */
+    private function buildCenterReachableScopes(array $centers, ExportElementInterface $element) {
+        $r = array();
+        
+        foreach($centers as $center) {
+            $r[] = array(
+                'center' => $center,
+                'circles' => $this->authorizationHelper->getReachableScopes($this->user, 
+                        $element->requiredRole(), $center)
+            );
+        }
+        
+        return $r;
+    }
+    
+    /**
      * get the aggregators typse used in the form export data
      * 
      * @param array $data the data from the export form
@@ -397,7 +420,7 @@ class ExportManager
     
     public function getPickedCenters(array $data)
     {
-        return $data['c'];
+        return $data[PickCenterType::CENTERS_IDENTIFIERS];
     }
     
     /**

@@ -247,6 +247,10 @@ class ExportManager
      * Return a \Generator containing filter which support type. If `$centers` is
      * not null, restrict the given filters to the center the user have access to.
      * 
+     * if $centers is null, the function will returns all filters where the user 
+     * has access in every centers he can reach (if the user can use the filter F in
+     * center A, but not in center B, the filter F will not be returned)
+     * 
      * @param string[] $types
      * @param \Chill\MainBundle\Entity\Center[] $centers the centers where the user have access to
      * @return FilterInterface[] a \Generator that contains filters. The key is the filter's alias
@@ -266,7 +270,7 @@ class ExportManager
      * center, false if the user hasn't access to element for at least one center.
      * 
      * @param \Chill\MainBundle\Export\ExportElementInterface $element
-     * @param array|null $centers, if null, the function take into account all the reachables centers for the current user
+     * @param array|null $centers, if null, the function take into account all the reachables centers for the current user and the role given by element::requiredRole
      * @return boolean
      */
     public function isGrantedForElement(ExportElementInterface $element, array $centers = null)
@@ -317,10 +321,11 @@ class ExportManager
      * @param string[] $types
      * @return AggregatorInterface[] a \Generator that contains aggretagors. The key is the filter's alias
      */
-    public function &getAggregatorsApplyingOn(array $types)
+    public function &getAggregatorsApplyingOn(array $types, array $centers = null)
     {
         foreach ($this->aggregators as $alias => $aggregator) {
-            if (in_array($aggregator->applyOn(), $types)) {
+            if (in_array($aggregator->applyOn(), $types) && 
+                    $this->isGrantedForElement($aggregator, $centers)) {
                 yield $alias => $aggregator;
             }
         }

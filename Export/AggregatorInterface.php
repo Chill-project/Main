@@ -26,13 +26,11 @@ use Doctrine\ORM\QueryBuilder;
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-interface AggregatorInterface
+interface AggregatorInterface extends ExportElementInterface
 {
     public function applyOn();
     
     public function buildForm(FormBuilderInterface $builder);
     
     public function alterQuery(QueryBuilder $qb, $data);
-    
-    public function getTitle();
 }

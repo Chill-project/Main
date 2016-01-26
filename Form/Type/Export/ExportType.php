@@ -74,7 +74,8 @@ class ExportType extends AbstractType
         
         //add aggregators
         $aggregators = $this->exportManager
-                ->getAggregatorsApplyingOn($export->supportsModifiers());
+                ->getAggregatorsApplyingOn($export->supportsModifiers(), 
+                        $options['picked_centers']);
         $aggregatorBuilder = $builder->create('aggregators', 'form', 
                 array('compound' => true));
         

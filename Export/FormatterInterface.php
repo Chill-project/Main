@@ -19,11 +19,41 @@
 
 namespace Chill\MainBundle\Export;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 /**
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
 interface FormatterInterface
 {
-    //put your code here
+    const TYPE_TABULAR = 'tabular';
+    
+    public function getType();
+    
+    public function getName();
+    
+    /**
+     * build a form, which will be used to collect data required for the execution
+     * of this formatter.
+     * 
+     * @uses appendAggregatorForm
+     * @param FormBuilderInterface $builder
+     * @param type $exportAlias
+     * @param array $aggregatorAliases
+     */
+    public function buildForm(FormBuilderInterface $builder, $exportAlias, array $aggregatorAliases);
+    
+    /**
+     * Generate a response from the data collected on differents ExportElementInterface
+     * 
+     * @param mixed[] $result The result, as given by the ExportInterface
+     * @param mixed[] $data collected from the current form
+     * @param \Chill\MainBundle\Export\ExportInterface $export the export which is executing
+     * @param \Chill\MainBundle\Export\FilterInterface[] $filters the filters applying on the export. The key will be filters aliases, and the values will be filter's data (from their own form)
+     * @param \Chill\MainBundle\Export\AggregatorInterface[] $aggregators the aggregators applying on the export. The key will be aggregators aliases, and the values will be aggregator's data (from their own form)
+     */
+    public function getResponse($result, $formatterData, $exportAlias, array $exportData, array $filtersData, 
+            array $aggregatorsData);
+    
 }

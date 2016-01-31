@@ -117,7 +117,7 @@ class ExportController extends Controller
                 $data = $form->getData();
                 
                 // check ACL
-                if ($exportManager->isGrantedForElement($export, 
+                if ($exportManager->isGrantedForElement($export, NULL,
                         $exportManager->getPickedCenters($data['centers'])) === FALSE) {
                     throw $this->createAccessDeniedException('you do not have '
                             . 'access to this export for those centers');

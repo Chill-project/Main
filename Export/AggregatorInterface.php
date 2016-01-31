@@ -19,18 +19,34 @@
 
 namespace Chill\MainBundle\Export;
 
-use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\ORM\QueryBuilder;
-
 /**
+ * Interface for Aggregators. 
+ * 
+ * Aggregators gather result of a query. Most of the time, it will add
+ * a GROUP BY clause.
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-interface AggregatorInterface extends ExportElementInterface
-{
-    public function applyOn();
+interface AggregatorInterface extends ModifierInterface
+{ 
+    /**
+     * give the list of keys the current export added to the queryBuilder in 
+     * self::initiateQuery
+     * 
+     * Example: if your query builder will contains `SELECT count(id) AS count_id ...`,
+     * this function will return `array('count_id')`.
+     * 
+     * @param mixed[] $data the data from the export's form (added by self::buildForm)
+     */
+    public function getQueryKeys($data);
     
-    public function buildForm(FormBuilderInterface $builder);
-    
-    public function alterQuery(QueryBuilder $qb, $data);
+    /**
+     * transform the results to viewable and understable string.
+     * 
+     * @param string $key The column key, as added in the query
+     * @param mixed[] $values The values from the result. Each value is unique
+     * @param mixed $data The data from the form
+     */
+    public function getLabels($key, array $values, $data);
+
 }

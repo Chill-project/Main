@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2015 Champs-Libres <info@champs-libres.coop>
+ * Copyright (C) 2016 Champs-Libres <info@champs-libres.coop>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,21 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Chill\MainBundle\Export;
+namespace Chill\MainBundle\Tests\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Interface for filters. 
- * 
- * Filter will filter result on the query initiated by Export. Most of the time, 
- * it will add a `WHERE` clause on this query.
- * 
- * Filters should not add column in `SELECT` clause.
- * 
+ * Test the export
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
-interface FilterInterface extends ModifierInterface
+class ExportControllerTest extends WebTestCase
 {
+    public function testIndex()
+    {
+        $client = static::createClient(array(), array(
+           'PHP_AUTH_USER' => 'center a_social',
+           'PHP_AUTH_PW'   => 'password',
+           'HTTP_ACCEPT_LANGUAGE' => 'fr_FR'
+        ));
+        
+        $client->request('GET', '/fr/exports/');
 
+        $this->assertTrue($client->getResponse()->isSuccessful(), 
+                "assert the list is shown");
+    }
+    
 }

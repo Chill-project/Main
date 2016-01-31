@@ -59,8 +59,7 @@ class ExportType extends AbstractType
         } */
         
         //add filters
-        $filters = $this->exportManager->getFiltersApplyingOn($export->supportsModifiers(), 
-                $options['picked_centers']);
+        $filters = $this->exportManager->getFiltersApplyingOn($export, $options['picked_centers']);
         $filterBuilder = $builder->create('filters', 'form', array('compound' => true));
         
         foreach($filters as $alias => $filter) {
@@ -74,8 +73,7 @@ class ExportType extends AbstractType
         
         //add aggregators
         $aggregators = $this->exportManager
-                ->getAggregatorsApplyingOn($export->supportsModifiers(), 
-                        $options['picked_centers']);
+                ->getAggregatorsApplyingOn($export, $options['picked_centers']);
         $aggregatorBuilder = $builder->create('aggregators', 'form', 
                 array('compound' => true));
         

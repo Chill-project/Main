@@ -31,10 +31,11 @@ use Chill\MainBundle\Security\Authorization\AuthorizationHelper;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Chill\MainBundle\Form\Type\Export\PickCenterType;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**
  * Collects all agregators, filters and export from
- * the installed bundle. 
+ * the installed bundle, and performs the export logic.
  * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
@@ -42,30 +43,35 @@ use Chill\MainBundle\Form\Type\Export\PickCenterType;
 class ExportManager
 {
     /**
+     * The collected filters, injected by DI
      *
      * @var FilterInterface[]
      */
     private $filters = array();
     
     /**
+     * The collected aggregators, injected by DI
      *
      * @var AggregatorInterface[]
      */
     private $aggregators = array();
     
     /**
+     * Collected Exports, injected by DI
      *
      * @var ExportInterface[]
      */
     private $exports = array();
     
     /**
+     * Collected Formatters, injected by DI
      *
      * @var FormatterInterface[]
      */
     private $formatters = array();
     
     /**
+     * a logger 
      *
      * @var LoggerInterface
      */
@@ -109,21 +115,53 @@ class ExportManager
         $this->user = $tokenStorage->getToken()->getUser();
     }
     
+    /**
+     * add a Filter
+     * 
+     * @internal Normally used by the dependency injection
+     * 
+     * @param FilterInterface $filter
+     * @param string $alias
+     */
     public function addFilter(FilterInterface $filter, $alias)
     {
         $this->filters[$alias] = $filter;
     }
     
+    /**
+     * add an aggregator
+     * 
+     * @internal used by DI
+     * 
+     * @param AggregatorInterface $aggregator
+     * @param string $alias
+     */
     public function addAggregator(AggregatorInterface $aggregator, $alias)
     {
         $this->aggregators[$alias] = $aggregator;
     }
     
+    /**
+     * add an export
+     * 
+     * @internal used by DI
+     * 
+     * @param ExportInterface $export
+     * @param type $alias
+     */
     public function addExport(ExportInterface $export, $alias)
     {
         $this->exports[$alias] = $export;
     }
     
+    /**
+     * add a formatter
+     * 
+     * @internal used by DI
+     * 
+     * @param FormatterInterface $formatter
+     * @param type $alias
+     */
     public function addFormatter(FormatterInterface $formatter, $alias)
     {
         $this->formatters[$alias] = $formatter;
@@ -156,7 +194,7 @@ class ExportManager
     {
         foreach ($this->exports as $alias => $export) {
             if ($whereUserIsGranted) {
-                if ($this->isGrantedForElement($export, null)) {
+                if ($this->isGrantedForElement($export, null, null)) {
                     yield $alias => $export;
                 }
             } else {
@@ -252,15 +290,14 @@ class ExportManager
      * has access in every centers he can reach (if the user can use the filter F in
      * center A, but not in center B, the filter F will not be returned)
      * 
-     * @param string[] $types
      * @param \Chill\MainBundle\Entity\Center[] $centers the centers where the user have access to
      * @return FilterInterface[] a \Generator that contains filters. The key is the filter's alias
      */
-    public function &getFiltersApplyingOn(array $types, array $centers = null)
+    public function &getFiltersApplyingOn(ExportInterface $export, array $centers = null)
     {
         foreach ($this->filters as $alias => $filter) {
-            if (in_array($filter->applyOn(), $types) 
-                    && $this->isGrantedForElement($filter, $centers)) {
+            if (in_array($filter->applyOn(), $export->supportsModifiers()) 
+                    && $this->isGrantedForElement($filter, $export, $centers)) {
                 yield $alias => $filter;
             }
         }
@@ -274,11 +311,28 @@ class ExportManager
      * @param array|null $centers, if null, the function take into account all the reachables centers for the current user and the role given by element::requiredRole
      * @return boolean
      */
-    public function isGrantedForElement(ExportElementInterface $element, array $centers = null)
+    public function isGrantedForElement(ExportElementInterface $element, ExportInterface $export = NULL, array $centers = null)
     {
-        if($centers === null) {
+        if ($element instanceof ExportInterface) {
+            $role = $element->requiredRole();
+        } elseif ($element instanceof ModifierInterface ) {
+            if (is_null($element->addRole())) {
+                if (is_null($export)) {
+                    throw new \LogicException("The export should not be null: as the "
+                            . "ModifierInstance element is not an export, we should "
+                            . "be aware of the export to determine which role is required");
+                } else {
+                    $role = $export->requiredRole();
+                }
+            }
+        } else {
+            throw new \LogicException("The element is not an ModifiersInterface or "
+                    . "an ExportInterface.");
+        }
+        
+        if ($centers === null) {
             $centers = $this->authorizationHelper->getReachableCenters($this->user, 
-                            $element->requiredRole());
+                            $role);
         }
         
         if (count($centers) === 0) {
@@ -286,8 +340,7 @@ class ExportManager
         }
         
         foreach($centers as $center) {
-            if ($this->authorizationChecker->isGranted(
-                    $element->requiredRole()->getRole(), $center) === false) {
+            if ($this->authorizationChecker->isGranted($role->getRole(), $center) === false) {
                 //debugging
                 $this->logger->debug('user has no access to element', array(
                     'method' => __METHOD__,  
@@ -302,31 +355,15 @@ class ExportManager
     }
     
     /**
-     * Return a \Generator containing filter which support type
-     * 
-     * @param string $types
-     * @return FilterInterface[] a \Generator that contains filters. The key is the filter's alias
-     */
-    public function &getFiltersSupportingType($type)
-    {
-        foreach ($this->filters as $alias => $filter) {
-            if ($filter->supportsType($type)) {
-                yield $alias => $filter;
-            }
-        }
-    }
-    
-    /**
      * Return a \Generator containing aggregators which support type
      * 
-     * @param string[] $types
      * @return AggregatorInterface[] a \Generator that contains aggretagors. The key is the filter's alias
      */
-    public function &getAggregatorsApplyingOn(array $types, array $centers = null)
+    public function &getAggregatorsApplyingOn(ExportInterface $export, array $centers = null)
     {
         foreach ($this->aggregators as $alias => $aggregator) {
-            if (in_array($aggregator->applyOn(), $types) && 
-                    $this->isGrantedForElement($aggregator, $centers)) {
+            if (in_array($aggregator->applyOn(), $export->supportsModifiers()) && 
+                    $this->isGrantedForElement($aggregator, $export, $centers)) {
                 yield $alias => $aggregator;
             }
         }
@@ -349,10 +386,10 @@ class ExportManager
                 $this->buildCenterReachableScopes($centers, $export));
         
         //handle filters
-        $this->handleFilters($export, $qb, $data['filters']);
+        $this->handleFilters($export, $qb, $data['filters'], $centers);
         
         //handle aggregators
-        $this->handleAggregators($export, $qb, $data['aggregators']);
+        $this->handleAggregators($export, $qb, $data['aggregators'], $centers);
         
         $this->logger->debug('current query is '.$qb->getDQL(), array(
             'class' => self::class, 'function' => __FUNCTION__
@@ -418,6 +455,13 @@ class ExportManager
         return $data['pick_formatter']['alias'];
     }
     
+    /**
+     * Get the Center picked by the user for this export. The data are
+     * extracted from the PickCenterType data
+     * 
+     * @param array $data the data from a PickCenterType
+     * @return \Chill\MainBundle\Entity\Center[] the picked center
+     */
     public function getPickedCenters(array $data)
     {
         return $data[PickCenterType::CENTERS_IDENTIFIERS];
@@ -442,6 +486,12 @@ class ExportManager
         return $usedTypes;
     }
     
+    /**
+     * Retrieve the filter used in this export.
+     * 
+     * @param mixed $data the data from the `filters` key of the ExportType
+     * @return array an array with types
+     */
     private function retrieveUsedFiltersType($data)
     {
         $usedTypes = array();
@@ -481,7 +531,7 @@ class ExportManager
      */
     private function retrieveUsedAggregators($data)
     {
-        foreach($data as $alias => $aggregatorData) {
+        foreach ($data as $alias => $aggregatorData) {
             if ($aggregatorData['enabled'] === true){
                 yield $alias => $this->getAggregator($alias);
             }
@@ -490,43 +540,75 @@ class ExportManager
     
     /**
      * 
-     * @param ExportInterface $export
-     * @param QueryBuilder $qb
-     * @param mixed $data the data under the initial 'filters' data
+     * @param type $data the data from the filter key of the ExportType
      */
-    private function handleFilters(ExportInterface $export, QueryBuilder $qb, $data)
+    private function retrieveUsedFilters($data) 
     {
-        $filters = $this->getFiltersApplyingOn($export->supportsModifiers());
-                
-        foreach($filters as $alias => $filter) {
-            $this->logger->debug('handling filter '.$alias, array(
-                'class' => self::class, 'function' => __FUNCTION__
-            ));
-            
-            $formData = $data[$alias];
-            
-            if ($formData['enabled'] == true) {
-                $this->logger->debug('alter query by filter '.$alias, array(
-                    'class' => self::class, 'function' => __FUNCTION__
-                ));
-                $filter->alterQuery($qb, $formData['form']);
-            } else {
-                $this->logger->debug('skipping filter '.$alias.' because not enabled',
-                        array('class' => self::class, 'function' => __FUNCTION__));
+        foreach ($data as $alias => $filterData) {
+            if ($filterData['enabled'] === true) {
+                yield $alias => $this->getFilter($alias);
             }
         }
     }
     
-    private function handleAggregators(ExportInterface $export, QueryBuilder $qb, $data)
+    /**
+     * alter the query with selected filters.
+     * 
+     * This function check the acl.
+     * 
+     * @param ExportInterface $export
+     * @param QueryBuilder $qb
+     * @param mixed $data the data under the initial 'filters' data
+     * @param \Chill\MainBundle\Entity\Center[] $centers the picked centers
+     * @throw UnauthorizedHttpException if the user is not authorized
+     */
+    private function handleFilters(
+            ExportInterface $export, 
+            QueryBuilder $qb, 
+            $data, 
+            array $centers)
     {
-        //$aggregators = $this->getAggregatorsApplyingOn($export->supportsModifiers());
+        $filters = $this->retrieveUsedFilters($data);
+                
+        foreach($filters as $alias => $filter) {
+            if ($this->isGrantedForElement($filter, $export, $centers) === false) {
+                throw new UnauthorizedHttpException("You are not authorized to "
+                        . "use the filter ".$filter->getTitle());
+            }
+            
+            $formData = $data[$alias];
+
+            $this->logger->debug('alter query by filter '.$alias, array(
+                'class' => self::class, 'function' => __FUNCTION__
+            ));
+            $filter->alterQuery($qb, $formData['form']);
+
+        }
+    }
+    
+    /**
+     * Alter the query with selected aggregators
+     * 
+     * Check for acl. If an user is not authorized to see an aggregator, throw an
+     * UnauthorizedException.
+     * 
+     * @param ExportInterface $export
+     * @param QueryBuilder $qb
+     * @param type $data
+     * @param \Chill\MainBundle\Entity\Center[] $centers the picked centers
+     * @throw UnauthorizedHttpException if the user is not authorized
+     */
+    private function handleAggregators(
+            ExportInterface $export, 
+            QueryBuilder $qb, 
+            $data, 
+            array $center)
+    {
         $aggregators = $this->retrieveUsedAggregators($data);
         
         foreach ($aggregators as $alias => $aggregator) {
             $formData = $data[$alias];
-            //if ($formData['order'] >= 0) {
-                $aggregator->alterQuery($qb, $formData['form']);
-            //}
+            $aggregator->alterQuery($qb, $formData['form']);
         }
     }
     

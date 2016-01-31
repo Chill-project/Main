@@ -19,15 +19,29 @@
 
 namespace Chill\MainBundle\Export;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 /**
  * The common methods between different object used to build export (i.e. : ExportInterface,
- * FilterInterface, AggregatorInterface
+ * FilterInterface, AggregatorInterface)
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
  */
 interface ExportElementInterface
 {
-    public function requiredRole();
-    
+    /**
+     * get a title, which will be used in UI (and translated)
+     * 
+     * @return string
+     */
     public function getTitle();
+    
+        
+    /**
+     * Add a form to collect data from the user.
+     * 
+     * @param FormBuilderInterface $builder
+     */
+    public function buildForm(FormBuilderInterface $builder);
+    
 }

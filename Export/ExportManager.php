@@ -324,6 +324,8 @@ class ExportManager
                 } else {
                     $role = $export->requiredRole();
                 }
+            } else {
+                $role = $element->addRole();
             }
         } else {
             throw new \LogicException("The element is not an ModifiersInterface or "

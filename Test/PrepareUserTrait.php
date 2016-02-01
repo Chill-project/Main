@@ -45,10 +45,10 @@ trait PrepareUserTrait
      * ```
      * array(
      *    array( 'center' => $centerA, 'permissionsGroup' => array(
-     *        [ 'role' => 'CHILL_REPORT_SEE', 'scope' => $scopeA]
+     *        'role' => 'CHILL_REPORT_SEE', 'scope' => $scopeA
      *    ),
      *    array( 'center' => $centerB, 'permissionsGroup' => array(
-     *        [ 'role' => 'CHILL_ACTIVITY_UPDATE', 'scope' => $scopeB]
+     *        'role' => 'CHILL_ACTIVITY_UPDATE', 'scope' => $scopeB
      *    )
      * )
      * ```

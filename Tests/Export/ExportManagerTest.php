@@ -21,6 +21,7 @@ namespace Chill\MainBundle\Tests\Export;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Chill\MainBundle\Export\ExportManager;
+use Symfony\Component\Security\Core\Role\Role;
 
 /**
  * Test the export manager
@@ -30,6 +31,11 @@ use Chill\MainBundle\Export\ExportManager;
  */
 class ExportManagerTest extends KernelTestCase
 {
+    
+    use \Chill\MainBundle\Test\PrepareCenterTrait;
+    use \Chill\MainBundle\Test\PrepareUserTrait;
+    use \Chill\MainBundle\Test\PrepareScopeTrait;
+    
     /**
      *
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -69,10 +75,10 @@ class ExportManagerTest extends KernelTestCase
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @return ExportManager
      */
-    public function createExportManager(
+    protected function createExportManager(
             \Psr\Log\LoggerInterface $logger = null,
             \Doctrine\ORM\EntityManagerInterface $em = null,
-            \Symfony\Component\Security\Core\Authorization\AuthorizationChecker $authorizationChecker = null,
+            \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker = null,
             \Chill\MainBundle\Security\Authorization\AuthorizationHelper $authorizationHelper = null,
             \Symfony\Component\Security\Core\User\UserInterface $user = null
             ) 
@@ -287,9 +293,53 @@ class ExportManagerTest extends KernelTestCase
         $this->assertNotContains($formatterBar->reveal(), $obtained);
     }
     
-    public function testIsGrantedForElementUserIsGranted()
+    public function testIsGrantedForElementWithExportAndUserIsGranted()
     {
-        $this->markTestSkipped();
+        $center = $this->prepareCenter(100, 'center A');
+        $user = $this->prepareUser(array());
+        
+        $authorizationChecker = $this->prophet->prophesize();
+        $authorizationChecker->willImplement('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $center)
+                ->willReturn(True);
+        
+        $exportManager = $this->createExportManager(null, null, 
+                $authorizationChecker->reveal(), null, $user);
+        
+        $export = $this->prophet->prophesize();
+        $export->willImplement('Chill\MainBundle\Export\ExportInterface');
+        $export->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        
+        $result = $exportManager->isGrantedForElement($export->reveal(), null, array($center));
+        
+        $this->assertTrue($result);
+        
+    }
+    
+    public function testIsGrantedForElementWithExportAndUserIsGrantedNotForAllCenters()
+    {
+        $center = $this->prepareCenter(100, 'center A');
+        $centerB = $this->prepareCenter(102, 'center B');
+        $user = $this->prepareUser(array());
+        
+        $authorizationChecker = $this->prophet->prophesize();
+        $authorizationChecker->willImplement('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $center)
+                ->willReturn(true);
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $centerB)
+                ->willReturn(false);
+        
+        $exportManager = $this->createExportManager(null, null, 
+                $authorizationChecker->reveal(), null, $user);
+        
+        $export = $this->prophet->prophesize();
+        $export->willImplement('Chill\MainBundle\Export\ExportInterface');
+        $export->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        
+        $result = $exportManager->isGrantedForElement($export->reveal(), null, array($center, $centerB));
+        
+        $this->assertFalse($result);
+        
     }
     
     

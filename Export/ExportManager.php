@@ -28,7 +28,7 @@ use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Chill\MainBundle\Security\Authorization\AuthorizationHelper;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Chill\MainBundle\Form\Type\Export\PickCenterType;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -104,7 +104,7 @@ class ExportManager
     public function __construct(
             LoggerInterface $logger, 
             EntityManagerInterface $em,
-            AuthorizationChecker $authorizationChecker, 
+            AuthorizationCheckerInterface $authorizationChecker, 
             AuthorizationHelper $authorizationHelper,
             TokenStorageInterface $tokenStorage)
     {

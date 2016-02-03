@@ -22,6 +22,11 @@ namespace Chill\MainBundle\Tests\Export;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Chill\MainBundle\Export\ExportManager;
 use Symfony\Component\Security\Core\Role\Role;
+use Chill\MainBundle\Export\AggregatorInterface;
+use Chill\MainBundle\Export\FilterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Chill\MainBundle\Export\ExportInterface;
+use Prophecy\Argument;
 
 /**
  * Test the export manager
@@ -107,7 +112,7 @@ class ExportManagerTest extends KernelTestCase
         
         //create an export and add it to ExportManager
         $export = $this->prophet->prophesize();
-        $export->willImplement('Chill\MainBundle\Export\ExportInterface');
+        $export->willImplement(ExportInterface::class);
         $exportManager->addExport($export->reveal(), 'dummy');
         
         $exports = iterator_to_array($exportManager->getExports(false));
@@ -123,7 +128,7 @@ class ExportManagerTest extends KernelTestCase
         
         //create an export and add it to ExportManager
         $export = $this->prophet->prophesize();
-        $export->willImplement('Chill\MainBundle\Export\ExportInterface');
+        $export->willImplement(ExportInterface::class);
         $export->getType()->willReturn('my_type');
         $exportManager->addExport($export->reveal(), 'dummy');
         
@@ -137,12 +142,12 @@ class ExportManagerTest extends KernelTestCase
         
         //create an export and add it to ExportManager
         $export = $this->prophet->prophesize();
-        $export->willImplement('Chill\MainBundle\Export\ExportInterface');
+        $export->willImplement(ExportInterface::class);
         $exportManager->addExport($export->reveal(), 'dummy');
         
         $obtained = $exportManager->getExport('dummy');
 
-        $this->assertInstanceof('Chill\MainBundle\Export\ExportInterface', $obtained);
+        $this->assertInstanceof(ExportInterface::class, $obtained);
     }
     
     /**
@@ -307,7 +312,7 @@ class ExportManagerTest extends KernelTestCase
                 $authorizationChecker->reveal(), null, $user);
         
         $export = $this->prophet->prophesize();
-        $export->willImplement('Chill\MainBundle\Export\ExportInterface');
+        $export->willImplement(ExportInterface::class);
         $export->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
         
         $result = $exportManager->isGrantedForElement($export->reveal(), null, array($center));
@@ -333,7 +338,7 @@ class ExportManagerTest extends KernelTestCase
                 $authorizationChecker->reveal(), null, $user);
         
         $export = $this->prophet->prophesize();
-        $export->willImplement('Chill\MainBundle\Export\ExportInterface');
+        $export->willImplement(ExportInterface::class);
         $export->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
         
         $result = $exportManager->isGrantedForElement($export->reveal(), null, array($center, $centerB));
@@ -342,6 +347,208 @@ class ExportManagerTest extends KernelTestCase
         
     }
     
+    public function testIsGrantedForElementWithExportEmptyCenters()
+    {
+        $user = $this->prepareUser(array());
+        
+        $exportManager = $this->createExportManager(null, null, 
+                null, null, $user);
+        
+        $export = $this->prophet->prophesize();
+        $export->willImplement(\Chill\MainBundle\Export\ExportInterface::class);
+        $export->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        
+        $result = $exportManager->isGrantedForElement($export->reveal(), null, array());
+        
+        $this->assertFalse($result);
+        
+    }
     
+    public function testIsGrantedForElementWithModifierFallbackToExport()
+    {
+        $center = $this->prepareCenter(100, 'center A');
+        $centerB = $this->prepareCenter(102, 'center B');
+        $user = $this->prepareUser(array());
+        
+        $authorizationChecker = $this->prophet->prophesize();
+        $authorizationChecker->willImplement(AuthorizationCheckerInterface::class);
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $center)
+                ->willReturn(true);
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $centerB)
+                ->willReturn(false);
+        
+        $exportManager = $this->createExportManager(null, null, 
+                $authorizationChecker->reveal(), null, $user);
+        
+        $modifier = $this->prophet->prophesize();
+        $modifier->willImplement(\Chill\MainBundle\Export\ModifierInterface::class);
+        $modifier->addRole()->willReturn(NULL);
+        
+        $export = $this->prophet->prophesize();
+        $export->willImplement(ExportInterface::class);
+        $export->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        
+        $result = $exportManager->isGrantedForElement($modifier->reveal(), 
+                $export->reveal(), array($center, $centerB));
+        
+        $this->assertFalse($result);
+        
+    }
+    
+    public function testAggregatorsApplyingOn()
+    {
+        $center = $this->prepareCenter(100, 'center');
+        $centers = array($center);
+        $user = $this->prepareUser(array());
+        
+        $authorizationChecker = $this->prophet->prophesize();
+        $authorizationChecker->willImplement(AuthorizationCheckerInterface::class);
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $center)
+                ->willReturn(true);
+        
+        $exportManager = $this->createExportManager(null, null, 
+                $authorizationChecker->reveal(), null, $user);
+        
+        $exportFooBar = $this->prophet->prophesize();
+        $exportFooBar->willImplement(ExportInterface::class);
+        $exportFooBar->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        $exportFooBar->supportsModifiers()->willReturn(array('foo', 'bar'));
+        
+        $aggregatorBar = $this->prophet->prophesize();
+        $aggregatorBar->willImplement(AggregatorInterface::class);
+        $aggregatorBar->applyOn()->willReturn('bar');
+        $aggregatorBar->addRole()->willReturn(null);
+        $exportManager->addAggregator($aggregatorBar->reveal(), 'bar');
+        
+        $exportBar = $this->prophet->prophesize();
+        $exportBar->willImplement(ExportInterface::class);
+        $exportBar->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        $exportBar->supportsModifiers()->willReturn(array('bar'));
+        
+        $aggregatorFoo = $this->prophet->prophesize();
+        $aggregatorFoo->willImplement(AggregatorInterface::class);
+        $aggregatorFoo->applyOn()->willReturn('foo');
+        $aggregatorFoo->addRole()->willReturn(null);
+        $exportManager->addAggregator($aggregatorFoo->reveal(), 'foo');
+        
+        $exportFoo = $this->prophet->prophesize();
+        $exportFoo->willImplement(ExportInterface::class);
+        $exportFoo->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        $exportFoo->supportsModifiers()->willReturn(array('foo'));
+        
+
+        $obtained = iterator_to_array($exportManager->getAggregatorsApplyingOn($exportFoo->reveal(), $centers));
+        $this->assertEquals(1, count($obtained));
+        $this->assertContains('foo', array_keys($obtained));
+        
+        $obtained = iterator_to_array($exportManager->getAggregatorsApplyingOn($exportBar->reveal(), $centers));
+        $this->assertEquals(1, count($obtained));
+        $this->assertContains('bar', array_keys($obtained));
+        
+        $obtained = iterator_to_array($exportManager->getAggregatorsApplyingOn($exportFooBar->reveal(), $centers));
+        $this->assertEquals(2, count($obtained));
+        $this->assertContains('bar', array_keys($obtained));
+        $this->assertContains('foo', array_keys($obtained));
+        
+        // test with empty centers
+        $obtained = iterator_to_array($exportManager->getAggregatorsApplyingOn($exportFooBar->reveal(), array()));
+        $this->assertEquals(0, count($obtained));
+        
+    }
+    
+    public function testFiltersApplyingOn()
+    {
+        $center = $this->prepareCenter(100, 'center');
+        $centers = array($center);
+        $user = $this->prepareUser(array());
+        
+        $authorizationChecker = $this->prophet->prophesize();
+        $authorizationChecker->willImplement(AuthorizationCheckerInterface::class);
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $center)
+                ->willReturn(true);
+        
+        $exportManager = $this->createExportManager(null, null, 
+                $authorizationChecker->reveal(), null, $user);
+        
+        $exportFooBar = $this->prophet->prophesize();
+        $exportFooBar->willImplement(ExportInterface::class);
+        $exportFooBar->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        $exportFooBar->supportsModifiers()->willReturn(array('foo', 'bar'));
+        
+        $filterBar = $this->prophet->prophesize();
+        $filterBar->willImplement(FilterInterface::class);
+        $filterBar->applyOn()->willReturn('bar');
+        $filterBar->addRole()->willReturn(null);
+        $exportManager->addFilter($filterBar->reveal(), 'bar');
+        
+        $exportBar = $this->prophet->prophesize();
+        $exportBar->willImplement(ExportInterface::class);
+        $exportBar->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        $exportBar->supportsModifiers()->willReturn(array('bar'));
+        
+        $filterFoo = $this->prophet->prophesize();
+        $filterFoo->willImplement(FilterInterface::class);
+        $filterFoo->applyOn()->willReturn('foo');
+        $filterFoo->addRole()->willReturn(null);
+        $exportManager->addFilter($filterFoo->reveal(), 'foo');
+        
+        $exportFoo = $this->prophet->prophesize();
+        $exportFoo->willImplement(ExportInterface::class);
+        $exportFoo->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        $exportFoo->supportsModifiers()->willReturn(array('foo'));
+        
+
+        $obtained = iterator_to_array($exportManager->getFiltersApplyingOn($exportFoo->reveal(), $centers));
+        $this->assertEquals(1, count($obtained));
+        $this->assertContains('foo', array_keys($obtained));
+        
+        $obtained = iterator_to_array($exportManager->getFiltersApplyingOn($exportBar->reveal(), $centers));
+        $this->assertEquals(1, count($obtained));
+        $this->assertContains('bar', array_keys($obtained));
+        
+        $obtained = iterator_to_array($exportManager->getFiltersApplyingOn($exportFooBar->reveal(), $centers));
+        $this->assertEquals(2, count($obtained));
+        $this->assertContains('bar', array_keys($obtained));
+        $this->assertContains('foo', array_keys($obtained));
+        
+        $obtained = iterator_to_array($exportManager->getFiltersApplyingOn($exportFooBar->reveal(), array()));
+        $this->assertEquals(0, count($obtained));
+    }
+    
+    public function testGenerate()
+    {
+        $this->markTestSkipped("work in progress");
+        $center = $this->prepareCenter(100, 'center');
+        $centers = array($center);
+        $user = $this->prepareUser(array());
+        
+        $authorizationChecker = $this->prophet->prophesize();
+        $authorizationChecker->willImplement(AuthorizationCheckerInterface::class);
+        $authorizationChecker->isGranted('CHILL_STAT_DUMMY', $center)
+                ->willReturn(true);
+        
+        $exportManager = $this->createExportManager(null, null, 
+                $authorizationChecker->reveal(), null, $user);
+        
+        $export = $this->prophet->prophesize();
+        $export->initiateQuery(Argument::any(), Argument::any(), Argument::any())
+                ->willReturn(null);
+        $export->supportsModifiers()->willReturn(array('foo'));
+        $export->hasForm()->willReturn(false);
+        $export->requiredRole()->willReturn('CHILL_STAT_DUMMY');
+        $export->getResult()->willReturn(array(
+            array(
+                'aggregator' => 'cat a',
+                'export' => 0,
+            ),
+            array(
+                'aggregator' => 'cat b',
+                'export' => 1
+            )
+        ));
+        $export->getLabels()->willReturn();
+        
+        $filter ;
+    }
     
 }

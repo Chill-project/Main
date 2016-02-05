@@ -60,17 +60,9 @@ interface ExportInterface extends ExportElementInterface
      * @param QueryBuilder $qb
      * @param array $requiredModifiers
      * @param array $acl an array where each row as a `center` key containing the Chill\MainBundle\Entity\Center, and `circles` containing the reachable circles
-     * TODO : we should add ability to receive data from a form
+     * @param array $data the data from the form, if any
      */
-    public function initiateQuery(QueryBuilder $qb, array $requiredModifiers, $acl);
-
-    
-    /**
-     * Return wether this export has a form.
-     * 
-     * @return bool
-     */
-    public function hasForm();
+    public function initiateQuery(QueryBuilder $qb, array $requiredModifiers, array $acl, array $data = array());
     
     /**
      * Inform which ModifiersInterface (i.e. AggregatorInterface, FilterInterface)

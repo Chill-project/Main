@@ -50,6 +50,16 @@
             {{ form_row(form.children.export.children.pick_formatter.children.alias) }}
     </div>
     
+    {% if form.children.export.children.export.children|length > 0 %}
+    <div>
+        <h2>{{ 'Export'|trans }}</h2>
+            {{ form_widget(form.children.export.children.export) }}
+    </div>
+    {% else %}
+        {# render the children, to mark the widget as 'rendered' #}
+        {{ form_widget(form.children.export.children.export) }}
+    {% endif %}
+    
     <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>
     {{ form_end(form) }}
     

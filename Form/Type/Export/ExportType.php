@@ -42,6 +42,11 @@ class ExportType extends AbstractType
      */
     protected $exportManager;
     
+    const FILTER_KEY = 'filters';
+    const AGGREGATOR_KEY = 'aggregators';
+    const PICK_FORMATTER_KEY = 'pick_formatter';
+    const EXPORT_KEY = 'export';
+    
     public function __construct(ExportManager $exportManager)
     {
         $this->exportManager = $exportManager;
@@ -51,16 +56,15 @@ class ExportType extends AbstractType
     {
         $export = $this->exportManager->getExport($options['export_alias']);
         
-        /* this part has not been experimented
-        if ($export->hasForm()) {
-            $exportBuilder = $builder->create('export', null, array('compound' => true));
+        $exportBuilder = $builder->create(self::EXPORT_KEY, null, array('compound' => true));
+        //if ($export->hasForm()) {
             $export->buildForm($exportBuilder);
-            $builder->add($exportBuilder);
-        } */
+        //} 
+        $builder->add($exportBuilder);
         
         //add filters
         $filters = $this->exportManager->getFiltersApplyingOn($export, $options['picked_centers']);
-        $filterBuilder = $builder->create('filters', 'form', array('compound' => true));
+        $filterBuilder = $builder->create(self::FILTER_KEY, 'form', array('compound' => true));
         
         foreach($filters as $alias => $filter) {
             $filterBuilder->add($alias, new FilterType($this->exportManager), array(
@@ -74,7 +78,7 @@ class ExportType extends AbstractType
         //add aggregators
         $aggregators = $this->exportManager
                 ->getAggregatorsApplyingOn($export, $options['picked_centers']);
-        $aggregatorBuilder = $builder->create('aggregators', 'form', 
+        $aggregatorBuilder = $builder->create(self::AGGREGATOR_KEY, 'form', 
                 array('compound' => true));
         
         foreach($aggregators as $alias => $aggregator) {
@@ -86,7 +90,7 @@ class ExportType extends AbstractType
         
         $builder->add($aggregatorBuilder);
         
-        $builder->add('pick_formatter', PickFormatterType::class, array(
+        $builder->add(self::PICK_FORMATTER_KEY, PickFormatterType::class, array(
             'export_alias' => $options['export_alias']
         ));
         

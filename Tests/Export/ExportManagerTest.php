@@ -27,6 +27,10 @@ use Chill\MainBundle\Export\FilterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Chill\MainBundle\Export\ExportInterface;
 use Prophecy\Argument;
+use Doctrine\ORM\QueryBuilder;
+use Chill\MainBundle\Form\Type\Export\ExportType;
+use Symfony\Component\HttpFoundation\Response;
+use Chill\MainBundle\Form\Type\Export\PickCenterType;
 
 /**
  * Test the export manager
@@ -64,6 +68,11 @@ class ExportManagerTest extends KernelTestCase
         $this->container = self::$kernel->getContainer();
         
         $this->prophet = new \Prophecy\Prophet;
+    }
+    
+    public function tearDown()
+    {
+        $this->prophet->checkPredictions();
     }
     
     /**
@@ -515,11 +524,12 @@ class ExportManagerTest extends KernelTestCase
         $this->assertEquals(0, count($obtained));
     }
     
+    /**
+     * Test the generation of an export
+     */
     public function testGenerate()
     {
-        $this->markTestSkipped("work in progress");
         $center = $this->prepareCenter(100, 'center');
-        $centers = array($center);
         $user = $this->prepareUser(array());
         
         $authorizationChecker = $this->prophet->prophesize();
@@ -531,12 +541,22 @@ class ExportManagerTest extends KernelTestCase
                 $authorizationChecker->reveal(), null, $user);
         
         $export = $this->prophet->prophesize();
-        $export->initiateQuery(Argument::any(), Argument::any(), Argument::any())
-                ->willReturn(null);
+        $export->willImplement(ExportInterface::class);
+        $export->initiateQuery(
+                    Argument::Type(QueryBuilder::class), 
+                    Argument::is(array('foo')), 
+                    Argument::Type('array'),
+                    Argument::is(array('a' => 'b'))
+                )
+                ->will(function ($qb) {
+                    return $qb[0]->addSelect('COUNT(user.id) as export')
+                            ->from('ChillMainBundle:User', 'user');
+                    
+                });
+        //$export->initiateQuery()->shouldBeCalled();
         $export->supportsModifiers()->willReturn(array('foo'));
-        $export->hasForm()->willReturn(false);
-        $export->requiredRole()->willReturn('CHILL_STAT_DUMMY');
-        $export->getResult()->willReturn(array(
+        $export->requiredRole()->willReturn(new Role('CHILL_STAT_DUMMY'));
+        $export->getResult(Argument::Type(QueryBuilder::class), Argument::Type('array'))->willReturn(array(
             array(
                 'aggregator' => 'cat a',
                 'export' => 0,
@@ -546,9 +566,90 @@ class ExportManagerTest extends KernelTestCase
                 'export' => 1
             )
         ));
-        $export->getLabels()->willReturn();
+        $export->getLabels(
+                    Argument::is('export'), 
+                    Argument::is(array(0, 1)), 
+                    Argument::Type('array')
+                )
+                ->willReturn(array( 1 => 1, 0 => 0));
+        $export->getQueryKeys(Argument::Type('array'))->willReturn(array('export'));
+        $export->getTitle()->willReturn('dummy title');
+        $exportManager->addExport($export->reveal(), 'dummy');
         
-        $filter ;
+        $filter = $this->prophet->prophesize();
+        $filter->willImplement(FilterInterface::class);
+        //$filter->alterQuery()->shouldBeCalled();
+        $filter->alterQuery(Argument::Type(QueryBuilder::class), Argument::Type('array'))
+                ->willReturn(null);
+        $filter->addRole()->shouldBeCalled();
+        //$filter->addRole()->shouldBeCalled();
+        $filter->applyOn()->willReturn('foo');
+        $exportManager->addFilter($filter->reveal(), 'filter_foo');
+        
+        $aggregator = $this->prophet->prophesize();
+        $aggregator->willImplement(AggregatorInterface::class);
+        $aggregator->applyOn()->willReturn('foo');
+        $aggregator->alterQuery(Argument::Type(QueryBuilder::class), Argument::Type('array'))
+                ->willReturn(null);
+        //$aggregator->alterQuery()->shouldBeCalled();
+        $aggregator->getQueryKeys(Argument::Type('array'))->willReturn(array('aggregator'));
+        $aggregator->getLabels(
+                    Argument::is('aggregator'), 
+                    Argument::is(array('cat a', 'cat b')), 
+                    Argument::is(array())
+                )
+                ->willReturn(array(
+                'cat a' => 'label cat a', 'cat b' => 'label cat b'
+            ));
+        $aggregator->addRole()->willReturn(null);
+        //$aggregator->addRole()->shouldBeCalled();
+        $exportManager->addAggregator($aggregator->reveal(), 'aggregator_foo');
+        
+        //add csv formatter
+        $formatter = new \Chill\MainBundle\Export\Formatter\CSVFormatter(
+                $this->container->get('translator'), $exportManager);
+        $exportManager->addFormatter($formatter, 'csv');
+        
+        ob_start();
+        $response = $exportManager->generate('dummy', 
+                array(PickCenterType::CENTERS_IDENTIFIERS => array($center)), 
+                array(
+                    ExportType::FILTER_KEY => array(
+                        'filter_foo' => array(
+                            'enabled' => true,
+                            'form' => array()
+                        )
+                    ),
+                    ExportType::AGGREGATOR_KEY => array(
+                        'aggregator_foo' => array(
+                            'enabled' => true,
+                            'form' => array() 
+                        )
+                    ),
+                    ExportType::PICK_FORMATTER_KEY => array(
+                        'alias' => 'csv'
+                    ),
+                    ExportType::EXPORT_KEY => array(
+                        'a' => 'b'
+                    )
+                ), 
+                array(
+                    'aggregator_foo' => array(
+                        'order' => 1, 'position' => 'r'
+                    )
+                )
+            );
+        $content = ob_get_clean();
+        $this->assertInstanceOf(Response::class, $response);
+        $expected = <<<EOT
+"dummy title"
+
+,
+"label cat a",0
+"label cat b",1
+
+EOT;
+        $this->assertEquals($expected, $content);
     }
     
 }

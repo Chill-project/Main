@@ -32,6 +32,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Chill\MainBundle\Form\Type\Export\PickCenterType;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Chill\MainBundle\Form\Type\Export\ExportType;
 
 /**
  * Collects all agregators, filters and export from
@@ -384,14 +385,18 @@ class ExportManager
         $qb = $this->em->createQueryBuilder();
         $centers = $this->getPickedCenters($pickedCentersData);
         
-        $qb = $export->initiateQuery($qb, $this->retrieveUsedModifiers($data), 
-                $this->buildCenterReachableScopes($centers, $export));
+        $qb = $export->initiateQuery(
+                $qb, 
+                $this->retrieveUsedModifiers($data), 
+                $this->buildCenterReachableScopes($centers, $export),
+                $data[ExportType::EXPORT_KEY]
+                );
         
         //handle filters
-        $this->handleFilters($export, $qb, $data['filters'], $centers);
+        $this->handleFilters($export, $qb, $data[ExportType::FILTER_KEY], $centers);
         
         //handle aggregators
-        $this->handleAggregators($export, $qb, $data['aggregators'], $centers);
+        $this->handleAggregators($export, $qb, $data[ExportType::AGGREGATOR_KEY], $centers);
         
         $this->logger->debug('current query is '.$qb->getDQL(), array(
             'class' => self::class, 'function' => __FUNCTION__
@@ -403,10 +408,10 @@ class ExportManager
         $formatter = $this->getFormatter($this->getFormatterAlias($data));
         $filters = array();
         
-        $aggregators = $this->retrieveUsedAggregators($data['aggregators']);
+        $aggregators = $this->retrieveUsedAggregators($data[ExportType::AGGREGATOR_KEY]);
         $aggregatorsData = array();
         foreach($aggregators as $alias => $aggregator) {
-            $aggregatorsData[$alias] = $data['aggregators'][$alias]['form'];
+            $aggregatorsData[$alias] = $data[ExportType::AGGREGATOR_KEY][$alias]['form'];
         }
         
         return $formatter->getResponse($result, $formatterData, $exportAlias, $data,
@@ -441,7 +446,7 @@ class ExportManager
      */
     public function getUsedAggregatorsAliases(array $data)
     {
-        $aggregators = $this->retrieveUsedAggregators($data['aggregators']);
+        $aggregators = $this->retrieveUsedAggregators($data[ExportType::AGGREGATOR_KEY]);
         
         return array_keys(iterator_to_array($aggregators));
     }
@@ -454,7 +459,7 @@ class ExportManager
      */
     public function getFormatterAlias(array $data)
     {
-        return $data['pick_formatter']['alias'];
+        return $data[ExportType::PICK_FORMATTER_KEY]['alias'];
     }
     
     /**
@@ -478,14 +483,14 @@ class ExportManager
     private function retrieveUsedModifiers($data)
     {
         $usedTypes = array_merge(
-                $this->retrieveUsedFiltersType($data['filters']),
-                $this->retrieveUsedAggregatorsType($data['aggregators'])
+                $this->retrieveUsedFiltersType($data[ExportType::FILTER_KEY]),
+                $this->retrieveUsedAggregatorsType($data[ExportType::AGGREGATOR_KEY])
                 );
         
         $this->logger->debug('Required types are '.implode(', ', $usedTypes), 
                 array('class' => self::class, 'function' => __FUNCTION__));
         
-        return $usedTypes;
+        return array_unique($usedTypes);
     }
     
     /**

@@ -23,9 +23,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Chill\MainBundle\Export\ExportManager;
-use Chill\MainBundle\Form\Type\DataTransformer\AliasToFormatterTransformer;
 
 /**
+ * Choose a formatter amongst the available formatters
  * 
  *
  * @author Julien Fastré <julien.fastre@champs-libres.coop>
@@ -44,7 +44,6 @@ class PickFormatterType extends AbstractType
         $export = $this->exportManager->getExport($options['export_alias']);
         $allowedFormatters = $this->exportManager
                 ->getFormattersByTypes($export->getAllowedFormattersTypes());
-        //$transformer = new AliasToFormatterTransformer($this->exportManager);
         
         //build choices
         $choices = array();

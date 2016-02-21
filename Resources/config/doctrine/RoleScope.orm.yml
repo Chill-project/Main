@@ -1,6 +1,9 @@
 Chill\MainBundle\Entity\RoleScope:
     type: entity
     table: role_scopes
+    cache:
+        usage: NONSTRICT_READ_WRITE
+        region: acl_cache_region
     id:
         id:
             type: integer
@@ -16,3 +19,6 @@ Chill\MainBundle\Entity\RoleScope:
             targetEntity: Chill\MainBundle\Entity\Scope
             inversedBy: roleScopes
             nullable: true
+            cache:
+                usage: NONSTRICT_READ_WRITE
+                

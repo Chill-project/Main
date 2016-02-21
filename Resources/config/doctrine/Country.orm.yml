@@ -1,6 +1,9 @@
 Chill\MainBundle\Entity\Country:
     type: entity
     table: null
+    cache:
+        usage: READ_ONLY
+        region: country_cache_region
     fields:
         id:
             type: integer

@@ -1,6 +1,9 @@
 Chill\MainBundle\Entity\GroupCenter:
     type: entity
     table: group_centers
+    cache:
+        usage: NONSTRICT_READ_WRITE
+        region: acl_cache_region
     id:
         id:
             type: integer
@@ -11,5 +14,9 @@ Chill\MainBundle\Entity\GroupCenter:
         center:
             targetEntity: Chill\MainBundle\Entity\Center
             inversedBy: groupCenters
+            cache:
+                usage: NONSTRICT_READ_WRITE
         permissionsGroup:
             targetEntity: Chill\MainBundle\Entity\PermissionsGroup
+            cache:
+                usage: NONSTRICT_READ_WRITE

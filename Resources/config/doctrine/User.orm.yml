@@ -1,6 +1,9 @@
 Chill\MainBundle\Entity\User:
     type: entity
     table: users
+    cache:
+        usage: NONSTRICT_READ_WRITE
+        region: acl_cache_region
     id:
         id:
             type: integer
@@ -27,5 +30,7 @@ Chill\MainBundle\Entity\User:
     manyToMany:
         groupCenters:
             targetEntity: Chill\MainBundle\Entity\GroupCenter
+            cache:
+                usage: NONSTRICT_READ_WRITE
         
                     

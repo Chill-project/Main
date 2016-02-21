@@ -146,3 +146,25 @@ div.input_with_post_text input {
     flex: 2;
 }
 /* <- INPUT CLASS */
+
+dl.chill_report_view_data {
+    
+    dt {
+        margin-top: 1.5em;
+        color: $chill-blue;
+    }
+    
+    dd {
+        padding-left: 1.5em;
+        margin-top: 0.2em;
+        
+        ul {
+            padding-left: 0;
+        }
+    }
+    
+}
+
+.flash_message {
+    margin-top: 2.5em;
+}

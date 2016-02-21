@@ -7,9 +7,9 @@
     "homepage" : "http://chill.social",
     "support": {
         "email": "dev@lists.chill.social",
-        "issues": "https://redmine.champs-libres.coop/projects/chillmain/issues",
-        "sources": "https://github.com/chill-project/main",
-        "docs": "http://chill.readthedocs.org"
+        "issues": "https://git.framasoft.org/Chill-project/Chill-Main/issues",
+        "sources": "https://git.framasoft.org/Chill-project/Chill-Main",
+        "docs": "http://docs.chill.social"
     },
     "autoload": {
         "psr-4": { "Chill\\MainBundle\\": "" }

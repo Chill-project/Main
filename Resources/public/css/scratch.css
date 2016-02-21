@@ -5637,5 +5637,16 @@ div.input_with_post_text input {
   flex: 2; }
 
 /* <- INPUT CLASS */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/media\/ssd2\/julien\/dev\/chill-dev\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003151}}
+dl.chill_report_view_data dt {
+  margin-top: 1.5em;
+  color: #334d5c; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/media\/ssd2\/julien\/dev\/chill-dev\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003156}}
+dl.chill_report_view_data dd {
+  padding-left: 1.5em;
+  margin-top: 0.2em; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/media\/ssd2\/julien\/dev\/chill-dev\/vendor\/chill-project\/main\/Resources\/public\/sass\/_custom\.scss}line{font-family:\00003160}}
+  dl.chill_report_view_data dd ul {
+    padding-left: 0; }
 
 /*# sourceMappingURL=scratch.css.map */

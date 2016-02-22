@@ -1,5 +1,7 @@
 // YOUR CUSTOM SCSS
 @import 'custom/timeline';
+@import 'custom/mixins/entity';
+@import 'custom/activity';
 
 html,body { 
    min-height:100%;
@@ -147,7 +149,8 @@ div.input_with_post_text input {
 }
 /* <- INPUT CLASS */
 
-dl.chill_report_view_data {
+dl.chill_report_view_data,
+dl.chill_view_data {
     
     dt {
         margin-top: 1.5em;
@@ -167,4 +170,21 @@ dl.chill_report_view_data {
 
 .flash_message {
     margin-top: 2.5em;
+}
+
+blockquote.chill-user-quote {
+    border-left: 10px solid $chill-yellow;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+    background-color: $chill-llight-gray;
+    
+    
+    p { display: inline; }
+    
+}
+
+.chill-no-data-statement {
+    font-style: italic;
+    
 }

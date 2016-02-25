@@ -50,10 +50,6 @@ chill_main_admin_central:
     defaults: { _controller: ChillMainBundle:Admin:index }
     options:
         menus:
-            section:
-                order: 30
-                label: Admin Menu
-                icons: [gears]
             admin_permissions:
                 order: 0
                 label: Main admin menu

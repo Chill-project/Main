@@ -22,6 +22,12 @@ Edit: Modifier
 Update: Mettre à jour
 Back to the list: Retour à la liste
 
+#addresses
+Street address1: Adresse ligne 1
+Street address2: Adresse ligne 2
+Postal code: Code postal
+Valid from: Valide à partir du
+
 #serach
 Your search is empty. Please provide search terms.: La recherche est vide. Merci de fournir des termes de recherche.
 The domain %domain% is unknow. Please check your search.: Le domaine de recherche "%domain%" est inconnu. Merci de vérifier votre recherche.

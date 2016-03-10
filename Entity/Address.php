@@ -15,12 +15,12 @@ class Address
     /**
      * @var string
      */
-    private $streetAddress1;
+    private $streetAddress1 = '';
 
     /**
      * @var string
      */
-    private $streetAddress2;
+    private $streetAddress2 = '';
 
     /**
      * @var \Chill\MainBundle\Entity\PostalCode
@@ -32,6 +32,11 @@ class Address
      * @var \DateTime
      */
     private $validFrom;
+    
+    public function __construct()
+    {
+        $this->validFrom = new \DateTime();
+    }
 
 
     /**
@@ -53,7 +58,7 @@ class Address
      */
     public function setStreetAddress1($streetAddress1)
     {
-        $this->streetAddress1 = $streetAddress1;
+        $this->streetAddress1 = $streetAddress1 === NULL ? '' : $streetAddress1;
 
         return $this;
     }
@@ -77,7 +82,7 @@ class Address
      */
     public function setStreetAddress2($streetAddress2)
     {
-        $this->streetAddress2 = $streetAddress2;
+        $this->streetAddress2 = $streetAddress2 === NULL ? '' : $streetAddress2;
 
         return $this;
     }

@@ -127,3 +127,10 @@ services:
             - "@translator"
         tags:
             - { name: validator.constraint_validator, alias: 'role_scope_scope_presence' }
+            
+    chill.main.form.type.postal_code_type:
+        class: Chill\MainBundle\Form\Type\PostalCodeType
+        arguments:
+            - "@chill.main.helper.translatable_string"
+        tags:
+            - { name: form.type }

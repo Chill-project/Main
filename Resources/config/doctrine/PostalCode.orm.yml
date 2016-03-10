@@ -1,0 +1,21 @@
+Chill\MainBundle\Entity\PostalCode:
+    type: entity
+    table: chill_main_postal_code
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            column: label
+        code:
+            type: string
+            length: 100
+    manyToOne:
+        country:
+            targetEntity: Chill\MainBundle\Entity\Country
+    lifecycleCallbacks: {  }

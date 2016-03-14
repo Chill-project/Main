@@ -51,6 +51,13 @@ services:
         tags:
             - { name: twig.extension }
             
+    chill.main.twig.delegated_block:
+        class: Chill\MainBundle\Templating\DelegatedBlockRenderingTwig
+        arguments:
+            - "@event_dispatcher"
+        tags:
+            - { name: twig.extension }
+            
     chill.main.twig.csv_cell:
         class: Chill\MainBundle\Templating\CSVCellTwig
         tags:

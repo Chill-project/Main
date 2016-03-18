@@ -42,7 +42,9 @@ class AddressType extends AbstractType
                  'required' => false
               ))
               ->add('postCode', PostalCodeType::class, array(
-                 'label' => 'Postal code'
+                 'label' => 'Postal code',
+                 'placeholder' => 'Choose a postal code',
+                 'required' => true
               ))
               ->add('validFrom', 'date', array(
                 'required' => true, 

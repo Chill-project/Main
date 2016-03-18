@@ -29,3 +29,28 @@ Chill\MainBundle\Entity\Center:
             - Length:
                 max: 50
                 min: 3
+
+Chill\MainBundle\Entity\Address:
+    properties:
+        streetAddress1:
+            - Length:
+                min: 2
+                max: 250
+        postcode:
+            - NotNull: ~
+        validFrom:
+            - NotNull: ~
+            - Date: ~
+            
+Chill\MainBundle\Entity\PostalCode:
+    properties:
+        name:
+            - Length: 
+                max: 250
+                min: 2
+        code:
+            - Length:
+                min: 2
+                max: 100
+        country:
+            - NotNull: ~

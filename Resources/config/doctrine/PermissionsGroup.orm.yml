@@ -1,6 +1,9 @@
 Chill\MainBundle\Entity\PermissionsGroup:
     type: entity
     table: permission_groups
+    cache:
+        usage: NONSTRICT_READ_WRITE
+        region: acl_cache_region
     id:
         id:
             type: integer
@@ -14,4 +17,6 @@ Chill\MainBundle\Entity\PermissionsGroup:
     manyToMany:
         roleScopes:
             targetEntity: Chill\MainBundle\Entity\RoleScope
+            cache:
+                usage: NONSTRICT_READ_WRITE
             

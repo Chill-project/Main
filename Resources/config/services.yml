@@ -51,6 +51,13 @@ services:
         tags:
             - { name: twig.extension }
             
+    chill.main.twig.delegated_block:
+        class: Chill\MainBundle\Templating\DelegatedBlockRenderingTwig
+        arguments:
+            - "@event_dispatcher"
+        tags:
+            - { name: twig.extension }
+            
     chill.main.twig.csv_cell:
         class: Chill\MainBundle\Templating\CSVCellTwig
         tags:
@@ -127,3 +134,10 @@ services:
             - "@translator"
         tags:
             - { name: validator.constraint_validator, alias: 'role_scope_scope_presence' }
+            
+    chill.main.form.type.postal_code_type:
+        class: Chill\MainBundle\Form\Type\PostalCodeType
+        arguments:
+            - "@chill.main.helper.translatable_string"
+        tags:
+            - { name: form.type }

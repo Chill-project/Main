@@ -100,7 +100,7 @@ module.exports = function(grunt) {
       sass: {
          dist: {
             options: {
-               debugInfo: true,
+               debugInfo: false,
             },
             files: [{
                expand: true,

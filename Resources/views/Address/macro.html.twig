@@ -1,0 +1,10 @@
+{%- macro _render(address, options) -%}
+    {% set options = { 'with_valid_from' : true }|merge(options|default({})) %}
+    {% if address.streetAddress1 is not empty %}<span class="street street1">{{ address.streetAddress1 }}</span><br/>{% endif %}
+    {% if address.streetAddress2 is not empty %}<span class="street street2">{{ address.streetAddress2 }}</span><br/>{% endif %}
+    <span class="postalCode"><span class="code">{{ address.postCode.code }}</span> <span class="name">{{ address.postCode.name }}</span></span><br/>
+    <span class="country">{{ address.postCode.country.name|localize_translatable_string }}</span><br/>
+    {%- if options['with_valid_from'] == true -%}
+    <span class="address_since">{{ 'Since %date%'|trans( { '%date%' : address.validFrom|localizeddate('long', 'none') } ) }}</span>
+    {%- endif -%}
+{%- endmacro -%}

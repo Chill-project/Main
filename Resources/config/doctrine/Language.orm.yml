@@ -1,6 +1,9 @@
 Chill\MainBundle\Entity\Language:
     type: entity
     table: null
+    cache:
+        usage: READ_ONLY
+        region: language_cache_region
     id: 
         id:
             type: string

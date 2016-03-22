@@ -1,0 +1,15 @@
+@mixin entity($background-color, $color: white) {
+    font-variant: small-caps;
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 88%;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    color: $color;
+    background-color: $background-color;
+}
+

@@ -1,0 +1,22 @@
+Chill\MainBundle\Entity\Address:
+    type: entity
+    table: chill_main_address
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        streetAddress1:
+            type: string
+            length: 255
+        streetAddress2:
+            type: string
+            length: 255
+        validFrom:
+            type: date
+    manyToOne:
+        postcode:
+            targetEntity: Chill\MainBundle\Entity\PostalCode
+    lifecycleCallbacks: {  }

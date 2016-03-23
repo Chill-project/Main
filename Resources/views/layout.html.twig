@@ -36,16 +36,6 @@
     {% endstylesheets %}
     
     {% block css%}<!-- nothing added to css -->{% endblock %}
-
-    {% javascripts output="js/libs.js"
-        "bundles/chillmain/js/jquery.js"
-        "bundles/chillmain/js/moment.js"
-        "bundles/chillmain/js/pikaday/pikaday.js"
-        "bundles/chillmain/js/select2/select2.js"
-        "bundles/chillmain/js/pikaday/plugins/pikaday.jquery.js"
-        "bundles/chillmain/js/chill.js" %}
-    <script src="{{ asset_url }}" type="text/javascript"></script>
-    {% endjavascripts %}    
 </head>
 
 <body>
@@ -161,6 +151,16 @@
     <footer class="footer">
         <p>{{ 'Programme sous license' | trans }} <b>AGPL</b></p>
     </footer>
+    
+    {% javascripts output="js/libs.js"
+        "bundles/chillmain/js/jquery.js"
+        "bundles/chillmain/js/moment.js"
+        "bundles/chillmain/js/pikaday/pikaday.js"
+        "bundles/chillmain/js/select2/select2.js"
+        "bundles/chillmain/js/pikaday/plugins/pikaday.jquery.js"
+        "bundles/chillmain/js/chill.js" %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
 
     <script type="text/javascript">
         chill.initPikaday('{{ app.request.locale }}');
@@ -170,7 +170,5 @@
     </script>
 
     {% block js%}<!-- nothing added to js -->{% endblock %}
-
-
 </body>
 </html>

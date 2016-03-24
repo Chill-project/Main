@@ -164,12 +164,27 @@ class AuthorizationHelper
     /**
      * Return all reachable scope for a given user, center and role
      * 
+     * @deprecated Use getReachableCircles
+     *
      * @param User $user
      * @param Role $role
      * @param Center $center
      * @return Scope[]
      */
     public function getReachableScopes(User $user, Role $role, Center $center)
+    {
+        return $this->getReachableCircles($user, $role, $center);
+    }
+    
+    /**
+     * Return all reachable circle for a given user, center and role
+     * 
+     * @param User $user
+     * @param Role $role
+     * @param Center $center
+     * @return Scope[]
+     */
+    public function getReachableCircles(User $user, Role $role, Center $center)
     {
         $scopes = array();
         
@@ -191,6 +206,8 @@ class AuthorizationHelper
         
         return $scopes;
     }
+    
+    
     
     /**
      * Test if a parent role may give access to a given child role

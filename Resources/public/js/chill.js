@@ -174,6 +174,71 @@ var chill = function() {
         });
     }
 
+    /**
+    * Create an interraction between two select element (the parent and the
+    * child) of a given form : each parent option has a category, the
+    * child select only display options that have the same category of the
+    * parent optionn
+    */
+    /**
+     * TODO ECRIRE LA DOC METTRE LES TESTS DANS git :
+     * tester que init est ok :
+        - quand vide
+        - quand choix
+     * tester que quand sélection
+        - quand vide
+        - quand choix
+     */
+    function categoryLinkParentChildSelect() {
+        var forms_to_link = $('form:has(select.chill-category-link-parent)');
+
+        forms_to_link.each(function(i,form_selector) {
+            var form = $(form_selector);
+            form.old_category = null;
+            form.link_parent =  $(form).find('.chill-category-link-parent');
+            form.link_child = $(form).find('.chill-category-link-child');
+
+            $(form.link_parent).addClass('select2');
+            $(form.link_parant).select2({allowClear: true});
+
+            form.old_category = null;
+            if($(form.link_parent).select2('data') !== null) {
+                form.old_category = ($(form.link_parent).select2('data').element[0].dataset.linkCategory);
+            }
+
+            $(form.link_child).find('option')
+                .each(function(i,e) {
+                    if(
+                        ((!$(e).data('link-category')) || $(e).data('link-category') == form.old_category) &&
+                        ((!$(e).data('link-categories')) || form.old_category in $(e).data('link-categories').split(','))
+                    ) {
+                        $(e).show();
+                    } else {
+                        $(e).hide();
+                    }
+                });
+
+            form.link_parent.change(function() {
+                var new_category = ($(form.link_parent).select2('data').element[0].dataset.linkCategory);
+                if(new_category != form.old_category) {
+                    $(form.link_child).find('option')
+                        .each(function(i,e) {
+                            if(
+                                ((!$(e).data('link-category')) || $(e).data('link-category') == new_category) &&
+                                ((!$(e).data('link-categories')) || new_category in $(e).data('link-categories').split(','))
+                            ) {
+                                $(e).show();
+                            } else {
+                                $(e).hide();
+                            }
+                        });
+                    $(form.link_child).find('option')[0].selected = true;
+                    form.old_category = new_category;
+                }
+            });
+        });
+    }
+
     return {
         initPikaday: initPikaday,
         emulateSticky: emulateSticky,
@@ -181,5 +246,6 @@ var chill = function() {
         displayAlertWhenLeavingModifiedForm: displayAlertWhenLeavingModifiedForm,
         displayAlertWhenLeavingUnsubmittedForm: displayAlertWhenLeavingUnsubmittedForm,
         checkNullValuesInChoices: checkNullValuesInChoices,
+        categoryLinkParentChildSelect: categoryLinkParentChildSelect,
     };
 } ();

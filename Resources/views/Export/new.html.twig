@@ -27,6 +27,8 @@
     <p>{{ export.description|trans }}</p>
 
     {{ form_start(form) }}
+    
+    {% if form.children.export.children.filters is not empty%}
     <div>
         <h2>{{ 'Filters'| trans }}</h2>
         {% for filter_form in form.children.export.children.filters %}
@@ -35,7 +37,9 @@
             {{ form_widget(filter_form.form) }}
         {% endfor %}
     </div>
+    {% endif %}
     
+    {% if form.children.export.children.aggregators is not empty %} 
     <div>
         <h2>{{ 'Aggregators'| trans }}</h2>
         {% for aggregator_form in form.children.export.children.aggregators %}
@@ -44,6 +48,7 @@
             {{ form_widget(aggregator_form.form) }}
         {% endfor %}
     </div>
+    {% endif %} 
     
     <div>
         <h2>{{ 'Formatter'| trans }}</h2>
@@ -56,8 +61,8 @@
             {{ form_widget(form.children.export.children.export) }}
     </div>
     {% else %}
-        {# render the children, to mark the widget as 'rendered' #}
-        {{ form_widget(form.children.export.children.export) }}
+        {# render the children, to mark the widget as 'rendered' 
+        {{ form_widget(form.children.export.children.export) }}#}
     {% endif %}
     
     <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>

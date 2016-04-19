@@ -201,3 +201,11 @@ services:
             - "@chill.main.export_manager"
         tags:
             - { name: chill.export_formatter, alias: 'csv' }
+            
+    chill.main.export.list_formatter:
+        class: Chill\MainBundle\Export\Formatter\CSVListFormatter
+        arguments:
+            - "@translator"
+            - "@chill.main.export_manager"
+        tags:
+            - { name: chill.export_formatter, alias: 'csvlist' }

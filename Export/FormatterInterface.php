@@ -42,7 +42,11 @@ interface FormatterInterface
      * @param type $exportAlias
      * @param array $aggregatorAliases
      */
-    public function buildForm(FormBuilderInterface $builder, $exportAlias, array $aggregatorAliases);
+    public function buildForm(
+          FormBuilderInterface $builder, 
+          $exportAlias, 
+          array $aggregatorAliases
+          );
     
     /**
      * Generate a response from the data collected on differents ExportElementInterface
@@ -52,8 +56,15 @@ interface FormatterInterface
      * @param \Chill\MainBundle\Export\ExportInterface $export the export which is executing
      * @param \Chill\MainBundle\Export\FilterInterface[] $filters the filters applying on the export. The key will be filters aliases, and the values will be filter's data (from their own form)
      * @param \Chill\MainBundle\Export\AggregatorInterface[] $aggregators the aggregators applying on the export. The key will be aggregators aliases, and the values will be aggregator's data (from their own form)
+     * @return \Symfony\Component\HttpFoundation\Response The response to be shown
      */
-    public function getResponse($result, $formatterData, $exportAlias, array $exportData, array $filtersData, 
-            array $aggregatorsData);
+    public function getResponse(
+          $result, 
+          $formatterData, 
+          $exportAlias, 
+          array $exportData, 
+          array $filtersData, 
+          array $aggregatorsData
+          );
     
 }

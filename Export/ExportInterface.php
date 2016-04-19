@@ -59,7 +59,7 @@ interface ExportInterface extends ExportElementInterface
      * 
      * @param QueryBuilder $qb
      * @param array $requiredModifiers
-     * @param array $acl an array where each row as a `center` key containing the Chill\MainBundle\Entity\Center, and `circles` containing the reachable circles
+     * @param array $acl an array where each row has a `center` key containing the Chill\MainBundle\Entity\Center, and `circles` keys containing the reachable circles. Example: `array( array('center' => $centerA, 'circles' => array($circleA, $circleB) ) )`
      * @param array $data the data from the form, if any
      */
     public function initiateQuery(QueryBuilder $qb, array $requiredModifiers, array $acl, array $data = array());

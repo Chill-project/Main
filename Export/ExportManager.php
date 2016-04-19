@@ -402,7 +402,7 @@ class ExportManager
             'class' => self::class, 'function' => __FUNCTION__
         ));
         
-        $result = $export->getResult($qb, array());
+        $result = $export->getResult($qb, $data[ExportType::EXPORT_KEY]);
         
         /* @var $formatter Formatter\CSVFormatter */
         $formatter = $this->getFormatter($this->getFormatterAlias($data));
@@ -414,8 +414,13 @@ class ExportManager
             $aggregatorsData[$alias] = $data[ExportType::AGGREGATOR_KEY][$alias]['form'];
         }
         
-        return $formatter->getResponse($result, $formatterData, $exportAlias, $data,
-                $filters, $aggregatorsData);
+        return $formatter->getResponse(
+              $result, 
+              $formatterData, 
+              $exportAlias, 
+              $data[ExportType::EXPORT_KEY],
+              $filters, 
+              $aggregatorsData);
     }
     
     /**

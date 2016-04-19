@@ -28,6 +28,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Export\ExportManager;
 use Chill\MainBundle\Form\Type\Export\FilterType;
 use Chill\MainBundle\Form\Type\Export\AggregatorType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
  * 
@@ -89,6 +90,12 @@ class ExportType extends AbstractType
         }
         
         $builder->add($aggregatorBuilder);
+        
+        // add export form
+        $exportBuilder = $builder->create(self::EXPORT_KEY, FormType::class, array('compound' => true));
+        $this->exportManager->getExport($options['export_alias'])
+              ->buildForm($exportBuilder);
+        $builder->add($exportBuilder);
         
         $builder->add(self::PICK_FORMATTER_KEY, PickFormatterType::class, array(
             'export_alias' => $options['export_alias']

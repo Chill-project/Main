@@ -141,9 +141,14 @@ class CSVFormatter implements FormatterInterface
      * @param \Chill\MainBundle\Export\FilterInterface[] $filters
      * @param \Chill\MainBundle\Export\AggregatorInterface[] $aggregators
      */
-    public function getResponse($result, $formatterData, $exportAlias, array $exportData, array $filtersData, 
-            array $aggregatorsData)
-    {
+    public function getResponse(
+          $result, 
+          $formatterData, 
+          $exportAlias, 
+          array $exportData, 
+          array $filtersData, 
+          array $aggregatorsData
+    ) {
         $this->result = $result;
         $this->orderingHeaders($formatterData);
         $this->export = $this->exportManager->getExport($exportAlias);

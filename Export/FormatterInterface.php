@@ -28,6 +28,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 interface FormatterInterface
 {
     const TYPE_TABULAR = 'tabular';
+    const TYPE_CSV_LIST = 'csvlist';
     
     public function getType();
     
@@ -39,8 +40,8 @@ interface FormatterInterface
      * 
      * @uses appendAggregatorForm
      * @param FormBuilderInterface $builder
-     * @param type $exportAlias
-     * @param array $aggregatorAliases
+     * @param String $exportAlias Alias of the export which is being executed. An export gets the data and implements the \Chill\MainBundle\Export\ExportInterface
+     * @param Array(String) $aggregatorAliases Array of the aliases of the aggregators. An aggregator do the "group by" on the data. $aggregatorAliases
      */
     public function buildForm(
           FormBuilderInterface $builder, 
@@ -53,7 +54,7 @@ interface FormatterInterface
      * 
      * @param mixed[] $result The result, as given by the ExportInterface
      * @param mixed[] $data collected from the current form
-     * @param \Chill\MainBundle\Export\ExportInterface $export the export which is executing
+     * @param String $exportAlias Alias of the export which is being executed. An export gets the data and implements the  \Chill\MainBundle\Export\ExportInterface
      * @param \Chill\MainBundle\Export\FilterInterface[] $filters the filters applying on the export. The key will be filters aliases, and the values will be filter's data (from their own form)
      * @param \Chill\MainBundle\Export\AggregatorInterface[] $aggregators the aggregators applying on the export. The key will be aggregators aliases, and the values will be aggregator's data (from their own form)
      * @return \Symfony\Component\HttpFoundation\Response The response to be shown

@@ -55,7 +55,8 @@ class AggregatorType extends AbstractType
                     ),
                     'multiple' => false,
                     'expanded' => true,
-                    'choices_as_values' => true
+                    'choices_as_values' => true,
+                    'data' => false
                 ));
         
         $filterFormBuilder = $builder->create('form', 'form', array(

@@ -37,6 +37,9 @@
             {{ form_widget(filter_form.form) }}
         {% endfor %}
     </div>
+    {% else %}
+        {# render the children, to mark the widget as 'rendered' #}
+        {{ form_widget(form.children.export.children.filters) }}
     {% endif %}
     
     {% if form.children.export.children.aggregators is not empty %} 
@@ -48,16 +51,15 @@
             {{ form_widget(aggregator_form.form) }}
         {% endfor %}
     </div>
+    {% else %}
+        {# render the children, to mark the widget as 'rendered' #}
+        {{ form_widget(form.children.export.children.aggregators) }}
     {% endif %} 
     
-    <div>
-        <h2>{{ 'Formatter'| trans }}</h2>
-            {{ form_row(form.children.export.children.pick_formatter.children.alias) }}
-    </div>
     
     {% if form.children.export.children.export.children|length > 0 %}
     <div>
-        <h2>{{ 'Export'|trans }}</h2>
+        <h2>{{ 'Export parameters'|trans }}</h2>
             {{ form_widget(form.children.export.children.export) }}
     </div>
     {% else %}
@@ -65,7 +67,15 @@
         {{ form_widget(form.children.export.children.export) }}#}
     {% endif %}
     
-    <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>
+    <div style="clear: both;">
+        <h2>{{ 'Formatter'| trans }}</h2>
+                
+        <p> {{ 'Choose the formatter'|trans }}</p>
+        
+            {{ form_row(form.children.export.children.pick_formatter.children.alias, { 'label' : 'Formatter' }) }}
+    </div>
+    
+    <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-create' }, 'label' : 'Go to formatter options' } ) }}</p>
     {{ form_end(form) }}
     
 {% endblock layout_wvm_content  %}

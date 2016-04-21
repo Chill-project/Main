@@ -27,12 +27,20 @@
     <p>{{ export.description|trans }}</p>
 
     {{ form_start(form) }}
-    <div>
+    <div style="">
         <h2>{{ 'Formatter'| trans }}</h2>
-        {{ form_widget(form.children.formatter) }}
+        
+        <div style="clear: both;">
+        {% for input in form.children.formatter.children %}
+        {{ form_row(input) }}
+        {% endfor %}
+        </div>
     </div>
     
-    <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>
+    <div style=clear:both;">
+    <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' }, 'label': 'Generate the report' } ) }}</p>
+    </div>
+    
     {{ form_end(form) }}
     
 {% endblock layout_wvm_content  %}

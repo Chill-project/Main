@@ -245,11 +245,9 @@ class ExportController extends Controller
             ));
         }
         
-        //if (strpos($step, 'generate_') !== false) {
-            $builder->add('submit', 'submit', array(
-                'label' => 'Generate'
-            ));
-        //}
+        $builder->add('submit', 'submit', array(
+            'label' => 'Generate'
+        ));
         
         return $builder->getForm();
     }

@@ -29,10 +29,13 @@
     {{ form_start(form) }}
     
     <h2>{{ 'Pick centers'|trans }}</h2>
+    
+    <p>{{ 'The export will contains only data from the picked centers.'|trans }} 
+        {{ 'This will eventually restrict your possibilities in filtering the data.'|trans }}</p>
 
     {{ form_widget(form.centers.c) }}
     
-    <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action' } } ) }}</p>
+    <p>{{ form_widget(form.submit, { 'attr' : { 'class' : 'sc-button btn-action bt-create' }, 'label' : 'Go to export options' } ) }}</p>
     {{ form_end(form) }}
     
 {% endblock layout_wvm_content  %}

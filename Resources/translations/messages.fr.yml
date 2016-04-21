@@ -17,6 +17,8 @@ Welcome: Bienvenue
 Export Menu: Export
 Admin Menu: Menu d'administration
 Details: Détails
+yes: oui
+no: non
 
 Edit: Modifier
 Update: Mettre à jour
@@ -108,6 +110,27 @@ Create a new circle: Créer un nouveau cercle
 
 #export
 
+# export creation step 0 : list of exports
+Exports list: Liste des exports
+Create an export: Créer un export
+#export creation step 'center' : pick a center
+Pick centers: Choisir les centres
+The export will contains only data from the picked centers.: L'export ne contiendra que les données des centres choisis.
+This will eventually restrict your possibilities in filtering the data.: Les possibilités de filtrages seront adaptées aux droits de consultation pour les centres choisis.
+Go to export options: Vers la préparation de l'export
+# export creation step 'export' : choose aggregators, filtering and formatter
+Formatter: Formatteur
+Choose the formatter: Choisissez le format d'export voulu.
+Export parameters: Paramètres d'export
+Filters: Filtres
+Aggregators: Aggrégateurs
+Go to formatter options: Vers les options du formatteur
+#export creation step 'formatter' : choose formatter option
+Generate the report: Générer le rapport
+
+
 #CSV List Formatter
 Add a number on first column: La première colonne est un numéro
 Number: Numéro
+# the label which appears in the UI
+CSV List: Liste au format CSV

@@ -116,9 +116,9 @@ interface ExportInterface extends ExportElementInterface
      * have, as value, a string for the header. See example in return declaration
      * 
      * @param string $key The column key, as added in the query
-     * @param mixed[] $values The values from the result. Each value should be unique. Example: array('FR', 'BE', 'CZ')
-     * @param mixed $data The data from the form
-     * @return string[] where keys are the identifier given by result, and the value a string which should be displayed to the user. A special key '_header' should be added for the header. Example: array('FR' => 'France', 'BE' => 'Belgium', 'CZ' => 'Tchécoslovaquie', '_header' => 'Pays')
+     * @param mixed[] $values The values from the result. if there are duplicates, those might be given twice. Example: array('FR', 'BE', 'CZ', 'FR', 'BE', 'FR')
+     * @param mixed $data The data from the export's form (as defined in `buildForm`
+     * @return \Closure where the first argument is the value, and the function should return the label to show in the formatted file. Example : `function($countryCode) use ($countries) { return $countries[$countryCode]->getName(); }`
      */
     public function getLabels($key, array $values, $data);
 

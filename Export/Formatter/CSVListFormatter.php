@@ -19,13 +19,12 @@
 
 namespace Chill\MainBundle\Export\Formatter;
 
-use Chill\MainBundle\Export\ExportInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Chill\MainBundle\Export\FormatterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Export\ExportManager;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 // command to get the report with curl : curl --user "center a_social:password" "http://localhost:8000/fr/exports/generate/count_person?export[filters][person_gender_filter][enabled]=&export[filters][person_nationality_filter][enabled]=&export[filters][person_nationality_filter][form][nationalities]=&export[aggregators][person_nationality_aggregator][order]=1&export[aggregators][person_nationality_aggregator][form][group_by_level]=country&export[submit]=&export[_token]=RHpjHl389GrK-bd6iY5NsEqrD5UKOTHH40QKE9J1edU" --globoff
 
@@ -49,6 +48,8 @@ class CSVListFormatter implements FormatterInterface
     protected $exportAlias = null;
     
     protected $exportData = null;
+    
+    protected $formatterData = null;
     
     /**
      *
@@ -94,7 +95,17 @@ class CSVListFormatter implements FormatterInterface
         $exportAlias, 
         array $aggregatorAliases
     ){
-        // do nothing
+        $builder->add('numerotation', ChoiceType::class, array(
+            'choices' => array(
+                'yes' => true,
+                'no'  => false
+            ),
+            'expanded' => true,
+            'multiple' => false,
+            'label' => "Add a number on first column",
+            'choices_as_values' => true,
+            'data' => true
+        ));
     }
     
     /**
@@ -118,17 +129,27 @@ class CSVListFormatter implements FormatterInterface
         $this->result = $result;
         $this->exportAlias = $exportAlias;
         $this->exportData = $exportData;
+        $this->formatterData = $formatterData;
         
         $output = fopen('php://output', 'w');
         
         $this->prepareHeaders($output);
         
+        $i = 1;
         foreach ($result as $row) {
             $line = array();
+            
+            if ($this->formatterData['numerotation'] === true) {
+                $line[] = $i;
+            }
+            
             foreach ($row as $key => $value) {
                 $line[] = $this->getLabel($key, $value);
             }
+            
             fputcsv($output, $line);
+            
+            $i++;
         }
         
         $csvContent = stream_get_contents($output);
@@ -144,12 +165,21 @@ class CSVListFormatter implements FormatterInterface
         return $response;
     }
     
+    /**
+     * add the headers to the csv file
+     * 
+     * @param resource $output
+     */
     protected function prepareHeaders($output)
     {
         $keys = $this->exportManager->getExport($this->exportAlias)->getQueryKeys($this->exportData);
         // we want to keep the order of the first row. So we will iterate on the first row of the results
         $first_row = count($this->result) > 0 ? $this->result[0] : array();
         $header_line = array();
+        
+        if ($this->formatterData['numerotation'] === true) {
+                $header_line[] = $this->translator->trans('Number');
+        }
         
         foreach ($first_row as $key => $value) {
             $header_line[] = $this->getLabel($key, '_header');
@@ -160,29 +190,36 @@ class CSVListFormatter implements FormatterInterface
         }
     }
     
+    /**
+     * Give the label corresponding to the given key and value. 
+     * 
+     * @param string $key
+     * @param string $value
+     * @return string
+     * @throws \LogicException if the label is not found
+     */
     protected function getLabel($key, $value)
     {
         
         if ($this->labelsCache === null) { 
-            $this->prepareLabels();
-        } 
-        
-        if (!isset($this->labelsCache[$key][$value])) {
-            throw new \LogicException("The label for key $key and value $value was not given "
-                    . "by the export, aggregator or filter responsible for this key.");
+            $this->prepareCacheLabels();
         }
         
-        return $this->labelsCache[$key][$value];
+        return $this->labelsCache[$key]($value);
     }
     
-    protected function prepareLabels()
+    /**
+     * Prepare the label cache which will be used by getLabel. This function
+     * should be called only once in the generation lifecycle.
+     */
+    protected function prepareCacheLabels()
     {
         $export = $this->exportManager->getExport($this->exportAlias);
         $keys = $export->getQueryKeys($this->exportData);
         
         foreach($keys as $key) {
-            // get an array with all values for this key
-            $values = array_unique(array_map(function ($v) use ($key) { return $v[$key]; }, $this->result));
+            // get an array with all values for this key if possible
+            $values = \array_map(function ($v) use ($key) { return $v[$key]; }, $this->result);
             // store the label in the labelsCache property
             $this->labelsCache[$key] = $export->getLabels($key, $values, $this->exportData);
         }

@@ -398,9 +398,9 @@ class ExportManager
         //handle aggregators
         $this->handleAggregators($export, $qb, $data[ExportType::AGGREGATOR_KEY], $centers);
         
-        $this->logger->debug('current query is '.$qb->getDQL(), array(
-            'class' => self::class, 'function' => __FUNCTION__
-        ));
+//        $this->logger->debug('current query is '.$qb->getDQL(), array(
+//            'class' => self::class, 'function' => __FUNCTION__
+//        ));
         
         $result = $export->getResult($qb, $data[ExportType::EXPORT_KEY]);
         

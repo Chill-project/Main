@@ -53,10 +53,10 @@ interface FormatterInterface
      * Generate a response from the data collected on differents ExportElementInterface
      * 
      * @param mixed[] $result The result, as given by the ExportInterface
-     * @param mixed[] $data collected from the current form
-     * @param String $exportAlias Alias of the export which is being executed. An export gets the data and implements the  \Chill\MainBundle\Export\ExportInterface
-     * @param \Chill\MainBundle\Export\FilterInterface[] $filters the filters applying on the export. The key will be filters aliases, and the values will be filter's data (from their own form)
-     * @param \Chill\MainBundle\Export\AggregatorInterface[] $aggregators the aggregators applying on the export. The key will be aggregators aliases, and the values will be aggregator's data (from their own form)
+     * @param mixed[] $formatterData collected from the current form
+     * @param string $exportAlias the id of the current export
+     * @param array $filtersData an array containing the filters data. The key are the filters id, and the value are the data
+     * @param array $aggregatorsData an array containing the aggregators data. The key are the filters id, and the value are the data
      * @return \Symfony\Component\HttpFoundation\Response The response to be shown
      */
     public function getResponse(

@@ -112,9 +112,13 @@ interface ExportInterface extends ExportElementInterface
     /**
      * transform the results to viewable and understable string.
      * 
+     * The result should also contains an entry with a key _header which should
+     * have, as value, a string for the header. See example in return declaration
+     * 
      * @param string $key The column key, as added in the query
-     * @param mixed[] $values The values from the result. Each value is unique
+     * @param mixed[] $values The values from the result. Each value should be unique. Example: array('FR', 'BE', 'CZ')
      * @param mixed $data The data from the form
+     * @return string[] where keys are the identifier given by result, and the value a string which should be displayed to the user. A special key '_header' should be added for the header. Example: array('FR' => 'France', 'BE' => 'Belgium', 'CZ' => 'Tchécoslovaquie', '_header' => 'Pays')
      */
     public function getLabels($key, array $values, $data);
 

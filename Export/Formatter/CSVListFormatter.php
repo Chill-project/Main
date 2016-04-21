@@ -36,6 +36,34 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
  */
 class CSVListFormatter implements FormatterInterface
 {
+    
+    /**
+     * This variable cache the labels internally
+     *
+     * @var string[]
+     */
+    protected $labelsCache = null;
+    
+    protected $result = null;
+    
+    protected $exportAlias = null;
+    
+    protected $exportData = null;
+    
+    /**
+     *
+     * @var ExportManager
+     */
+    protected $exportManager;
+    
+    /**
+     *
+     * @var TranslatorInterface
+     */
+    protected $translator;
+    
+
+
     public function __construct(TranslatorInterface $translator, ExportManager $manager)
     {
         $this->translator = $translator;
@@ -73,10 +101,10 @@ class CSVListFormatter implements FormatterInterface
      * Generate a response from the data collected on differents ExportElementInterface
      * 
      * @param mixed[] $result The result, as given by the ExportInterface
-     * @param mixed[] $data collected from the current form
-     * @param \Chill\MainBundle\Export\ExportInterface $export the export which is executing
-     * @param \Chill\MainBundle\Export\FilterInterface[] $filters the filters applying on the export. The key will be filters aliases, and the values will be filter's data (from their own form)
-     * @param \Chill\MainBundle\Export\AggregatorInterface[] $aggregators the aggregators applying on the export. The key will be aggregators aliases, and the values will be aggregator's data (from their own form)
+     * @param mixed[] $formatterData collected from the current form
+     * @param string $exportAlias the id of the current export
+     * @param array $filtersData an array containing the filters data. The key are the filters id, and the value are the data
+     * @param array $aggregatorsData an array containing the aggregators data. The key are the filters id, and the value are the data
      * @return \Symfony\Component\HttpFoundation\Response The response to be shown
      */
     public function getResponse(
@@ -87,11 +115,20 @@ class CSVListFormatter implements FormatterInterface
         array $filtersData, 
         array $aggregatorsData
     ) {
+        $this->result = $result;
+        $this->exportAlias = $exportAlias;
+        $this->exportData = $exportData;
+        
         $output = fopen('php://output', 'w');
         
+        $this->prepareHeaders($output);
+        
         foreach ($result as $row) {
-            //var_dump($row);
-            fputcsv($output, $row);
+            $line = array();
+            foreach ($row as $key => $value) {
+                $line[] = $this->getLabel($key, $value);
+            }
+            fputcsv($output, $line);
         }
         
         $csvContent = stream_get_contents($output);
@@ -106,4 +143,50 @@ class CSVListFormatter implements FormatterInterface
         
         return $response;
     }
+    
+    protected function prepareHeaders($output)
+    {
+        $keys = $this->exportManager->getExport($this->exportAlias)->getQueryKeys($this->exportData);
+        // we want to keep the order of the first row. So we will iterate on the first row of the results
+        $first_row = count($this->result) > 0 ? $this->result[0] : array();
+        $header_line = array();
+        
+        foreach ($first_row as $key => $value) {
+            $header_line[] = $this->getLabel($key, '_header');
+        }
+        
+        if (count($header_line) > 0) {
+            fputcsv($output, $header_line);
+        }
+    }
+    
+    protected function getLabel($key, $value)
+    {
+        
+        if ($this->labelsCache === null) { 
+            $this->prepareLabels();
+        } 
+        
+        if (!isset($this->labelsCache[$key][$value])) {
+            throw new \LogicException("The label for key $key and value $value was not given "
+                    . "by the export, aggregator or filter responsible for this key.");
+        }
+        
+        return $this->labelsCache[$key][$value];
+    }
+    
+    protected function prepareLabels()
+    {
+        $export = $this->exportManager->getExport($this->exportAlias);
+        $keys = $export->getQueryKeys($this->exportData);
+        
+        foreach($keys as $key) {
+            // get an array with all values for this key
+            $values = array_unique(array_map(function ($v) use ($key) { return $v[$key]; }, $this->result));
+            // store the label in the labelsCache property
+            $this->labelsCache[$key] = $export->getLabels($key, $values, $this->exportData);
+        }
+    }
+    
+    
 }

@@ -382,36 +382,53 @@ class ExportManager
     public function generate($exportAlias, array $pickedCentersData, array $data, array $formatterData)
     {
         $export = $this->getExport($exportAlias);
-        $qb = $this->em->createQueryBuilder();
+        //$qb = $this->em->createQueryBuilder();
         $centers = $this->getPickedCenters($pickedCentersData);
         
-        $qb = $export->initiateQuery(
-                $qb, 
+        $query = $export->initiateQuery(
                 $this->retrieveUsedModifiers($data), 
                 $this->buildCenterReachableScopes($centers, $export),
                 $data[ExportType::EXPORT_KEY]
                 );
         
-        //handle filters
-        $this->handleFilters($export, $qb, $data[ExportType::FILTER_KEY], $centers);
+        if ($query instanceof \Doctrine\ORM\NativeQuery) {
+            // throw an error if the export require other modifier, which is 
+            // not allowed when the export return a `NativeQuery`
+            if (count($export->supportsModifiers()) > 0) {
+                throw new \LogicException("The export with alias `$exportAlias` return "
+                        . "a `\Doctrine\ORM\NativeQuery` and supports modifiers, which is not "
+                        . "allowed. Either the method `supportsModifiers` should return an empty "
+                        . "array, or return a `Doctrine\ORM\QueryBuilder`");
+            }
+        } elseif ($query instanceof QueryBuilder) {
+            //handle filters
+            $this->handleFilters($export, $query, $data[ExportType::FILTER_KEY], $centers);
+
+            //handle aggregators
+            $this->handleAggregators($export, $query, $data[ExportType::AGGREGATOR_KEY], $centers);
+            
+            $this->logger->debug('current query is '.$query->getDQL(), array(
+                'class' => self::class, 'function' => __FUNCTION__
+            ));
+        } else {
+            throw new \UnexpectedValueException("The method `intiateQuery` should return "
+                    . "a `\Doctrine\ORM\NativeQuery` or a `Doctrine\ORM\QueryBuilder` "
+                    . "object.");
+        }
         
-        //handle aggregators
-        $this->handleAggregators($export, $qb, $data[ExportType::AGGREGATOR_KEY], $centers);
-        
-//        $this->logger->debug('current query is '.$qb->getDQL(), array(
-//            'class' => self::class, 'function' => __FUNCTION__
-//        ));
-        
-        $result = $export->getResult($qb, $data[ExportType::EXPORT_KEY]);
+        $result = $export->getResult($query, $data[ExportType::EXPORT_KEY]);
         
         /* @var $formatter Formatter\CSVFormatter */
         $formatter = $this->getFormatter($this->getFormatterAlias($data));
         $filters = array();
-        
-        $aggregators = $this->retrieveUsedAggregators($data[ExportType::AGGREGATOR_KEY]);
         $aggregatorsData = array();
-        foreach($aggregators as $alias => $aggregator) {
-            $aggregatorsData[$alias] = $data[ExportType::AGGREGATOR_KEY][$alias]['form'];
+        
+        if ($query instanceof QueryBuilder) {
+            $aggregators = $this->retrieveUsedAggregators($data[ExportType::AGGREGATOR_KEY]);
+            
+            foreach($aggregators as $alias => $aggregator) {
+                $aggregatorsData[$alias] = $data[ExportType::AGGREGATOR_KEY][$alias]['form'];
+            }
         }
         
         return $formatter->getResponse(

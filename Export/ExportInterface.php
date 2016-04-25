@@ -57,12 +57,12 @@ interface ExportInterface extends ExportElementInterface
      * what the user is allowed to see. (Do not show personal data the user
      * is not allowed to see).
      * 
-     * @param QueryBuilder $qb
      * @param array $requiredModifiers
      * @param array $acl an array where each row has a `center` key containing the Chill\MainBundle\Entity\Center, and `circles` keys containing the reachable circles. Example: `array( array('center' => $centerA, 'circles' => array($circleA, $circleB) ) )`
      * @param array $data the data from the form, if any
+     * @return  the query to execute. 
      */
-    public function initiateQuery(QueryBuilder $qb, array $requiredModifiers, array $acl, array $data = array());
+    public function initiateQuery(array $requiredModifiers, array $acl, array $data = array());
     
     /**
      * Inform which ModifiersInterface (i.e. AggregatorInterface, FilterInterface)
@@ -102,11 +102,11 @@ interface ExportInterface extends ExportElementInterface
     /**
      * Return the results of the query builder.
      * 
-     * @param QueryBuilder $qb
+     * @param QueryBuilder|\Doctrine\ORM\NativeQuery $query
      * @param mixed[] $data the data from the export's fomr (added by self::buildForm)
      * @return mixed[] an array of results
      */
-    public function getResult(QueryBuilder $qb, $data);
+    public function getResult($query, $data);
     
         
     /**

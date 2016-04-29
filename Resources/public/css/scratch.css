@@ -4447,6 +4447,9 @@ ul.custom_fields.choice li {
 .footer p {
   font-family: 'Open Sans';
   font-weight: 300; }
+.footer a {
+  color: white;
+  text-decoration: underline; }
 
 .time_compound input[type=text], .time_compound select {
   width: 4em;

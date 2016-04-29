@@ -4361,7 +4361,7 @@ span.entity.entity-activity.activity-reason {
   font-variant: small-caps;
   display: inline;
   padding: .2em .6em .3em;
-  font-size: 85%;
+  font-size: 88%;
   font-weight: bold;
   line-height: 1;
   text-align: center;
@@ -4373,7 +4373,7 @@ span.entity.entity-activity.activity-reason {
 
 html, body {
   min-height: 100%;
-  font-family: 'open_sansregular'; }
+  font-family: 'Open Sans'; }
 
 header {
   position: relative; }
@@ -4445,7 +4445,8 @@ ul.custom_fields.choice li {
   line-height: 1.5em; }
 
 .footer p {
-  font-family: 'open_sanslight'; }
+  font-family: 'Open Sans';
+  font-weight: 300; }
 
 .time_compound input[type=text], .time_compound select {
   width: 4em;
@@ -4456,7 +4457,8 @@ ul.custom_fields.choice li {
   margin-right: 0.2em; }
 
 .open_sansbold {
-  font-family: "open_sansbold"; }
+  font-family: 'Open Sans';
+  font-weight: bold; }
 
 ul.record_actions {
   padding-left: 0; }
@@ -4468,7 +4470,8 @@ dd {
   margin-left: 0; }
 
 dt {
-  font-family: "open_sanssemibold"; }
+  font-family: 'Open Sans';
+  font-weight: 600; }
 
 /* INPUT CLASS -> */
 div.input_with_post_text {

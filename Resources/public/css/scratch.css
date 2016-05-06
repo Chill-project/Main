@@ -2693,16 +2693,16 @@ html {
   width: 25%; }
 
 .push-3 {
-  left: 25.0%; }
+  left: 25%; }
 
 .pull-3 {
-  right: 25.0%; }
+  right: 25%; }
 
 .prefix-3 {
-  margin-left: 25.0%; }
+  margin-left: 25%; }
 
 .suffix-3 {
-  margin-right: 25.0%; }
+  margin-right: 25%; }
 
 .grid-4 {
   width: 33.33333%; }
@@ -2738,16 +2738,16 @@ html {
   width: 50%; }
 
 .push-6 {
-  left: 50.0%; }
+  left: 50%; }
 
 .pull-6 {
-  right: 50.0%; }
+  right: 50%; }
 
 .prefix-6 {
-  margin-left: 50.0%; }
+  margin-left: 50%; }
 
 .suffix-6 {
-  margin-right: 50.0%; }
+  margin-right: 50%; }
 
 .grid-7 {
   width: 58.33333%; }
@@ -2783,16 +2783,16 @@ html {
   width: 75%; }
 
 .push-9 {
-  left: 75.0%; }
+  left: 75%; }
 
 .pull-9 {
-  right: 75.0%; }
+  right: 75%; }
 
 .prefix-9 {
-  margin-left: 75.0%; }
+  margin-left: 75%; }
 
 .suffix-9 {
-  margin-right: 75.0%; }
+  margin-right: 75%; }
 
 .grid-10 {
   width: 83.33333%; }
@@ -2828,16 +2828,16 @@ html {
   width: 100%; }
 
 .push-12 {
-  left: 100.0%; }
+  left: 100%; }
 
 .pull-12 {
-  right: 100.0%; }
+  right: 100%; }
 
 .prefix-12 {
-  margin-left: 100.0%; }
+  margin-left: 100%; }
 
 .suffix-12 {
-  margin-right: 100.0%; }
+  margin-right: 100%; }
 
 .float-left {
   float: left; }
@@ -3008,16 +3008,16 @@ html {
     width: 25%; }
 
   .push-mobile-3 {
-    left: 25.0%; }
+    left: 25%; }
 
   .pull-mobile-3 {
-    right: 25.0%; }
+    right: 25%; }
 
   .prefix-mobile-3 {
-    margin-left: 25.0%; }
+    margin-left: 25%; }
 
   .suffix-mobile-3 {
-    margin-right: 25.0%; }
+    margin-right: 25%; }
 
   .grid-mobile-4 {
     width: 33.33333%; }
@@ -3053,16 +3053,16 @@ html {
     width: 50%; }
 
   .push-mobile-6 {
-    left: 50.0%; }
+    left: 50%; }
 
   .pull-mobile-6 {
-    right: 50.0%; }
+    right: 50%; }
 
   .prefix-mobile-6 {
-    margin-left: 50.0%; }
+    margin-left: 50%; }
 
   .suffix-mobile-6 {
-    margin-right: 50.0%; }
+    margin-right: 50%; }
 
   .grid-mobile-7 {
     width: 58.33333%; }
@@ -3098,16 +3098,16 @@ html {
     width: 75%; }
 
   .push-mobile-9 {
-    left: 75.0%; }
+    left: 75%; }
 
   .pull-mobile-9 {
-    right: 75.0%; }
+    right: 75%; }
 
   .prefix-mobile-9 {
-    margin-left: 75.0%; }
+    margin-left: 75%; }
 
   .suffix-mobile-9 {
-    margin-right: 75.0%; }
+    margin-right: 75%; }
 
   .grid-mobile-10 {
     width: 83.33333%; }
@@ -3143,16 +3143,16 @@ html {
     width: 100%; }
 
   .push-mobile-12 {
-    left: 100.0%; }
+    left: 100%; }
 
   .pull-mobile-12 {
-    right: 100.0%; }
+    right: 100%; }
 
   .prefix-mobile-12 {
-    margin-left: 100.0%; }
+    margin-left: 100%; }
 
   .suffix-mobile-12 {
-    margin-right: 100.0%; }
+    margin-right: 100%; }
 
   .float-mobile-left {
     float: left; }
@@ -3323,16 +3323,16 @@ html {
     width: 25%; }
 
   .push-tablet-3 {
-    left: 25.0%; }
+    left: 25%; }
 
   .pull-tablet-3 {
-    right: 25.0%; }
+    right: 25%; }
 
   .prefix-tablet-3 {
-    margin-left: 25.0%; }
+    margin-left: 25%; }
 
   .suffix-tablet-3 {
-    margin-right: 25.0%; }
+    margin-right: 25%; }
 
   .grid-tablet-4 {
     width: 33.33333%; }
@@ -3368,16 +3368,16 @@ html {
     width: 50%; }
 
   .push-tablet-6 {
-    left: 50.0%; }
+    left: 50%; }
 
   .pull-tablet-6 {
-    right: 50.0%; }
+    right: 50%; }
 
   .prefix-tablet-6 {
-    margin-left: 50.0%; }
+    margin-left: 50%; }
 
   .suffix-tablet-6 {
-    margin-right: 50.0%; }
+    margin-right: 50%; }
 
   .grid-tablet-7 {
     width: 58.33333%; }
@@ -3413,16 +3413,16 @@ html {
     width: 75%; }
 
   .push-tablet-9 {
-    left: 75.0%; }
+    left: 75%; }
 
   .pull-tablet-9 {
-    right: 75.0%; }
+    right: 75%; }
 
   .prefix-tablet-9 {
-    margin-left: 75.0%; }
+    margin-left: 75%; }
 
   .suffix-tablet-9 {
-    margin-right: 75.0%; }
+    margin-right: 75%; }
 
   .grid-tablet-10 {
     width: 83.33333%; }
@@ -3458,16 +3458,16 @@ html {
     width: 100%; }
 
   .push-tablet-12 {
-    left: 100.0%; }
+    left: 100%; }
 
   .pull-tablet-12 {
-    right: 100.0%; }
+    right: 100%; }
 
   .prefix-tablet-12 {
-    margin-left: 100.0%; }
+    margin-left: 100%; }
 
   .suffix-tablet-12 {
-    margin-right: 100.0%; }
+    margin-right: 100%; }
 
   .float-tablet-left {
     float: left; }
@@ -4350,18 +4350,32 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-div.timeline div {
-  margin: 0.7em 0.2em;
-  background-color: #e6e6e6;
-  padding: 0.3em; }
-  div.timeline div div.summary {
-    margin-left: 1em; }
+div.timeline-item {
+  padding: 0.5em;
+  overflow: auto;
+  margin-bottom: 1.5em; }
+  div.timeline-item.odd {
+    background-color: #e6e6e6; }
+    div.timeline-item.odd .summary {
+      background-color: #fff; }
+  div.timeline-item.even {
+    background-color: #fff; }
+    div.timeline-item.even .summary {
+      background-color: #e6e6e6; }
+  div.timeline-item .summary {
+    margin: 1em;
+    overflow: auto; }
+  div.timeline-item h3 {
+    margin-top: 0em;
+    font-size: 1em; }
+    div.timeline-item h3.single-line {
+      margin-bottom: 0em; }
 
 span.entity.entity-activity.activity-reason {
   font-variant: small-caps;
   display: inline;
   padding: .2em .6em .3em;
-  font-size: 85%;
+  font-size: 88%;
   font-weight: bold;
   line-height: 1;
   text-align: center;
@@ -4370,6 +4384,15 @@ span.entity.entity-activity.activity-reason {
   border-radius: .25em;
   color: white;
   background-color: #dd506d; }
+
+.activity {
+  color: #43b29d; }
+
+.report {
+  color: #df4949; }
+
+.person {
+  color: #334d5c; }
 
 html, body {
   min-height: 100%;

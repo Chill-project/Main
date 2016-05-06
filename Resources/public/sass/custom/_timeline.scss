@@ -16,14 +16,38 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-div.timeline {
-   div {
-      margin: 0.7em 0.2em;
-      background-color: #e6e6e6;
-      padding: 0.3em;
+div.timeline-item {
+    padding: 0.5em;
+    overflow: auto;
+    margin-bottom: 1.5em;
+    
+    &.odd {
+        background-color: $chill-llight-gray;
+        
+        .summary {
+            background-color: $white;
+        }
+    }
 
-      div.summary {
-         margin-left: 1em;
-      }
-   }
+    &.even {
+        background-color: $white;
+        
+        .summary {
+            background-color: $chill-llight-gray;
+        }
+    }
+    
+    .summary {
+        margin: 1em;
+        overflow: auto;
+    }
+    
+    h3 {
+        margin-top: 0em;
+        font-size: 1em;
+        
+        &.single-line {
+            margin-bottom: 0em;
+        }
+    }
 }

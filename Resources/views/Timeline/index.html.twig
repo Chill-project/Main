@@ -1,6 +1,6 @@
 <div class="timeline">
     {% for result in results %}
-        <div>
+        <div class="timeline-item {% if loop.index0 is even %}even{% else %}odd{% endif %}">
             {% include result.template with result.template_data %}
         </div>
     {% endfor %}

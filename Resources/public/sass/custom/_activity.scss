@@ -2,3 +2,6 @@ span.entity.entity-activity.activity-reason {
     @include entity($chill-pink, white);
 }
 
+.activity {
+    color: $chill-green;
+}

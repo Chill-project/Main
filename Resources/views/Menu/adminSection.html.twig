@@ -24,7 +24,7 @@
         {% for route in routes %}
             <li style="display:block; background-color: #333333; padding-left:1.5em; border-bottom:1px; border-bottom: 1px solid #FFF;padding-top:0; padding-bottom:0;">
                 <div style="margin-bottom:2px;">
-                        <div style="font-family: 'open_sanslight'; font-size: 0.75em; text-align:left; height: 46px; display:inline-block;  width: calc(100% - 5em - 1px); vertical-align:top;">
+                        <div style="font-family: 'Open Sans'; font-weight: 300; font-size: 0.75em; text-align:left; height: 46px; display:inline-block;  width: calc(100% - 5em - 1px); vertical-align:top;">
                             <a href="{{ path(route.key, args ) }}">{{ route.label|trans }}</a>
                         </div>
                         <div style="background-color: #333333;  text-align:center;width: 2em; margin-left:-0.15em; font-size:1.5em; color:#FFF; height: 46px; display:inline-block; vertical-align:top;float:right">{% spaceless %}

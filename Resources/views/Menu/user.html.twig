@@ -18,14 +18,14 @@
 
 <li class="nav-link2">
 	<div class="li-content">
-		<a href="javascript:void(0)" style="font-size: 0.8em; font-family: 'open_sanslight';">
+		<a href="javascript:void(0)" style="font-size: 0.8em; font-family: 'Open Sans'; font-weight:300;">
 			{{ 'Welcome' | trans }}<br/>
 			<b>{{ app.user.username }}</b>
 		</a>
 	</div>
     <ul class="submenu width-11-em">
         {% for route in routes %}
-            <li><a href="{{ path(route.key, args ) }}" style="font-family: 'open_sanslight'; font-size: 0.9em;"><i class="fa fa-{{ route.icon }}"></i> {{ route.label|trans }}</a></li>
+            <li><a href="{{ path(route.key, args ) }}" style="font-family: 'Open Sans'; font-weight:300; font-size: 0.9em;"><i class="fa fa-{{ route.icon }}"></i> {{ route.label|trans }}</a></li>
         {% endfor %}
     </ul>
 </li>

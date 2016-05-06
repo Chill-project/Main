@@ -7,7 +7,7 @@
 
 html,body { 
    min-height:100%;
-   font-family: 'open_sansregular';
+   font-family: 'Open Sans';
 }
 
 header {
@@ -95,8 +95,14 @@ ul.custom_fields.choice li {
 
 .footer {
    p {
-      font-family: 'open_sanslight';
+      font-family: 'Open Sans';
+      font-weight: 300;
    }
+   
+   a { 
+        color: white; 
+        text-decoration: underline;
+      }
 }
 
 // inline time input
@@ -114,7 +120,9 @@ ul.custom_fields.choice li {
 }
 
 .open_sansbold {
-  font-family:'open_sansbold'
+  font-family: 'Open Sans';
+  font-weight: bold;
+      
 }
 
 // Symfony records actions
@@ -130,7 +138,8 @@ dd {
 }
 
 dt {
-  font-family: "open_sanssemibold";
+  font-family: 'Open Sans';
+  font-weight: 600;
 }
 
 

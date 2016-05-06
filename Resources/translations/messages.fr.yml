@@ -1,3 +1,5 @@
+"This program is free software: you can redistribute it and/or modify it under the terms of the <strong>GNU Affero General Public License</strong>": "Ce programme est un logiciel libre: vous pouvez le redistribuer et/ou le modifier selon les termes de la licence <strong>GNU Affero GPL</strong>"
+User manual: Manuel d'utilisation
 Search: Rechercher
 'Search persons, ...': 'Recherche des personnes, ...'
 Person name: Nom / Prénom de la personne
@@ -19,6 +21,10 @@ Admin Menu: Menu d'administration
 Details: Détails
 yes: oui
 no: non
+valid: valide
+Valid: Valide
+Not valid: Non valide
+not valid: non valide
 
 Edit: Modifier
 Update: Mettre à jour

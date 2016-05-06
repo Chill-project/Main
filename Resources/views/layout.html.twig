@@ -149,7 +149,8 @@
     </div>
 
     <footer class="footer">
-        <p>{{ 'Programme sous license' | trans }} <b>AGPL</b></p>
+        <p>{{ 'This program is free software: you can redistribute it and/or modify it under the terms of the <strong>GNU Affero General Public License</strong>'|trans|raw }}
+            <br/> <a href="https://{{ app.request.locale }}.wikibooks.org/wiki/Chill">{{ 'User manual'|trans }}</a></p>
     </footer>
     
     {% javascripts output="js/libs.js"

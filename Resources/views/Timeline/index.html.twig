@@ -1,8 +1,7 @@
 <div class="timeline">
-{% for result in results %}
-    <div>
-        {% include result.template with result.template_data %}
-    </div>
-
-{% endfor %}
+    {% for result in results %}
+        <div>
+            {% include result.template with result.template_data %}
+        </div>
+    {% endfor %}
 </div>

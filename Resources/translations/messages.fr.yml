@@ -5,7 +5,7 @@ Search: Rechercher
 Person name: Nom / Prénom de la personne
 Login: Connexion
 Logout: Se déconnecter
-Bad credentials: Le mot de passe et le nom d'utilisateur ne correspondent pas
+Bad credentials.: Le mot de passe et le nom d'utilisateur ne correspondent pas.
 Invalid CSRF token.: Votre session a expirée ou est devenue invalide.
 Username: Nom d'utilisateur
 username: nom d'utilisateur

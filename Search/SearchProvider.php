@@ -82,7 +82,7 @@ class SearchProvider
     private function extractTerms(&$subject)
     {
         $terms = array();
-        preg_match_all('/([a-z]+):([\w\-]+|\([^\(\r\n]+\))/', $subject, $matches);
+        preg_match_all('/([a-z\-]+):([\w\-]+|\([^\(\r\n]+\))/', $subject, $matches);
 
         foreach ($matches[2] as $key => $match) {
             //remove from search pattern

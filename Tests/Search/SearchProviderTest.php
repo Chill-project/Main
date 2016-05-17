@@ -165,6 +165,17 @@ class SearchProviderTest extends \PHPUnit_Framework_TestCase
         ), $terms);
     }
     
+    public function testArgumentNameWithTrait()
+    {
+        $terms = $this->p('date-from:2016-05-04');
+        
+        $this->assertEquals(array(
+            '_domain' => null,
+            'date-from' => '2016-05-04',
+            '_default' => ''
+        ), $terms);
+    }
+    
     /**
      * Test the behaviour when no domain is provided in the search pattern : 
      * the default search should be enabled

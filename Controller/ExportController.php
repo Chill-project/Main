@@ -389,6 +389,7 @@ class ExportController extends Controller
      */
     public function generateAction(Request $request, $alias)
     {
+        /* @var $exportManager \Chill\MainBundle\Export\ExportManager */
         $exportManager = $this->get('chill.main.export_manager');
         
         $formCenters = $this->createCreateFormExport($alias, 'generate_centers');
@@ -404,7 +405,12 @@ class ExportController extends Controller
         $formFormatter->handleRequest($request);
         $dataFormatter = $formFormatter->getData();
         
-        return $exportManager->generate($alias, $dataCenters['centers'],
+        // temporary hack due to bug with fputcsv and header_get
+        header('Content-Type: text/csv');
+        
+        $r = $exportManager->generate($alias, $dataCenters['centers'],
                 $dataExport['export'], $dataFormatter['formatter']);
+        
+        return $r;
     }
 }

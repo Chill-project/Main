@@ -418,6 +418,15 @@ class ExportManager
         
         $result = $export->getResult($query, $data[ExportType::EXPORT_KEY]);
         
+        if (!is_array($result)) {
+            throw new \UnexpectedValueException(
+                    sprintf(
+                            'The result of the export should be an array, %s given',
+                            gettype($result)
+                            )
+                    );
+        }
+        
         /* @var $formatter Formatter\CSVFormatter */
         $formatter = $this->getFormatter($this->getFormatterAlias($data));
         $filters = array();

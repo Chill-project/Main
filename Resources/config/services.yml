@@ -209,3 +209,11 @@ services:
             - "@chill.main.export_manager"
         tags:
             - { name: chill.export_formatter, alias: 'csvlist' }
+            
+    chill.main.export.pivoted_list_formatter:
+        class: Chill\MainBundle\Export\Formatter\CSVPivotedListFormatter
+        arguments:
+            - "@translator"
+            - "@chill.main.export_manager"
+        tags:
+            - { name: chill.export_formatter, alias: 'csv_pivoted_list' }

@@ -28,7 +28,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 interface FormatterInterface
 {
     const TYPE_TABULAR = 'tabular';
-    const TYPE_CSV_LIST = 'csvlist';
+    const TYPE_LIST = 'list';
     
     public function getType();
     

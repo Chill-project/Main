@@ -26,14 +26,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Chill\MainBundle\Export\ExportManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-// command to get the report with curl : curl --user "center a_social:password" "http://localhost:8000/fr/exports/generate/count_person?export[filters][person_gender_filter][enabled]=&export[filters][person_nationality_filter][enabled]=&export[filters][person_nationality_filter][form][nationalities]=&export[aggregators][person_nationality_aggregator][order]=1&export[aggregators][person_nationality_aggregator][form][group_by_level]=country&export[submit]=&export[_token]=RHpjHl389GrK-bd6iY5NsEqrD5UKOTHH40QKE9J1edU" --globoff
-
 /**
- * Create a CSV List for the export
+ * Create a CSV List for the export where the header are printed on the 
+ * first column, and the result goes from left to right.
  *
  * @author Champs-Libres <info@champs-libres.coop>
  */
-class CSVListFormatter implements FormatterInterface
+class CSVPivotedListFormatter implements FormatterInterface
 {
     
     /**
@@ -78,7 +77,7 @@ class CSVListFormatter implements FormatterInterface
     
     public function getName()
     {
-        return 'CSV vertical list';
+        return 'CSV horizontal list';
     }
     
     /**
@@ -123,7 +122,7 @@ class CSVListFormatter implements FormatterInterface
         $formatterData, 
         $exportAlias, 
         array $exportData, 
-        array $filtersData, 
+        array $filtersData,
         array $aggregatorsData
     ) {
         $this->result = $result;
@@ -133,23 +132,28 @@ class CSVListFormatter implements FormatterInterface
         
         $output = fopen('php://output', 'w');
         
-        $this->prepareHeaders($output);
-        
         $i = 1;
+        $lines = array();
+        $this->prepareHeaders($lines);
+        
         foreach ($result as $row) {
-            $line = array();
+            $j = 0;
             
             if ($this->formatterData['numerotation'] === true) {
-                $line[] = $i;
+                $lines[$j][] = $i;
+                $j++;
             }
             
             foreach ($row as $key => $value) {
-                $line[] = $this->getLabel($key, $value);
+                $lines[$j][] = $this->getLabel($key, $value);
+                $j++;
             }
-            
-            fputcsv($output, $line);
-            
             $i++;
+        }
+        
+        //adding the lines to the csv output
+        foreach($lines as $line) {
+            fputcsv($output, $line);
         }
         
         $csvContent = stream_get_contents($output);
@@ -158,7 +162,7 @@ class CSVListFormatter implements FormatterInterface
         $response = new Response();
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
-        //$response->headers->set('Content-Disposition','attachment; filename="export.csv"');
+        $response->headers->set('Content-Disposition','attachment; filename="export.csv"');
 
         $response->setContent($csvContent);
         
@@ -166,11 +170,11 @@ class CSVListFormatter implements FormatterInterface
     }
     
     /**
-     * add the headers to the csv file
+     * add the headers to lines array
      * 
-     * @param resource $output
+     * @param array $lines the lines where the header will be added
      */
-    protected function prepareHeaders($output)
+    protected function prepareHeaders(array &$lines)
     {
         $keys = $this->exportManager->getExport($this->exportAlias)->getQueryKeys($this->exportData);
         // we want to keep the order of the first row. So we will iterate on the first row of the results
@@ -178,15 +182,11 @@ class CSVListFormatter implements FormatterInterface
         $header_line = array();
         
         if ($this->formatterData['numerotation'] === true) {
-                $header_line[] = $this->translator->trans('Number');
+                $lines[] = array($this->translator->trans('Number'));
         }
         
         foreach ($first_row as $key => $value) {
-            $header_line[] = $this->getLabel($key, '_header');
-        }
-        
-        if (count($header_line) > 0) {
-            fputcsv($output, $header_line);
+            $lines[] = array($this->getLabel($key, '_header'));
         }
     }
     

@@ -141,4 +141,5 @@ Generate the report: Générer le rapport
 Add a number on first column: La première colonne est un numéro
 Number: Numéro
 # the label which appears in the UI
-CSV List: Liste au format CSV
+CSV vertical list: Liste verticale au format CSV
+CSV horizontal list: Liste horizontale au format CSV

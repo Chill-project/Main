@@ -124,7 +124,12 @@ var chill = function() {
     }
 
     /** 
-    * TODO : DOC
+    * Mark the choices "not specified" as check by default. 
+    * 
+    * This function apply to `custom field choices` when the `required` 
+    * option is false and `expanded` is true (checkboxes or radio buttons).
+    * 
+    * @param{string} choice_name the name of the input
     */
     function checkNullValuesInChoices(choice_name) {
         var choices;

@@ -184,63 +184,175 @@ var chill = function() {
     * child) of a given form : each parent option has a category, the
     * child select only display options that have the same category of the
     * parent optionn
+    * 
+    * The parent must have the class "chill-category-link-parent". 
+    * 
+    * The children must have the class "chill-category-link-child". Each option
+    * of the parent must have the attribute `data-link-category`, with the value of
+    * the connected option in parent.
+    * 
+    * Example :
+    * 
+    * ```html
+    * <select name="country" class="chill-category-link-parent">
+    *   <option value="BE">Belgium</option>
+    *   <option value="FR">France</option>
+    * </select>
+    * 
+    * <select name="cities">class="chill-category-link-children">
+    *   <option value="paris" data-link-category="FR">Paris</option>
+    *   <option value="toulouse" data-link-category="FR">Toulouse</option>
+    *   <option value="bruxelles" data-link-category="BE">Bruxelles</option>
+    *   <option value="liege" data-link-category="BE">Liège</option>
+    *   <option value="mons" data-link-category="BE">Mons</option>
+    * </select>
+    * ```
+    * 
+    * TODO ECRIRE LA DOC METTRE LES TESTS DANS git :
+    * tester que init est ok :
+       - quand vide
+       - quand choix
+    * tester que quand sélection
+       - quand vide
+       - quand choix
     */
-    /**
-     * TODO ECRIRE LA DOC METTRE LES TESTS DANS git :
-     * tester que init est ok :
-        - quand vide
-        - quand choix
-     * tester que quand sélection
-        - quand vide
-        - quand choix
-     */
     function categoryLinkParentChildSelect() {
         var forms_to_link = $('form:has(select.chill-category-link-parent)');
 
         forms_to_link.each(function(i,form_selector) {
-            var form = $(form_selector);
+            var form = $(form_selector), parent_multiple;
             form.old_category = null;
             form.link_parent =  $(form).find('.chill-category-link-parent');
             form.link_child = $(form).find('.chill-category-link-child');
-
-            $(form.link_parent).addClass('select2');
-            $(form.link_parant).select2({allowClear: true});
-
-            form.old_category = null;
-            if($(form.link_parent).select2('data') !== null) {
-                form.old_category = ($(form.link_parent).select2('data').element[0].dataset.linkCategory);
+            
+            // check if the parent allow multiple or single results
+            parent_multiple = $(form).find('.chill-category-link-parent').get(0).multiple;
+            // if we use select2, parent_multiple will be `undefined`
+            if (typeof parent_multiple == 'undefined') {
+                // currently, I do not know how to check if multiple using select2.
+                // we suppose that multiple is false (old behaviour)
+                parent_multiple = false
             }
+            
+            $(form.link_parent).addClass('select2');
+            $(form.link_parant).select2({allowClear: true}); // it is weird: when I fix the typo here, the whole stuff does not work anymore...
+  
+            if (parent_multiple == false) {
 
-            $(form.link_child).find('option')
-                .each(function(i,e) {
-                    if(
-                        ((!$(e).data('link-category')) || $(e).data('link-category') == form.old_category) &&
-                        ((!$(e).data('link-categories')) || form.old_category in $(e).data('link-categories').split(','))
-                    ) {
-                        $(e).show();
-                    } else {
-                        $(e).hide();
+                form.old_category = null;
+                if($(form.link_parent).select2('data') !== null) {
+                    form.old_category = ($(form.link_parent).select2('data').element[0].dataset.linkCategory);
+                }
+
+                $(form.link_child).find('option')
+                    .each(function(i,e) {
+                        if(
+                            ((!$(e).data('link-category')) || $(e).data('link-category') == form.old_category) &&
+                            ((!$(e).data('link-categories')) || form.old_category in $(e).data('link-categories').split(','))
+                        ) {
+                            $(e).show();
+                            // here, we should handle the optgroup
+                        } else {
+                            $(e).hide();
+                            // here, we should handle the optgroup
+                        }
+                    });
+
+                form.link_parent.change(function() {
+                    var new_category = ($(form.link_parent).select2('data').element[0].dataset.linkCategory);
+                    if(new_category != form.old_category) {
+                        $(form.link_child).find('option')
+                            .each(function(i,e) {
+                                if(
+                                    ((!$(e).data('link-category')) || $(e).data('link-category') == new_category) &&
+                                    ((!$(e).data('link-categories')) || new_category in $(e).data('link-categories').split(','))
+                                ) {
+                                    $(e).show();
+                                    // here, we should handle the optgroup
+                                } else {
+                                    $(e).hide();
+                                    // here, we should handle the opgroup
+                                }
+                            });
+                        $(form.link_child).find('option')[0].selected = true;
+                        form.old_category = new_category;
                     }
                 });
-
-            form.link_parent.change(function() {
-                var new_category = ($(form.link_parent).select2('data').element[0].dataset.linkCategory);
-                if(new_category != form.old_category) {
-                    $(form.link_child).find('option')
-                        .each(function(i,e) {
-                            if(
-                                ((!$(e).data('link-category')) || $(e).data('link-category') == new_category) &&
-                                ((!$(e).data('link-categories')) || new_category in $(e).data('link-categories').split(','))
-                            ) {
-                                $(e).show();
-                            } else {
-                                $(e).hide();
-                            }
-                        });
-                    $(form.link_child).find('option')[0].selected = true;
-                    form.old_category = new_category;
+            } else {
+                var i=0, 
+                    selected_items = $(form.link_parent).find(':selected');
+                
+                form.old_categories = [];
+                for (i=0;i < selected_items.length; i++) {
+                    form.old_categories.push(selected_items[i].value);
                 }
-            });
+
+                $(form.link_child).find('option')
+                    .each(function(i,e) {
+                        var visible;
+                        if(form.old_categories.indexOf(e.dataset.linkCategory) != -1) {
+                            $(e).show();
+                            if (e.parentNode instanceof HTMLOptGroupElement) {
+                                $(e.parentNode).show();
+                            }
+                        } else {
+                            $(e).hide();
+                            if (e.parentNode instanceof HTMLOptGroupElement) {
+                                // we check if the other options are visible.
+                                visible = false
+                                for (var l=0; l < e.parentNode.children.length; l++) {
+                                    if (window.getComputedStyle(e.parentNode.children[l]).getPropertyValue('display') != 'none') {
+                                        visible = true;
+                                    }
+                                }
+                                // if any options are visible, we hide the optgroup
+                                if (visible == false) {
+                                    $(e.parentNode).hide();
+                                }
+                            }
+                        }
+                    });
+
+                form.link_parent.change(function() {
+                    var new_categories = [], 
+                        selected_items = $(form.link_parent).find(':selected'),
+                        visible;
+                    for (i=0;i < selected_items.length; i++) {
+                        new_categories.push(selected_items[i].value);
+                    }
+                    
+                    if(new_categories != form.old_categories) {
+                        $(form.link_child).find('option')
+                            .each(function(i,e) {
+                                if(new_categories.indexOf(e.dataset.linkCategory) != -1) {
+                                    $(e).show();
+                                    // if parent is an opgroup, we show it
+                                    if (e.parentNode instanceof HTMLOptGroupElement) {
+                                        $(e.parentNode).show();
+                                    }
+                                } else {
+                                    $(e).hide();
+                                    // we check if the parent is an optgroup
+                                    if (e.parentNode instanceof HTMLOptGroupElement) {
+                                        // we check if other options are visible
+                                        visible = false
+                                        for (var l=0; l < e.parentNode.children.length; l++) {
+                                            if (window.getComputedStyle(e.parentNode.children[l]).getPropertyValue('display') != 'none') {
+                                                visible = true;
+                                            }
+                                        }
+                                        // if any options are visible, we hide the optgroup
+                                        if (visible == false) {
+                                            $(e.parentNode).hide();
+                                }
+                                    }
+                                }
+                            });
+                        //$(form.link_child).find('option')[0].selected = true;
+                        form.old_categories = new_categories;
+                    }
+                });
+            }  
         });
     }
 

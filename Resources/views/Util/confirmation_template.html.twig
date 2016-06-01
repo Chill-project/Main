@@ -1,0 +1,22 @@
+{% if title is defined %}
+    <h2>{{ title }}</h2>
+{% endif %}
+
+{% if confirm_question is defined %}
+    <p class="message-confirm">{{ confirm_question }}</p>
+{% endif %}
+
+{{ form_start(form) }}
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path(cancel_route, cancel_parameters|default( { } ) ) }}" class="sc-button bt-cancel">
+            {{ 'Cancel'|trans }}
+        </a>
+    </li>
+    <li>
+        {{ form_widget(form.submit, { 'attr' : { 'class' : "sc-button bt-delete" } } ) }}
+    </li>
+</ul>
+        
+{{ form_end(form) }}

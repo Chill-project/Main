@@ -1,0 +1,4 @@
+services:
+    chill.main.logger:
+        # a logger to log events from the app (deletion, remove, etc.)
+        alias: monolog.logger.chill
